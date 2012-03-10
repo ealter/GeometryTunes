@@ -10,4 +10,6 @@
 
 @interface GridView : UIView
 
+- (void)drawGridWidth:(float)width Height:(float)height Context:(CGContextRef)context;
+
 @end

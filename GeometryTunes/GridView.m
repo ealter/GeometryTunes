@@ -19,8 +19,23 @@
     return self;
 }
 
+- (void)drawGridWidth:(float)width Height:(float)height Context:(CGContextRef)context
+{
+    
+    CGRect myRect;
+    for (int i = 0; i <= 10; i++) {
+        for (int j = 0; j <= 10; j++) {
+            myRect = CGRectMake(i * width / 10, j * height / 10, width / 10, height / 10);
+            CGContextAddRect(context, myRect);  
+        }
+    }  
+    
+}
+
 - (void)drawRect:(CGRect)rect
 {
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    
     // Get current graphics context
     CGContextRef context = UIGraphicsGetCurrentContext();
     
@@ -29,10 +44,13 @@
     
     // Draw a blue rectangle
     CGContextSetFillColorWithColor(context, [UIColor blueColor].CGColor);
-    CGRect rectangle = CGRectMake(60, 170, 200, 80);
-    CGContextAddRect(context, rectangle);
+    
+    [self drawGridWidth:screenRect.size.width Height:screenRect.size.height Context:context];
+    
     CGContextStrokePath(context);
+
 }
+
 
 
 @end
