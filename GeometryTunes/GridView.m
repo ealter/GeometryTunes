@@ -42,11 +42,13 @@
     // Set line width
     CGContextSetLineWidth(context, 2.0);
     
-    // Draw a blue rectangle
+    // Set fill color to blue
     CGContextSetFillColorWithColor(context, [UIColor blueColor].CGColor);
     
+    // Add grid of screen's size to context
     [self drawGridWidth:screenRect.size.width Height:screenRect.size.height Context:context];
     
+    // Draw
     CGContextStrokePath(context);
 
 }
