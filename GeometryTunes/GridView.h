@@ -10,6 +10,17 @@
 
 @interface GridView : UIView
 
-- (void)drawGridWidth:(float)width Height:(float)height Context:(CGContextRef)context;
+@property int gridWidth;
+@property int gridHeight;
+@property int numBoxesX;
+@property int numBoxesY; 
+
+@property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
+
+- (void)handleTap:(UITapGestureRecognizer *)sender;
+- (int)getBoxWidth;
+- (int)getBoxHeight;
+- (void)drawGrid:(CGContextRef)context;
+- (CGPoint)getBoxFromCoords:(CGPoint)pos;
 
 @end

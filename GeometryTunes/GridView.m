@@ -10,31 +10,66 @@
 
 @implementation GridView
 
+@synthesize numBoxesX;
+@synthesize numBoxesY; 
+@synthesize gridWidth;
+@synthesize gridHeight;
+
+@synthesize tapGestureRecognizer;
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        // Initialization code
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        gridWidth = screenRect.size.width;
+        gridHeight = screenRect.size.height;
+        NSLog(@"%d, %d", gridWidth, gridHeight);
+        numBoxesX = 10;
+        numBoxesY = 10;
+        
+        // Initialize tap gesture recognizer
+        tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTaps:)]; 
+        
+        // The number of taps in order for gesture to be recognized
+        tapGestureRecognizer.numberOfTapsRequired = 1;
+        
+        // Add gesture recognizer to the view
+        [self addGestureRecognizer:tapGestureRecognizer];
     }
     return self;
 }
 
-- (void)drawGridWidth:(float)width Height:(float)height Context:(CGContextRef)context
+-(void) handleTap:(UITapGestureRecognizer *)sender
 {
-    
+    CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
+    CGPoint box = [self getBoxFromCoords:pos];
+    NSLog(@"%@", NSStringFromCGPoint(box));
+}
+
+- (int)getBoxWidth
+{
+    return gridWidth / numBoxesX;
+}
+
+- (int)getBoxHeight
+{
+    return gridHeight / numBoxesY;
+}
+
+- (void)drawGrid:(CGContextRef)context
+{
     CGRect myRect;
-    for (int i = 0; i <= 10; i++) {
-        for (int j = 0; j <= 10; j++) {
-            myRect = CGRectMake(i * width / 10, j * height / 10, width / 10, height / 10);
+    for (int i = 0; i <= numBoxesX; i++) {
+        for (int j = 0; j <= numBoxesY; j++) {
+            myRect = CGRectMake(i * [self getBoxWidth], j * [self getBoxHeight], [self getBoxWidth], [self getBoxHeight]);
             CGContextAddRect(context, myRect);  
         }
     }  
-    
 }
 
 - (void)drawRect:(CGRect)rect
 {
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
     
     // Get current graphics context
     CGContextRef context = UIGraphicsGetCurrentContext();
@@ -46,13 +81,20 @@
     CGContextSetFillColorWithColor(context, [UIColor blueColor].CGColor);
     
     // Add grid of screen's size to context
-    [self drawGridWidth:screenRect.size.width Height:screenRect.size.height Context:context];
+    [self drawGrid:context];
     
     // Draw
     CGContextStrokePath(context);
 
 }
 
+- (CGPoint) getBoxFromCoords:(CGPoint)pos 
+{
+    CGPoint box = CGPointMake(pos.x / [self getBoxWidth], pos.y / [self getBoxWidth]);
+    if (box.x > numBoxesX || box.y > numBoxesY)
+        return CGPointMake(-1, -1);
+    return box;
+}
 
 
 @end
