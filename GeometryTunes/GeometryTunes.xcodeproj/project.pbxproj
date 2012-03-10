@@ -1,0 +1,290 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		83194310150BD226003EF364 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8319430F150BD226003EF364 /* UIKit.framework */; };
+		83194312150BD226003EF364 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83194311150BD226003EF364 /* Foundation.framework */; };
+		83194314150BD226003EF364 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83194313150BD226003EF364 /* CoreGraphics.framework */; };
+		8319431A150BD226003EF364 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 83194318150BD226003EF364 /* InfoPlist.strings */; };
+		8319431C150BD226003EF364 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8319431B150BD226003EF364 /* main.m */; };
+		83194320150BD226003EF364 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8319431F150BD226003EF364 /* AppDelegate.m */; };
+		83194323150BD226003EF364 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83194322150BD226003EF364 /* ViewController.m */; };
+		83194326150BD226003EF364 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83194324150BD226003EF364 /* ViewController.xib */; };
+		8319432E150BD32B003EF364 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8319432D150BD32B003EF364 /* GridView.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		8319430B150BD226003EF364 /* GeometryTunes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GeometryTunes.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		8319430F150BD226003EF364 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		83194311150BD226003EF364 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		83194313150BD226003EF364 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		83194317150BD226003EF364 /* GeometryTunes-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GeometryTunes-Info.plist"; sourceTree = "<group>"; };
+		83194319150BD226003EF364 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		8319431B150BD226003EF364 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		8319431D150BD226003EF364 /* GeometryTunes-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GeometryTunes-Prefix.pch"; sourceTree = "<group>"; };
+		8319431E150BD226003EF364 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		8319431F150BD226003EF364 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		83194321150BD226003EF364 /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		83194322150BD226003EF364 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		83194325150BD226003EF364 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
+		8319432C150BD32B003EF364 /* GridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridView.h; sourceTree = "<group>"; };
+		8319432D150BD32B003EF364 /* GridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridView.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		83194308150BD226003EF364 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				83194310150BD226003EF364 /* UIKit.framework in Frameworks */,
+				83194312150BD226003EF364 /* Foundation.framework in Frameworks */,
+				83194314150BD226003EF364 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		83194300150BD226003EF364 = {
+			isa = PBXGroup;
+			children = (
+				8319432C150BD32B003EF364 /* GridView.h */,
+				8319432D150BD32B003EF364 /* GridView.m */,
+				83194315150BD226003EF364 /* GeometryTunes */,
+				8319430E150BD226003EF364 /* Frameworks */,
+				8319430C150BD226003EF364 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		8319430C150BD226003EF364 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				8319430B150BD226003EF364 /* GeometryTunes.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		8319430E150BD226003EF364 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				8319430F150BD226003EF364 /* UIKit.framework */,
+				83194311150BD226003EF364 /* Foundation.framework */,
+				83194313150BD226003EF364 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		83194315150BD226003EF364 /* GeometryTunes */ = {
+			isa = PBXGroup;
+			children = (
+				8319431E150BD226003EF364 /* AppDelegate.h */,
+				8319431F150BD226003EF364 /* AppDelegate.m */,
+				83194321150BD226003EF364 /* ViewController.h */,
+				83194322150BD226003EF364 /* ViewController.m */,
+				83194324150BD226003EF364 /* ViewController.xib */,
+				83194316150BD226003EF364 /* Supporting Files */,
+			);
+			path = GeometryTunes;
+			sourceTree = "<group>";
+		};
+		83194316150BD226003EF364 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				83194317150BD226003EF364 /* GeometryTunes-Info.plist */,
+				83194318150BD226003EF364 /* InfoPlist.strings */,
+				8319431B150BD226003EF364 /* main.m */,
+				8319431D150BD226003EF364 /* GeometryTunes-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		8319430A150BD226003EF364 /* GeometryTunes */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 83194329150BD226003EF364 /* Build configuration list for PBXNativeTarget "GeometryTunes" */;
+			buildPhases = (
+				83194307150BD226003EF364 /* Sources */,
+				83194308150BD226003EF364 /* Frameworks */,
+				83194309150BD226003EF364 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = GeometryTunes;
+			productName = GeometryTunes;
+			productReference = 8319430B150BD226003EF364 /* GeometryTunes.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		83194302150BD226003EF364 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0420;
+				ORGANIZATIONNAME = "Tufts University";
+			};
+			buildConfigurationList = 83194305150BD226003EF364 /* Build configuration list for PBXProject "GeometryTunes" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 83194300150BD226003EF364;
+			productRefGroup = 8319430C150BD226003EF364 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				8319430A150BD226003EF364 /* GeometryTunes */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		83194309150BD226003EF364 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8319431A150BD226003EF364 /* InfoPlist.strings in Resources */,
+				83194326150BD226003EF364 /* ViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		83194307150BD226003EF364 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8319431C150BD226003EF364 /* main.m in Sources */,
+				83194320150BD226003EF364 /* AppDelegate.m in Sources */,
+				83194323150BD226003EF364 /* ViewController.m in Sources */,
+				8319432E150BD32B003EF364 /* GridView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		83194318150BD226003EF364 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				83194319150BD226003EF364 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		83194324150BD226003EF364 /* ViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				83194325150BD226003EF364 /* en */,
+			);
+			name = ViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		83194327150BD226003EF364 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		83194328150BD226003EF364 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		8319432A150BD226003EF364 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GeometryTunes/GeometryTunes-Prefix.pch";
+				INFOPLIST_FILE = "GeometryTunes/GeometryTunes-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		8319432B150BD226003EF364 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "GeometryTunes/GeometryTunes-Prefix.pch";
+				INFOPLIST_FILE = "GeometryTunes/GeometryTunes-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		83194305150BD226003EF364 /* Build configuration list for PBXProject "GeometryTunes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				83194327150BD226003EF364 /* Debug */,
+				83194328150BD226003EF364 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		83194329150BD226003EF364 /* Build configuration list for PBXNativeTarget "GeometryTunes" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8319432A150BD226003EF364 /* Debug */,
+				8319432B150BD226003EF364 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 83194302150BD226003EF364 /* Project object */;
+}
