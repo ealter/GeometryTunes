@@ -9,9 +9,15 @@
 #import <UIKit/UIKit.h>
 
 @interface Piano : UIView
+{
+    NSMutableArray *notes;
+    int numNotes;
+    int numWhiteNotes;
+}
 
 @property unsigned octave;
 
 - (id)sharedInit;
+- (void)updateColors; //Sets all of the colors of the piano
 
 @end
