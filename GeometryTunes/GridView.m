@@ -21,6 +21,21 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
+        CGRect screenRect = [[UIScreen mainScreen] bounds];
+        gridWidth = screenRect.size.width;
+        gridHeight = screenRect.size.height;
+        NSLog(@"%d, %d", gridWidth, gridHeight);
+        numBoxesX = 10;
+        numBoxesY = 10;
+        
+        // Initialize tap gesture recognizer
+        tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTaps:)]; 
+        
+        // The number of taps in order for gesture to be recognized
+        tapGestureRecognizer.numberOfTapsRequired = 1;
+        
+        // Add gesture recognizer to the view
+        [self addGestureRecognizer:tapGestureRecognizer];
     }
     return self;
 }
@@ -55,21 +70,6 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    gridWidth = screenRect.size.width;
-    gridHeight = screenRect.size.height;
-    NSLog(@"%d, %d", gridWidth, gridHeight);
-    numBoxesX = 10;
-    numBoxesY = 10;
-    
-    // Initialize tap gesture recognizer
-    tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTaps:)]; 
-    
-    // The number of taps in order for gesture to be recognized
-    tapGestureRecognizer.numberOfTapsRequired = 1;
-    
-    // Add gesture recognizer to the view
-    [self addGestureRecognizer:tapGestureRecognizer];
     
     // Get current graphics context
     CGContextRef context = UIGraphicsGetCurrentContext();
