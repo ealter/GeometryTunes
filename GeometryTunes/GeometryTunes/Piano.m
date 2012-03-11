@@ -45,15 +45,31 @@
     int width = screenRect.size.width;
     int height = screenRect.size.height;
     const int numNotes = 8; //an octave
-    int whiteKeyWidth = width / (numNotes+3); //The octave up/down have a width of 1.5 notes each
-    int x = 0;
-    UIButton *octaveDown = [[UIButton alloc]initWithFrame:CGRectMake(x, 0, whiteKeyWidth*1.5, height)];
-    [octaveDown setBackgroundColor:[UIColor blueColor]];
+    float whiteKeyWidth = ((float)width) / (numNotes+3); //The octave up/down have a width of 1.5 notes each
+    float x = 0;
+    
+    UIColor *octavesBackground = [UIColor blueColor];
+    UIFont  *octavesFont = [UIFont systemFontOfSize:70];
+    UIColor *octavesTextColor = [UIColor blackColor];
+    
+    float buttonWidth = whiteKeyWidth*1.5;
+    UIButton *octaveDown = [[UIButton alloc]initWithFrame:CGRectMake(x, 0, buttonWidth, height)];
+    [octaveDown setBackgroundColor:octavesBackground];
     [octaveDown setTitle:@"-" forState:UIControlStateNormal];
-    octaveDown.titleLabel.font = [UIFont systemFontOfSize:(CGFloat)70];
-    octaveDown.titleLabel.textColor = [UIColor blackColor];
+    octaveDown.titleLabel.font = octavesFont;
+    octaveDown.titleLabel.textColor = octavesTextColor;
     
     [self addSubview:octaveDown];
+    x += buttonWidth;
+    
+    buttonWidth = whiteKeyWidth*1.5;
+    UIButton *octaveUp = [[UIButton alloc]initWithFrame:CGRectMake(x, 0, buttonWidth, height)];
+    [octaveUp setBackgroundColor:octavesBackground];
+    [octaveUp setTitle:@"+" forState:UIControlStateNormal];
+    octaveUp.titleLabel.font = octavesFont;
+    octaveUp.titleLabel.textColor = octavesTextColor;
+    
+    [self addSubview:octaveUp];
 }
 
 @end
