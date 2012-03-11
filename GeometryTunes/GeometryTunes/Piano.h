@@ -13,5 +13,6 @@
 @property unsigned octave;
 
 - (id)sharedInit;
+- (void)updateColors; //Sets all of the colors of the piano
 
 @end
