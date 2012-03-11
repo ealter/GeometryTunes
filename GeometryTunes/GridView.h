@@ -16,7 +16,8 @@
 @property int numBoxesX;
 @property int numBoxesY;
 
-@property (retain) Piano *defaultPiano;
+@property int pianoOctave;
+
 @property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
 
 -(id)sharedInit;

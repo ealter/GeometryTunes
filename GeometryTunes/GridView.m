@@ -16,7 +16,8 @@
 @synthesize gridHeight;
 
 @synthesize tapGestureRecognizer;
-@synthesize defaultPiano;
+
+@synthesize pianoOctave;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -45,6 +46,8 @@
     numBoxesX = 10;
     numBoxesY = 10;
     
+    pianoOctave = 5;
+    
     // Initialize tap gesture recognizer
     tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)]; 
     
@@ -60,6 +63,10 @@
 {
     CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
     CGPoint box = [self getBoxFromCoords:pos];
+    CGRect pianoRect = CGRectMake(0, gridHeight-200, gridWidth, 200);
+    Piano* piano = [[Piano alloc] initWithFrame:pianoRect];
+    [piano setOctave:pianoOctave];
+    [self addSubview:piano];
     NSLog(@"%@", NSStringFromCGPoint(box));
 }
 
@@ -105,6 +112,7 @@
     
     // Add Playback buttons
     //[makePlaybackButton];
+    
     
     // Draw Grid of screen size
     CGContextRef context = UIGraphicsGetCurrentContext();
