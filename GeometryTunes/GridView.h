@@ -26,6 +26,7 @@
 - (int)getBoxHeight;
 - (void)drawGrid:(CGContextRef)context;
 - (void)drawPlaybackMenu:(CGContextRef)context;
+- (void) makePlaybackButtons;
 - (CGPoint)getBoxFromCoords:(CGPoint)pos;
 
 @end

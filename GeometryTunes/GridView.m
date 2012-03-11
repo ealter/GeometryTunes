@@ -102,6 +102,39 @@
     UIRectFill(playbackBar);
 }
 
+- (void) makePlaybackButtons
+{
+    UIColor *playbarButtonsBackground = [UIColor whiteColor];
+    UIFont  *playbarButtonsFont = [UIFont systemFontOfSize:30];
+    UIColor *playbarButtonsTextColor = [UIColor blueColor];
+    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    int playBarButtonWidth = screenRect.size.width/10 + 20;
+    int nextXPosition = 20;
+    int buttonSpacing = 10;
+    
+    CGRect playRect;
+    playRect = CGRectMake(nextXPosition, 10, playBarButtonWidth, [self getBoxHeight]-20);
+    nextXPosition += playBarButtonWidth + buttonSpacing;
+    CGRect pauseRect;
+    pauseRect = CGRectMake(nextXPosition, 10, playBarButtonWidth, [self getBoxHeight]-20);
+    
+    //Play button
+    UIButton *play = [[UIButton alloc]initWithFrame:playRect];
+    [play setBackgroundColor:playbarButtonsBackground];
+    [play setTitle:@"Play" forState:UIControlStateNormal];
+    play.titleLabel.font = playbarButtonsFont;
+    play.titleLabel.textColor = playbarButtonsTextColor;
+    [self addSubview:play];
+    
+    //Pause Button
+    UIButton *pause = [[UIButton alloc]initWithFrame:pauseRect];
+    [pause setBackgroundColor:playbarButtonsBackground];
+    [pause setTitle:@"Pause" forState:UIControlStateNormal];
+    pause.titleLabel.font = playbarButtonsFont;
+    pause.titleLabel.textColor = playbarButtonsTextColor;
+    [self addSubview:pause];
+}
+
 - (void)drawRect:(CGRect)rect
 {
     // Draw Playback Menu at top of screen
@@ -111,7 +144,7 @@
     [self drawPlaybackMenu:playbackContext];
     
     // Add Playback buttons
-    //[makePlaybackButton];
+    [self makePlaybackButtons];
     
     
     // Draw Grid of screen size
