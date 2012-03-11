@@ -33,7 +33,15 @@
 - (id)sharedInit
 {
     octave = 5;
+    numNotes = 12;
+    numWhiteNotes = 7;
+    notes = [NSMutableArray arrayWithCapacity:numNotes];
     return self;
+}
+
+- (void)updateColors
+{
+    
 }
 
 // Only override drawRect: if you perform custom drawing.
@@ -44,8 +52,6 @@
     CGRect screenRect = [self bounds];
     int width = screenRect.size.width;
     int height = screenRect.size.height;
-    const int numWhiteNotes = 7; //an octave
-    const int numNotes = 12;
     const float octaveButtonRelativeSize = 1.3;
     const float whiteKeyWidth = ((float)width) / (numWhiteNotes+octaveButtonRelativeSize*2);
     float x = 0;
@@ -92,6 +98,7 @@
             [self addSubview:note];
             [self sendSubviewToBack:note];
         }
+        [notes addObject:note];
     }
     
     buttonWidth = whiteKeyWidth*1.5;

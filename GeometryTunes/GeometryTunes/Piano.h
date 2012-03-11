@@ -9,6 +9,11 @@
 #import <UIKit/UIKit.h>
 
 @interface Piano : UIView
+{
+    NSMutableArray *notes;
+    int numNotes;
+    int numWhiteNotes;
+}
 
 @property unsigned octave;
 
