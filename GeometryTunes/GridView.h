@@ -7,14 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "Piano.h"
 
 @interface GridView : UIView
 
 @property int gridWidth;
 @property int gridHeight;
 @property int numBoxesX;
-@property int numBoxesY; 
+@property int numBoxesY;
 
+@property (retain) Piano *defaultPiano;
 @property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
 
 -(id)sharedInit;

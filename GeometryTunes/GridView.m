@@ -16,6 +16,7 @@
 @synthesize gridHeight;
 
 @synthesize tapGestureRecognizer;
+@synthesize defaultPiano;
 
 - (id)initWithFrame:(CGRect)frame
 {

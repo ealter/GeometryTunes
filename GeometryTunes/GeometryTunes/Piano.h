@@ -10,4 +10,8 @@
 
 @interface Piano : UIView
 
+@property unsigned octave;
+
+- (id)sharedInit;
+
 @end
