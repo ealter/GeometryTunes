@@ -40,12 +40,17 @@
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    NSLog(@"Drawing the rectangle");
+    CGRect screenRect = [self bounds];
     int width = screenRect.size.width;
     int height = screenRect.size.height;
     const int numNotes = 8; //an octave
     int whiteKeyWidth = width / (numNotes+3); //The octave up/down have a width of 1.5 notes each
-    [self setBackgroundColor:[UIColor blueColor]];
+    int x = 0;
+    UIButton *octaveDown = [[UIButton alloc]initWithFrame:CGRectMake(x, 0, whiteKeyWidth*1.5, height)];
+    [octaveDown setBackgroundColor:[UIColor blueColor]];
+    [octaveDown.titleLabel setText:@"-"];
+    [self addSubview:octaveDown];
 }
 
 @end
