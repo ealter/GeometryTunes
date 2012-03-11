@@ -49,7 +49,10 @@
     int x = 0;
     UIButton *octaveDown = [[UIButton alloc]initWithFrame:CGRectMake(x, 0, whiteKeyWidth*1.5, height)];
     [octaveDown setBackgroundColor:[UIColor blueColor]];
-    [octaveDown.titleLabel setText:@"-"];
+    [octaveDown setTitle:@"-" forState:UIControlStateNormal];
+    octaveDown.titleLabel.font = [UIFont systemFontOfSize:(CGFloat)70];
+    octaveDown.titleLabel.textColor = [UIColor blackColor];
+    
     [self addSubview:octaveDown];
 }
 
