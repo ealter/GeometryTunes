@@ -82,27 +82,43 @@
 
 - (void)drawGrid:(CGContextRef)context
 {
+
     CGRect myRect;
     for (int i = 0; i <= numBoxesX; i++) {
         for (int j = 0; j <= numBoxesY; j++) {
             myRect = CGRectMake(i * [self getBoxWidth], j * [self getBoxHeight], [self getBoxWidth], [self getBoxHeight]);
             CGContextAddRect(context, myRect);  
         }
-    }
+    }  
+    
+    
+}
+
+- (void) drawPlaybackMenu:(CGContextRef)context
+{
+    CGRect playbackBar;
+    playbackBar = CGRectMake(0, 0, gridWidth, [self getBoxHeight]);
+    [[UIColor blackColor] set];
+    UIRectFill(playbackBar);
 }
 
 - (void)drawRect:(CGRect)rect
 {
-    // Get current graphics context
+    // Draw Playback Menu at top of screen
+    CGContextRef playbackContext = UIGraphicsGetCurrentContext();
+    CGContextSetLineWidth(playbackContext, 2.0);
+    CGContextSetFillColorWithColor(playbackContext, [UIColor blackColor].CGColor);
+    [self drawPlaybackMenu:playbackContext];
+    
+    // Add Playback buttons
+    //[makePlaybackButton];
+    
+    
+    // Draw Grid of screen size
     CGContextRef context = UIGraphicsGetCurrentContext();
-    
-    // Set line width
     CGContextSetLineWidth(context, 2.0);
-    
-    // Set fill color to blue
-    CGContextSetFillColorWithColor(context, [UIColor blueColor].CGColor);
-    
-    // Add grid of screen's size to context
+    // Set fill color to blue (Don't need this)
+    // CGContextSetFillColorWithColor(context, [UIColor blueColor].CGColor);
     [self drawGrid:context];
     
     // Draw
