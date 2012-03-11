@@ -41,7 +41,16 @@
 
 - (void)updateColors
 {
-    
+    for(int i=0; i<numNotes; i++)
+    {
+        UIButton *note = [notes objectAtIndex:i];
+        int relativePitch = i % 12;
+        UIColor *color;
+        switch (relativePitch)
+        {
+                
+        }
+    }
 }
 
 // Only override drawRect: if you perform custom drawing.
