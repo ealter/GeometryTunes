@@ -75,9 +75,12 @@
         if(relativeNote == 1 || relativeNote == 3 || relativeNote == 6 || relativeNote == 8 | relativeNote == 10)
         {
             //The note is a black note
-            note = [[UIButton alloc]initWithFrame:CGRectMake(x-blackKeyWidth/2, 0, blackKeyWidth, blackKeyHeight)];
-            [note setBackgroundColor:[UIColor blackColor]];
-            [self addSubview:note];
+            if(i + 1 != numNotes) //don't end on a black key
+            {
+                note = [[UIButton alloc]initWithFrame:CGRectMake(x-blackKeyWidth/2, 0, blackKeyWidth, blackKeyHeight)];
+                [note setBackgroundColor:[UIColor blackColor]];
+                [self addSubview:note];
+            }
         }
         else
         {
