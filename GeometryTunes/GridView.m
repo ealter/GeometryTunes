@@ -45,7 +45,7 @@
     numBoxesY = 10;
     
     // Initialize tap gesture recognizer
-    tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTaps:)]; 
+    tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)]; 
     
     // The number of taps in order for gesture to be recognized
     tapGestureRecognizer.numberOfTapsRequired = 1;
