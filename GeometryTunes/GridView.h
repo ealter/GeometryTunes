@@ -17,6 +17,7 @@
 
 @property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
 
+-(id)sharedInit;
 - (void)handleTap:(UITapGestureRecognizer *)sender;
 - (int)getBoxWidth;
 - (int)getBoxHeight;
