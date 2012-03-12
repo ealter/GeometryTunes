@@ -79,9 +79,12 @@
     }
     else if(state == PIANO_STATE)
     {
-        [piano removeFromSuperview];
-        piano = NULL;
-        state = NORMAL_STATE;
+        if(![piano pointInside:pos withEvent:nil])
+        {
+            [piano removeFromSuperview];
+            piano = NULL;
+            state = NORMAL_STATE;
+        }
     }
 }
 
