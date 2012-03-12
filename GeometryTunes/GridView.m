@@ -70,7 +70,11 @@
         {
             state = PIANO_STATE;
             CGPoint box = [self getBoxFromCoords:pos];
-            CGRect pianoRect = CGRectMake(0, gridHeight-200, gridWidth, 200);
+            int pianoHeight = 200;
+            int pianoY = gridHeight - pianoHeight;
+            if((box.y+1) * [self getBoxHeight] > gridHeight - pianoHeight)
+                pianoY = (box.y - 0.5) * [self getBoxHeight] - pianoHeight;
+            CGRect pianoRect = CGRectMake(0, pianoY, gridWidth, pianoHeight);
             piano = [[Piano alloc] initWithFrame:pianoRect];
             [piano setOctave:pianoOctave];
             [self addSubview:piano];
@@ -79,7 +83,7 @@
     }
     else if(state == PIANO_STATE)
     {
-        if(![piano pointInside:pos withEvent:nil])
+        if(!CGRectContainsPoint([piano frame], pos))
         {
             [piano removeFromSuperview];
             piano = NULL;
@@ -117,10 +121,10 @@
     UIRectFill(playbackBar);
 }
 
-//-(void) playEvent
-//{
-//    
-//}
+-(void) buttonEvent
+{
+    NSLog(@"ButtonPressed");
+}
 
 - (void) makePlaybackButtons
 {
@@ -146,6 +150,7 @@
         btn.titleLabel.font = playbarButtonsFont;
         btn.titleLabel.textColor = playbarButtonsTextColor;
         [btn setTitleColor:playbarButtonsTextColor forState:UIControlStateNormal];
+        //[btn addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:btn];
     }
 }
@@ -161,7 +166,6 @@
     // Add Playback buttons
     [self makePlaybackButtons];
     
-    
     // Draw Grid of screen size
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(context, 2.0);
@@ -174,7 +178,7 @@
 
 - (CGPoint) getBoxFromCoords:(CGPoint)pos 
 {
-    CGPoint box = CGPointMake((int)pos.x / [self getBoxWidth], (int)pos.y / [self getBoxWidth]);
+    CGPoint box = CGPointMake((int)pos.x / [self getBoxWidth], (int)pos.y / [self getBoxHeight]);
     if (box.x > numBoxesX || box.y > numBoxesY)
         return CGPointMake(-1, -1);
     return box;
