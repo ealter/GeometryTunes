@@ -177,7 +177,7 @@
 
 - (CGPoint) getBoxFromCoords:(CGPoint)pos 
 {
-    CGPoint box = CGPointMake((int)pos.x / [self getBoxWidth], (int)pos.y / [self getBoxWidth]);
+    CGPoint box = CGPointMake((int)pos.x / [self getBoxWidth], (int)pos.y / [self getBoxHeight]);
     if (box.x > numBoxesX || box.y > numBoxesY)
         return CGPointMake(-1, -1);
     return box;
