@@ -11,6 +11,13 @@
 
 @interface GridView : UIView
 
+typedef enum STATE
+{
+    NORMAL_STATE,
+    PIANO_STATE,
+    PIPE_EDIT_STATE
+} STATE;
+
 @property int gridWidth;
 @property int gridHeight;
 @property int numBoxesX;
@@ -19,6 +26,8 @@
 @property int pianoOctave;
 
 @property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
+
+@property STATE state;
 
 -(id)sharedInit;
 - (void)handleTap:(UITapGestureRecognizer *)sender;

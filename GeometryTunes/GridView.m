@@ -18,6 +18,7 @@
 @synthesize tapGestureRecognizer;
 
 @synthesize pianoOctave;
+@synthesize state;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -47,6 +48,7 @@
     numBoxesY = 10;
     
     pianoOctave = 5;
+    state = NORMAL_STATE;
     
     // Initialize tap gesture recognizer
     tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)]; 
