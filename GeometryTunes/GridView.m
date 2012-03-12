@@ -79,7 +79,7 @@
     }
     else if(state == PIANO_STATE)
     {
-        if(![piano pointInside:pos withEvent:nil])
+        if(!CGRectContainsPoint([piano frame], pos))
         {
             [piano removeFromSuperview];
             piano = NULL;
