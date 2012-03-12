@@ -16,6 +16,7 @@
 @synthesize gridHeight;
 
 @synthesize tapGestureRecognizer;
+@synthesize tapButtonRecognizer;
 
 @synthesize pianoOctave;
 @synthesize state;
@@ -146,7 +147,11 @@
         btn.titleLabel.font = playbarButtonsFont;
         btn.titleLabel.textColor = playbarButtonsTextColor;
         [btn setTitleColor:playbarButtonsTextColor forState:UIControlStateNormal];
-        //[btn addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside];
+        [btn addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside];
+        
+        //tapButtonRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:btn action:@selector(butttonEvent:)];
+        //tapButtonRecognizer.numberOfTapsRequired = 1;
+        //[btn addGestureRecognizer:tapButtonRecognizer];
         [self addSubview:btn];
     }
 }

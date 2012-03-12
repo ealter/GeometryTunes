@@ -29,6 +29,7 @@ typedef enum STATE
 @property int pianoOctave;
 
 @property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
+@property (nonatomic, retain) UITapGestureRecognizer *tapButtonRecognizer;
 
 @property STATE state;
 
