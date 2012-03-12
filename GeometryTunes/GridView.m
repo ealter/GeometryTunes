@@ -117,10 +117,10 @@
     UIRectFill(playbackBar);
 }
 
-//-(void) playEvent
-//{
-//    
-//}
+-(void) buttonEvent
+{
+    NSLog(@"ButtonPressed");
+}
 
 - (void) makePlaybackButtons
 {
@@ -146,7 +146,7 @@
         btn.titleLabel.font = playbarButtonsFont;
         btn.titleLabel.textColor = playbarButtonsTextColor;
         [btn setTitleColor:playbarButtonsTextColor forState:UIControlStateNormal];
-        //[btn addTarget:self action:@selector(buttonEvent) forControlEvents:<#(UIControlEvents)#>
+        //[btn addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside];
         [self addSubview:btn];
     }
 }
