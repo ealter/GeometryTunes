@@ -43,12 +43,12 @@
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     gridWidth = screenRect.size.width;
     gridHeight = screenRect.size.height;
-    NSLog(@"%d, %d", gridWidth, gridHeight);
     numBoxesX = 10;
     numBoxesY = 10;
     
     pianoOctave = 5;
     state = NORMAL_STATE;
+    piano = NULL;
     
     // Initialize tap gesture recognizer
     tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)]; 
@@ -66,7 +66,7 @@
     CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
     if(state == NORMAL_STATE)
     {
-        if(pos.y > [self getBoxHeight])
+        if(pos.y > [self getBoxHeight]) //Don't handle taps to the toolbar
         {
             state = PIANO_STATE;
             CGPoint box = [self getBoxFromCoords:pos];
@@ -79,7 +79,6 @@
     }
     else if(state == PIANO_STATE)
     {
-        NSLog(@"Piano: 	%@", NSStringFromCGPoint(pos));
         [piano removeFromSuperview];
         piano = NULL;
         state = NORMAL_STATE;
@@ -98,16 +97,13 @@
 
 - (void)drawGrid:(CGContextRef)context
 {
-
     CGRect myRect;
     for (int i = 0; i <= numBoxesX; i++) {
         for (int j = 0; j <= numBoxesY; j++) {
             myRect = CGRectMake(i * [self getBoxWidth], j * [self getBoxHeight], [self getBoxWidth], [self getBoxHeight]);
             CGContextAddRect(context, myRect);  
         }
-    }  
-    
-    
+    }
 }
 
 - (void) drawPlaybackMenu:(CGContextRef)context
@@ -135,79 +131,19 @@
     int buttonSpacing = 15;
     int YPosition = 10;
     
+    NSString * buttonNames[] = {@"Play", @"Pause", @"Rew", @"FF", @"Save", @"Load"};
+    int numButtons = sizeof(buttonNames)/sizeof(buttonNames[0]);
     
-    //Play rect
-    CGRect playRect;
-    playRect = CGRectMake(nextXPosition, YPosition, playbarButtonWidth, playbarButtonHeight);
-    nextXPosition += playbarButtonWidth + buttonSpacing;
-    //Play button
-    UIButton *play = [[UIButton alloc]initWithFrame:playRect];
-    [play setBackgroundColor:playbarButtonsBackground];
-    [play setTitle:@"Play" forState:UIControlStateNormal];
-    play.titleLabel.font = playbarButtonsFont;
-    play.titleLabel.textColor = playbarButtonsTextColor;
-    //[play beginTrackingWithTouch:play withEvent:playEvent];
-    [self addSubview:play];
-    
-    //Pause rect
-    CGRect pauseRect;
-    pauseRect = CGRectMake(nextXPosition, YPosition, playbarButtonWidth, playbarButtonHeight);
-    nextXPosition += playbarButtonWidth + buttonSpacing;
-    //Pause button
-    UIButton *pause = [[UIButton alloc]initWithFrame:pauseRect];
-    [pause setBackgroundColor:playbarButtonsBackground];
-    [pause setTitle:@"Pause" forState:UIControlStateNormal];
-    pause.titleLabel.font = playbarButtonsFont;
-    pause.titleLabel.textColor = playbarButtonsTextColor;
-    [self addSubview:pause];
-    
-    //Rew rect
-    CGRect rewRect;
-    rewRect = CGRectMake(nextXPosition, YPosition, playbarButtonWidth, playbarButtonHeight);
-    nextXPosition += playbarButtonWidth + buttonSpacing;
-    //Rew button
-    UIButton *rew = [[UIButton alloc]initWithFrame:rewRect];
-    [rew setBackgroundColor:playbarButtonsBackground];
-    [rew setTitle:@"Rew" forState:UIControlStateNormal];
-    rew.titleLabel.font = playbarButtonsFont;
-    rew.titleLabel.textColor = playbarButtonsTextColor;
-    [self addSubview:rew];
-    
-    //FF rect
-    CGRect ffRect;
-    ffRect = CGRectMake(nextXPosition, YPosition, playbarButtonWidth, playbarButtonHeight);
-    nextXPosition += playbarButtonWidth + buttonSpacing;
-    //Rew button
-    UIButton *ff = [[UIButton alloc]initWithFrame:ffRect];
-    [ff setBackgroundColor:playbarButtonsBackground];
-    [ff setTitle:@"FF" forState:UIControlStateNormal];
-    ff.titleLabel.font = playbarButtonsFont;
-    ff.titleLabel.textColor = playbarButtonsTextColor;
-    [self addSubview:ff];
-    
-    //Save rect
-    CGRect saveRect;
-    saveRect = CGRectMake(nextXPosition, YPosition, playbarButtonWidth, playbarButtonHeight);
-    nextXPosition += playbarButtonWidth + buttonSpacing;
-    //Save button
-    UIButton *save = [[UIButton alloc]initWithFrame:saveRect];
-    [save setBackgroundColor:playbarButtonsBackground];
-    [save setTitle:@"Save" forState:UIControlStateNormal];
-    save.titleLabel.font = playbarButtonsFont;
-    save.titleLabel.textColor = playbarButtonsTextColor;
-    [self addSubview:save];
-    
-    //Load rect
-    CGRect loadRect;
-    loadRect = CGRectMake(nextXPosition, YPosition, playbarButtonWidth, playbarButtonHeight);
-    nextXPosition += playbarButtonWidth + buttonSpacing;
-    //Load button
-    UIButton *load = [[UIButton alloc]initWithFrame:loadRect];
-    [load setBackgroundColor:playbarButtonsBackground];
-    [load setTitle:@"Load" forState:UIControlStateNormal];
-    load.titleLabel.font = playbarButtonsFont;
-    load.titleLabel.textColor = playbarButtonsTextColor;
-    [self addSubview:load];
+    for(int i=0; i<numButtons; i++, nextXPosition += playbarButtonWidth + buttonSpacing)
+    {
+        CGRect rect = CGRectMake(nextXPosition, YPosition, playbarButtonWidth, playbarButtonHeight);
+        UIButton *btn = [[UIButton alloc]initWithFrame:rect];
+        [btn setBackgroundColor:playbarButtonsBackground];
+        [btn setTitle:buttonNames[i] forState:UIControlStateNormal];
+        btn.titleLabel.font = playbarButtonsFont;
+        btn.titleLabel.textColor = playbarButtonsTextColor;
+        [self addSubview:btn];
+    }
 }
 
 - (void)drawRect:(CGRect)rect
@@ -241,6 +177,5 @@
         return CGPointMake(-1, -1);
     return box;
 }
-
 
 @end

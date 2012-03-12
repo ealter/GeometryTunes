@@ -46,10 +46,7 @@
         UIButton *note = [notes objectAtIndex:i];
         int relativePitch = i % 12;
         UIColor *color;
-        switch (relativePitch)
-        {
-                
-        }
+        
     }
 }
 
@@ -83,7 +80,7 @@
     float blackKeyHeight = height*2/3;
     UIButton *note;
     int whiteKeyNum = 0;
-    NSLog(@"whiteWidth: %f, blackOffset: %f", whiteKeyWidth, (whiteKeyWidth*2-blackKeyWidth)/2);
+
     for(int i=0; i<numNotes; i++)
     {
         int relativeNote = i % 12;
