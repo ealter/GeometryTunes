@@ -102,37 +102,96 @@
     UIRectFill(playbackBar);
 }
 
+//-(void) playEvent
+//{
+//    
+//}
+
 - (void) makePlaybackButtons
 {
     UIColor *playbarButtonsBackground = [UIColor whiteColor];
     UIFont  *playbarButtonsFont = [UIFont systemFontOfSize:30];
     UIColor *playbarButtonsTextColor = [UIColor blueColor];
     CGRect screenRect = [[UIScreen mainScreen] bounds];
-    int playBarButtonWidth = screenRect.size.width/10 + 20;
+    int playbarButtonHeight = [self getBoxHeight]-20;
+    int playbarButtonWidth = screenRect.size.width/10 + 20;
     int nextXPosition = 20;
-    int buttonSpacing = 10;
+    int buttonSpacing = 15;
+    int YPosition = 10;
     
+    
+    //Play rect
     CGRect playRect;
-    playRect = CGRectMake(nextXPosition, 10, playBarButtonWidth, [self getBoxHeight]-20);
-    nextXPosition += playBarButtonWidth + buttonSpacing;
-    CGRect pauseRect;
-    pauseRect = CGRectMake(nextXPosition, 10, playBarButtonWidth, [self getBoxHeight]-20);
-    
+    playRect = CGRectMake(nextXPosition, YPosition, playbarButtonWidth, playbarButtonHeight);
+    nextXPosition += playbarButtonWidth + buttonSpacing;
     //Play button
     UIButton *play = [[UIButton alloc]initWithFrame:playRect];
     [play setBackgroundColor:playbarButtonsBackground];
     [play setTitle:@"Play" forState:UIControlStateNormal];
     play.titleLabel.font = playbarButtonsFont;
     play.titleLabel.textColor = playbarButtonsTextColor;
+    //[play beginTrackingWithTouch:play withEvent:playEvent];
     [self addSubview:play];
     
-    //Pause Button
+    //Pause rect
+    CGRect pauseRect;
+    pauseRect = CGRectMake(nextXPosition, YPosition, playbarButtonWidth, playbarButtonHeight);
+    nextXPosition += playbarButtonWidth + buttonSpacing;
+    //Pause button
     UIButton *pause = [[UIButton alloc]initWithFrame:pauseRect];
     [pause setBackgroundColor:playbarButtonsBackground];
     [pause setTitle:@"Pause" forState:UIControlStateNormal];
     pause.titleLabel.font = playbarButtonsFont;
     pause.titleLabel.textColor = playbarButtonsTextColor;
     [self addSubview:pause];
+    
+    //Rew rect
+    CGRect rewRect;
+    rewRect = CGRectMake(nextXPosition, YPosition, playbarButtonWidth, playbarButtonHeight);
+    nextXPosition += playbarButtonWidth + buttonSpacing;
+    //Rew button
+    UIButton *rew = [[UIButton alloc]initWithFrame:rewRect];
+    [rew setBackgroundColor:playbarButtonsBackground];
+    [rew setTitle:@"Rew" forState:UIControlStateNormal];
+    rew.titleLabel.font = playbarButtonsFont;
+    rew.titleLabel.textColor = playbarButtonsTextColor;
+    [self addSubview:rew];
+    
+    //FF rect
+    CGRect ffRect;
+    ffRect = CGRectMake(nextXPosition, YPosition, playbarButtonWidth, playbarButtonHeight);
+    nextXPosition += playbarButtonWidth + buttonSpacing;
+    //Rew button
+    UIButton *ff = [[UIButton alloc]initWithFrame:ffRect];
+    [ff setBackgroundColor:playbarButtonsBackground];
+    [ff setTitle:@"FF" forState:UIControlStateNormal];
+    ff.titleLabel.font = playbarButtonsFont;
+    ff.titleLabel.textColor = playbarButtonsTextColor;
+    [self addSubview:ff];
+    
+    //Save rect
+    CGRect saveRect;
+    saveRect = CGRectMake(nextXPosition, YPosition, playbarButtonWidth, playbarButtonHeight);
+    nextXPosition += playbarButtonWidth + buttonSpacing;
+    //Save button
+    UIButton *save = [[UIButton alloc]initWithFrame:saveRect];
+    [save setBackgroundColor:playbarButtonsBackground];
+    [save setTitle:@"Save" forState:UIControlStateNormal];
+    save.titleLabel.font = playbarButtonsFont;
+    save.titleLabel.textColor = playbarButtonsTextColor;
+    [self addSubview:save];
+    
+    //Load rect
+    CGRect loadRect;
+    loadRect = CGRectMake(nextXPosition, YPosition, playbarButtonWidth, playbarButtonHeight);
+    nextXPosition += playbarButtonWidth + buttonSpacing;
+    //Load button
+    UIButton *load = [[UIButton alloc]initWithFrame:loadRect];
+    [load setBackgroundColor:playbarButtonsBackground];
+    [load setTitle:@"Load" forState:UIControlStateNormal];
+    load.titleLabel.font = playbarButtonsFont;
+    load.titleLabel.textColor = playbarButtonsTextColor;
+    [self addSubview:load];
 }
 
 - (void)drawRect:(CGRect)rect

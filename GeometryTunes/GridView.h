@@ -28,5 +28,6 @@
 - (void)drawPlaybackMenu:(CGContextRef)context;
 - (void) makePlaybackButtons;
 - (CGPoint)getBoxFromCoords:(CGPoint)pos;
+//- (void) playEvent;
 
 @end
