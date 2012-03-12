@@ -10,6 +10,9 @@
 #import "Piano.h"
 
 @interface GridView : UIView
+{
+    Piano *piano;
+}
 
 typedef enum STATE
 {

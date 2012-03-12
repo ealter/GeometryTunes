@@ -64,14 +64,25 @@
 -(void) handleTap:(UITapGestureRecognizer *)sender
 {
     CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
-    if(pos.y > [self getBoxHeight])
+    if(state == NORMAL_STATE)
     {
-        CGPoint box = [self getBoxFromCoords:pos];
-        CGRect pianoRect = CGRectMake(0, gridHeight-200, gridWidth, 200);
-        Piano* piano = [[Piano alloc] initWithFrame:pianoRect];
-        [piano setOctave:pianoOctave];
-        [self addSubview:piano];
-        NSLog(@"%@", NSStringFromCGPoint(box));
+        if(pos.y > [self getBoxHeight])
+        {
+            state = PIANO_STATE;
+            CGPoint box = [self getBoxFromCoords:pos];
+            CGRect pianoRect = CGRectMake(0, gridHeight-200, gridWidth, 200);
+            piano = [[Piano alloc] initWithFrame:pianoRect];
+            [piano setOctave:pianoOctave];
+            [self addSubview:piano];
+            NSLog(@"%@", NSStringFromCGPoint(box));
+        }
+    }
+    else if(state == PIANO_STATE)
+    {
+        NSLog(@"Piano: 	%@", NSStringFromCGPoint(pos));
+        [piano removeFromSuperview];
+        piano = NULL;
+        state = NORMAL_STATE;
     }
 }
 
