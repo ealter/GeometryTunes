@@ -144,6 +144,7 @@
         [btn setBackgroundColor:playbarButtonsBackground];
         [btn setTitle:buttonNames[i] forState:UIControlStateNormal];
         btn.titleLabel.font = playbarButtonsFont;
+        btn.titleLabel.textColor = playbarButtonsTextColor;
         [btn setTitleColor:playbarButtonsTextColor forState:UIControlStateNormal];
         //[btn addTarget:self action:@selector(buttonEvent) forControlEvents:<#(UIControlEvents)#>
         [self addSubview:btn];
