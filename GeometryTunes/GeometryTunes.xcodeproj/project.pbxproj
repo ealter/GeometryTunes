@@ -16,6 +16,7 @@
 		83194323150BD226003EF364 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83194322150BD226003EF364 /* ViewController.m */; };
 		83194326150BD226003EF364 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83194324150BD226003EF364 /* ViewController.xib */; };
 		8319432E150BD32B003EF364 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8319432D150BD32B003EF364 /* GridView.m */; };
+		831FF091150DB113001E9014 /* noteColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 831FF090150DB112001E9014 /* noteColor.m */; };
 		E28150FD150C513500C8A036 /* Piano.m in Sources */ = {isa = PBXBuildFile; fileRef = E28150FC150C513500C8A036 /* Piano.m */; };
 /* End PBXBuildFile section */
 
@@ -35,6 +36,8 @@
 		83194325150BD226003EF364 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
 		8319432C150BD32B003EF364 /* GridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridView.h; sourceTree = "<group>"; };
 		8319432D150BD32B003EF364 /* GridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridView.m; sourceTree = "<group>"; };
+		831FF08F150DB112001E9014 /* noteColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = noteColor.h; sourceTree = "<group>"; };
+		831FF090150DB112001E9014 /* noteColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = noteColor.m; sourceTree = "<group>"; };
 		E28150FB150C513500C8A036 /* Piano.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Piano.h; path = GeometryTunes/Piano.h; sourceTree = "<group>"; };
 		E28150FC150C513500C8A036 /* Piano.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Piano.m; path = GeometryTunes/Piano.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -56,6 +59,8 @@
 		83194300150BD226003EF364 = {
 			isa = PBXGroup;
 			children = (
+				831FF08F150DB112001E9014 /* noteColor.h */,
+				831FF090150DB112001E9014 /* noteColor.m */,
 				8319432C150BD32B003EF364 /* GridView.h */,
 				8319432D150BD32B003EF364 /* GridView.m */,
 				E28150FB150C513500C8A036 /* Piano.h */,
@@ -176,6 +181,7 @@
 				83194323150BD226003EF364 /* ViewController.m in Sources */,
 				8319432E150BD32B003EF364 /* GridView.m in Sources */,
 				E28150FD150C513500C8A036 /* Piano.m in Sources */,
+				831FF091150DB113001E9014 /* noteColor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

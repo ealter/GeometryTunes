@@ -165,8 +165,6 @@
     // Draw Grid of screen size
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(context, 2.0);
-    // Set fill color to blue (Don't need this)
-    // CGContextSetFillColorWithColor(context, [UIColor blueColor].CGColor);
     [self drawGrid:context];
     
     // Draw
