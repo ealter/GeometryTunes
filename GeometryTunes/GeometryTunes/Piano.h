@@ -14,10 +14,18 @@
     int numNotes;
     int numWhiteNotes;
 }
+typedef unsigned pianoNote; //The least-significant byte is the pitch in the scale (C=0, B=11).
+                            //The next least-significant byte is the octave number
+                            //The rest of the integer should be 0's
 
 @property unsigned octave;
 
 - (id)sharedInit;
 - (void)updateColors; //Sets all of the colors of the piano
+
++ (int)octaveOfPianoNote:(pianoNote)p;
++ (int)pitchOfPianoNote: (pianoNote)p;
+
++ (pianoNote)getPianoNoteOfPitch:(int)pitch Octave:(int)octave;
 
 @end

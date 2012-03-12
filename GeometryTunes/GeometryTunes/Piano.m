@@ -117,4 +117,20 @@
     [self addSubview:octaveUp];
 }
 
++ (int)octaveOfPianoNote:(pianoNote)p
+{
+    return p >> 8;
+}
+
++ (int)pitchOfPianoNote: (pianoNote)p
+{
+    return p & ((1 << 8) - 1);
+}
+
++ (pianoNote)getPianoNoteOfPitch:(int)pitch Octave:(int)octave
+{
+    assert(pitch < (1 << 7) && octave < (1 << 7));
+    return pitch | octave << 8;
+}
+
 @end
