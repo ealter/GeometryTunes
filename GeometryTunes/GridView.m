@@ -71,7 +71,11 @@
         {
             state = PIANO_STATE;
             CGPoint box = [self getBoxFromCoords:pos];
-            CGRect pianoRect = CGRectMake(0, gridHeight-200, gridWidth, 200);
+            int pianoHeight = 200;
+            int pianoY = gridHeight - pianoHeight;
+            if((box.y+1) * [self getBoxHeight] > gridHeight - pianoHeight)
+                pianoY = (box.y - 0.5) * [self getBoxHeight] - pianoHeight;
+            CGRect pianoRect = CGRectMake(0, pianoY, gridWidth, pianoHeight);
             piano = [[Piano alloc] initWithFrame:pianoRect];
             [piano setOctave:pianoOctave];
             [self addSubview:piano];
@@ -166,7 +170,6 @@
     
     // Add Playback buttons
     [self makePlaybackButtons];
-    
     
     // Draw Grid of screen size
     CGContextRef context = UIGraphicsGetCurrentContext();
