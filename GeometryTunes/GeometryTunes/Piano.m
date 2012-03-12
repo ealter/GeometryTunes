@@ -119,11 +119,13 @@
 
 + (int)octaveOfPianoNote:(pianoNote)p
 {
+    assert(p < (1 << 16));
     return p >> 8;
 }
 
 + (int)pitchOfPianoNote: (pianoNote)p
 {
+    assert(p < (1 << 16));
     return p & ((1 << 8) - 1);
 }
 
