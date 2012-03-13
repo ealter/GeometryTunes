@@ -69,18 +69,20 @@
     float blackKeyHeight = height*2/3;
     UIButton *note;
     int whiteKeyNum = 0;
+    bool isBlack;
 
     for(int i=0; i<numNotes; i++)
     {
         if([Piano isBlackNote:i])
         {
+            isBlack = true;
             //The note is a black note
             note = [[UIButton alloc]initWithFrame:CGRectMake(x-blackKeyWidth/2, 0, blackKeyWidth, blackKeyHeight)];
             [note setBackgroundColor:[UIColor blackColor]];
-            [self addSubview:note];
         }
         else
         {
+            isBlack = false;
             //This note is a white note
             whiteKeyNum++;
             note = [[UIButton alloc]initWithFrame:CGRectMake(x, 0, whiteKeyWidth, height)];
@@ -89,11 +91,13 @@
                 [note setBackgroundColor:[UIColor whiteColor]];
             else
                 [note setBackgroundColor:[UIColor greenColor]];
-            [self addSubview:note];
-            [self sendSubviewToBack:note];
         }
+        
         note.tag = i;
-        [note addTarget:self action:@selector(KeyClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [note addTarget:self action:@selector(KeyClicked:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
+        [self addSubview:note];
+        if(!isBlack)
+            [self sendSubviewToBack:note];
         [notes addObject:note];
     }
     
@@ -109,7 +113,8 @@
 
 - (void)KeyClicked:(id)sender
 {
-    
+    UIButton *note = sender;
+    NSLog(@"Key: %d", note.tag);
 }
 
 + (int)octaveOfPianoNote:(pianoNote)p
