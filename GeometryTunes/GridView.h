@@ -29,6 +29,7 @@ typedef enum STATE
 @property int pianoOctave;
 
 @property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
+@property (nonatomic, retain) UITapGestureRecognizer *tapButtonRecognizer;
 
 @property STATE state;
 
@@ -40,6 +41,6 @@ typedef enum STATE
 - (void)drawPlaybackMenu:(CGContextRef)context;
 - (void) makePlaybackButtons;
 - (CGPoint)getBoxFromCoords:(CGPoint)pos;
-- (void) buttonEvent;
+- (void) buttonEvent:(id)user;
 
 @end
