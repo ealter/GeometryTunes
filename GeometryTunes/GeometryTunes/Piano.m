@@ -61,6 +61,8 @@
     [octaveDown setTitle:@"-" forState:UIControlStateNormal];
     octaveDown.titleLabel.font = octavesFont;
     octaveDown.titleLabel.textColor = octavesTextColor;
+    octaveDown.tag = -1;
+    [octaveDown addTarget:self action:@selector(OctaveChanged:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
     
     [self addSubview:octaveDown];
     x += buttonWidth;
@@ -107,6 +109,8 @@
     [octaveUp setTitle:@"+" forState:UIControlStateNormal];
     octaveUp.titleLabel.font = octavesFont;
     octaveUp.titleLabel.textColor = octavesTextColor;
+    octaveUp.tag = 1;
+    [octaveUp addTarget:self action:@selector(OctaveChanged:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
     
     [self addSubview:octaveUp];
 }
@@ -115,6 +119,14 @@
 {
     UIButton *note = sender;
     NSLog(@"Key: %d", note.tag);
+}
+
+- (void)OctaveChanged:(id)sender
+{
+    UIButton *octaveBtn = sender;
+    octave += octaveBtn.tag;
+    //TODO: Update the piano colors
+    NSLog(@"New octave: %d", octave);
 }
 
 + (int)octaveOfPianoNote:(pianoNote)p
