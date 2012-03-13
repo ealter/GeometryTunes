@@ -39,17 +39,6 @@
     return self;
 }
 
-- (void)updateColors
-{
-    for(int i=0; i<numNotes; i++)
-    {
-        UIButton *note = [notes objectAtIndex:i];
-        int relativePitch = i % 12;
-        UIColor *color;
-        
-    }
-}
-
 // Only override drawRect: if you perform custom drawing.
 // An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
