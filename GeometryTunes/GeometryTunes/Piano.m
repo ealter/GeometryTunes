@@ -61,6 +61,7 @@
     [octaveDown setTitle:@"-" forState:UIControlStateNormal];
     octaveDown.titleLabel.font = octavesFont;
     octaveDown.titleLabel.textColor = octavesTextColor;
+    [octaveDown setTitleColor:octavesTextColor forState:UIControlStateNormal];
     octaveDown.tag = -1;
     [octaveDown addTarget:self action:@selector(OctaveChanged:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
     
@@ -109,6 +110,7 @@
     [octaveUp setTitle:@"+" forState:UIControlStateNormal];
     octaveUp.titleLabel.font = octavesFont;
     octaveUp.titleLabel.textColor = octavesTextColor;
+    [octaveUp setTitleColor:octavesTextColor forState:UIControlStateNormal];
     octaveUp.tag = 1;
     [octaveUp addTarget:self action:@selector(OctaveChanged:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
     
