@@ -126,9 +126,17 @@
 - (void)OctaveChanged:(id)sender
 {
     UIButton *octaveBtn = sender;
-    octave += octaveBtn.tag;
-    //TODO: Update the piano colors
-    NSLog(@"New octave: %d", octave);
+    int newOctave = octave + octaveBtn.tag;
+    if(newOctave > MAX_OCTAVE)
+        octave = MAX_OCTAVE;
+    else if(newOctave < MIN_OCTAVE)
+        octave = MIN_OCTAVE;
+    else
+    {
+        octave = newOctave;
+        //TODO: Update the piano colors
+        NSLog(@"New octave: %d", octave);
+    }
 }
 
 + (int)octaveOfPianoNote:(pianoNote)p
