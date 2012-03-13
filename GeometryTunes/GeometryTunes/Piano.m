@@ -72,8 +72,7 @@
 
     for(int i=0; i<numNotes; i++)
     {
-        int relativeNote = i % 12;
-        if(relativeNote == 1 || relativeNote == 3 || relativeNote == 6 || relativeNote == 8 | relativeNote == 10)
+        if([Piano isBlackNote:i])
         {
             //The note is a black note
             note = [[UIButton alloc]initWithFrame:CGRectMake(x-blackKeyWidth/2, 0, blackKeyWidth, blackKeyHeight)];
@@ -93,6 +92,8 @@
             [self addSubview:note];
             [self sendSubviewToBack:note];
         }
+        note.tag = i;
+        [note addTarget:self action:@selector(KeyClicked:) forControlEvents:UIControlEventTouchUpInside];
         [notes addObject:note];
     }
     
@@ -104,6 +105,11 @@
     octaveUp.titleLabel.textColor = octavesTextColor;
     
     [self addSubview:octaveUp];
+}
+
+- (void)KeyClicked:(id)sender
+{
+    
 }
 
 + (int)octaveOfPianoNote:(pianoNote)p
@@ -122,6 +128,12 @@
 {
     assert(pitch < (1 << 7) && octave < (1 << 7));
     return pitch | octave << 8;
+}
+
++ (bool)isBlackNote:(int)pitch
+{
+    int n = pitch % 12;
+    return n == 1 || n == 3 || n == 6 || n == 8 | n == 10;
 }
 
 @end

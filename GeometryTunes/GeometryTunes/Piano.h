@@ -22,9 +22,12 @@ typedef unsigned pianoNote; //The least-significant byte is the pitch in the sca
 
 - (id)sharedInit;
 
+- (void)KeyClicked:(id)sender;
+
 + (int)octaveOfPianoNote:(pianoNote)p;
 + (int)pitchOfPianoNote: (pianoNote)p;
-
 + (pianoNote)getPianoNoteOfPitch:(int)pitch Octave:(int)octave;
+
++ (bool)isBlackNote:(int)pitch;
 
 @end
