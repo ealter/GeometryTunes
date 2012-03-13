@@ -41,6 +41,6 @@ typedef enum STATE
 - (void)drawPlaybackMenu:(CGContextRef)context;
 - (void) makePlaybackButtons;
 - (CGPoint)getBoxFromCoords:(CGPoint)pos;
-- (void) buttonEvent;
+- (void) buttonEvent:(id)user;
 
 @end
