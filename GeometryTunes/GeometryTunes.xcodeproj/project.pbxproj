@@ -29,6 +29,7 @@
 		E25113E91519222C00BBE1F2 /* f#.wav in Resources */ = {isa = PBXBuildFile; fileRef = E25113DD1519222C00BBE1F2 /* f#.wav */; };
 		E25113EA1519222C00BBE1F2 /* g.wav in Resources */ = {isa = PBXBuildFile; fileRef = E25113DE1519222C00BBE1F2 /* g.wav */; };
 		E25113EB1519222C00BBE1F2 /* g#.wav in Resources */ = {isa = PBXBuildFile; fileRef = E25113DF1519222C00BBE1F2 /* g#.wav */; };
+		E25113F01519230500BBE1F2 /* NotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E25113EF1519230500BBE1F2 /* NotePlayer.m */; };
 		E28150FD150C513500C8A036 /* Piano.m in Sources */ = {isa = PBXBuildFile; fileRef = E28150FC150C513500C8A036 /* Piano.m */; };
 /* End PBXBuildFile section */
 
@@ -62,6 +63,8 @@
 		E25113DD1519222C00BBE1F2 /* f#.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "f#.wav"; path = "notes/f#.wav"; sourceTree = "<group>"; };
 		E25113DE1519222C00BBE1F2 /* g.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = g.wav; path = notes/g.wav; sourceTree = "<group>"; };
 		E25113DF1519222C00BBE1F2 /* g#.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "g#.wav"; path = "notes/g#.wav"; sourceTree = "<group>"; };
+		E25113EE1519230500BBE1F2 /* NotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotePlayer.h; sourceTree = "<group>"; };
+		E25113EF1519230500BBE1F2 /* NotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePlayer.m; sourceTree = "<group>"; };
 		E28150FB150C513500C8A036 /* Piano.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Piano.h; path = GeometryTunes/Piano.h; sourceTree = "<group>"; };
 		E28150FC150C513500C8A036 /* Piano.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Piano.m; path = GeometryTunes/Piano.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -89,6 +92,8 @@
 				8319432D150BD32B003EF364 /* GridView.m */,
 				E28150FB150C513500C8A036 /* Piano.h */,
 				E28150FC150C513500C8A036 /* Piano.m */,
+				E25113EE1519230500BBE1F2 /* NotePlayer.h */,
+				E25113EF1519230500BBE1F2 /* NotePlayer.m */,
 				E25113ED1519226700BBE1F2 /* notes */,
 				83194315150BD226003EF364 /* GeometryTunes */,
 				8319430E150BD226003EF364 /* Frameworks */,
@@ -238,6 +243,7 @@
 				8319432E150BD32B003EF364 /* GridView.m in Sources */,
 				E28150FD150C513500C8A036 /* Piano.m in Sources */,
 				831FF091150DB113001E9014 /* noteColor.m in Sources */,
+				E25113F01519230500BBE1F2 /* NotePlayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
