@@ -9,5 +9,11 @@
 #import <Foundation/Foundation.h>
 
 @interface NotePlayer : NSObject
+{
+    NSMutableArray *players;
+}
+
+- (id)init;
+- (void)playNoteWithPitch:(unsigned) pitch octave: (unsigned) octave;
 
 @end

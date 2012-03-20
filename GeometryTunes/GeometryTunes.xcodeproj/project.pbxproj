@@ -30,6 +30,7 @@
 		E25113EA1519222C00BBE1F2 /* g.wav in Resources */ = {isa = PBXBuildFile; fileRef = E25113DE1519222C00BBE1F2 /* g.wav */; };
 		E25113EB1519222C00BBE1F2 /* g#.wav in Resources */ = {isa = PBXBuildFile; fileRef = E25113DF1519222C00BBE1F2 /* g#.wav */; };
 		E25113F01519230500BBE1F2 /* NotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E25113EF1519230500BBE1F2 /* NotePlayer.m */; };
+		E25113F215192BE600BBE1F2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E25113F115192BE600BBE1F2 /* AVFoundation.framework */; };
 		E28150FD150C513500C8A036 /* Piano.m in Sources */ = {isa = PBXBuildFile; fileRef = E28150FC150C513500C8A036 /* Piano.m */; };
 /* End PBXBuildFile section */
 
@@ -65,6 +66,7 @@
 		E25113DF1519222C00BBE1F2 /* g#.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "g#.wav"; path = "notes/g#.wav"; sourceTree = "<group>"; };
 		E25113EE1519230500BBE1F2 /* NotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotePlayer.h; sourceTree = "<group>"; };
 		E25113EF1519230500BBE1F2 /* NotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePlayer.m; sourceTree = "<group>"; };
+		E25113F115192BE600BBE1F2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		E28150FB150C513500C8A036 /* Piano.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Piano.h; path = GeometryTunes/Piano.h; sourceTree = "<group>"; };
 		E28150FC150C513500C8A036 /* Piano.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Piano.m; path = GeometryTunes/Piano.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E25113F215192BE600BBE1F2 /* AVFoundation.framework in Frameworks */,
 				83194310150BD226003EF364 /* UIKit.framework in Frameworks */,
 				83194312150BD226003EF364 /* Foundation.framework in Frameworks */,
 				83194314150BD226003EF364 /* CoreGraphics.framework in Frameworks */,
@@ -86,6 +89,7 @@
 		83194300150BD226003EF364 = {
 			isa = PBXGroup;
 			children = (
+				E25113F115192BE600BBE1F2 /* AVFoundation.framework */,
 				831FF08F150DB112001E9014 /* noteColor.h */,
 				831FF090150DB112001E9014 /* noteColor.m */,
 				8319432C150BD32B003EF364 /* GridView.h */,
