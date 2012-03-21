@@ -18,8 +18,9 @@ typedef unsigned pianoNote; //The least-significant byte is the pitch in the sca
                             //The next least-significant byte is the octave number
                             //The rest of the integer should be 0's
 
-#define MIN_OCTAVE 2
-#define MAX_OCTAVE 6
+#define MIN_OCTAVE 5
+#define MAX_OCTAVE 5
+#define NOTES_IN_OCTAVE 12
 
 @property unsigned octave;
 

@@ -33,7 +33,7 @@
 - (id)sharedInit
 {
     octave = 5;
-    numNotes = 12;
+    numNotes = NOTES_IN_OCTAVE;
     numWhiteNotes = 7;
     notes = [NSMutableArray arrayWithCapacity:numNotes];
     return self;
@@ -157,7 +157,7 @@
 
 + (bool)isBlackNote:(int)pitch
 {
-    int n = pitch % 12;
+    int n = pitch % NOTES_IN_OCTAVE;
     return n == 1 || n == 3 || n == 6 || n == 8 | n == 10;
 }
 

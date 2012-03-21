@@ -17,6 +17,20 @@
 		83194326150BD226003EF364 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83194324150BD226003EF364 /* ViewController.xib */; };
 		8319432E150BD32B003EF364 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8319432D150BD32B003EF364 /* GridView.m */; };
 		831FF091150DB113001E9014 /* noteColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 831FF090150DB112001E9014 /* noteColor.m */; };
+		E25113E01519222C00BBE1F2 /* a.wav in Resources */ = {isa = PBXBuildFile; fileRef = E25113D41519222C00BBE1F2 /* a.wav */; };
+		E25113E11519222C00BBE1F2 /* b.wav in Resources */ = {isa = PBXBuildFile; fileRef = E25113D51519222C00BBE1F2 /* b.wav */; };
+		E25113E21519222C00BBE1F2 /* bb.wav in Resources */ = {isa = PBXBuildFile; fileRef = E25113D61519222C00BBE1F2 /* bb.wav */; };
+		E25113E31519222C00BBE1F2 /* c.wav in Resources */ = {isa = PBXBuildFile; fileRef = E25113D71519222C00BBE1F2 /* c.wav */; };
+		E25113E41519222C00BBE1F2 /* c#.wav in Resources */ = {isa = PBXBuildFile; fileRef = E25113D81519222C00BBE1F2 /* c#.wav */; };
+		E25113E51519222C00BBE1F2 /* d.wav in Resources */ = {isa = PBXBuildFile; fileRef = E25113D91519222C00BBE1F2 /* d.wav */; };
+		E25113E61519222C00BBE1F2 /* e.wav in Resources */ = {isa = PBXBuildFile; fileRef = E25113DA1519222C00BBE1F2 /* e.wav */; };
+		E25113E71519222C00BBE1F2 /* eb.wav in Resources */ = {isa = PBXBuildFile; fileRef = E25113DB1519222C00BBE1F2 /* eb.wav */; };
+		E25113E81519222C00BBE1F2 /* f.wav in Resources */ = {isa = PBXBuildFile; fileRef = E25113DC1519222C00BBE1F2 /* f.wav */; };
+		E25113E91519222C00BBE1F2 /* f#.wav in Resources */ = {isa = PBXBuildFile; fileRef = E25113DD1519222C00BBE1F2 /* f#.wav */; };
+		E25113EA1519222C00BBE1F2 /* g.wav in Resources */ = {isa = PBXBuildFile; fileRef = E25113DE1519222C00BBE1F2 /* g.wav */; };
+		E25113EB1519222C00BBE1F2 /* g#.wav in Resources */ = {isa = PBXBuildFile; fileRef = E25113DF1519222C00BBE1F2 /* g#.wav */; };
+		E25113F01519230500BBE1F2 /* NotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E25113EF1519230500BBE1F2 /* NotePlayer.m */; };
+		E25113F215192BE600BBE1F2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E25113F115192BE600BBE1F2 /* AVFoundation.framework */; };
 		E28150FD150C513500C8A036 /* Piano.m in Sources */ = {isa = PBXBuildFile; fileRef = E28150FC150C513500C8A036 /* Piano.m */; };
 /* End PBXBuildFile section */
 
@@ -38,6 +52,21 @@
 		8319432D150BD32B003EF364 /* GridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridView.m; sourceTree = "<group>"; };
 		831FF08F150DB112001E9014 /* noteColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = noteColor.h; sourceTree = "<group>"; };
 		831FF090150DB112001E9014 /* noteColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = noteColor.m; sourceTree = "<group>"; };
+		E25113D41519222C00BBE1F2 /* a.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = a.wav; path = notes/a.wav; sourceTree = "<group>"; };
+		E25113D51519222C00BBE1F2 /* b.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = b.wav; path = notes/b.wav; sourceTree = "<group>"; };
+		E25113D61519222C00BBE1F2 /* bb.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = bb.wav; path = notes/bb.wav; sourceTree = "<group>"; };
+		E25113D71519222C00BBE1F2 /* c.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = c.wav; path = notes/c.wav; sourceTree = "<group>"; };
+		E25113D81519222C00BBE1F2 /* c#.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "c#.wav"; path = "notes/c#.wav"; sourceTree = "<group>"; };
+		E25113D91519222C00BBE1F2 /* d.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = d.wav; path = notes/d.wav; sourceTree = "<group>"; };
+		E25113DA1519222C00BBE1F2 /* e.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = e.wav; path = notes/e.wav; sourceTree = "<group>"; };
+		E25113DB1519222C00BBE1F2 /* eb.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = eb.wav; path = notes/eb.wav; sourceTree = "<group>"; };
+		E25113DC1519222C00BBE1F2 /* f.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = f.wav; path = notes/f.wav; sourceTree = "<group>"; };
+		E25113DD1519222C00BBE1F2 /* f#.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "f#.wav"; path = "notes/f#.wav"; sourceTree = "<group>"; };
+		E25113DE1519222C00BBE1F2 /* g.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = g.wav; path = notes/g.wav; sourceTree = "<group>"; };
+		E25113DF1519222C00BBE1F2 /* g#.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = "g#.wav"; path = "notes/g#.wav"; sourceTree = "<group>"; };
+		E25113EE1519230500BBE1F2 /* NotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotePlayer.h; sourceTree = "<group>"; };
+		E25113EF1519230500BBE1F2 /* NotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePlayer.m; sourceTree = "<group>"; };
+		E25113F115192BE600BBE1F2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		E28150FB150C513500C8A036 /* Piano.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Piano.h; path = GeometryTunes/Piano.h; sourceTree = "<group>"; };
 		E28150FC150C513500C8A036 /* Piano.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Piano.m; path = GeometryTunes/Piano.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -47,6 +76,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E25113F215192BE600BBE1F2 /* AVFoundation.framework in Frameworks */,
 				83194310150BD226003EF364 /* UIKit.framework in Frameworks */,
 				83194312150BD226003EF364 /* Foundation.framework in Frameworks */,
 				83194314150BD226003EF364 /* CoreGraphics.framework in Frameworks */,
@@ -59,12 +89,16 @@
 		83194300150BD226003EF364 = {
 			isa = PBXGroup;
 			children = (
+				E25113F115192BE600BBE1F2 /* AVFoundation.framework */,
 				831FF08F150DB112001E9014 /* noteColor.h */,
 				831FF090150DB112001E9014 /* noteColor.m */,
 				8319432C150BD32B003EF364 /* GridView.h */,
 				8319432D150BD32B003EF364 /* GridView.m */,
 				E28150FB150C513500C8A036 /* Piano.h */,
 				E28150FC150C513500C8A036 /* Piano.m */,
+				E25113EE1519230500BBE1F2 /* NotePlayer.h */,
+				E25113EF1519230500BBE1F2 /* NotePlayer.m */,
+				E25113ED1519226700BBE1F2 /* notes */,
 				83194315150BD226003EF364 /* GeometryTunes */,
 				8319430E150BD226003EF364 /* Frameworks */,
 				8319430C150BD226003EF364 /* Products */,
@@ -111,6 +145,25 @@
 				8319431D150BD226003EF364 /* GeometryTunes-Prefix.pch */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		E25113ED1519226700BBE1F2 /* notes */ = {
+			isa = PBXGroup;
+			children = (
+				E25113D41519222C00BBE1F2 /* a.wav */,
+				E25113D51519222C00BBE1F2 /* b.wav */,
+				E25113D61519222C00BBE1F2 /* bb.wav */,
+				E25113D71519222C00BBE1F2 /* c.wav */,
+				E25113D81519222C00BBE1F2 /* c#.wav */,
+				E25113D91519222C00BBE1F2 /* d.wav */,
+				E25113DA1519222C00BBE1F2 /* e.wav */,
+				E25113DB1519222C00BBE1F2 /* eb.wav */,
+				E25113DC1519222C00BBE1F2 /* f.wav */,
+				E25113DD1519222C00BBE1F2 /* f#.wav */,
+				E25113DE1519222C00BBE1F2 /* g.wav */,
+				E25113DF1519222C00BBE1F2 /* g#.wav */,
+			);
+			name = notes;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -166,6 +219,18 @@
 			files = (
 				8319431A150BD226003EF364 /* InfoPlist.strings in Resources */,
 				83194326150BD226003EF364 /* ViewController.xib in Resources */,
+				E25113E01519222C00BBE1F2 /* a.wav in Resources */,
+				E25113E11519222C00BBE1F2 /* b.wav in Resources */,
+				E25113E21519222C00BBE1F2 /* bb.wav in Resources */,
+				E25113E31519222C00BBE1F2 /* c.wav in Resources */,
+				E25113E41519222C00BBE1F2 /* c#.wav in Resources */,
+				E25113E51519222C00BBE1F2 /* d.wav in Resources */,
+				E25113E61519222C00BBE1F2 /* e.wav in Resources */,
+				E25113E71519222C00BBE1F2 /* eb.wav in Resources */,
+				E25113E81519222C00BBE1F2 /* f.wav in Resources */,
+				E25113E91519222C00BBE1F2 /* f#.wav in Resources */,
+				E25113EA1519222C00BBE1F2 /* g.wav in Resources */,
+				E25113EB1519222C00BBE1F2 /* g#.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -182,6 +247,7 @@
 				8319432E150BD32B003EF364 /* GridView.m in Sources */,
 				E28150FD150C513500C8A036 /* Piano.m in Sources */,
 				831FF091150DB113001E9014 /* noteColor.m in Sources */,
+				E25113F01519230500BBE1F2 /* NotePlayer.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
