@@ -35,14 +35,19 @@ typedef enum STATE
 
 @property STATE state;
 
--(id)sharedInit;
+- (id)sharedInit;
+
 - (void)handleTap:(UITapGestureRecognizer *)sender;
+- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned) x y:(unsigned)y;
+
 - (int)getBoxWidth;
 - (int)getBoxHeight;
+
 - (void)drawGrid:(CGContextRef)context;
 - (void)drawPlaybackMenu:(CGContextRef)context;
 - (void) makePlaybackButtons;
+
 - (CGPoint)getBoxFromCoords:(CGPoint)pos;
-- (void) buttonEvent:(id)user;
+- (void)buttonEvent:(id)user;
 
 @end

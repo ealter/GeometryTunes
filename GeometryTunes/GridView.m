@@ -22,6 +22,11 @@
 @synthesize pianoOctave;
 @synthesize state;
 
+- (GridCell*)cellAtX:(unsigned)x y:(unsigned)y
+{
+    return [[cells objectAtIndex:y] objectAtIndex:x];
+}
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -109,6 +114,16 @@
     }
 }
 
+- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned)x y:(unsigned)y
+{
+    assert(pitch < NOTES_IN_OCTAVE);
+    assert(octave <= MAX_OCTAVE && octave >= MIN_OCTAVE);
+    assert(x < numBoxesX && y < numBoxesY);
+    GridCell *cell = [self cellAtX:x y:y];
+    [cell setNote:[Piano getPianoNoteOfPitch:pitch Octave:octave]];
+    //TODO: change the color
+}
+
 - (int)getBoxWidth
 {
     return gridWidth / numBoxesX;
@@ -121,9 +136,9 @@
 
 - (void)drawGrid:(CGContextRef)context
 {
-    for (int i = 0; i < numBoxesY; i++) {
-        for (int j = 0; j < numBoxesX; j++) {
-            GridCell *cell = [[cells objectAtIndex:i] objectAtIndex:j];
+    for (int y = 0; y < numBoxesY; y++) {
+        for (int x = 0; x < numBoxesX; x++) {
+            GridCell *cell = [self cellAtX:x y:y];
             CGContextAddRect(context, [cell box]);  
         }
     }

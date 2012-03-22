@@ -117,6 +117,8 @@
 {
     UIButton *note = sender;
     NSLog(@"Key: %d", note.tag);
+    int pitch = note.tag % NOTES_IN_OCTAVE;
+    int oct   = note.tag / NOTES_IN_OCTAVE + octave;
 }
 
 - (void)OctaveChanged:(id)sender
