@@ -13,6 +13,7 @@
     NSMutableArray *notes;
     int numNotes;
     int numWhiteNotes;
+    id delegate;
 }
 typedef unsigned pianoNote; //The least-significant byte is the pitch in the scale (C=0, B=11).
                             //The next least-significant byte is the octave number
@@ -28,6 +29,7 @@ typedef unsigned pianoNote; //The least-significant byte is the pitch in the sca
 @property unsigned octave;
 
 - (id)sharedInit;
+- (id)initWithFrame:(CGRect)frame delegate:(id)delagate;
 
 - (void)KeyClicked:(id)sender;
 - (void)OctaveChanged:(id)sender;

@@ -14,11 +14,12 @@
 
 @synthesize octave;
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame delegate:(id)del
 {
     self = [super initWithFrame:frame];
     if (self) {
         self = [self sharedInit];
+        delegate = del;
     }
     return self;
 }
