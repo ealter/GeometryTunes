@@ -10,10 +10,10 @@
 
 @implementation noteColor
 
-const int RED = 0;
-const int GREEN = 1;
-const int BLUE = 2;
-const float ALPHA_MULT = 0.2;
+#define RED   0
+#define GREEN 1
+#define BLUE  2
+#define ALPHA_MULT 0.2
 
 static float RGBPitchMap[11][3] =
 {
