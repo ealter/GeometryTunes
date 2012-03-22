@@ -11,10 +11,11 @@
 @implementation Piano
 
 #import "noteColor.h"
+#import "GridView.h"
 
 @synthesize octave;
 
-- (id)initWithFrame:(CGRect)frame delegate:(id)del
+- (id)initWithFrame:(CGRect)frame delegate:(GridView*)del
 {
     self = [super initWithFrame:frame];
     if (self) {
@@ -119,6 +120,7 @@
     NSLog(@"Key: %d", note.tag);
     int pitch = note.tag % NOTES_IN_OCTAVE;
     int oct   = note.tag / NOTES_IN_OCTAVE + octave;
+    [delegate changeNoteWithPitch:pitch octave:oct];
 }
 
 - (void)OctaveChanged:(id)sender

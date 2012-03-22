@@ -30,6 +30,9 @@ typedef enum STATE
 
 @property int pianoOctave;
 
+@property unsigned currentX; //These are used when editing a square
+@property unsigned currentY;
+
 @property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic, retain) UITapGestureRecognizer *tapButtonRecognizer;
 
@@ -38,6 +41,7 @@ typedef enum STATE
 - (id)sharedInit;
 
 - (void)handleTap:(UITapGestureRecognizer *)sender;
+- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave;
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned) x y:(unsigned)y;
 
 - (int)getBoxWidth;

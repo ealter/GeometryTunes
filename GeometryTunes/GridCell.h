@@ -6,10 +6,10 @@
 //  Copyright (c) 2012 Tufts University. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
+#import <UIKit/UIKit.h>
 #import "Piano.h"
 
-@interface GridCell : NSObject
+@interface GridCell : UIView
 
 @property pianoNote note;
 @property (nonatomic) CGRect box;

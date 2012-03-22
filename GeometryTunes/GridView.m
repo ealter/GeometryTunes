@@ -16,6 +16,9 @@
 @synthesize gridWidth;
 @synthesize gridHeight;
 
+@synthesize currentX;
+@synthesize currentY;
+
 @synthesize tapGestureRecognizer;
 @synthesize tapButtonRecognizer;
 
@@ -92,6 +95,11 @@
         {
             state = PIANO_STATE;
             CGPoint box = [self getBoxFromCoords:pos];
+            assert(box.x >= 0 && box.x < numBoxesX);
+            assert(box.y >= 0 && box.y < numBoxesY);
+            
+            currentX = box.x;
+            currentY = box.y;
             int pianoHeight = 200;
             int pianoY = gridHeight - pianoHeight;
             if((box.y+1) * [self getBoxHeight] > gridHeight - pianoHeight)
@@ -112,6 +120,11 @@
             state = NORMAL_STATE;
         }
     }
+}
+
+- (void)changeNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave
+{
+    [self changeNoteWithPitch:pitch octave:octave x:currentX y:currentY];
 }
 
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned)x y:(unsigned)y
