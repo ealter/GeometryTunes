@@ -15,7 +15,7 @@
 #define BLUE  2
 #define ALPHA_MULT 0.2
 
-static float RGBPitchMap[11][3] =
+static const float RGBPitchMap[11][3] =
 {
     {1.0, 0.0, 0.0},
     {0.75, 0.25, 0.0},
