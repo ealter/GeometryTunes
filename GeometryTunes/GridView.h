@@ -12,6 +12,8 @@
 @interface GridView : UIView
 {
     Piano *piano;
+    NSMutableArray *cells; //2D array: 1st index is row
+                           //          2nd index is col
 }
 
 typedef enum STATE

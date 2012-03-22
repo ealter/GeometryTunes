@@ -7,6 +7,7 @@
 //
 
 #import "GridView.h"
+#import "GridCell.h"
 
 @implementation GridView
 
@@ -51,6 +52,21 @@
     assert(pianoOctave >= MIN_OCTAVE && pianoOctave <= MAX_OCTAVE);
     state = NORMAL_STATE;
     piano = NULL;
+    
+    cells = [[NSMutableArray alloc] initWithCapacity:numBoxesY];
+    NSMutableArray *row;
+    
+    for(int i=0; i<numBoxesY; i++)
+    {
+        row = [[NSMutableArray alloc] initWithCapacity:numBoxesX];
+        for(int j=0; j<numBoxesX; j++)
+        {
+            CGRect cell = CGRectMake(i * [self getBoxWidth], j * [self getBoxHeight], [self getBoxWidth], [self getBoxHeight]);
+            [row addObject:[[GridCell alloc]initWithRect:cell]];
+        }
+        [cells addObject:row];
+        NSLog(@"Num rows: %d, num cols: %d", [cells count], [row count]);
+    }
     
     // Initialize tap gesture recognizer
     tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)]; 
@@ -106,11 +122,10 @@
 
 - (void)drawGrid:(CGContextRef)context
 {
-    CGRect myRect;
-    for (int i = 0; i <= numBoxesX; i++) {
-        for (int j = 0; j <= numBoxesY; j++) {
-            myRect = CGRectMake(i * [self getBoxWidth], j * [self getBoxHeight], [self getBoxWidth], [self getBoxHeight]);
-            CGContextAddRect(context, myRect);  
+    for (int i = 0; i < numBoxesY; i++) {
+        for (int j = 0; j < numBoxesX; j++) {
+            GridCell *cell = [[cells objectAtIndex:i] objectAtIndex:j];
+            CGContextAddRect(context, [cell box]);  
         }
     }
 }

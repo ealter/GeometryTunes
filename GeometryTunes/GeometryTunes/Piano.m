@@ -43,7 +43,6 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    NSLog(@"Drawing the rectangle");
     CGRect screenRect = [self bounds];
     int width = screenRect.size.width;
     int height = screenRect.size.height;
