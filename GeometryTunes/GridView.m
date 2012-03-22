@@ -65,7 +65,6 @@
             [row addObject:[[GridCell alloc]initWithRect:cell]];
         }
         [cells addObject:row];
-        NSLog(@"Num rows: %d, num cols: %d", [cells count], [row count]);
     }
     
     // Initialize tap gesture recognizer
