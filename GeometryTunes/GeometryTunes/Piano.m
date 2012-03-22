@@ -10,6 +10,8 @@
 
 @implementation Piano
 
+#import "noteColor.h"
+
 @synthesize octave;
 
 - (id)initWithFrame:(CGRect)frame
@@ -79,7 +81,6 @@
             isBlack = true;
             //The note is a black note
             note = [[UIButton alloc]initWithFrame:CGRectMake(x-blackKeyWidth/2, 0, blackKeyWidth, blackKeyHeight)];
-            [note setBackgroundColor:[UIColor blackColor]];
         }
         else
         {
@@ -88,12 +89,9 @@
             whiteKeyNum++;
             note = [[UIButton alloc]initWithFrame:CGRectMake(x, 0, whiteKeyWidth, height)];
             x += whiteKeyWidth;
-            if(whiteKeyNum%2 == 0)
-                [note setBackgroundColor:[UIColor whiteColor]];
-            else
-                [note setBackgroundColor:[UIColor greenColor]];
         }
         
+        [note setBackgroundColor:[noteColor colorFromNoteWithPitch:i octave:octave]];
         note.tag = i;
         [note addTarget:self action:@selector(KeyClicked:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
         [self addSubview:note];
