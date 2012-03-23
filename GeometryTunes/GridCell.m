@@ -12,17 +12,39 @@
 @implementation GridCell
 
 @synthesize note;
-@synthesize box;
 
-- (id)initWithRect:(CGRect)r
+- (void)sharedInit
 {
-    self = [super init];
+    note = NO_PIANO_NOTE;
+    [self setBackgroundColor:[UIColor clearColor]];
+}
+
+- (id)initWithFrame:(CGRect)frame
+{
+    self = [super initWithFrame:frame];
     if (self)
     {
-        self.box = r;
-        self.note = NO_PIANO_NOTE;
+        [self sharedInit];
     }
     return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self sharedInit];
+    }
+    return self;
+}
+
+- (void)drawRect:(CGRect)rect
+{
+    /* Set UIView Border */
+    CGContextRef contextRef = UIGraphicsGetCurrentContext();
+    CGContextSetLineWidth(contextRef, 2.0);
+    CGContextSetRGBStrokeColor(contextRef, 0.0, 0.0, 0.0, 1.0);
+    CGContextStrokeRect(contextRef, rect);
 }
 
 @end

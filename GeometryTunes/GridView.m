@@ -27,7 +27,7 @@
 
 - (GridCell*)cellAtX:(unsigned)x y:(unsigned)y
 {
-    return [[cells objectAtIndex:y] objectAtIndex:x];
+    return [[cells objectAtIndex:x] objectAtIndex:y];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -70,7 +70,7 @@
         for(int j=0; j<numBoxesX; j++)
         {
             CGRect cell = CGRectMake(i * [self getBoxWidth], j * [self getBoxHeight], [self getBoxWidth], [self getBoxHeight]);
-            [row addObject:[[GridCell alloc]initWithRect:cell]];
+            [row addObject:[[GridCell alloc]initWithFrame:cell]];
         }
         [cells addObject:row];
     }
@@ -149,10 +149,11 @@
 
 - (void)drawGrid:(CGContextRef)context
 {
-    for (int y = 0; y < numBoxesY; y++) {
+    for (int y = 1; y < numBoxesY; y++) {
         for (int x = 0; x < numBoxesX; x++) {
             GridCell *cell = [self cellAtX:x y:y];
-            CGContextAddRect(context, [cell box]);  
+            [self addSubview:cell];
+            //CGContextAddRect(context, [cell box]);  
         }
     }
 }
@@ -209,17 +210,9 @@
     CGContextSetFillColorWithColor(playbackContext, [UIColor blackColor].CGColor);
     [self drawPlaybackMenu:playbackContext];
     
-    // Add Playback buttons
     [self makePlaybackButtons];
     
-    // Draw Grid of screen size
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetLineWidth(context, 2.0);
-    [self drawGrid:context];
-    
-    // Draw
-    CGContextStrokePath(context);
-
+    [self drawGrid:UIGraphicsGetCurrentContext()];
 }
 
 - (CGPoint) getBoxFromCoords:(CGPoint)pos 
