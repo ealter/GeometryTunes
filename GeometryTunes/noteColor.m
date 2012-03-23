@@ -10,12 +10,12 @@
 
 @implementation noteColor
 
-const int RED = 0;
-const int GREEN = 1;
-const int BLUE = 2;
-const int ALPHA_MULT = 0.2;
+#define RED   0
+#define GREEN 1
+#define BLUE  2
+#define ALPHA_MULT 0.2
 
-float RGBPitchMap[11][3] =
+static const float RGBPitchMap[11][3] =
 {
     {1.0, 0.0, 0.0},
     {0.75, 0.25, 0.0},
@@ -30,28 +30,9 @@ float RGBPitchMap[11][3] =
     {0.5, 0.0, 0.5}
 };
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
-}
-
-+ (UIColor*)colorFromNoteWithPitch:(int)pitch AndOctave:(int)octave {
-    
++ (UIColor*)colorFromNoteWithPitch:(int)pitch octave:(int)octave {
     return [UIColor colorWithRed:RGBPitchMap[pitch][RED] green:RGBPitchMap[pitch][GREEN] blue:RGBPitchMap[pitch][BLUE] alpha:ALPHA_MULT * octave];
     
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end

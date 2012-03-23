@@ -7,6 +7,7 @@
 //
 
 #import "GridView.h"
+#import "GridCell.h"
 
 @implementation GridView
 
@@ -15,10 +16,19 @@
 @synthesize gridWidth;
 @synthesize gridHeight;
 
+@synthesize currentX;
+@synthesize currentY;
+
 @synthesize tapGestureRecognizer;
+@synthesize tapButtonRecognizer;
 
 @synthesize pianoOctave;
 @synthesize state;
+
+- (GridCell*)cellAtX:(unsigned)x y:(unsigned)y
+{
+    return [[cells objectAtIndex:y] objectAtIndex:x];
+}
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -47,8 +57,23 @@
     numBoxesY = 10;
     
     pianoOctave = 5;
+    assert(pianoOctave >= MIN_OCTAVE && pianoOctave <= MAX_OCTAVE);
     state = NORMAL_STATE;
     piano = NULL;
+    
+    cells = [[NSMutableArray alloc] initWithCapacity:numBoxesY];
+    NSMutableArray *row;
+    
+    for(int i=0; i<numBoxesY; i++)
+    {
+        row = [[NSMutableArray alloc] initWithCapacity:numBoxesX];
+        for(int j=0; j<numBoxesX; j++)
+        {
+            CGRect cell = CGRectMake(i * [self getBoxWidth], j * [self getBoxHeight], [self getBoxWidth], [self getBoxHeight]);
+            [row addObject:[[GridCell alloc]initWithRect:cell]];
+        }
+        [cells addObject:row];
+    }
     
     // Initialize tap gesture recognizer
     tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)]; 
@@ -70,12 +95,17 @@
         {
             state = PIANO_STATE;
             CGPoint box = [self getBoxFromCoords:pos];
+            assert(box.x >= 0 && box.x < numBoxesX);
+            assert(box.y >= 0 && box.y < numBoxesY);
+            
+            currentX = box.x;
+            currentY = box.y;
             int pianoHeight = 200;
             int pianoY = gridHeight - pianoHeight;
             if((box.y+1) * [self getBoxHeight] > gridHeight - pianoHeight)
                 pianoY = (box.y - 0.5) * [self getBoxHeight] - pianoHeight;
             CGRect pianoRect = CGRectMake(0, pianoY, gridWidth, pianoHeight);
-            piano = [[Piano alloc] initWithFrame:pianoRect];
+            piano = [[Piano alloc] initWithFrame:pianoRect delegate:self];
             [piano setOctave:pianoOctave];
             [self addSubview:piano];
             NSLog(@"%@", NSStringFromCGPoint(box));
@@ -92,6 +122,21 @@
     }
 }
 
+- (void)changeNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave
+{
+    [self changeNoteWithPitch:pitch octave:octave x:currentX y:currentY];
+}
+
+- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned)x y:(unsigned)y
+{
+    assert(pitch < NOTES_IN_OCTAVE);
+    assert(octave <= MAX_OCTAVE && octave >= MIN_OCTAVE);
+    assert(x < numBoxesX && y < numBoxesY);
+    GridCell *cell = [self cellAtX:x y:y];
+    [cell setNote:[Piano getPianoNoteOfPitch:pitch Octave:octave]];
+    //TODO: change the color
+}
+
 - (int)getBoxWidth
 {
     return gridWidth / numBoxesX;
@@ -104,11 +149,10 @@
 
 - (void)drawGrid:(CGContextRef)context
 {
-    CGRect myRect;
-    for (int i = 0; i <= numBoxesX; i++) {
-        for (int j = 0; j <= numBoxesY; j++) {
-            myRect = CGRectMake(i * [self getBoxWidth], j * [self getBoxHeight], [self getBoxWidth], [self getBoxHeight]);
-            CGContextAddRect(context, myRect);  
+    for (int y = 0; y < numBoxesY; y++) {
+        for (int x = 0; x < numBoxesX; x++) {
+            GridCell *cell = [self cellAtX:x y:y];
+            CGContextAddRect(context, [cell box]);  
         }
     }
 }
@@ -121,37 +165,39 @@
     UIRectFill(playbackBar);
 }
 
--(void) buttonEvent
+-(void) buttonEvent:(id)user;
 {
     NSLog(@"ButtonPressed");
 }
 
 - (void) makePlaybackButtons
 {
-    UIColor *playbarButtonsBackground = [UIColor whiteColor];
+    UIColor *playbarButtonsBackground = [UIColor blueColor];
     UIFont  *playbarButtonsFont = [UIFont systemFontOfSize:30];
-    UIColor *playbarButtonsTextColor = [UIColor blueColor];
+    UIColor *playbarButtonsTextColor = [UIColor whiteColor];
     CGRect screenRect = [[UIScreen mainScreen] bounds];
-    int playbarButtonHeight = [self getBoxHeight]-20;
+    int playbarButtonHeight = [self getBoxHeight]-30;
     int playbarButtonWidth = screenRect.size.width/10 + 20;
     int nextXPosition = 20;
     int buttonSpacing = 15;
-    int YPosition = 10;
+    int YPosition = 15;
     
     NSString * buttonNames[] = {@"Play", @"Pause", @"Rew", @"FF", @"Save", @"Load"};
     int numButtons = sizeof(buttonNames)/sizeof(buttonNames[0]);
+    UIButton *btn[numButtons];
     
     for(int i=0; i<numButtons; i++, nextXPosition += playbarButtonWidth + buttonSpacing)
     {
+        if([buttonNames[i] isEqualToString:@"Save"]) nextXPosition += 80;
         CGRect rect = CGRectMake(nextXPosition, YPosition, playbarButtonWidth, playbarButtonHeight);
-        UIButton *btn = [[UIButton alloc]initWithFrame:rect];
-        [btn setBackgroundColor:playbarButtonsBackground];
-        [btn setTitle:buttonNames[i] forState:UIControlStateNormal];
-        btn.titleLabel.font = playbarButtonsFont;
-        btn.titleLabel.textColor = playbarButtonsTextColor;
-        [btn setTitleColor:playbarButtonsTextColor forState:UIControlStateNormal];
-        //[btn addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:btn];
+        btn[i] = [[UIButton alloc]initWithFrame:rect];
+        [btn[i] addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
+        [btn[i] setBackgroundColor:playbarButtonsBackground];
+        [btn[i] setTitle:buttonNames[i] forState:UIControlStateNormal];
+        btn[i].titleLabel.font = playbarButtonsFont;
+        btn[i].titleLabel.textColor = playbarButtonsTextColor;
+        [btn[i] setTitleColor:playbarButtonsTextColor forState:UIControlStateNormal];
+        [self addSubview:btn[i]];
     }
 }
 

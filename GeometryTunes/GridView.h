@@ -12,6 +12,8 @@
 @interface GridView : UIView
 {
     Piano *piano;
+    NSMutableArray *cells; //2D array: 1st index is row
+                           //          2nd index is col
 }
 
 typedef enum STATE
@@ -28,18 +30,28 @@ typedef enum STATE
 
 @property int pianoOctave;
 
+@property unsigned currentX; //These are used when editing a square
+@property unsigned currentY;
+
 @property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
+@property (nonatomic, retain) UITapGestureRecognizer *tapButtonRecognizer;
 
 @property STATE state;
 
--(id)sharedInit;
+- (id)sharedInit;
+
 - (void)handleTap:(UITapGestureRecognizer *)sender;
+- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave;
+- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned) x y:(unsigned)y;
+
 - (int)getBoxWidth;
 - (int)getBoxHeight;
+
 - (void)drawGrid:(CGContextRef)context;
 - (void)drawPlaybackMenu:(CGContextRef)context;
 - (void) makePlaybackButtons;
+
 - (CGPoint)getBoxFromCoords:(CGPoint)pos;
-- (void) buttonEvent;
+- (void)buttonEvent:(id)user;
 
 @end

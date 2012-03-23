@@ -10,13 +10,17 @@
 
 @implementation Piano
 
+#import "noteColor.h"
+#import "GridView.h"
+
 @synthesize octave;
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithFrame:(CGRect)frame delegate:(GridView*)del
 {
     self = [super initWithFrame:frame];
     if (self) {
         self = [self sharedInit];
+        delegate = del;
     }
     return self;
 }
@@ -33,28 +37,14 @@
 - (id)sharedInit
 {
     octave = 5;
-    numNotes = 12;
+    numNotes = NOTES_IN_OCTAVE;
     numWhiteNotes = 7;
     notes = [NSMutableArray arrayWithCapacity:numNotes];
     return self;
 }
 
-- (void)updateColors
-{
-    for(int i=0; i<numNotes; i++)
-    {
-        UIButton *note = [notes objectAtIndex:i];
-        int relativePitch = i % 12;
-        UIColor *color;
-        
-    }
-}
-
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
 - (void)drawRect:(CGRect)rect
 {
-    NSLog(@"Drawing the rectangle");
     CGRect screenRect = [self bounds];
     int width = screenRect.size.width;
     int height = screenRect.size.height;
@@ -72,6 +62,9 @@
     [octaveDown setTitle:@"-" forState:UIControlStateNormal];
     octaveDown.titleLabel.font = octavesFont;
     octaveDown.titleLabel.textColor = octavesTextColor;
+    [octaveDown setTitleColor:octavesTextColor forState:UIControlStateNormal];
+    octaveDown.tag = -1;
+    [octaveDown addTarget:self action:@selector(OctaveChanged:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
     
     [self addSubview:octaveDown];
     x += buttonWidth;
@@ -80,30 +73,31 @@
     float blackKeyHeight = height*2/3;
     UIButton *note;
     int whiteKeyNum = 0;
+    bool isBlack;
 
     for(int i=0; i<numNotes; i++)
     {
-        int relativeNote = i % 12;
-        if(relativeNote == 1 || relativeNote == 3 || relativeNote == 6 || relativeNote == 8 | relativeNote == 10)
+        if([Piano isBlackNote:i])
         {
+            isBlack = true;
             //The note is a black note
             note = [[UIButton alloc]initWithFrame:CGRectMake(x-blackKeyWidth/2, 0, blackKeyWidth, blackKeyHeight)];
-            [note setBackgroundColor:[UIColor blackColor]];
-            [self addSubview:note];
         }
         else
         {
+            isBlack = false;
             //This note is a white note
             whiteKeyNum++;
             note = [[UIButton alloc]initWithFrame:CGRectMake(x, 0, whiteKeyWidth, height)];
             x += whiteKeyWidth;
-            if(whiteKeyNum%2 == 0)
-                [note setBackgroundColor:[UIColor whiteColor]];
-            else
-                [note setBackgroundColor:[UIColor greenColor]];
-            [self addSubview:note];
-            [self sendSubviewToBack:note];
         }
+        
+        [note setBackgroundColor:[noteColor colorFromNoteWithPitch:i octave:octave]];
+        note.tag = i;
+        [note addTarget:self action:@selector(KeyClicked:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
+        [self addSubview:note];
+        if(!isBlack)
+            [self sendSubviewToBack:note];
         [notes addObject:note];
     }
     
@@ -113,8 +107,36 @@
     [octaveUp setTitle:@"+" forState:UIControlStateNormal];
     octaveUp.titleLabel.font = octavesFont;
     octaveUp.titleLabel.textColor = octavesTextColor;
+    [octaveUp setTitleColor:octavesTextColor forState:UIControlStateNormal];
+    octaveUp.tag = 1;
+    [octaveUp addTarget:self action:@selector(OctaveChanged:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
     
     [self addSubview:octaveUp];
+}
+
+- (void)KeyClicked:(id)sender
+{
+    UIButton *note = sender;
+    NSLog(@"Key: %d", note.tag);
+    int pitch = note.tag % NOTES_IN_OCTAVE;
+    int oct   = note.tag / NOTES_IN_OCTAVE + octave;
+    [delegate changeNoteWithPitch:pitch octave:oct];
+}
+
+- (void)OctaveChanged:(id)sender
+{
+    UIButton *octaveBtn = sender;
+    int newOctave = octave + octaveBtn.tag;
+    if(newOctave > MAX_OCTAVE)
+        octave = MAX_OCTAVE;
+    else if(newOctave < MIN_OCTAVE)
+        octave = MIN_OCTAVE;
+    else
+    {
+        octave = newOctave;
+        //TODO: Update the piano colors
+        NSLog(@"New octave: %d", octave);
+    }
 }
 
 + (int)octaveOfPianoNote:(pianoNote)p
@@ -133,6 +155,12 @@
 {
     assert(pitch < (1 << 7) && octave < (1 << 7));
     return pitch | octave << 8;
+}
+
++ (bool)isBlackNote:(int)pitch
+{
+    int n = pitch % NOTES_IN_OCTAVE;
+    return n == 1 || n == 3 || n == 6 || n == 8 | n == 10;
 }
 
 @end
