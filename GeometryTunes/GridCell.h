@@ -10,7 +10,10 @@
 #import "Piano.h"
 
 @interface GridCell : UIView
+{
+    pianoNote note;
+}
 
-@property pianoNote note;
+- (void)setNote:(pianoNote)note;
 
 @end

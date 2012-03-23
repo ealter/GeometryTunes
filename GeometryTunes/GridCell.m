@@ -11,8 +11,6 @@
 
 @implementation GridCell
 
-@synthesize note;
-
 - (void)sharedInit
 {
     note = NO_PIANO_NOTE;
@@ -45,6 +43,13 @@
     CGContextSetLineWidth(contextRef, 2.0);
     CGContextSetRGBStrokeColor(contextRef, 0.0, 0.0, 0.0, 1.0);
     CGContextStrokeRect(contextRef, rect);
+}
+
+- (void)setNote:(pianoNote)n
+{
+    note = n;
+    if(n != NO_PIANO_NOTE)
+        [self setBackgroundColor:[noteColor colorFromNoteWithPitch:[Piano pitchOfPianoNote:note] octave:[Piano octaveOfPianoNote:note]]];
 }
 
 @end
