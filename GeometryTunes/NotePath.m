@@ -10,4 +10,20 @@
 
 @implementation NotePath
 
+- (id)init 
+{
+    self = [super init];
+    if (self) {
+        notes = [[NSMutableArray alloc] init];
+        numNotes = 0;   
+    }
+    return self;
+}
+
+- (void)addNoteWithArray:(NSMutableArray*)array pos:(CGPoint)pos 
+{
+    [array addObject:[NSValue valueWithCGPoint:pos]];
+    numNotes++;
+}
+
 @end

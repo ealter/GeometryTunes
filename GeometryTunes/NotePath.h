@@ -14,4 +14,7 @@
     int numNotes;
 }
 
+- (id)init;
+- (void)addNoteWithArray:(NSMutableArray*)array pos:(CGPoint)pos;
+
 @end
