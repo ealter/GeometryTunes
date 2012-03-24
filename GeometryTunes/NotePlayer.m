@@ -27,7 +27,7 @@ static int getPlayerIndex(unsigned pitch, unsigned octave)
         const int numNotes = (MAX_OCTAVE - MIN_OCTAVE) * NOTES_IN_OCTAVE;
         assert(numNotes >= 0);
         players = [[NSMutableArray alloc]initWithCapacity:numNotes];
-        char* pitchNames[] = {"c", "c#", "d", "eb", "e", "f", "f#", "g", "g#", "a", "bb", "b"};
+        char* pitchNames[] = {"C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"};
         assert(sizeof(pitchNames)/sizeof(pitchNames[0]) == NOTES_IN_OCTAVE);
         for(int i=MIN_OCTAVE; i<=MAX_OCTAVE; i++)
         {

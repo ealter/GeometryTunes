@@ -36,7 +36,7 @@
 
 - (id)sharedInit
 {
-    octave = 5;
+    octave = 3;
     numNotes = NOTES_IN_OCTAVE;
     numWhiteNotes = 7;
     notes = [NSMutableArray arrayWithCapacity:numNotes];
