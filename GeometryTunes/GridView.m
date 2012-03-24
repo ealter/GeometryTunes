@@ -135,7 +135,6 @@
     assert(x < numBoxesX && y < numBoxesY);
     GridCell *cell = [self cellAtX:x y:y];
     [cell setNote:[Piano getPianoNoteOfPitch:pitch Octave:octave]];
-    //TODO: change the color
 }
 
 - (int)getBoxWidth
