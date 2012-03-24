@@ -10,6 +10,7 @@
 
 @implementation Piano
 
+#include "noteTypes.h"
 #import "noteColor.h"
 #import "GridView.h"
 

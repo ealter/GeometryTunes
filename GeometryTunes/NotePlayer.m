@@ -10,9 +10,6 @@
 
 @implementation NotePlayer
 
-#import "Piano.h"
-#import "AVFoundation/AVFoundation.h"
-
 static int getPlayerIndex(unsigned pitch, unsigned octave)
 {
     assert(pitch <= NOTES_IN_OCTAVE);
@@ -20,28 +17,32 @@ static int getPlayerIndex(unsigned pitch, unsigned octave)
     return (octave - MIN_OCTAVE) * NOTES_IN_OCTAVE + pitch;
 }
 
+- (void)loadSoundWithPitch:(unsigned)pitch octave:(unsigned)octave
+{
+    char* pitchNames[] = {"C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"};
+    assert(sizeof(pitchNames)/sizeof(pitchNames[0]) == NOTES_IN_OCTAVE);
+    
+    NSString *fname = [[NSString alloc]initWithFormat:@"%s%d", pitchNames[pitch], octave];
+    NSString* soundFilePath = [[NSBundle mainBundle] pathForResource:fname ofType:@"mp3"];
+    assert(soundFilePath);
+    NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:soundFilePath];
+    AVAudioPlayer* p = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:nil];
+    
+    [p prepareToPlay];
+    players[getPlayerIndex(pitch, octave)] = p;
+}
+
 - (id)init
 {
     self = [super init];
     if (self) {
-        const int numNotes = (MAX_OCTAVE - MIN_OCTAVE) * NOTES_IN_OCTAVE;
-        assert(numNotes >= 0);
-        players = [[NSMutableArray alloc]initWithCapacity:numNotes];
-        char* pitchNames[] = {"C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"};
-        assert(sizeof(pitchNames)/sizeof(pitchNames[0]) == NOTES_IN_OCTAVE);
+        
+        
         for(int i=MIN_OCTAVE; i<=MAX_OCTAVE; i++)
         {
             for(int j=0; j<NOTES_IN_OCTAVE; j++)
             {
-                NSString *fname = [[NSString alloc]initWithFormat:@"%s%d", pitchNames[j], i];
-                NSLog(@"pitch: %d, octave: %d, %@", j, i, fname);
-                NSString* soundFilePath = [[NSBundle mainBundle] pathForResource:fname ofType:@"mp3"];
-                assert(soundFilePath);
-                NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:soundFilePath];
-                AVAudioPlayer* p = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:nil];
-                
-                [p prepareToPlay];
-                [players addObject:p];
+                [self loadSoundWithPitch:j octave:i];
             }
         }
     }
@@ -52,7 +53,7 @@ static int getPlayerIndex(unsigned pitch, unsigned octave)
 {
     assert(octave >= MIN_OCTAVE && octave <= MAX_OCTAVE);
     assert(pitch < NOTES_IN_OCTAVE);
-    AVAudioPlayer *note = [players objectAtIndex:getPlayerIndex(pitch, octave)];
+    AVAudioPlayer *note = players[getPlayerIndex(pitch, octave)];
     assert(note);
     if([note isPlaying])
         note.currentTime = 0;
@@ -61,8 +62,9 @@ static int getPlayerIndex(unsigned pitch, unsigned octave)
 
 - (void)stopAllNotes
 {
-    for(AVAudioPlayer *p in players)
+    for(int i=0; i<(MAX_OCTAVE - MIN_OCTAVE) * NOTES_IN_OCTAVE; i++)
     {
+        AVAudioPlayer *p = players[i];
         if([p isPlaying])
         {
             [p pause];

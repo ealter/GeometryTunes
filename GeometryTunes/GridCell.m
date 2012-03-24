@@ -8,6 +8,7 @@
 
 #import "GridCell.h"
 #import "noteColor.h"
+#import "Piano.h"
 
 @implementation GridCell
 

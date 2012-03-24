@@ -7,10 +7,12 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AVFoundation/AVFoundation.h"
+#include "noteTypes.h"
 
 @interface NotePlayer : NSObject
 {
-    NSMutableArray *players;
+    AVAudioPlayer *players[(MAX_OCTAVE - MIN_OCTAVE) * NOTES_IN_OCTAVE];
 }
 
 - (id)init;

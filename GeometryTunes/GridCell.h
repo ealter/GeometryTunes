@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "Piano.h"
+#import "noteTypes.h"
 
 @interface GridCell : UIView
 {
