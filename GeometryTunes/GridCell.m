@@ -50,7 +50,7 @@
 {
     note = n;
     if(n != NO_PIANO_NOTE)
-        [self setBackgroundColor:[noteColor colorFromNoteWithPitch:[Piano pitchOfPianoNote:note] octave:[Piano octaveOfPianoNote:note]]];
+        [self setBackgroundColor:[noteColor colorFromNoteWithPitch:[noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note]]];
 }
 
 @end

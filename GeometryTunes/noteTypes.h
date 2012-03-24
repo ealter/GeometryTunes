@@ -2,12 +2,13 @@
 //  noteTypes.h
 //  GeometryTunes
 //
-//  Created by Lion User on 3/23/12.
+//  Created by Lion User on 3/24/12.
 //  Copyright (c) 2012 Tufts University. All rights reserved.
 //
 
-#ifndef GeometryTunes_noteTypes_h
-#define GeometryTunes_noteTypes_h
+#import <Foundation/Foundation.h>
+
+@interface noteTypes : NSObject
 
 #define MIN_OCTAVE 1
 #define MAX_OCTAVE 7
@@ -20,4 +21,8 @@ typedef unsigned pianoNote; //The least-significant byte is the pitch in the sca
                             //The rest of the integer should be 0's
                             //A value of all 1's (i.e. -1) signifies a non-existant note
 
-#endif
++ (int)octaveOfPianoNote:(pianoNote)p;
++ (int)pitchOfPianoNote: (pianoNote)p;
++ (pianoNote)getPianoNoteOfPitch:(int)pitch Octave:(int)octave;
+
+@end

@@ -7,7 +7,7 @@
 //
 
 #import "NotePlayer.h"
-#include "noteTypes.h"
+#import "noteTypes.h"
 
 @implementation NotePlayer
 

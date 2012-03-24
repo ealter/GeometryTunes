@@ -104,6 +104,7 @@
 		CE49860B151E27E4005228F4 /* A6.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CE498603151E27E4005228F4 /* A6.mp3 */; };
 		CE49860C151E27E4005228F4 /* A7.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CE498604151E27E4005228F4 /* A7.mp3 */; };
 		CE49860D151E27E4005228F4 /* Ab1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CE498605151E27E4005228F4 /* Ab1.mp3 */; };
+		CE5C7C70151E7D3900B81396 /* noteTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5C7C6F151E7D3900B81396 /* noteTypes.m */; };
 		E25113F01519230500BBE1F2 /* NotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E25113EF1519230500BBE1F2 /* NotePlayer.m */; };
 		E25113F215192BE600BBE1F2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E25113F115192BE600BBE1F2 /* AVFoundation.framework */; };
 		E28150FD150C513500C8A036 /* Piano.m in Sources */ = {isa = PBXBuildFile; fileRef = E28150FC150C513500C8A036 /* Piano.m */; };
@@ -216,7 +217,8 @@
 		CE498603151E27E4005228F4 /* A6.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = A6.mp3; sourceTree = "<group>"; };
 		CE498604151E27E4005228F4 /* A7.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = A7.mp3; sourceTree = "<group>"; };
 		CE498605151E27E4005228F4 /* Ab1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Ab1.mp3; sourceTree = "<group>"; };
-		CEFF6CC6151D700D00275C9E /* noteTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = noteTypes.h; sourceTree = "<group>"; };
+		CE5C7C6E151E7D3900B81396 /* noteTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = noteTypes.h; sourceTree = "<group>"; };
+		CE5C7C6F151E7D3900B81396 /* noteTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = noteTypes.m; sourceTree = "<group>"; };
 		E25113EE1519230500BBE1F2 /* NotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotePlayer.h; sourceTree = "<group>"; };
 		E25113EF1519230500BBE1F2 /* NotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePlayer.m; sourceTree = "<group>"; };
 		E25113F115192BE600BBE1F2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -244,6 +246,8 @@
 		83194300150BD226003EF364 = {
 			isa = PBXGroup;
 			children = (
+				CE5C7C6E151E7D3900B81396 /* noteTypes.h */,
+				CE5C7C6F151E7D3900B81396 /* noteTypes.m */,
 				E25113F115192BE600BBE1F2 /* AVFoundation.framework */,
 				831FF08F150DB112001E9014 /* noteColor.h */,
 				83534FE2151D7F0E00C7B574 /* pianoSounds */,
@@ -258,7 +262,6 @@
 				E28150FC150C513500C8A036 /* Piano.m */,
 				E25113EE1519230500BBE1F2 /* NotePlayer.h */,
 				E25113EF1519230500BBE1F2 /* NotePlayer.m */,
-				CEFF6CC6151D700D00275C9E /* noteTypes.h */,
 				83194315150BD226003EF364 /* GeometryTunes */,
 				8319430E150BD226003EF364 /* Frameworks */,
 				8319430C150BD226003EF364 /* Products */,
@@ -558,6 +561,7 @@
 				E25113F01519230500BBE1F2 /* NotePlayer.m in Sources */,
 				E2E4AF59151ABE5300E033E4 /* GridCell.m in Sources */,
 				83E3726D151D7069000DCF85 /* NotePath.m in Sources */,
+				CE5C7C70151E7D3900B81396 /* noteTypes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

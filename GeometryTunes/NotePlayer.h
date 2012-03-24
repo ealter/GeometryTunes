@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "AVFoundation/AVFoundation.h"
-#include "noteTypes.h"
+#import "noteTypes.h"
 
 @interface NotePlayer : NSObject
 {
@@ -16,7 +16,7 @@
 }
 
 - (id)init;
-- (void)playNoteWithPitch:(unsigned) pitch octave: (unsigned) octave;
+- (void)playNoteWithPitch:(unsigned)pitch octave:(unsigned)octave;
 - (void)stopAllNotes;
 
 @end

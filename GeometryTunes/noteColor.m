@@ -7,7 +7,7 @@
 //
 
 #import "noteColor.h"
-#include "noteTypes.h"
+#import "noteTypes.h"
 
 @implementation noteColor
 

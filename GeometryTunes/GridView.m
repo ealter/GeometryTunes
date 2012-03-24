@@ -134,7 +134,7 @@
     assert(octave <= MAX_OCTAVE && octave >= MIN_OCTAVE);
     assert(x < numBoxesX && y < numBoxesY);
     GridCell *cell = [self cellAtX:x y:y];
-    [cell setNote:[Piano getPianoNoteOfPitch:pitch Octave:octave]];
+    [cell setNote:[noteTypes getPianoNoteOfPitch:pitch Octave:octave]];
 }
 
 - (int)getBoxWidth
