@@ -17,6 +17,7 @@
 		83194326150BD226003EF364 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83194324150BD226003EF364 /* ViewController.xib */; };
 		8319432E150BD32B003EF364 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8319432D150BD32B003EF364 /* GridView.m */; };
 		831FF091150DB113001E9014 /* noteColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 831FF090150DB112001E9014 /* noteColor.m */; };
+		83E3726D151D7069000DCF85 /* NotePath.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E3726C151D7069000DCF85 /* NotePath.m */; };
 		CE3EF16E151D5C37000E5A90 /* A1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CE3EF118151D5C37000E5A90 /* A1.mp3 */; };
 		CE3EF16F151D5C37000E5A90 /* A2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CE3EF119151D5C37000E5A90 /* A2.mp3 */; };
 		CE3EF170151D5C37000E5A90 /* A3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CE3EF11A151D5C37000E5A90 /* A3.mp3 */; };
@@ -127,6 +128,8 @@
 		8319432D150BD32B003EF364 /* GridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridView.m; sourceTree = "<group>"; };
 		831FF08F150DB112001E9014 /* noteColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = noteColor.h; sourceTree = "<group>"; };
 		831FF090150DB112001E9014 /* noteColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = noteColor.m; sourceTree = "<group>"; };
+		83E3726B151D7069000DCF85 /* NotePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotePath.h; sourceTree = "<group>"; };
+		83E3726C151D7069000DCF85 /* NotePath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePath.m; sourceTree = "<group>"; };
 		CE3EF118151D5C37000E5A90 /* A1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = A1.mp3; sourceTree = "<group>"; };
 		CE3EF119151D5C37000E5A90 /* A2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = A2.mp3; sourceTree = "<group>"; };
 		CE3EF11A151D5C37000E5A90 /* A3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = A3.mp3; sourceTree = "<group>"; };
@@ -250,6 +253,8 @@
 				E2E4AF57151ABE5300E033E4 /* GridCell.h */,
 				E2E4AF58151ABE5300E033E4 /* GridCell.m */,
 				E28150FB150C513500C8A036 /* Piano.h */,
+				83E3726B151D7069000DCF85 /* NotePath.h */,
+				83E3726C151D7069000DCF85 /* NotePath.m */,
 				E28150FC150C513500C8A036 /* Piano.m */,
 				E25113EE1519230500BBE1F2 /* NotePlayer.h */,
 				E25113EF1519230500BBE1F2 /* NotePlayer.m */,
@@ -553,6 +558,7 @@
 				831FF091150DB113001E9014 /* noteColor.m in Sources */,
 				E25113F01519230500BBE1F2 /* NotePlayer.m in Sources */,
 				E2E4AF59151ABE5300E033E4 /* GridCell.m in Sources */,
+				83E3726D151D7069000DCF85 /* NotePath.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
