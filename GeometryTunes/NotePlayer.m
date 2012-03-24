@@ -17,7 +17,7 @@ static int getPlayerIndex(unsigned pitch, unsigned octave)
 {
     assert(pitch <= NOTES_IN_OCTAVE);
     assert(octave >= MIN_OCTAVE && octave <= MAX_OCTAVE);
-    return (octave - MIN_OCTAVE) * NOTES_IN_OCTAVE - pitch;
+    return (octave - MIN_OCTAVE) * NOTES_IN_OCTAVE + pitch;
 }
 
 - (id)init
@@ -33,8 +33,9 @@ static int getPlayerIndex(unsigned pitch, unsigned octave)
         {
             for(int j=0; j<NOTES_IN_OCTAVE; j++)
             {
-                NSString *fname = [fname initWithFormat:@"%s%d", pitchNames[j], i];
-                NSString* soundFilePath = [[NSBundle mainBundle] pathForResource:fname ofType:@"wav"];
+                NSString *fname = [[NSString alloc]initWithFormat:@"%s%d", pitchNames[j], i];
+                NSLog(@"pitch: %d, octave: %d, %@", j, i, fname);
+                NSString* soundFilePath = [[NSBundle mainBundle] pathForResource:fname ofType:@"mp3"];
                 assert(soundFilePath);
                 NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:soundFilePath];
                 AVAudioPlayer* p = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:nil];

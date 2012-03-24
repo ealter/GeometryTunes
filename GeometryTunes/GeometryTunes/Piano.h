@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "NotePlayer.h"
 
 @interface Piano : UIView
 {
@@ -14,7 +15,9 @@
     int numNotes;
     int numWhiteNotes;
     id delegate;
+    NotePlayer *notePlayer;
 }
+
 typedef unsigned pianoNote; //The least-significant byte is the pitch in the scale (C=0, B=11).
                             //The next least-significant byte is the octave number
                             //The rest of the integer should be 0's
@@ -22,6 +25,7 @@ typedef unsigned pianoNote; //The least-significant byte is the pitch in the sca
 
 #define MIN_OCTAVE 1
 #define MAX_OCTAVE 7
+#define INITIAL_PIANO_OCTAVE 4
 #define NOTES_IN_OCTAVE 12
 
 #define NO_PIANO_NOTE (-1)

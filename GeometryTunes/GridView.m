@@ -56,7 +56,7 @@
     numBoxesX = 10;
     numBoxesY = 10;
     
-    pianoOctave = 5;
+    pianoOctave = INITIAL_PIANO_OCTAVE;
     assert(pianoOctave >= MIN_OCTAVE && pianoOctave <= MAX_OCTAVE);
     state = NORMAL_STATE;
     piano = NULL;
