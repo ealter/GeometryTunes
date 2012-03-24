@@ -105,7 +105,8 @@
             if((box.y+1) * [self getBoxHeight] > gridHeight - pianoHeight)
                 pianoY = (box.y - 0.5) * [self getBoxHeight] - pianoHeight;
             CGRect pianoRect = CGRectMake(0, pianoY, gridWidth, pianoHeight);
-            piano = [[Piano alloc] initWithFrame:pianoRect delegate:self];
+            if (!piano)
+                piano = [[Piano alloc] initWithFrame:pianoRect delegate:self];
             [piano setOctave:pianoOctave];
             [self addSubview:piano];
             NSLog(@"%@", NSStringFromCGPoint(box));
