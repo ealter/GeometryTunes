@@ -154,7 +154,6 @@
         for (int x = 0; x < numBoxesX; x++) {
             GridCell *cell = [self cellAtX:x y:y];
             [self addSubview:cell];
-            //CGContextAddRect(context, [cell box]);  
         }
     }
 }

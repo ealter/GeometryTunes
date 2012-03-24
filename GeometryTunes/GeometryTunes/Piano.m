@@ -137,8 +137,12 @@
     else
     {
         octave = newOctave;
-        //TODO: Update the piano colors
-        NSLog(@"New octave: %d", octave);
+        for(int i=0; i<numNotes; i++)
+        {
+            UIButton *note = [notes objectAtIndex:i];
+            [note setBackgroundColor:[noteColor colorFromNoteWithPitch:i octave:octave]];
+        }
+        [delegate setPianoOctave:octave];
     }
 }
 
