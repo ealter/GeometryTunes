@@ -7,13 +7,14 @@
 //
 
 #import "noteColor.h"
+#include "noteTypes.h"
 
 @implementation noteColor
 
 #define RED   0
 #define GREEN 1
 #define BLUE  2
-#define ALPHA_MULT 0.2
+#define ALPHA_MULT (1.0/(MAX_OCTAVE - MIN_OCTAVE + 1))
 
 static const float RGBPitchMap[11][3] =
 {
