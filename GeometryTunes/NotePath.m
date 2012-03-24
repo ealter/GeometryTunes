@@ -26,4 +26,10 @@
     numNotes++;
 }
 
+- (void)removeNoteWithArray:(NSMutableArray*)array index:(NSUInteger)index
+{
+    [array removeObjectAtIndex:index];
+    numNotes--;
+}
+
 @end
