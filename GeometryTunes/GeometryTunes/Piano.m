@@ -42,6 +42,7 @@
     numWhiteNotes = 7;
     notes = [NSMutableArray arrayWithCapacity:numNotes];
     notePlayer = [[NotePlayer alloc]init];
+    [self setBackgroundColor:[UIColor whiteColor]];
     return self;
 }
 
@@ -100,6 +101,8 @@
         [self addSubview:note];
         if(!isBlack)
             [self sendSubviewToBack:note];
+        [note.layer setBorderWidth:1];
+        [note.layer setBorderColor:[[UIColor blackColor] CGColor]];
         [notes addObject:note];
     }
     
