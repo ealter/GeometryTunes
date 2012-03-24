@@ -32,7 +32,7 @@ static const float RGBPitchMap[11][3] =
 };
 
 + (UIColor*)colorFromNoteWithPitch:(int)pitch octave:(int)octave {
-    return [UIColor colorWithRed:RGBPitchMap[pitch][RED] green:RGBPitchMap[pitch][GREEN] blue:RGBPitchMap[pitch][BLUE] alpha:ALPHA_MULT * (octave - MIN_OCTAVE + 1)];
+    return [UIColor colorWithRed:RGBPitchMap[pitch][RED] green:RGBPitchMap[pitch][GREEN] blue:RGBPitchMap[pitch][BLUE] alpha:(1 - ALPHA_MULT * (octave - MIN_OCTAVE))];
 }
 
 @end
