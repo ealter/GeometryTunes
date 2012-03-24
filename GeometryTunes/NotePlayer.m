@@ -7,6 +7,7 @@
 //
 
 #import "NotePlayer.h"
+#include "noteTypes.h"
 
 @implementation NotePlayer
 
@@ -19,6 +20,8 @@ static int getPlayerIndex(unsigned pitch, unsigned octave)
 
 - (void)loadSoundWithPitch:(unsigned)pitch octave:(unsigned)octave
 {
+    assert(pitch < NOTES_IN_OCTAVE);
+    assert(octave >= MIN_OCTAVE && octave <= MAX_OCTAVE);
     char* pitchNames[] = {"C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"};
     assert(sizeof(pitchNames)/sizeof(pitchNames[0]) == NOTES_IN_OCTAVE);
     
@@ -62,7 +65,7 @@ static int getPlayerIndex(unsigned pitch, unsigned octave)
 
 - (void)stopAllNotes
 {
-    for(int i=0; i<(MAX_OCTAVE - MIN_OCTAVE) * NOTES_IN_OCTAVE; i++)
+    for(int i=0; i<(MAX_OCTAVE - MIN_OCTAVE + 1) * NOTES_IN_OCTAVE; i++)
     {
         AVAudioPlayer *p = players[i];
         if([p isPlaying])
