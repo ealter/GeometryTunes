@@ -36,10 +36,11 @@
 
 - (id)sharedInit
 {
-    octave = 5;
+    octave = INITIAL_PIANO_OCTAVE;
     numNotes = NOTES_IN_OCTAVE;
     numWhiteNotes = 7;
     notes = [NSMutableArray arrayWithCapacity:numNotes];
+    notePlayer = [[NotePlayer alloc]init];
     return self;
 }
 
@@ -120,6 +121,7 @@
     NSLog(@"Key: %d", note.tag);
     int pitch = note.tag % NOTES_IN_OCTAVE;
     int oct   = note.tag / NOTES_IN_OCTAVE + octave;
+    [notePlayer playNoteWithPitch:pitch octave:oct];
     [delegate changeNoteWithPitch:pitch octave:oct];
 }
 
