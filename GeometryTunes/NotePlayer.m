@@ -58,4 +58,16 @@ static int getPlayerIndex(unsigned pitch, unsigned octave)
     [note play];
 }
 
+- (void)stopAllNotes
+{
+    for(AVAudioPlayer *p in players)
+    {
+        if([p isPlaying])
+        {
+            [p pause];
+            p.currentTime = 0;
+        }
+    }
+}
+
 @end

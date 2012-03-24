@@ -15,5 +15,6 @@
 
 - (id)init;
 - (void)playNoteWithPitch:(unsigned) pitch octave: (unsigned) octave;
+- (void)stopAllNotes;
 
 @end
