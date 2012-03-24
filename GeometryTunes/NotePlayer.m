@@ -31,7 +31,6 @@ static int getPlayerIndex(unsigned pitch, unsigned octave)
     NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:soundFilePath];
     AVAudioPlayer* p = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:nil];
     
-    [p prepareToPlay];
     players[getPlayerIndex(pitch, octave)] = p;
 }
 
