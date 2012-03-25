@@ -40,7 +40,6 @@ typedef enum STATE
 
 - (id)sharedInit;
 
-- (void)handleTap:(UITapGestureRecognizer *)sender;
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave;
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned) x y:(unsigned)y;
 
@@ -52,13 +51,5 @@ typedef enum STATE
 - (void) makePlaybackButtons;
 
 - (CGPoint)getBoxFromCoords:(CGPoint)pos;
-
--(void) playButtonEvent:(id)sender;
--(void) pauseButtonEvent:(id)sender;
--(void) rewButtonEvent:(id)sender;
--(void) ffButtonEvent:(id)sender;
--(void) saveButtonEvent:(id)sender;
--(void) rrButtonEvent:(id)sender;
--(void) editButtonEvent:(id)sender;
 
 @end
