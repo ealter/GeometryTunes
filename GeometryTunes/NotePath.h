@@ -10,10 +10,11 @@
 
 @interface NotePath : NSObject
 {
-    NSMutableArray *notes;
-    int numNotes;
     UIBezierPath* path;
 }
+
+@property (readonly, retain) NSMutableArray *notes; //The type of each element is NSValue representation of CGPoint
+@property (readonly) int numNotes;
 
 - (id)init;
 - (void)addNoteWithPos:(CGPoint)pos;

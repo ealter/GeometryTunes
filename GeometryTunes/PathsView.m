@@ -10,6 +10,8 @@
 
 @implementation PathsView
 
+@synthesize path;
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];

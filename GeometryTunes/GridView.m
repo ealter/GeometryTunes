@@ -8,6 +8,7 @@
 
 #import "GridView.h"
 #import "GridCell.h"
+#import "noteTypes.h"
 
 @implementation GridView
 
@@ -28,16 +29,27 @@
 static NSString* editPathButtonStr = @"Edit Path";
 static NSString* finishEditingPathButtonStr = @"Finish";
 
+const static NSTimeInterval playbackSpeed = 1.0;
+
 - (GridCell*)cellAtX:(unsigned)x y:(unsigned)y
 {
     return [[cells objectAtIndex:x] objectAtIndex:y];
+}
+
+- (void)changeToNormalState
+{
+    if(state == PIANO_STATE)
+        [piano removeFromSuperview];
+    else if(state == PATH_EDIT_STATE)
+        [toolbarButtons[6] setTitle:editPathButtonStr forState:UIControlStateNormal];
+    state = NORMAL_STATE;
 }
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self = [self sharedInit];
+        [self sharedInitWithFrame:frame];
     }
     return self;
 }
@@ -46,16 +58,16 @@ static NSString* finishEditingPathButtonStr = @"Finish";
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        self = [self sharedInit];
+        [self sharedInitWithFrame:[self bounds]];
     }
     return self;
 }
 
--(id)sharedInit
+-(void)sharedInitWithFrame:(CGRect)frame
 {
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    gridWidth = screenRect.size.width;
-    gridHeight = screenRect.size.height;
+    [self setBackgroundColor:[UIColor whiteColor]];
+    gridWidth = frame.size.width;
+    gridHeight = frame.size.height;
     numBoxesX = 8;
     numBoxesY = 10;
     
@@ -63,6 +75,9 @@ static NSString* finishEditingPathButtonStr = @"Finish";
     assert(pianoOctave >= MIN_OCTAVE && pianoOctave <= MAX_OCTAVE);
     state = NORMAL_STATE;
     piano = NULL;
+    
+    playbackPosition = 0;
+    playbackTimer = nil;
     
     cells = [[NSMutableArray alloc] initWithCapacity:numBoxesY];
     NSMutableArray *row;
@@ -78,7 +93,7 @@ static NSString* finishEditingPathButtonStr = @"Finish";
         [cells addObject:row];
     }
     
-    pathView = [[PathsView alloc]initWithFrame:screenRect];
+    pathView = [[PathsView alloc]initWithFrame:frame];
     
     // Initialize tap gesture recognizer
     tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)]; 
@@ -88,7 +103,6 @@ static NSString* finishEditingPathButtonStr = @"Finish";
     
     // Add gesture recognizer to the view
     [self addGestureRecognizer:tapGestureRecognizer];
-    return self;
 }
 
 -(void) handleTap:(UITapGestureRecognizer *)sender
@@ -123,8 +137,7 @@ static NSString* finishEditingPathButtonStr = @"Finish";
     {
         if(!CGRectContainsPoint([piano frame], pos))
         {
-            [piano removeFromSuperview];
-            state = NORMAL_STATE;
+            [self changeToNormalState];
         }
     }
     else if(state == PATH_EDIT_STATE)
@@ -193,36 +206,52 @@ static NSString* finishEditingPathButtonStr = @"Finish";
 
 -(void) playButtonEvent:(id)sender;
 {
-    NSLog(@"PlayButtonPressed");
+    [self changeToNormalState];
+    [self playPathWithSpeed:playbackSpeed];
 }
+
 -(void) pauseButtonEvent:(id)sender;
 {
-    NSLog(@"PauseButtonPressed");
+    if(state == NORMAL_STATE)
+    {
+        if(playbackTimer)
+            [playbackTimer invalidate];
+    }
+    else
+        [self changeToNormalState];
 }
+
 -(void) rewButtonEvent:(id)sender;
 {
     NSLog(@"RewButtonPressed");
 }
+
 -(void) ffButtonEvent:(id)sender;
 {
-    NSLog(@"FFButtonPressed");
+    if(playbackTimer)
+        [playbackTimer invalidate];
+    if(state == NORMAL_STATE)
+    {
+        [self playPathWithSpeed:playbackSpeed * 0.5];
+    }
+    else
+        [self changeToNormalState];
 }
+
 -(void) saveButtonEvent:(id)sender;
 {
     NSLog(@"SaveButtonPressed");
 }
+
 -(void) loadButtonEvent:(id)sender;
 {
     NSLog(@"LoadButtonPressed");
 }
+
 -(void) editButtonEvent:(id)sender;
 {
-    NSLog(@"EditButtonPressed");
     if(state == PATH_EDIT_STATE)
-    {
-        [toolbarButtons[6] setTitle:editPathButtonStr forState:UIControlStateNormal];
-        state = NORMAL_STATE;
-    }
+        [self changeToNormalState];
     else
     {
         if(state == PIANO_STATE)
@@ -237,7 +266,8 @@ static NSString* finishEditingPathButtonStr = @"Finish";
     UIColor *playbarButtonsBackground = [UIColor blueColor];
     UIFont  *playbarButtonsFont = [UIFont systemFontOfSize:20];
     UIColor *playbarButtonsTextColor = [UIColor whiteColor];
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGRect screenRect = [self bounds];
+    
     int playbarButtonHeight = [self getBoxHeight]-30;
     int playbarButtonWidth = screenRect.size.width/10 + 10;
     int nextXPosition = 20;
@@ -295,6 +325,32 @@ static NSString* finishEditingPathButtonStr = @"Finish";
     if (box.x > numBoxesX || box.y > numBoxesY)
         return CGPointMake(-1, -1);
     return box;
+}
+
+- (void)playNote:(NSTimer*)t
+{
+    NSMutableArray *points = pathView.path.notes;
+    if(playbackPosition == [points count])
+    {
+        playbackPosition = 0;
+        [playbackTimer invalidate];
+        return;
+    }
+    CGPoint box = [self getBoxFromCoords:[[points objectAtIndex:playbackPosition] CGPointValue]];
+    assert(box.x > 0 && box.y > 0);
+    GridCell *cell = [self cellAtX:box.x y:box.y];
+    pianoNote note = [cell getNote];
+    if(note != NO_PIANO_NOTE)
+    {
+        assert(piano && piano.notePlayer);
+        [piano.notePlayer playNoteWithPitch: [noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note]];
+    }
+    playbackPosition++;
+}
+
+- (void)playPathWithSpeed:(NSTimeInterval)speed
+{
+    playbackTimer = [NSTimer scheduledTimerWithTimeInterval:speed target:self selector:@selector(playNote:) userInfo:nil repeats:YES];
 }
 
 @end

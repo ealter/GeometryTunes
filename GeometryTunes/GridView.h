@@ -17,6 +17,8 @@
                            //          2nd index is col
     PathsView *pathView;
     UIButton *toolbarButtons[7];
+    int playbackPosition;
+    NSTimer *playbackTimer;
 }
 
 typedef enum STATE
@@ -41,7 +43,7 @@ typedef enum STATE
 
 @property STATE state;
 
-- (id)sharedInit;
+- (void)sharedInitWithFrame:(CGRect)frame;
 
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave;
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned) x y:(unsigned)y;
@@ -54,5 +56,7 @@ typedef enum STATE
 - (void) makePlaybackButtons;
 
 - (CGPoint)getBoxFromCoords:(CGPoint)pos;
+
+- (void)playPathWithSpeed:(NSTimeInterval)speed;
 
 @end
