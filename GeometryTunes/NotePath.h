@@ -12,10 +12,12 @@
 {
     NSMutableArray *notes;
     int numNotes;
+    UIBezierPath* path;
 }
 
 - (id)init;
 - (void)addNoteWithPos:(CGPoint)pos;
-- (void)removeNoteAtIndex:(NSUInteger)index;
+- (void)removeNoteAtIndex:(unsigned)index;
+- (void)updateAndDisplayPath:(CGContextRef)context;
 
 @end

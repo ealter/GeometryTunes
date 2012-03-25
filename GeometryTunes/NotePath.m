@@ -16,6 +16,7 @@
     if (self) {
         notes = [[NSMutableArray alloc] init];
         numNotes = 0;
+        path = nil;
     }
     return self;
 }
@@ -26,7 +27,7 @@
     numNotes++;
 }
 
-- (void)removeNoteAtIndex:(NSUInteger)index
+- (void)removeNoteAtIndex:(unsigned)index
 {
     [notes removeObjectAtIndex:index];
     numNotes--;
@@ -34,13 +35,24 @@
 
 - (void)buildPath
 {
-    UIBezierPath* path = [UIBezierPath bezierPath];
+    path = [UIBezierPath bezierPath];
     if (numNotes > 0) {
         [path moveToPoint:[[notes objectAtIndex:0] CGPointValue]];
         for (int i = 1; i < numNotes; i++) {
             [path addLineToPoint:[[notes objectAtIndex:i] CGPointValue]];
         }
     }
+}
+
+- (void)updateAndDisplayPath:(CGContextRef)context
+{
+    CGContextSaveGState(context);
+    
+    path.lineWidth = 5;
+    [[UIColor blackColor] setStroke];
+    [path stroke];
+    
+    CGContextRestoreGState(context);
 }
 
 @end
