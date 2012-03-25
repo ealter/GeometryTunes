@@ -38,8 +38,6 @@ static int getPlayerIndex(unsigned pitch, unsigned octave)
 {
     self = [super init];
     if (self) {
-        
-        
         for(int i=MIN_OCTAVE; i<=MAX_OCTAVE; i++)
         {
             for(int j=0; j<NOTES_IN_OCTAVE; j++)
