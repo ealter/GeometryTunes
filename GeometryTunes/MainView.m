@@ -8,7 +8,6 @@
 
 #import "MainView.h"
 #import "GridView.h"
-#import "ToolbarView.h"
 
 @implementation MainView
 
