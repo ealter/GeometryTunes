@@ -26,7 +26,7 @@
 @synthesize state;
 
 static NSString* editPathButtonStr = @"Edit Path";
-static NSString* finishEditingPathButtonStr = @"Stop Path";
+static NSString* finishEditingPathButtonStr = @"Finish";
 
 - (GridCell*)cellAtX:(unsigned)x y:(unsigned)y
 {
@@ -131,7 +131,19 @@ static NSString* finishEditingPathButtonStr = @"Stop Path";
     {
         if(pos.y > [self getBoxHeight]) //Don't handle taps to the toolbar
         {
-            [pathView addNoteWithPos:pos]; //TODO: snap to center
+            CGPoint point = CGPointMake((int)pos.x / [self getBoxWidth], (int)pos.y / [self getBoxHeight]); // ERROR: will not add one
+            NSLog(@"Before   %f, %f",point.x, point.y);
+            pos.y++;// = pos.y + 1;
+            pos.x++;// = pos.x + 1;
+            NSLog(@"Mid 1    %f, %f",point.x, point.y);
+            point.x *= 192;
+            point.y *= 192;
+            NSLog(@"Mid 2    %f, %f",point.x, point.y);
+            point.x -= 96;
+            point.y -= 96;
+            
+            [pathView addNoteWithPos:point]; //TODO: snap to center
+            NSLog(@"  After  %f, %f",point.x, point.y);
             [pathView setNeedsDisplay];
         }
     }

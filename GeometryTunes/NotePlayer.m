@@ -49,9 +49,13 @@ static int getPlayerIndex(unsigned pitch, unsigned octave)
     return self;
 }
 
+
+/*
+ * Slow to play on simulator. Trouble findding files from AVAudio
+ * Should be faster on actual device
+ */
 - (void)playNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave
 {
-    NSLog(@"begin: playNoteWithPtch");
     assert(octave >= MIN_OCTAVE && octave <= MAX_OCTAVE);
     assert(pitch < NOTES_IN_OCTAVE);
     AVAudioPlayer *note = players[getPlayerIndex(pitch, octave)];
@@ -60,7 +64,6 @@ static int getPlayerIndex(unsigned pitch, unsigned octave)
     if([note isPlaying])
         note.currentTime = 0;
     [note play];
-    NSLog(@"end: playNoteWithPtch");
 }
 
 - (void)stopAllNotes
