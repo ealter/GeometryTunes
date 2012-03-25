@@ -122,7 +122,7 @@
     UIRectFill(playbackBar);
 }
 
--(void) buttonEvent:(id)user;
+-(void) buttonEvent:(id)user
 {
     NSLog(@"ButtonPressed");
 }
@@ -142,6 +142,13 @@
     NSString * buttonNames[] = {@"Play", @"Pause", @"Rew", @"FF", @"Save", @"Load"};
     int numButtons = sizeof(buttonNames)/sizeof(buttonNames[0]);
     UIButton *btn[numButtons];
+    //Create array of event functions
+    //
+    //void playEvent(void) {
+    //    NSLog(@"ButtonPressed");
+    //}
+    //void (*playbarEventHandlers[numButtons]) (void);
+    //playbarEventHandlers[0] = buttonEvent;
     
     for(int i=0; i<numButtons; i++, nextXPosition += playbarButtonWidth + buttonSpacing)
     {
