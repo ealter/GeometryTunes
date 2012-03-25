@@ -13,7 +13,7 @@
 
 #define HUE 0
 #define SAT 1
-#define BRI 2
+#define BRIGHT 2
 #define ALPHA 3
 
 static const float HSBAPitchMap[12][4] =
@@ -35,7 +35,7 @@ static const float HSBAPitchMap[12][4] =
 + (UIColor*)colorFromNoteWithPitch:(int)pitch octave:(int)octave {
     float hue = HSBAPitchMap[pitch][HUE];
     float sat = HSBAPitchMap[pitch][SAT];
-    float bright = HSBAPitchMap[pitch][BRI];
+    float bright = HSBAPitchMap[pitch][BRIGHT];
     float alpha = HSBAPitchMap[pitch][ALPHA];
     UIColor *color = [[UIColor alloc] init];
     color = [UIColor colorWithHue:hue saturation:sat brightness:bright alpha:alpha];
