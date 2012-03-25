@@ -128,8 +128,8 @@
     {
         if(pos.y > [self getBoxHeight]) //Don't handle taps to the toolbar
         {
-            [path addNoteWithPos:pos];
-            [path updateAndDisplayPath:UIGraphicsGetCurrentContext()];
+            [path addNoteWithPos:pos]; //TODO: snap to center
+            [self setNeedsDisplay];
         }
     }
 }
@@ -259,6 +259,7 @@
     [self makePlaybackButtons];
     
     [self drawGrid:UIGraphicsGetCurrentContext()];
+    [path updateAndDisplayPath:UIGraphicsGetCurrentContext()];
 }
 
 - (CGPoint) getBoxFromCoords:(CGPoint)pos 
