@@ -213,23 +213,24 @@
     UIButton *btn[numButtons];
     
     //Creates array of event functions
-    NSValue* selEventPlay = [NSValue valueWithPointer:@selector(playButtonEvent:)];
-    NSValue* selEventPause = [NSValue valueWithPointer:@selector(pauseButtonEvent:)];
-    NSValue* selEventRew = [NSValue valueWithPointer:@selector(rewButtonEvent:)];
-    NSValue* selEventFF = [NSValue valueWithPointer:@selector(ffButtonEvent:)];
-    NSValue* selEventSave = [NSValue valueWithPointer:@selector(saveButtonEvent:)];
-    NSValue* selEventLoad = [NSValue valueWithPointer:@selector(loadButtonEvent:)];
-    NSValue* selEventEdit = [NSValue valueWithPointer:@selector(editButtonEvent:)];
+    SEL selEventPlay  = @selector(playButtonEvent:);
+    SEL selEventPause = @selector(pauseButtonEvent:);
+    SEL selEventRew   = @selector(rewButtonEvent:);
+    SEL selEventFF    = @selector(ffButtonEvent:);
+    SEL selEventSave  = @selector(saveButtonEvent:);
+    SEL selEventLoad  = @selector(loadButtonEvent:);
+    SEL selEventEdit  = @selector(editButtonEvent:);
     
-    NSArray *event_table = [NSArray arrayWithObjects:selEventPlay, selEventPause, selEventRew, selEventFF, selEventSave, selEventLoad, selEventEdit, nil];
+    //NSArray *event_table = [NSArray arrayWithObjects:selEventPlay, selEventPause, selEventRew, selEventFF, selEventSave, selEventLoad, selEventEdit, nil];
+    SEL events[] = {selEventPlay, selEventPause, selEventRew, selEventFF, selEventSave, selEventLoad, selEventEdit};
     
     for(int i=0; i<numButtons; i++, nextXPosition += playbarButtonWidth + buttonSpacing)
     {
         if([buttonNames[i] isEqualToString:@"Save"]) nextXPosition += 20;
         CGRect rect = CGRectMake(nextXPosition, YPosition, playbarButtonWidth, playbarButtonHeight);
         btn[i] = [[UIButton alloc]initWithFrame:rect];
-        //SEL mySelector = [];
-        [btn[i] addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
+        SEL eventHandler = events[i];
+        [btn[i] addTarget:self action:eventHandler forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
         [btn[i] setBackgroundColor:playbarButtonsBackground];
         [btn[i] setTitle:buttonNames[i] forState:UIControlStateNormal];
         btn[i].titleLabel.font = playbarButtonsFont;
