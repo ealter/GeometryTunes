@@ -152,6 +152,9 @@ const static NSTimeInterval playbackSpeed = 1.0;
             
             
             
+            CGPoint box = [self getBoxFromCoords:pos];
+            CGPoint point = CGPointMake((box.x + 0.5) * [self getBoxWidth], (box.y + 0.5) * [self getBoxHeight]);
+            [pathView addNoteWithPos:point];
             [pathView setNeedsDisplay];
         }
     }
