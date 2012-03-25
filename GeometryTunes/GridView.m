@@ -144,14 +144,6 @@ const static NSTimeInterval playbackSpeed = 1.0;
     {
         if(pos.y > [self getBoxHeight]) //Don't handle taps to the toolbar
         {
-            
-            
-            
-            
-            
-            
-            
-            
             CGPoint box = [self getBoxFromCoords:pos];
             CGPoint point = CGPointMake((box.x + 0.5) * [self getBoxWidth], (box.y + 0.5) * [self getBoxHeight]);
             [pathView addNoteWithPos:point];
