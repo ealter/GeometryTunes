@@ -32,13 +32,13 @@
     numNotes--;
 }
 
-- (void)buildPathFromArray:(NSMutableArray*)array
+- (void)buildPath
 {
     UIBezierPath* path = [UIBezierPath bezierPath];
     if (numNotes > 0) {
-        [path moveToPoint:[[array objectAtIndex:0] CGPointValue]];
+        [path moveToPoint:[[notes objectAtIndex:0] CGPointValue]];
         for (int i = 1; i < numNotes; i++) {
-            [path addLineToPoint:[[array objectAtIndex:i] CGPointValue]];
+            [path addLineToPoint:[[notes objectAtIndex:i] CGPointValue]];
         }
     }
 }
