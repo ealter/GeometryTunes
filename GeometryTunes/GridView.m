@@ -25,6 +25,9 @@
 @synthesize pianoOctave;
 @synthesize state;
 
+static NSString* editPathButtonStr = @"Edit Path";
+static NSString* finishEditingPathButtonStr = @"Stop Path";
+
 - (GridCell*)cellAtX:(unsigned)x y:(unsigned)y
 {
     return [[cells objectAtIndex:x] objectAtIndex:y];
@@ -203,7 +206,18 @@
 -(void) editButtonEvent:(id)sender;
 {
     NSLog(@"EditButtonPressed");
-    state = PATH_EDIT_STATE;
+    if(state == PATH_EDIT_STATE)
+    {
+        [toolbarButtons[6] setTitle:editPathButtonStr forState:UIControlStateNormal];
+        state = NORMAL_STATE;
+    }
+    else
+    {
+        if(state == PIANO_STATE)
+            [piano removeFromSuperview];
+        [toolbarButtons[6] setTitle:finishEditingPathButtonStr forState:UIControlStateNormal];
+        state = PATH_EDIT_STATE;
+    }
 }
 
 - (void) makePlaybackButtons
@@ -218,9 +232,9 @@
     int buttonSpacing = 15;
     int YPosition = 15;
     
-    NSString * buttonNames[] = {@"Play", @"Pause", @"Rew", @"FF", @"Save", @"Load", @"Edit Path"};
+    NSString * buttonNames[] = {@"Play", @"Pause", @"Rew", @"FF", @"Save", @"Load", editPathButtonStr};
     int numButtons = sizeof(buttonNames)/sizeof(buttonNames[0]);
-    UIButton *btn[numButtons];
+    assert(numButtons = sizeof(toolbarButtons)/sizeof(toolbarButtons[0]));
     
     //Creates array of event functions
     SEL selEventPlay  = @selector(playButtonEvent:);
@@ -236,15 +250,15 @@
     {
         if([buttonNames[i] isEqualToString:@"Save"]) nextXPosition += 20;
         CGRect rect = CGRectMake(nextXPosition, YPosition, playbarButtonWidth, playbarButtonHeight);
-        btn[i] = [[UIButton alloc]initWithFrame:rect];
+        toolbarButtons[i] = [[UIButton alloc]initWithFrame:rect];
         SEL eventHandler = events[i];
-        [btn[i] addTarget:self action:eventHandler forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
-        [btn[i] setBackgroundColor:playbarButtonsBackground];
-        [btn[i] setTitle:buttonNames[i] forState:UIControlStateNormal];
-        btn[i].titleLabel.font = playbarButtonsFont;
-        btn[i].titleLabel.textColor = playbarButtonsTextColor;
-        [btn[i] setTitleColor:playbarButtonsTextColor forState:UIControlStateNormal];
-        [self addSubview:btn[i]];
+        [toolbarButtons[i] addTarget:self action:eventHandler forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
+        [toolbarButtons[i] setBackgroundColor:playbarButtonsBackground];
+        [toolbarButtons[i] setTitle:buttonNames[i] forState:UIControlStateNormal];
+        toolbarButtons[i].titleLabel.font = playbarButtonsFont;
+        toolbarButtons[i].titleLabel.textColor = playbarButtonsTextColor;
+        [toolbarButtons[i] setTitleColor:playbarButtonsTextColor forState:UIControlStateNormal];
+        [self addSubview:toolbarButtons[i]];
     }
 }
 
