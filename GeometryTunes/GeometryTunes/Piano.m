@@ -83,8 +83,8 @@
         if([Piano isBlackNote:i])
         {
             isBlack = true;
-            //The note is a black note
-            note = [[UIButton alloc]initWithFrame:CGRectMake(x-blackKeyWidth/2, 0, blackKeyWidth, blackKeyHeight)];
+            //The note is a black note                      
+            note = [[UIButton alloc]initWithFrame:CGRectMake(x-blackKeyWidth/2, 0, blackKeyWidth, blackKeyHeight)]; 
         }
         else
         {

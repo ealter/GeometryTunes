@@ -11,31 +11,35 @@
 
 @implementation noteColor
 
-#define RED   0
-#define GREEN 1
-#define BLUE  2
-#define ALPHA_MULT (1.0/(MAX_OCTAVE - MIN_OCTAVE + 1))
+#define HUE 0
+#define SAT 1
+#define BRI 2
+#define ALPHA 3
 
-static const float RGBPitchMap[11][3] =
+static const float HSBAPitchMap[12][4] =
 {
-    {1.0, 0.0, 0.0},
-    {0.75, 0.25, 0.0},
-    {0.5, 0.5, 0.0},
-    {0.25, 0.75, 0.0},
-    {0.0, 1.0, 0.0},
-    {0.0, 0.75, 0.25},
-    {0.0, 0.5, 0.5},
-    {0.0, 0.25, 0.75},
-    {0.0, 0.0, 1.0},
-    {0.25, 0.0, 0.75},
-    {0.5, 0.0, 0.5}
+    {0.0, 1.0, 1.0, 1.0},
+    {0.055, 1.0, 0.75, 1.0},
+    {0.166, 1.0, 0.5, 1.0},   
+    {0.277, 1.0, 0.75, 1.0},
+    {0.333, 1.0, 1.0, 1.0},
+    {0.388, 1.0, 0.75, 1.0},
+    {0.5, 1.0, 0.5, 1.0},
+    {0.583, 1.0, 0.5, 1.0},
+    {0.666, 1.0, 1.0, 1.0},
+    {0.722, 1.0, 0.75, 1.0},
+    {0.833, 1.0, 0.5, 1.0},
+    {0.9, 1.0, 0.75, 1.0}
 };
 
 + (UIColor*)colorFromNoteWithPitch:(int)pitch octave:(int)octave {
-    float red = RGBPitchMap[pitch][RED];
-    float green = RGBPitchMap[pitch][GREEN];
-    float blue = RGBPitchMap[pitch][BLUE];
-    return [UIColor colorWithRed:red green:green blue:blue alpha:(1 - ALPHA_MULT * (octave - MIN_OCTAVE))];
+    float hue = HSBAPitchMap[pitch][HUE];
+    float sat = HSBAPitchMap[pitch][SAT];
+    float bright = HSBAPitchMap[pitch][BRI];
+    float alpha = HSBAPitchMap[pitch][ALPHA];
+    UIColor *color = [[UIColor alloc] init];
+    color = [UIColor colorWithHue:hue saturation:sat brightness:bright alpha:alpha];
+    return color;
 }
 
 @end
