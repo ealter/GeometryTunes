@@ -51,13 +51,16 @@ static int getPlayerIndex(unsigned pitch, unsigned octave)
 
 - (void)playNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave
 {
+    NSLog(@"begin: playNoteWithPtch");
     assert(octave >= MIN_OCTAVE && octave <= MAX_OCTAVE);
     assert(pitch < NOTES_IN_OCTAVE);
     AVAudioPlayer *note = players[getPlayerIndex(pitch, octave)];
     assert(note);
+    //[note prepareToPlay];
     if([note isPlaying])
         note.currentTime = 0;
     [note play];
+    NSLog(@"end: playNoteWithPtch");
 }
 
 - (void)stopAllNotes
