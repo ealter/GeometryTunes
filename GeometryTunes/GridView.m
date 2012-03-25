@@ -175,22 +175,22 @@
 - (void) makePlaybackButtons
 {
     UIColor *playbarButtonsBackground = [UIColor blueColor];
-    UIFont  *playbarButtonsFont = [UIFont systemFontOfSize:30];
+    UIFont  *playbarButtonsFont = [UIFont systemFontOfSize:20];
     UIColor *playbarButtonsTextColor = [UIColor whiteColor];
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     int playbarButtonHeight = [self getBoxHeight]-30;
-    int playbarButtonWidth = screenRect.size.width/10 + 20;
+    int playbarButtonWidth = screenRect.size.width/10 + 10;
     int nextXPosition = 20;
     int buttonSpacing = 15;
     int YPosition = 15;
     
-    NSString * buttonNames[] = {@"Play", @"Pause", @"Rew", @"FF", @"Save", @"Load"};
+    NSString * buttonNames[] = {@"Play", @"Pause", @"Rew", @"FF", @"Save", @"Load", @"Edit Path"};
     int numButtons = sizeof(buttonNames)/sizeof(buttonNames[0]);
     UIButton *btn[numButtons];
     
     for(int i=0; i<numButtons; i++, nextXPosition += playbarButtonWidth + buttonSpacing)
     {
-        if([buttonNames[i] isEqualToString:@"Save"]) nextXPosition += 80;
+        if([buttonNames[i] isEqualToString:@"Save"]) nextXPosition += 20;
         CGRect rect = CGRectMake(nextXPosition, YPosition, playbarButtonWidth, playbarButtonHeight);
         btn[i] = [[UIButton alloc]initWithFrame:rect];
         [btn[i] addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
