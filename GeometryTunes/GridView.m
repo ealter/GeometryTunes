@@ -53,7 +53,7 @@
     CGRect screenRect = [[UIScreen mainScreen] bounds];
     gridWidth = screenRect.size.width;
     gridHeight = screenRect.size.height;
-    numBoxesX = 10;
+    numBoxesX = 8;
     numBoxesY = 10;
     
     pianoOctave = INITIAL_PIANO_OCTAVE;
@@ -64,10 +64,10 @@
     cells = [[NSMutableArray alloc] initWithCapacity:numBoxesY];
     NSMutableArray *row;
     
-    for(int i=0; i<numBoxesY; i++)
+    for(int i=0; i<numBoxesX; i++)
     {
         row = [[NSMutableArray alloc] initWithCapacity:numBoxesX];
-        for(int j=0; j<numBoxesX; j++)
+        for(int j=0; j<numBoxesY; j++)
         {
             CGRect cell = CGRectMake(i * [self getBoxWidth], j * [self getBoxHeight], [self getBoxWidth], [self getBoxHeight]);
             [row addObject:[[GridCell alloc]initWithFrame:cell]];
