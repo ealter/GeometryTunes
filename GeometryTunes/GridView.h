@@ -43,7 +43,7 @@ typedef enum STATE
 
 @property STATE state;
 
-- (id)sharedInit;
+- (void)sharedInitWithFrame:(CGRect)frame;
 
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave;
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned) x y:(unsigned)y;

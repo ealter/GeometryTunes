@@ -49,7 +49,7 @@ const static NSTimeInterval playbackSpeed = 1.0;
 {
     self = [super initWithFrame:frame];
     if (self) {
-        self = [self sharedInit];
+        [self sharedInitWithFrame:frame];
     }
     return self;
 }
@@ -58,16 +58,16 @@ const static NSTimeInterval playbackSpeed = 1.0;
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        self = [self sharedInit];
+        [self sharedInitWithFrame:[[UIScreen mainScreen] bounds]];
     }
     return self;
 }
 
--(id)sharedInit
+-(void)sharedInitWithFrame:(CGRect)frame
 {
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
-    gridWidth = screenRect.size.width;
-    gridHeight = screenRect.size.height;
+    [self setBackgroundColor:[UIColor whiteColor]];
+    gridWidth = frame.size.width;
+    gridHeight = frame.size.height;
     numBoxesX = 8;
     numBoxesY = 10;
     
@@ -93,7 +93,7 @@ const static NSTimeInterval playbackSpeed = 1.0;
         [cells addObject:row];
     }
     
-    pathView = [[PathsView alloc]initWithFrame:screenRect];
+    pathView = [[PathsView alloc]initWithFrame:frame];
     
     // Initialize tap gesture recognizer
     tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)]; 
@@ -103,7 +103,6 @@ const static NSTimeInterval playbackSpeed = 1.0;
     
     // Add gesture recognizer to the view
     [self addGestureRecognizer:tapGestureRecognizer];
-    return self;
 }
 
 -(void) handleTap:(UITapGestureRecognizer *)sender
