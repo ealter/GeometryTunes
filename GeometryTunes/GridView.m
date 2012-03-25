@@ -74,7 +74,8 @@
         }
         [cells addObject:row];
     }
-    path = [[NotePath alloc] init]; 
+    
+    pathView = [[PathsView alloc]initWithFrame:screenRect];
     
     // Initialize tap gesture recognizer
     tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)]; 
@@ -120,7 +121,6 @@
         if(!CGRectContainsPoint([piano frame], pos))
         {
             [piano removeFromSuperview];
-            piano = NULL;
             state = NORMAL_STATE;
         }
     }
@@ -128,8 +128,8 @@
     {
         if(pos.y > [self getBoxHeight]) //Don't handle taps to the toolbar
         {
-            [path addNoteWithPos:pos]; //TODO: snap to center
-            [self setNeedsDisplay];
+            [pathView addNoteWithPos:pos]; //TODO: snap to center
+            [pathView setNeedsDisplay];
         }
     }
 }
@@ -254,12 +254,13 @@
     CGContextRef playbackContext = UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(playbackContext, 2.0);
     CGContextSetFillColorWithColor(playbackContext, [UIColor blackColor].CGColor);
+    
+    [self drawGrid:UIGraphicsGetCurrentContext()];
+    [self addSubview:pathView];
+    [self bringSubviewToFront:pathView];
     [self drawPlaybackMenu:playbackContext];
     
     [self makePlaybackButtons];
-    
-    [self drawGrid:UIGraphicsGetCurrentContext()];
-    [path updateAndDisplayPath:UIGraphicsGetCurrentContext()];
 }
 
 - (CGPoint) getBoxFromCoords:(CGPoint)pos 

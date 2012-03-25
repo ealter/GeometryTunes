@@ -107,6 +107,7 @@
 		CE5C7C70151E7D3900B81396 /* noteTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5C7C6F151E7D3900B81396 /* noteTypes.m */; };
 		E25113F01519230500BBE1F2 /* NotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E25113EF1519230500BBE1F2 /* NotePlayer.m */; };
 		E25113F215192BE600BBE1F2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E25113F115192BE600BBE1F2 /* AVFoundation.framework */; };
+		E2687D90151FA3A8005BB1F8 /* PathsView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2687D8F151FA3A8005BB1F8 /* PathsView.m */; };
 		E28150FD150C513500C8A036 /* Piano.m in Sources */ = {isa = PBXBuildFile; fileRef = E28150FC150C513500C8A036 /* Piano.m */; };
 		E2E4AF59151ABE5300E033E4 /* GridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E4AF58151ABE5300E033E4 /* GridCell.m */; };
 /* End PBXBuildFile section */
@@ -222,6 +223,8 @@
 		E25113EE1519230500BBE1F2 /* NotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotePlayer.h; sourceTree = "<group>"; };
 		E25113EF1519230500BBE1F2 /* NotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePlayer.m; sourceTree = "<group>"; };
 		E25113F115192BE600BBE1F2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		E2687D8E151FA3A8005BB1F8 /* PathsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathsView.h; sourceTree = "<group>"; };
+		E2687D8F151FA3A8005BB1F8 /* PathsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathsView.m; sourceTree = "<group>"; };
 		E28150FB150C513500C8A036 /* Piano.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Piano.h; path = GeometryTunes/Piano.h; sourceTree = "<group>"; };
 		E28150FC150C513500C8A036 /* Piano.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Piano.m; path = GeometryTunes/Piano.m; sourceTree = "<group>"; };
 		E2E4AF57151ABE5300E033E4 /* GridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridCell.h; sourceTree = "<group>"; };
@@ -253,6 +256,8 @@
 				E2E4AF58151ABE5300E033E4 /* GridCell.m */,
 				8319432C150BD32B003EF364 /* GridView.h */,
 				8319432D150BD32B003EF364 /* GridView.m */,
+				E2687D8E151FA3A8005BB1F8 /* PathsView.h */,
+				E2687D8F151FA3A8005BB1F8 /* PathsView.m */,
 				831FF08F150DB112001E9014 /* noteColor.h */,
 				831FF090150DB112001E9014 /* noteColor.m */,
 				83E3726B151D7069000DCF85 /* NotePath.h */,
@@ -562,6 +567,7 @@
 				E2E4AF59151ABE5300E033E4 /* GridCell.m in Sources */,
 				83E3726D151D7069000DCF85 /* NotePath.m in Sources */,
 				CE5C7C70151E7D3900B81396 /* noteTypes.m in Sources */,
+				E2687D90151FA3A8005BB1F8 /* PathsView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
