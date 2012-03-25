@@ -24,7 +24,7 @@
 @synthesize tapButtonRecognizer;
 
 @synthesize pianoOctave;
-@synthesize state;
+
 
 static NSString* editPathButtonStr = @"Edit Path";
 static NSString* finishEditingPathButtonStr = @"Finish";
@@ -36,13 +36,26 @@ const static NSTimeInterval playbackSpeed = 1.0;
     return [[cells objectAtIndex:x] objectAtIndex:y];
 }
 
+- (STATE)state
+{
+    return delegate.state;
+}
+
+- (void)setState:(STATE)state
+{
+    [delegate setState:state];
+    delegate.state = state;
+}
+
 - (void)changeToNormalState
 {
-    if(state == PIANO_STATE)
+    if([self state] == PIANO_STATE)
         [piano removeFromSuperview];
-    else if(state == PATH_EDIT_STATE)
-        [toolbarButtons[6] setTitle:editPathButtonStr forState:UIControlStateNormal];
-    state = NORMAL_STATE;
+    else if([self state] == PATH_EDIT_STATE)
+    {
+        //TODO: Change toolbar button text
+    }
+    [self setState:NORMAL_STATE];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -73,7 +86,7 @@ const static NSTimeInterval playbackSpeed = 1.0;
     
     pianoOctave = INITIAL_PIANO_OCTAVE;
     assert(pianoOctave >= MIN_OCTAVE && pianoOctave <= MAX_OCTAVE);
-    state = NORMAL_STATE;
+    [self setState:NORMAL_STATE];
     piano = NULL;
     
     playbackPosition = 0;
@@ -107,12 +120,13 @@ const static NSTimeInterval playbackSpeed = 1.0;
 
 -(void) handleTap:(UITapGestureRecognizer *)sender
 {
+    NSLog(@"Handling tap in state: %d", [self state]);
     CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
-    if(state == NORMAL_STATE)
+    if([self state] == NORMAL_STATE)
     {
         if(pos.y > [self getBoxHeight]) //Don't handle taps to the toolbar
         {
-            state = PIANO_STATE;
+            [self setState:PIANO_STATE];
             CGPoint box = [self getBoxFromCoords:pos];
             assert(box.x >= 0 && box.x < numBoxesX);
             assert(box.y >= 0 && box.y < numBoxesY);
@@ -133,14 +147,17 @@ const static NSTimeInterval playbackSpeed = 1.0;
             NSLog(@"%@", NSStringFromCGPoint(box));
         }
     }
-    else if(state == PIANO_STATE)
+    else if([self state] == PIANO_STATE)
     {
         if(!CGRectContainsPoint([piano frame], pos))
         {
             [self changeToNormalState];
+            NSLog(@"Time to remove piano");
         }
+        else
+            NSLog(@"Don't remove piano");
     }
-    else if(state == PATH_EDIT_STATE)
+    else if([self state] == PATH_EDIT_STATE)
     {
         if(pos.y > [self getBoxHeight]) //Don't handle taps to the toolbar
         {
@@ -202,7 +219,7 @@ const static NSTimeInterval playbackSpeed = 1.0;
 
 -(void) pauseButtonEvent:(id)sender;
 {
-    if(state == NORMAL_STATE)
+    if([self state] == NORMAL_STATE)
     {
         if(playbackTimer)
             [playbackTimer invalidate];
@@ -220,7 +237,7 @@ const static NSTimeInterval playbackSpeed = 1.0;
 {
     if(playbackTimer)
         [playbackTimer invalidate];
-    if(state == NORMAL_STATE)
+    if([self state] == NORMAL_STATE)
     {
         [self playPathWithSpeed:playbackSpeed * 0.5];
     }
@@ -240,57 +257,14 @@ const static NSTimeInterval playbackSpeed = 1.0;
 
 -(void) editButtonEvent:(id)sender;
 {
-    if(state == PATH_EDIT_STATE)
+    if([self state] == PATH_EDIT_STATE)
         [self changeToNormalState];
     else
     {
-        if(state == PIANO_STATE)
+        if([self state] == PIANO_STATE)
             [piano removeFromSuperview];
-        [toolbarButtons[6] setTitle:finishEditingPathButtonStr forState:UIControlStateNormal];
-        state = PATH_EDIT_STATE;
-    }
-}
-
-- (void) makePlaybackButtons
-{
-    UIColor *playbarButtonsBackground = [UIColor blueColor];
-    UIFont  *playbarButtonsFont = [UIFont systemFontOfSize:20];
-    UIColor *playbarButtonsTextColor = [UIColor whiteColor];
-    CGRect screenRect = [self bounds];
-    
-    int playbarButtonHeight = [self getBoxHeight]-30;
-    int playbarButtonWidth = screenRect.size.width/10 + 10;
-    int nextXPosition = 20;
-    int buttonSpacing = 15;
-    int YPosition = 15;
-    
-    NSString * buttonNames[] = {@"Play", @"Pause", @"Rew", @"FF", @"Save", @"Load", editPathButtonStr};
-    int numButtons = sizeof(buttonNames)/sizeof(buttonNames[0]);
-    assert(numButtons = sizeof(toolbarButtons)/sizeof(toolbarButtons[0]));
-    
-    //Creates array of event functions
-    SEL selEventPlay  = @selector(playButtonEvent:);
-    SEL selEventPause = @selector(pauseButtonEvent:);
-    SEL selEventRew   = @selector(rewButtonEvent:);
-    SEL selEventFF    = @selector(ffButtonEvent:);
-    SEL selEventSave  = @selector(saveButtonEvent:);
-    SEL selEventLoad  = @selector(loadButtonEvent:);
-    SEL selEventEdit  = @selector(editButtonEvent:);
-    SEL events[] = {selEventPlay, selEventPause, selEventRew, selEventFF, selEventSave, selEventLoad, selEventEdit};
-    
-    for(int i=0; i<numButtons; i++, nextXPosition += playbarButtonWidth + buttonSpacing)
-    {
-        if([buttonNames[i] isEqualToString:@"Save"]) nextXPosition += 20;
-        CGRect rect = CGRectMake(nextXPosition, YPosition, playbarButtonWidth, playbarButtonHeight);
-        toolbarButtons[i] = [[UIButton alloc]initWithFrame:rect];
-        SEL eventHandler = events[i];
-        [toolbarButtons[i] addTarget:self action:eventHandler forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
-        [toolbarButtons[i] setBackgroundColor:playbarButtonsBackground];
-        [toolbarButtons[i] setTitle:buttonNames[i] forState:UIControlStateNormal];
-        toolbarButtons[i].titleLabel.font = playbarButtonsFont;
-        toolbarButtons[i].titleLabel.textColor = playbarButtonsTextColor;
-        [toolbarButtons[i] setTitleColor:playbarButtonsTextColor forState:UIControlStateNormal];
-        [self addSubview:toolbarButtons[i]];
+        //TODO: change Edit Path button text
+        [self setState:PATH_EDIT_STATE];
     }
 }
 
@@ -305,8 +279,6 @@ const static NSTimeInterval playbackSpeed = 1.0;
     [self addSubview:pathView];
     [self bringSubviewToFront:pathView];
     [self drawPlaybackMenu:playbackContext];
-    
-    [self makePlaybackButtons];
 }
 
 - (CGPoint) getBoxFromCoords:(CGPoint)pos 

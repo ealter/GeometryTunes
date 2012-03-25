@@ -10,6 +10,13 @@
 
 @interface ViewController : UIViewController
 
+typedef enum STATE
+{
+    NORMAL_STATE,
+    PIANO_STATE,
+    PATH_EDIT_STATE
+} STATE;
 
+@property STATE state;
 
 @end

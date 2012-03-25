@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "Piano.h"
 #import "PathsView.h"
+#import "ViewController.h"
 
 @interface GridView : UIView
 {
@@ -16,17 +17,10 @@
     NSMutableArray *cells; //2D array: 1st index is row
                            //          2nd index is col
     PathsView *pathView;
-    UIButton *toolbarButtons[7];
     int playbackPosition;
     NSTimer *playbackTimer;
+    ViewController *delegate;
 }
-
-typedef enum STATE
-{
-    NORMAL_STATE,
-    PIANO_STATE,
-    PATH_EDIT_STATE
-} STATE;
 
 @property int gridWidth;
 @property int gridHeight;
@@ -41,8 +35,6 @@ typedef enum STATE
 @property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic, retain) UITapGestureRecognizer *tapButtonRecognizer;
 
-@property STATE state;
-
 - (void)sharedInitWithFrame:(CGRect)frame;
 
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave;
@@ -53,7 +45,6 @@ typedef enum STATE
 
 - (void)drawGrid:(CGContextRef)context;
 - (void)drawPlaybackMenu:(CGContextRef)context;
-- (void) makePlaybackButtons;
 
 - (CGPoint)getBoxFromCoords:(CGPoint)pos;
 

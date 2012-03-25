@@ -10,6 +10,8 @@
 
 @implementation ViewController
 
+@synthesize state;
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -21,7 +23,8 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+    state = NORMAL_STATE;
+    NSLog(@"View loaded");
 }
 
 - (void)viewDidUnload
