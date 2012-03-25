@@ -213,6 +213,8 @@ static NSString* finishEditingPathButtonStr = @"Stop Path";
     }
     else
     {
+        if(state == PIANO_STATE)
+            [piano removeFromSuperview];
         [toolbarButtons[6] setTitle:finishEditingPathButtonStr forState:UIControlStateNormal];
         state = PATH_EDIT_STATE;
     }
