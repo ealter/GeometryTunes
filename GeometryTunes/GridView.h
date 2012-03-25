@@ -8,14 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "Piano.h"
-#import "NotePath.h"
+#import "PathsView.h"
 
 @interface GridView : UIView
 {
     Piano *piano;
     NSMutableArray *cells; //2D array: 1st index is row
                            //          2nd index is col
-    NotePath *path;
+    PathsView *pathView;
 }
 
 typedef enum STATE
