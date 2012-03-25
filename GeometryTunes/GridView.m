@@ -58,7 +58,7 @@ const static NSTimeInterval playbackSpeed = 1.0;
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self sharedInitWithFrame:[[UIScreen mainScreen] bounds]];
+        [self sharedInitWithFrame:[self bounds]];
     }
     return self;
 }
@@ -254,7 +254,8 @@ const static NSTimeInterval playbackSpeed = 1.0;
     UIColor *playbarButtonsBackground = [UIColor blueColor];
     UIFont  *playbarButtonsFont = [UIFont systemFontOfSize:20];
     UIColor *playbarButtonsTextColor = [UIColor whiteColor];
-    CGRect screenRect = [[UIScreen mainScreen] bounds];
+    CGRect screenRect = [self bounds];
+    
     int playbarButtonHeight = [self getBoxHeight]-30;
     int playbarButtonWidth = screenRect.size.width/10 + 10;
     int nextXPosition = 20;
