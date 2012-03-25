@@ -38,9 +38,8 @@ static const float HSBAPitchMap[12][4] =
     float sat = HSBAPitchMap[pitch][SAT];
     float bright = HSBAPitchMap[pitch][BRIGHT];
     float alpha = HSBAPitchMap[pitch][ALPHA];
-    UIColor *color = [[UIColor alloc] init];
     bright -= BRIGHTNESS_FACTOR * (MAX_OCTAVE - octave);
-    color = [UIColor colorWithHue:hue saturation:sat brightness:bright alpha:alpha];
+    UIColor *color = [UIColor colorWithHue:hue saturation:sat brightness:bright alpha:alpha];
     return color;
 }
 
