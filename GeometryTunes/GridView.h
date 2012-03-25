@@ -52,6 +52,13 @@ typedef enum STATE
 - (void) makePlaybackButtons;
 
 - (CGPoint)getBoxFromCoords:(CGPoint)pos;
-- (void)buttonEvent:(id)user;
+
+-(void) playButtonEvent:(id)sender;
+-(void) pauseButtonEvent:(id)sender;
+-(void) rewButtonEvent:(id)sender;
+-(void) ffButtonEvent:(id)sender;
+-(void) saveButtonEvent:(id)sender;
+-(void) rrButtonEvent:(id)sender;
+-(void) editButtonEvent:(id)sender;
 
 @end

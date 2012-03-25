@@ -167,9 +167,33 @@
     UIRectFill(playbackBar);
 }
 
--(void) buttonEvent:(id)sender;
+-(void) playButtonEvent:(id)sender;
 {
-    NSLog(@"ButtonPressed");
+    NSLog(@"PlayButtonPressed");
+}
+-(void) pauseButtonEvent:(id)sender;
+{
+    NSLog(@"PauseButtonPressed");
+}
+-(void) rewButtonEvent:(id)sender;
+{
+    NSLog(@"RewButtonPressed");
+}
+-(void) ffButtonEvent:(id)sender;
+{
+    NSLog(@"FFButtonPressed");
+}
+-(void) saveButtonEvent:(id)sender;
+{
+    NSLog(@"SaveButtonPressed");
+}
+-(void) loadButtonEvent:(id)sender;
+{
+    NSLog(@"LoadButtonPressed");
+}
+-(void) editButtonEvent:(id)sender;
+{
+    NSLog(@"EditButtonPressed");
 }
 
 - (void) makePlaybackButtons
@@ -187,19 +211,24 @@
     NSString * buttonNames[] = {@"Play", @"Pause", @"Rew", @"FF", @"Save", @"Load", @"Edit Path"};
     int numButtons = sizeof(buttonNames)/sizeof(buttonNames[0]);
     UIButton *btn[numButtons];
-    //Create array of event functions
-    //
-    //void playEvent(void) {
-    //    NSLog(@"ButtonPressed");
-    //}
-    //void (*playbarEventHandlers[numButtons]) (void);
-    //playbarEventHandlers[0] = buttonEvent;
+    
+    //Creates array of event functions
+    NSValue* selEventPlay = [NSValue valueWithPointer:@selector(playButtonEvent:)];
+    NSValue* selEventPause = [NSValue valueWithPointer:@selector(pauseButtonEvent:)];
+    NSValue* selEventRew = [NSValue valueWithPointer:@selector(rewButtonEvent:)];
+    NSValue* selEventFF = [NSValue valueWithPointer:@selector(ffButtonEvent:)];
+    NSValue* selEventSave = [NSValue valueWithPointer:@selector(saveButtonEvent:)];
+    NSValue* selEventLoad = [NSValue valueWithPointer:@selector(loadButtonEvent:)];
+    NSValue* selEventEdit = [NSValue valueWithPointer:@selector(editButtonEvent:)];
+    
+    NSArray *event_table = [NSArray arrayWithObjects:selEventPlay, selEventPause, selEventRew, selEventFF, selEventSave, selEventLoad, selEventEdit, nil];
     
     for(int i=0; i<numButtons; i++, nextXPosition += playbarButtonWidth + buttonSpacing)
     {
         if([buttonNames[i] isEqualToString:@"Save"]) nextXPosition += 20;
         CGRect rect = CGRectMake(nextXPosition, YPosition, playbarButtonWidth, playbarButtonHeight);
         btn[i] = [[UIButton alloc]initWithFrame:rect];
+        //SEL mySelector = [];
         [btn[i] addTarget:self action:@selector(buttonEvent:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
         [btn[i] setBackgroundColor:playbarButtonsBackground];
         [btn[i] setTitle:buttonNames[i] forState:UIControlStateNormal];
