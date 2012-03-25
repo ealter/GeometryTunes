@@ -74,6 +74,7 @@
         }
         [cells addObject:row];
     }
+    path = [[NotePath alloc] init]; 
     
     // Initialize tap gesture recognizer
     tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)]; 
@@ -127,7 +128,8 @@
     {
         if(pos.y > [self getBoxHeight]) //Don't handle taps to the toolbar
         {
-            //[addNoteWithPos
+            [path addNoteWithPos:pos];
+            [path updateAndDisplayPath:UIGraphicsGetCurrentContext()];
         }
     }
 }
