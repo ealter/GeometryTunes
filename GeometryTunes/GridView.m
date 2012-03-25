@@ -167,7 +167,7 @@
     UIRectFill(playbackBar);
 }
 
--(void) buttonEvent:(id)user;
+-(void) buttonEvent:(id)sender;
 {
     NSLog(@"ButtonPressed");
 }

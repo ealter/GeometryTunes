@@ -20,7 +20,7 @@ typedef enum STATE
 {
     NORMAL_STATE,
     PIANO_STATE,
-    PIPE_EDIT_STATE
+    PATH_EDIT_STATE
 } STATE;
 
 @property int gridWidth;
