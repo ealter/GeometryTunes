@@ -40,6 +40,8 @@ const static NSTimeInterval playbackSpeed = 1.0;
 {
     if(state == PIANO_STATE)
         [piano removeFromSuperview];
+    else if(state == PATH_EDIT_STATE)
+        [toolbarButtons[6] setTitle:editPathButtonStr forState:UIControlStateNormal];
     state = NORMAL_STATE;
 }
 
@@ -193,36 +195,49 @@ const static NSTimeInterval playbackSpeed = 1.0;
 
 -(void) playButtonEvent:(id)sender;
 {
+    [self changeToNormalState];
+    isPaused = false;
     [self playPathWithSpeed:playbackSpeed];
 }
 
 -(void) pauseButtonEvent:(id)sender;
 {
-    NSLog(@"PauseButtonPressed");
+    if(state == NORMAL_STATE)
+        isPaused = true;
+    else
+        [self changeToNormalState];
 }
+
 -(void) rewButtonEvent:(id)sender;
 {
     NSLog(@"RewButtonPressed");
 }
+
 -(void) ffButtonEvent:(id)sender;
 {
-    NSLog(@"FFButtonPressed");
+    if(state == NORMAL_STATE)
+    {
+        isPaused = false;
+        [self playPathWithSpeed:playbackSpeed * 0.5];
+    }
+    else
+        [self changeToNormalState];
 }
+
 -(void) saveButtonEvent:(id)sender;
 {
     NSLog(@"SaveButtonPressed");
 }
+
 -(void) loadButtonEvent:(id)sender;
 {
     NSLog(@"LoadButtonPressed");
 }
+
 -(void) editButtonEvent:(id)sender;
 {
     if(state == PATH_EDIT_STATE)
-    {
-        [toolbarButtons[6] setTitle:editPathButtonStr forState:UIControlStateNormal];
-        state = NORMAL_STATE;
-    }
+        [self changeToNormalState];
     else
     {
         if(state == PIANO_STATE)
