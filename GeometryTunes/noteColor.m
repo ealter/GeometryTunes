@@ -15,6 +15,7 @@
 #define SAT 1
 #define BRIGHT 2
 #define ALPHA 3
+#define BRIGHTNESS_FACTOR 0.1
 
 static const float HSBAPitchMap[12][4] =
 {
@@ -38,7 +39,7 @@ static const float HSBAPitchMap[12][4] =
     float bright = HSBAPitchMap[pitch][BRIGHT];
     float alpha = HSBAPitchMap[pitch][ALPHA];
     UIColor *color = [[UIColor alloc] init];
-    bright -= 0.1 * (MAX_OCTAVE - octave);
+    bright -= BRIGHTNESS_FACTOR * (MAX_OCTAVE - octave);
     color = [UIColor colorWithHue:hue saturation:sat brightness:bright alpha:alpha];
     return color;
 }
