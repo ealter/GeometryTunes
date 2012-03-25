@@ -8,6 +8,7 @@
 
 #import "GridView.h"
 #import "GridCell.h"
+#import "noteTypes.h"
 
 @implementation GridView
 
@@ -28,9 +29,18 @@
 static NSString* editPathButtonStr = @"Edit Path";
 static NSString* finishEditingPathButtonStr = @"Stop Path";
 
+const static NSTimeInterval playbackSpeed = 1.0;
+
 - (GridCell*)cellAtX:(unsigned)x y:(unsigned)y
 {
     return [[cells objectAtIndex:x] objectAtIndex:y];
+}
+
+- (void)changeToNormalState
+{
+    if(state == PIANO_STATE)
+        [piano removeFromSuperview];
+    state = NORMAL_STATE;
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -63,6 +73,9 @@ static NSString* finishEditingPathButtonStr = @"Stop Path";
     assert(pianoOctave >= MIN_OCTAVE && pianoOctave <= MAX_OCTAVE);
     state = NORMAL_STATE;
     piano = NULL;
+    
+    playbackPosition = 0;
+    isPaused = false;
     
     cells = [[NSMutableArray alloc] initWithCapacity:numBoxesY];
     NSMutableArray *row;
@@ -123,8 +136,7 @@ static NSString* finishEditingPathButtonStr = @"Stop Path";
     {
         if(!CGRectContainsPoint([piano frame], pos))
         {
-            [piano removeFromSuperview];
-            state = NORMAL_STATE;
+            [self changeToNormalState];
         }
     }
     else if(state == PATH_EDIT_STATE)
@@ -181,8 +193,9 @@ static NSString* finishEditingPathButtonStr = @"Stop Path";
 
 -(void) playButtonEvent:(id)sender;
 {
-    NSLog(@"PlayButtonPressed");
+    [self playPathWithSpeed:playbackSpeed];
 }
+
 -(void) pauseButtonEvent:(id)sender;
 {
     NSLog(@"PauseButtonPressed");
@@ -205,7 +218,6 @@ static NSString* finishEditingPathButtonStr = @"Stop Path";
 }
 -(void) editButtonEvent:(id)sender;
 {
-    NSLog(@"EditButtonPressed");
     if(state == PATH_EDIT_STATE)
     {
         [toolbarButtons[6] setTitle:editPathButtonStr forState:UIControlStateNormal];
@@ -283,6 +295,31 @@ static NSString* finishEditingPathButtonStr = @"Stop Path";
     if (box.x > numBoxesX || box.y > numBoxesY)
         return CGPointMake(-1, -1);
     return box;
+}
+
+- (void)playPathWithSpeed:(NSTimeInterval)speed
+{
+    NSMutableArray *points = pathView.path.notes;
+    int numPoints = [points count];
+    if(playbackPosition == numPoints)
+        playbackPosition = 0;
+    for(; playbackPosition<numPoints; playbackPosition++)
+    {
+        if(isPaused)
+            return;
+        CGPoint box = [self getBoxFromCoords:[[points objectAtIndex:playbackPosition] CGPointValue]];
+        assert(box.x > 0 && box.y > 0);
+        GridCell *cell = [self cellAtX:box.x y:box.y];
+        pianoNote note = [cell getNote];
+        if(note != NO_PIANO_NOTE)
+        {
+            assert(piano && piano.notePlayer);
+            [piano.notePlayer playNoteWithPitch: [noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note]];
+        }
+        if(playbackPosition + 1 < numPoints) //Don't pause if this is the last note
+            [NSThread sleepForTimeInterval:speed];
+    }
+    playbackPosition = 0;
 }
 
 @end

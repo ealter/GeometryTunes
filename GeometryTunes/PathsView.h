@@ -10,9 +10,8 @@
 #import "NotePath.h"
 
 @interface PathsView : UIView
-{
-    NotePath *path;
-}
+
+@property (readonly, retain) NotePath *path;
 
 - (void)addNoteWithPos:(CGPoint)pos;
 

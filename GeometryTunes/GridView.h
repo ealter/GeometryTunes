@@ -17,6 +17,8 @@
                            //          2nd index is col
     PathsView *pathView;
     UIButton *toolbarButtons[7];
+    int playbackPosition;
+    bool isPaused;
 }
 
 typedef enum STATE
@@ -54,5 +56,7 @@ typedef enum STATE
 - (void) makePlaybackButtons;
 
 - (CGPoint)getBoxFromCoords:(CGPoint)pos;
+
+- (void)playPathWithSpeed:(NSTimeInterval)speed;
 
 @end

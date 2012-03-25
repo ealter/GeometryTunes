@@ -10,6 +10,9 @@
 
 @implementation NotePath
 
+@synthesize numNotes;
+@synthesize notes;
+
 - (id)init 
 {
     self = [super init];

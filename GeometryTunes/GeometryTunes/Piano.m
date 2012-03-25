@@ -15,6 +15,7 @@
 #import "GridView.h"
 
 @synthesize octave;
+@synthesize notePlayer;
 
 - (id)initWithFrame:(CGRect)frame delegate:(GridView*)del
 {

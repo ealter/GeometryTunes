@@ -8,10 +8,10 @@
     int numNotes;
     int numWhiteNotes;
     id delegate; //A Gridview type
-    NotePlayer *notePlayer;
 }
 
 @property unsigned octave;
+@property (retain) NotePlayer *notePlayer;
 
 - (id)sharedInit;
 - (id)initWithFrame:(CGRect)frame delegate:(id)delagate;
