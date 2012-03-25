@@ -46,6 +46,7 @@
 
 - (void)updateAndDisplayPath:(CGContextRef)context
 {
+    [self buildPath];
     CGContextSaveGState(context);
     
     path.lineWidth = 5;
