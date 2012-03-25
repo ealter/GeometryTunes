@@ -25,6 +25,9 @@
 @synthesize pianoOctave;
 @synthesize state;
 
+static NSString* editPathButtonStr = @"Edit Path";
+static NSString* finishEditingPathButtonStr = @"Stop Path";
+
 - (GridCell*)cellAtX:(unsigned)x y:(unsigned)y
 {
     return [[cells objectAtIndex:x] objectAtIndex:y];
@@ -203,7 +206,16 @@
 -(void) editButtonEvent:(id)sender;
 {
     NSLog(@"EditButtonPressed");
-    state = PATH_EDIT_STATE;
+    if(state == PATH_EDIT_STATE)
+    {
+        [toolbarButtons[6] setTitle:editPathButtonStr forState:UIControlStateNormal];
+        state = NORMAL_STATE;
+    }
+    else
+    {
+        [toolbarButtons[6] setTitle:finishEditingPathButtonStr forState:UIControlStateNormal];
+        state = PATH_EDIT_STATE;
+    }
 }
 
 - (void) makePlaybackButtons
@@ -218,7 +230,7 @@
     int buttonSpacing = 15;
     int YPosition = 15;
     
-    NSString * buttonNames[] = {@"Play", @"Pause", @"Rew", @"FF", @"Save", @"Load", @"Edit Path"};
+    NSString * buttonNames[] = {@"Play", @"Pause", @"Rew", @"FF", @"Save", @"Load", editPathButtonStr};
     int numButtons = sizeof(buttonNames)/sizeof(buttonNames[0]);
     assert(numButtons = sizeof(toolbarButtons)/sizeof(toolbarButtons[0]));
     
