@@ -102,8 +102,10 @@
             currentY = box.y;
             int pianoHeight = 200;
             int pianoY = gridHeight - pianoHeight;
-            if((box.y+1) * [self getBoxHeight] > gridHeight - pianoHeight)
-                pianoY = (box.y - 0.5) * [self getBoxHeight] - pianoHeight;
+            if((box.y+1) * [self getBoxHeight] > gridHeight - pianoHeight) {
+                pianoY = [self getBoxHeight];
+            }
+                
             CGRect pianoRect = CGRectMake(0, pianoY, gridWidth, pianoHeight);
             if (!piano)
                 piano = [[Piano alloc] initWithFrame:pianoRect delegate:self];
