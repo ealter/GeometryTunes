@@ -77,7 +77,7 @@ const static NSTimeInterval playbackSpeed = 1.0;
     piano = NULL;
     
     playbackPosition = 0;
-    isPaused = false;
+    playbackTimer = nil;
     
     cells = [[NSMutableArray alloc] initWithCapacity:numBoxesY];
     NSMutableArray *row;
@@ -196,14 +196,16 @@ const static NSTimeInterval playbackSpeed = 1.0;
 -(void) playButtonEvent:(id)sender;
 {
     [self changeToNormalState];
-    isPaused = false;
     [self playPathWithSpeed:playbackSpeed];
 }
 
 -(void) pauseButtonEvent:(id)sender;
 {
     if(state == NORMAL_STATE)
-        isPaused = true;
+    {
+        if(playbackTimer)
+            [playbackTimer invalidate];
+    }
     else
         [self changeToNormalState];
 }
@@ -215,9 +217,10 @@ const static NSTimeInterval playbackSpeed = 1.0;
 
 -(void) ffButtonEvent:(id)sender;
 {
+    if(playbackTimer)
+        [playbackTimer invalidate];
     if(state == NORMAL_STATE)
     {
-        isPaused = false;
         [self playPathWithSpeed:playbackSpeed * 0.5];
     }
     else
@@ -312,29 +315,30 @@ const static NSTimeInterval playbackSpeed = 1.0;
     return box;
 }
 
-- (void)playPathWithSpeed:(NSTimeInterval)speed
+- (void)playNote:(NSTimer*)t
 {
     NSMutableArray *points = pathView.path.notes;
-    int numPoints = [points count];
-    if(playbackPosition == numPoints)
-        playbackPosition = 0;
-    for(; playbackPosition<numPoints; playbackPosition++)
+    if(playbackPosition == [points count])
     {
-        if(isPaused)
-            return;
-        CGPoint box = [self getBoxFromCoords:[[points objectAtIndex:playbackPosition] CGPointValue]];
-        assert(box.x > 0 && box.y > 0);
-        GridCell *cell = [self cellAtX:box.x y:box.y];
-        pianoNote note = [cell getNote];
-        if(note != NO_PIANO_NOTE)
-        {
-            assert(piano && piano.notePlayer);
-            [piano.notePlayer playNoteWithPitch: [noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note]];
-        }
-        if(playbackPosition + 1 < numPoints) //Don't pause if this is the last note
-            [NSThread sleepForTimeInterval:speed];
+        playbackPosition = 0;
+        [playbackTimer invalidate];
+        return;
     }
-    playbackPosition = 0;
+    CGPoint box = [self getBoxFromCoords:[[points objectAtIndex:playbackPosition] CGPointValue]];
+    assert(box.x > 0 && box.y > 0);
+    GridCell *cell = [self cellAtX:box.x y:box.y];
+    pianoNote note = [cell getNote];
+    if(note != NO_PIANO_NOTE)
+    {
+        assert(piano && piano.notePlayer);
+        [piano.notePlayer playNoteWithPitch: [noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note]];
+    }
+    playbackPosition++;
+}
+
+- (void)playPathWithSpeed:(NSTimeInterval)speed
+{
+    playbackTimer = [NSTimer scheduledTimerWithTimeInterval:speed target:self selector:@selector(playNote:) userInfo:nil repeats:YES];
 }
 
 @end

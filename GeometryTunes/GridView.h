@@ -18,7 +18,7 @@
     PathsView *pathView;
     UIButton *toolbarButtons[7];
     int playbackPosition;
-    bool isPaused;
+    NSTimer *playbackTimer;
 }
 
 typedef enum STATE
