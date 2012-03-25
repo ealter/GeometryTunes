@@ -16,6 +16,7 @@
     NSMutableArray *cells; //2D array: 1st index is row
                            //          2nd index is col
     PathsView *pathView;
+    UIButton *toolbarButtons[7];
 }
 
 typedef enum STATE
