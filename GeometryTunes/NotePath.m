@@ -15,20 +15,20 @@
     self = [super init];
     if (self) {
         notes = [[NSMutableArray alloc] init];
-        numNotes = 0;   
+        numNotes = 0;
     }
     return self;
 }
 
-- (void)addNoteWithArray:(NSMutableArray*)array pos:(CGPoint)pos 
+- (void)addNoteWithPos:(CGPoint)pos 
 {
-    [array addObject:[NSValue valueWithCGPoint:pos]];
+    [notes addObject:[NSValue valueWithCGPoint:pos]];
     numNotes++;
 }
 
-- (void)removeNoteWithArray:(NSMutableArray*)array index:(NSUInteger)index
+- (void)removeNoteAtIndex:(NSUInteger)index
 {
-    [array removeObjectAtIndex:index];
+    [notes removeObjectAtIndex:index];
     numNotes--;
 }
 
@@ -37,10 +37,8 @@
     UIBezierPath* path = [UIBezierPath bezierPath];
     if (numNotes > 0) {
         [path moveToPoint:[[array objectAtIndex:0] CGPointValue]];
-        if (numNotes > 1) {
-            for (int i = 1; i < numNotes; i++) {
-                [path addLineToPoint:[[array objectAtIndex:i] CGPointValue]];
-            }
+        for (int i = 1; i < numNotes; i++) {
+            [path addLineToPoint:[[array objectAtIndex:i] CGPointValue]];
         }
     }
 }

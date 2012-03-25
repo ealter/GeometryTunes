@@ -15,7 +15,7 @@
 }
 
 - (id)init;
-- (void)addNoteWithArray:(NSMutableArray*)array pos:(CGPoint)pos;
-- (void)removeNoteWithArray:(NSMutableArray*)array index:(NSUInteger)index;
+- (void)addNoteWithPos:(CGPoint)pos;
+- (void)removeNoteAtIndex:(NSUInteger)index;
 
 @end
