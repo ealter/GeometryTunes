@@ -7,51 +7,41 @@
 //
 
 #import "noteColor.h"
+#import "noteTypes.h"
 
 @implementation noteColor
 
-const int RED = 0;
-const int GREEN = 1;
-const int BLUE = 2;
-const int ALPHA_MULT = 0.2;
+#define HUE 0
+#define SAT 1
+#define BRIGHT 2
+#define ALPHA 3
+#define BRIGHTNESS_FACTOR 0.1
 
-float RGBPitchMap[11][3] =
+static const float HSBAPitchMap[12][4] =
 {
-    {1.0, 0.0, 0.0},
-    {0.75, 0.25, 0.0},
-    {0.5, 0.5, 0.0},
-    {0.25, 0.75, 0.0},
-    {0.0, 1.0, 0.0},
-    {0.0, 0.75, 0.25},
-    {0.0, 0.5, 0.5},
-    {0.0, 0.25, 0.75},
-    {0.0, 0.0, 1.0},
-    {0.25, 0.0, 0.75},
-    {0.5, 0.0, 0.5}
+    {0.0, 1.0, 1.0, 1.0},
+    {0.055, 1.0, 1.0, 1.0},   
+    {0.166, 1.0, 1.0, 1.0},   
+    {0.277, 1.0, 1.0, 1.0},
+    {0.333, 1.0, 1.0, 1.0},
+    {0.388, 1.0, 1.0, 1.0},
+    {0.5, 1.0, 1.0, 1.0},
+    {0.583, 1.0, 1.0, 1.0},
+    {0.666, 1.0, 1.0, 1.0},
+    {0.722, 1.0, 1.0, 1.0},
+    {0.833, 1.0, 1.0, 1.0},
+    {0.9, 1.0, 1.0, 1.0}
 };
 
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        // Initialization code
-    }
-    return self;
++ (UIColor*)colorFromNoteWithPitch:(int)pitch octave:(int)octave {
+    float hue = HSBAPitchMap[pitch][HUE];
+    float sat = HSBAPitchMap[pitch][SAT];
+    float bright = HSBAPitchMap[pitch][BRIGHT];
+    float alpha = HSBAPitchMap[pitch][ALPHA];
+    UIColor *color = [[UIColor alloc] init];
+    bright -= BRIGHTNESS_FACTOR * (MAX_OCTAVE - octave);
+    color = [UIColor colorWithHue:hue saturation:sat brightness:bright alpha:alpha];
+    return color;
 }
-
-+ (UIColor*)colorFromNoteWithPitch:(int)pitch AndOctave:(int)octave {
-    
-    return [UIColor colorWithRed:RGBPitchMap[pitch][RED] green:RGBPitchMap[pitch][GREEN] blue:RGBPitchMap[pitch][BLUE] alpha:ALPHA_MULT * octave];
-    
-}
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end

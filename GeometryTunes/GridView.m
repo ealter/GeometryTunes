@@ -7,6 +7,7 @@
 //
 
 #import "GridView.h"
+#import "GridCell.h"
 
 @implementation GridView
 
@@ -15,11 +16,19 @@
 @synthesize gridWidth;
 @synthesize gridHeight;
 
+@synthesize currentX;
+@synthesize currentY;
+
 @synthesize tapGestureRecognizer;
 @synthesize tapButtonRecognizer;
 
 @synthesize pianoOctave;
 @synthesize state;
+
+- (GridCell*)cellAtX:(unsigned)x y:(unsigned)y
+{
+    return [[cells objectAtIndex:x] objectAtIndex:y];
+}
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -47,9 +56,24 @@
     numBoxesX = 10;
     numBoxesY = 10;
     
-    pianoOctave = 5;
+    pianoOctave = INITIAL_PIANO_OCTAVE;
+    assert(pianoOctave >= MIN_OCTAVE && pianoOctave <= MAX_OCTAVE);
     state = NORMAL_STATE;
     piano = NULL;
+    
+    cells = [[NSMutableArray alloc] initWithCapacity:numBoxesY];
+    NSMutableArray *row;
+    
+    for(int i=0; i<numBoxesY; i++)
+    {
+        row = [[NSMutableArray alloc] initWithCapacity:numBoxesX];
+        for(int j=0; j<numBoxesX; j++)
+        {
+            CGRect cell = CGRectMake(i * [self getBoxWidth], j * [self getBoxHeight], [self getBoxWidth], [self getBoxHeight]);
+            [row addObject:[[GridCell alloc]initWithFrame:cell]];
+        }
+        [cells addObject:row];
+    }
     
     // Initialize tap gesture recognizer
     tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)]; 
@@ -71,12 +95,18 @@
         {
             state = PIANO_STATE;
             CGPoint box = [self getBoxFromCoords:pos];
+            assert(box.x >= 0 && box.x < numBoxesX);
+            assert(box.y >= 0 && box.y < numBoxesY);
+            
+            currentX = box.x;
+            currentY = box.y;
             int pianoHeight = 200;
             int pianoY = gridHeight - pianoHeight;
             if((box.y+1) * [self getBoxHeight] > gridHeight - pianoHeight)
                 pianoY = (box.y - 0.5) * [self getBoxHeight] - pianoHeight;
             CGRect pianoRect = CGRectMake(0, pianoY, gridWidth, pianoHeight);
-            piano = [[Piano alloc] initWithFrame:pianoRect];
+            if (!piano)
+                piano = [[Piano alloc] initWithFrame:pianoRect delegate:self];
             [piano setOctave:pianoOctave];
             [self addSubview:piano];
             NSLog(@"%@", NSStringFromCGPoint(box));
@@ -93,6 +123,20 @@
     }
 }
 
+- (void)changeNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave
+{
+    [self changeNoteWithPitch:pitch octave:octave x:currentX y:currentY];
+}
+
+- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned)x y:(unsigned)y
+{
+    assert(pitch < NOTES_IN_OCTAVE);
+    assert(octave <= MAX_OCTAVE && octave >= MIN_OCTAVE);
+    assert(x < numBoxesX && y < numBoxesY);
+    GridCell *cell = [self cellAtX:x y:y];
+    [cell setNote:[noteTypes getPianoNoteOfPitch:pitch Octave:octave]];
+}
+
 - (int)getBoxWidth
 {
     return gridWidth / numBoxesX;
@@ -105,11 +149,10 @@
 
 - (void)drawGrid:(CGContextRef)context
 {
-    CGRect myRect;
-    for (int i = 0; i <= numBoxesX; i++) {
-        for (int j = 0; j <= numBoxesY; j++) {
-            myRect = CGRectMake(i * [self getBoxWidth], j * [self getBoxHeight], [self getBoxWidth], [self getBoxHeight]);
-            CGContextAddRect(context, myRect);  
+    for (int y = 1; y < numBoxesY; y++) {
+        for (int x = 0; x < numBoxesX; x++) {
+            GridCell *cell = [self cellAtX:x y:y];
+            [self addSubview:cell];
         }
     }
 }
@@ -173,17 +216,9 @@
     CGContextSetFillColorWithColor(playbackContext, [UIColor blackColor].CGColor);
     [self drawPlaybackMenu:playbackContext];
     
-    // Add Playback buttons
     [self makePlaybackButtons];
     
-    // Draw Grid of screen size
-    CGContextRef context = UIGraphicsGetCurrentContext();
-    CGContextSetLineWidth(context, 2.0);
-    [self drawGrid:context];
-    
-    // Draw
-    CGContextStrokePath(context);
-
+    [self drawGrid:UIGraphicsGetCurrentContext()];
 }
 
 - (CGPoint) getBoxFromCoords:(CGPoint)pos 
