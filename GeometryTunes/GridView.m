@@ -123,6 +123,13 @@
             state = NORMAL_STATE;
         }
     }
+    else if(state == PATH_EDIT_STATE)
+    {
+        if(pos.y > [self getBoxHeight]) //Don't handle taps to the toolbar
+        {
+            //[addNoteWithPos
+        }
+    }
 }
 
 - (void)changeNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave
@@ -194,6 +201,7 @@
 -(void) editButtonEvent:(id)sender;
 {
     NSLog(@"EditButtonPressed");
+    state = PATH_EDIT_STATE;
 }
 
 - (void) makePlaybackButtons
@@ -220,8 +228,6 @@
     SEL selEventSave  = @selector(saveButtonEvent:);
     SEL selEventLoad  = @selector(loadButtonEvent:);
     SEL selEventEdit  = @selector(editButtonEvent:);
-    
-    //NSArray *event_table = [NSArray arrayWithObjects:selEventPlay, selEventPause, selEventRew, selEventFF, selEventSave, selEventLoad, selEventEdit, nil];
     SEL events[] = {selEventPlay, selEventPause, selEventRew, selEventFF, selEventSave, selEventLoad, selEventEdit};
     
     for(int i=0; i<numButtons; i++, nextXPosition += playbarButtonWidth + buttonSpacing)
