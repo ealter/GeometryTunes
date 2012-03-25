@@ -229,6 +229,7 @@
 		E28150FC150C513500C8A036 /* Piano.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Piano.m; path = GeometryTunes/Piano.m; sourceTree = "<group>"; };
 		E2E4AF57151ABE5300E033E4 /* GridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridCell.h; sourceTree = "<group>"; };
 		E2E4AF58151ABE5300E033E4 /* GridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridCell.m; sourceTree = "<group>"; };
+		E2EBF93B151FAA4D00D34B53 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -249,6 +250,7 @@
 		83194300150BD226003EF364 = {
 			isa = PBXGroup;
 			children = (
+				E2EBF93B151FAA4D00D34B53 /* CoreFoundation.framework */,
 				E25113F115192BE600BBE1F2 /* AVFoundation.framework */,
 				8319430E150BD226003EF364 /* Frameworks */,
 				83194315150BD226003EF364 /* GeometryTunes */,
