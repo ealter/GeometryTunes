@@ -12,6 +12,7 @@
 
 @synthesize state;
 @synthesize grid;
+@synthesize editPathBtn;
 
 - (IBAction)playEvent:(id)sender
 {
@@ -53,17 +54,18 @@
     else
     {
         [self changeStateToNormal:true];
-        //TODO: change Edit Path button text
+        [editPathBtn setTitle:@"Stop Path" forState:UIControlStateNormal];
         state = PATH_EDIT_STATE;
     }
 }
 
 - (void)changeStateToNormal:(bool)informGrid
 {
-    state = NORMAL_STATE;
+    if(state == PATH_EDIT_STATE)
+        [editPathBtn setTitle:@"Edit Path" forState:UIControlStateNormal];
     if(informGrid)
         [grid changeToNormalState];
-    //TODO: change button text for editting paths
+    state = NORMAL_STATE;
 }
 
 - (void)didReceiveMemoryWarning
