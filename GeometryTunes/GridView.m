@@ -58,11 +58,9 @@ const static NSTimeInterval playbackSpeed = 1.0;
 {
     if([self state] == PIANO_STATE)
         [piano removeFromSuperview];
-    else if([self state] == PATH_EDIT_STATE)
-    {
-        //TODO: Change toolbar button text
-    }
     [self setState:NORMAL_STATE];
+    ViewController *del = delegate;
+    [del changeStateToNormal:false];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -203,66 +201,13 @@ const static NSTimeInterval playbackSpeed = 1.0;
 -(void) playButtonEvent:(id)sender;
 {
     [self changeToNormalState];
-    [self playPathWithSpeed:playbackSpeed reversed:FALSE];
+    [self playPathWithSpeedFactor:1 reversed:FALSE];
 }
 
--(void) pauseButtonEvent:(id)sender;
-{
-    if([self state] == NORMAL_STATE)
-    {
-        if(playbackTimer)
-            [playbackTimer invalidate];
-    }
-    else
-        [self changeToNormalState];
-}
-
--(void) rewButtonEvent:(id)sender;
+-(void) pausePlayback
 {
     if(playbackTimer)
         [playbackTimer invalidate];
-    if([self state] == NORMAL_STATE)
-    {
-        [self playPathWithSpeed:playbackSpeed * 0.5 reversed:TRUE];
-    }
-    else
-        [self changeToNormalState];
-    NSLog(@"RewButtonPressed");
-}
-
--(void) ffButtonEvent:(id)sender;
-{
-    if(playbackTimer)
-        [playbackTimer invalidate];
-    if([self state] == NORMAL_STATE)
-    {
-        [self playPathWithSpeed:playbackSpeed * 0.5 reversed:FALSE];
-    }
-    else
-        [self changeToNormalState];
-}
-
--(void) saveButtonEvent:(id)sender;
-{
-    NSLog(@"SaveButtonPressed");
-}
-
--(void) loadButtonEvent:(id)sender;
-{
-    NSLog(@"LoadButtonPressed");
-}
-
--(void) editButtonEvent:(id)sender;
-{
-    if([self state] == PATH_EDIT_STATE)
-        [self changeToNormalState];
-    else
-    {
-        if([self state] == PIANO_STATE)
-            [piano removeFromSuperview];
-        //TODO: change Edit Path button text
-        [self setState:PATH_EDIT_STATE];
-    }
 }
 
 - (void)drawRect:(CGRect)rect
@@ -307,11 +252,12 @@ const static NSTimeInterval playbackSpeed = 1.0;
     else playbackPosition++;
 }
 
-- (void)playPathWithSpeed:(NSTimeInterval)speed reversed:(bool)reverse
+- (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse
 {
     //NSMutableArray *notes = pathView.path.notes;
     //if(reverse) notes = [[notes reverseObjectEnumerator] allObjects];
     
+    NSTimeInterval speed = playbackSpeed * factor;
     if(reverse) playbackPosition = [pathView.path.notes count];
     NSValue *reverseObject = [NSValue value:&reverse withObjCType:@encode(bool *)];
     playbackTimer = [NSTimer scheduledTimerWithTimeInterval:speed target:self selector:@selector(playNote:) userInfo:reverseObject repeats:YES];

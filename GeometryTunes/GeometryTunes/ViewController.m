@@ -15,23 +15,55 @@
 
 - (IBAction)playEvent:(id)sender
 {
-    
+    if(state != NORMAL_STATE)
+        [self changeStateToNormal:true];
+    [grid playPathWithSpeedFactor:1 reversed:false];
 }
+
 - (IBAction)pauseEvent:(id)sender
 {
-    
+    if(state == NORMAL_STATE)
+        [grid pausePlayback];
+    else
+        [self changeStateToNormal:true];
 }
+
 - (IBAction)rewindEvent:(id)sender
 {
-    
+    [grid pausePlayback]; //todo: make this stop playback, not pause
+    if(state == NORMAL_STATE)
+    {
+        [grid playPathWithSpeedFactor:0.5 reversed:true];
+    }
+    else
+        [self changeStateToNormal:true];
 }
+
 - (IBAction)fastForwardEvent:(id)sender
 {
-    
+    if(state != NORMAL_STATE)
+        [self changeStateToNormal:true];
+    [grid playPathWithSpeedFactor:0.5 reversed:false];
 }
+
 - (IBAction)editPathEvent:(id)sender
 {
-    
+    if(state == PATH_EDIT_STATE)
+        [self changeStateToNormal:true];
+    else
+    {
+        [self changeStateToNormal:true];
+        //TODO: change Edit Path button text
+        state = PATH_EDIT_STATE;
+    }
+}
+
+- (void)changeStateToNormal:(bool)informGrid
+{
+    state = NORMAL_STATE;
+    if(informGrid)
+        [grid changeToNormalState];
+    //TODO: change button text for editting paths
 }
 
 - (void)didReceiveMemoryWarning

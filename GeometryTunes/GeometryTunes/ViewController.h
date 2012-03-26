@@ -27,4 +27,6 @@ typedef enum STATE
 - (IBAction)fastForwardEvent:(id)sender;
 - (IBAction)editPathEvent:(id)sender;
 
+- (void)changeStateToNormal:(bool)informGrid;
+
 @end
