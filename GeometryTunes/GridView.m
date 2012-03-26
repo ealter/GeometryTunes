@@ -128,52 +128,41 @@ const static NSTimeInterval playbackSpeed = 1.0;
 
 -(void) handleTap:(UITapGestureRecognizer *)sender
 {
-    NSLog(@"Handling tap in state: %d", [self state]);
     CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
     if([self state] == NORMAL_STATE)
     {
-        if(pos.y > [self getBoxHeight]) //Don't handle taps to the toolbar
-        {
-            [self setState:PIANO_STATE];
-            CGPoint box = [self getBoxFromCoords:pos];
-            assert(box.x >= 0 && box.x < numBoxesX);
-            assert(box.y >= 0 && box.y < numBoxesY);
-            
-            currentX = box.x;
-            currentY = box.y;
-            int pianoHeight = 200;
-            int pianoY = gridHeight - pianoHeight;
-            if((box.y+1) * [self getBoxHeight] > gridHeight - pianoHeight) {
-                pianoY = [self getBoxHeight];
-            }
-                
-            CGRect pianoRect = CGRectMake(0, pianoY, gridWidth, pianoHeight);
-            if (!piano)
-                piano = [[Piano alloc] initWithFrame:pianoRect delegate:self];
-            [piano setOctave:pianoOctave];
-            [self addSubview:piano];
-            NSLog(@"%@", NSStringFromCGPoint(box));
+        [self setState:PIANO_STATE];
+        CGPoint box = [self getBoxFromCoords:pos];
+        assert(box.x >= 0 && box.x < numBoxesX);
+        assert(box.y >= 0 && box.y < numBoxesY);
+        
+        currentX = box.x;
+        currentY = box.y;
+        int pianoHeight = 200;
+        int pianoY = gridHeight - pianoHeight;
+        if((box.y+1) * [self getBoxHeight] > pianoY) {
+            pianoY = 0;
         }
+            
+        CGRect pianoRect = CGRectMake(0, pianoY, gridWidth, pianoHeight);
+        if (piano)
+            piano = [piano initWithFrame:pianoRect delegate:self];
+        else
+            piano = [[Piano alloc] initWithFrame:pianoRect delegate:self];
+        [piano setOctave:pianoOctave];
+        [self addSubview:piano];
     }
     else if([self state] == PIANO_STATE)
     {
         if(!CGRectContainsPoint([piano frame], pos))
-        {
             [self changeToNormalState];
-            NSLog(@"Time to remove piano");
-        }
-        else
-            NSLog(@"Don't remove piano");
     }
     else if([self state] == PATH_EDIT_STATE)
     {
-        if(pos.y > [self getBoxHeight]) //Don't handle taps to the toolbar
-        {
-            CGPoint box = [self getBoxFromCoords:pos];
-            CGPoint point = CGPointMake((box.x + 0.5) * [self getBoxWidth], (box.y + 0.5) * [self getBoxHeight]);
-            [pathView addNoteWithPos:point];
-            [pathView setNeedsDisplay];
-        }
+        CGPoint box = [self getBoxFromCoords:pos];
+        CGPoint point = CGPointMake((box.x + 0.5) * [self getBoxWidth], (box.y + 0.5) * [self getBoxHeight]);
+        [pathView addNoteWithPos:point];
+        [pathView setNeedsDisplay];
     }
 }
 
@@ -203,20 +192,12 @@ const static NSTimeInterval playbackSpeed = 1.0;
 
 - (void)drawGrid:(CGContextRef)context
 {
-    for (int y = 1; y < numBoxesY; y++) {
+    for (int y = 0; y < numBoxesY; y++) {
         for (int x = 0; x < numBoxesX; x++) {
             GridCell *cell = [self cellAtX:x y:y];
             [self addSubview:cell];
         }
     }
-}
-
-- (void) drawPlaybackMenu:(CGContextRef)context
-{
-    CGRect playbackBar;
-    playbackBar = CGRectMake(0, 0, gridWidth, [self getBoxHeight]);
-    [[UIColor blackColor] set];
-    UIRectFill(playbackBar);
 }
 
 -(void) playButtonEvent:(id)sender;
@@ -286,16 +267,11 @@ const static NSTimeInterval playbackSpeed = 1.0;
 
 - (void)drawRect:(CGRect)rect
 {
-    NSLog(@"Drawing rectangle");
     // Draw Playback Menu at top of screen
-    CGContextRef playbackContext = UIGraphicsGetCurrentContext();
-    CGContextSetLineWidth(playbackContext, 2.0);
-    CGContextSetFillColorWithColor(playbackContext, [UIColor blackColor].CGColor);
     
     [self drawGrid:UIGraphicsGetCurrentContext()];
     [self addSubview:pathView];
     [self bringSubviewToFront:pathView];
-    [self drawPlaybackMenu:playbackContext];
 }
 
 - (CGPoint) getBoxFromCoords:(CGPoint)pos 
