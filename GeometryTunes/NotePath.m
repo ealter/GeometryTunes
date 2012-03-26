@@ -106,8 +106,10 @@ const static NSTimeInterval playbackSpeed = 1.0;
         reverse = true;
     }
     NSTimeInterval speed = playbackSpeed * factor;
+    //if(reverse)
+        //playbackPosition = [notes count] - 1; Causes Rew to start from end every time
     if(reverse)
-        playbackPosition = [notes count] - 1;
+        playbackPosition = playbackPosition - 1;
     NSNumber *r = [NSNumber numberWithBool:reverse];
     if(playbackTimer)
         [playbackTimer invalidate];

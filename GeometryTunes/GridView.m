@@ -34,7 +34,12 @@
 {
     return [[cells objectAtIndex:x] objectAtIndex:y];
 }
-
+/*
+-(CGRect)rectAtX:(unsigned)x y:(unsigned)y
+{
+    return rects[x][y];
+}
+*/
 - (STATE)state
 {
     ViewController *del = delegate;
@@ -94,18 +99,23 @@
     
     cells = [[NSMutableArray alloc] initWithCapacity:numBoxesY];
     NSMutableArray *row;
+    //rects = (CGRect **)malloc(sizeof(CGRect *) * numBoxesY);
+    //CGRect *rectRow;
     
     float boxWidth = [self getBoxWidth];
     float boxHeight = [self getBoxHeight];
     for(int i=0; i<numBoxesX; i++)
     {
         row = [[NSMutableArray alloc] initWithCapacity:numBoxesX];
+        //rectRow = (CGRect *)malloc(sizeof(CGRect *) * numBoxesX);
         for(int j=0; j<numBoxesY; j++)
         {
             CGRect cell = CGRectMake(i * boxWidth, j * boxHeight, boxWidth, boxHeight);
             [row addObject:[[GridCell alloc]initWithFrame:cell]];
+            //rectRow[j] = cell;
         }
         [cells addObject:row];
+        //rects[i] = rectRow;
     }
     
     pathView = [[PathsView alloc]initWithFrame:frame];
@@ -129,6 +139,9 @@
         CGPoint box = [self getBoxFromCoords:pos];
         assert(box.x >= 0 && box.x < numBoxesX);
         assert(box.y >= 0 && box.y < numBoxesY);
+        
+        //CGRect selectedCell = [self rectAtX:box.x y:box.y];
+        //CGFloat xCord = [selectedCell CGRectWidth];
         
         currentX = box.x;
         currentY = box.y;
