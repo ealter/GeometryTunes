@@ -229,9 +229,8 @@ const static NSTimeInterval playbackSpeed = 1.0;
   
 - (void)playNote:(NSTimer*)t
 {
-    bool *reverse = NULL;//= t.userInfo;
-    [t.userInfo getValue:reverse];
-    assert(reverse);
+    NSNumber *r = t.userInfo;
+    bool reverse = [r boolValue];
     NSMutableArray *points = pathView.path.notes;
     if((reverse && playbackPosition == 0) || playbackPosition == [points count])
     {
@@ -259,8 +258,9 @@ const static NSTimeInterval playbackSpeed = 1.0;
     
     NSTimeInterval speed = playbackSpeed * factor;
     if(reverse) playbackPosition = [pathView.path.notes count];
-    NSValue *reverseObject = [NSValue value:&reverse withObjCType:@encode(bool *)];
-    playbackTimer = [NSTimer scheduledTimerWithTimeInterval:speed target:self selector:@selector(playNote:) userInfo:reverseObject repeats:YES];
+    //NSValue *reverseObject = [NSValue value:&reverse withObjCType:@encode(bool *)];
+    NSNumber *r = [NSNumber numberWithBool:reverse];
+    playbackTimer = [NSTimer scheduledTimerWithTimeInterval:speed target:self selector:@selector(playNote:) userInfo:r repeats:YES];
 
 }
 
