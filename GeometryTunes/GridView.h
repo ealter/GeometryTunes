@@ -48,6 +48,7 @@
 
 - (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse;
 - (void)pausePlayback;
+- (void)stopPlayback;
 
 - (void)changeToNormalState;
 

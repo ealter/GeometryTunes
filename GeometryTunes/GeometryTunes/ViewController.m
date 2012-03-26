@@ -13,18 +13,35 @@
 @synthesize state;
 @synthesize grid;
 @synthesize editPathBtn;
+@synthesize playPauseButton;
 
-- (IBAction)playEvent:(id)sender
+- (IBAction)playEvent:(id)sender //change to playPauseEvent. Don't forget to reconnect in .xib
 {
-    if(state != NORMAL_STATE)
-        [self changeStateToNormal:true];
-    [grid playPathWithSpeedFactor:1 reversed:false];
+    playPauseButton = (UIButton *)sender;
+    if(playPauseButton.currentTitle == @"Play"){
+        if(state != NORMAL_STATE)
+            [self changeStateToNormal:true];
+        [grid playPathWithSpeedFactor:1 reversed:false];
+        
+        [sender setTitle:@"Pause" forState:UIControlStateNormal];
+    }
+    else{
+        if(state == NORMAL_STATE)
+            [grid pausePlayback];
+        else
+            [self changeStateToNormal:true];
+        [sender setTitle:@"Play" forState:UIControlStateNormal];
+    }
+    
+    
 }
 
-- (IBAction)pauseEvent:(id)sender
+- (IBAction)pauseEvent:(id)sender //change to StopEvent. Dont' forget to reconnect in .xib
 {
-    if(state == NORMAL_STATE)
-        [grid pausePlayback];
+    if(state == NORMAL_STATE){
+        [grid stopPlayback];
+        [playPauseButton setTitle:@"Play" forState:UIControlStateNormal];
+    }
     else
         [self changeStateToNormal:true];
 }
@@ -81,6 +98,7 @@
     [super viewDidLoad];
     state = NORMAL_STATE;
     [grid setDelegate:self];
+    UIButton *playPauseButton = [[UIButton alloc] init];
 }
 
 - (void)viewDidUnload

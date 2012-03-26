@@ -121,6 +121,12 @@ const static NSTimeInterval playbackSpeed = 1.0;
     
     // Add gesture recognizer to the view
     [self addGestureRecognizer:tapGestureRecognizer];
+    
+    //Initialize playback features
+    /*struct PlaybackFeatures{
+        int playSpeed;
+        int currentNote;
+    };*/
     NSLog(@"Finished init with frame");
 }
 
@@ -206,8 +212,19 @@ const static NSTimeInterval playbackSpeed = 1.0;
 
 -(void) pausePlayback
 {
-    if(playbackTimer)
+    if(playbackTimer) {
+        [piano.notePlayer stopAllNotes];
         [playbackTimer invalidate];
+    }
+}
+
+-(void) stopPlayback
+{
+    if(playbackTimer) {
+        [piano.notePlayer stopAllNotes];
+        [playbackTimer invalidate];
+        playbackPosition = 0;
+    }
 }
 
 -(void) saveButtonEvent:(id)sender;
@@ -283,13 +300,13 @@ const static NSTimeInterval playbackSpeed = 1.0;
         return;
     }
     CGPoint box = [self getBoxFromCoords:[[points objectAtIndex:playbackPosition] CGPointValue]];
-    assert(box.x > 0 && box.y > 0);
+    assert(box.x >= 0 && box.y >= 0);
     GridCell *cell = [self cellAtX:box.x y:box.y];
     pianoNote note = [cell getNote];
     if(note != NO_PIANO_NOTE)
     {
         assert(piano && piano.notePlayer);
-        [piano.notePlayer playNoteWithPitch: [noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note]];
+        [piano.notePlayer playNoteWithPitch: [noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note]]; //
     }
     if(reverse)playbackPosition--;
     else playbackPosition++;
