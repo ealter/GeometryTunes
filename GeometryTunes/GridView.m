@@ -27,9 +27,6 @@
 @synthesize pianoOctave;
 @synthesize delegate;
 
-static NSString* editPathButtonStr = @"Edit Path";
-static NSString* finishEditingPathButtonStr = @"Finish";
-
 - (GridCell*)cellAtX:(unsigned)x y:(unsigned)y
 {
     return [[cells objectAtIndex:x] objectAtIndex:y];
@@ -116,13 +113,6 @@ static NSString* finishEditingPathButtonStr = @"Finish";
     
     // Add gesture recognizer to the view
     [self addGestureRecognizer:tapGestureRecognizer];
-    
-    //Initialize playback features
-    /*struct PlaybackFeatures{
-        int playSpeed;
-        int currentNote;
-    };*/
-    NSLog(@"Finished init with frame");
 }
 
 -(void) handleTap:(UITapGestureRecognizer *)sender
