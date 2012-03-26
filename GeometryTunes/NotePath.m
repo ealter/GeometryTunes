@@ -48,11 +48,16 @@ const static NSTimeInterval playbackSpeed = 1.0;
 - (void)buildPath
 {
     path = [UIBezierPath bezierPath];
-    if (numNotes > 0) {
-        [path moveToPoint:[[notes objectAtIndex:0] CGPointValue]];
-        for (int i = 1; i < numNotes; i++) {
-            [path addLineToPoint:[[notes objectAtIndex:i] CGPointValue]];
-        }
+    
+    float radius = 5;
+    for (int i = 0; i < numNotes; i++) {
+        CGPoint point = [[notes objectAtIndex:i] CGPointValue];
+        if (i == 0)
+            [path moveToPoint:point];
+        else
+            [path addLineToPoint:point];
+        UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(point.x - radius, point.y - radius, radius*2, radius*2)];
+        [path appendPath:circlePath];
     }
 }
 
