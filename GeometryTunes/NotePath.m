@@ -85,11 +85,17 @@ const static NSTimeInterval playbackSpeed = 1.0;
         return;
     }
     pianoNote note = [delegateGrid getNoteFromCoords:[[notes objectAtIndex:playbackPosition] CGPointValue]];
+    
+    // pulse code begin (unfinished)
+    
     CGPoint point = [[notes objectAtIndex:playbackPosition] CGPointValue];
     pulse = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(point.x - 5, point.y - 5, 20, 20)];
     pulse.lineWidth = 5;
     [[UIColor redColor] setStroke];
     [pulse stroke];
+    
+    // pulse code end
+    
     if(note != NO_PIANO_NOTE)
     {
         assert(player);
