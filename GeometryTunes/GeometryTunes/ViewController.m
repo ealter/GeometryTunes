@@ -13,6 +13,27 @@
 @synthesize state;
 @synthesize grid;
 
+- (IBAction)playEvent:(id)sender
+{
+    
+}
+- (IBAction)pauseEvent:(id)sender
+{
+    
+}
+- (IBAction)rewindEvent:(id)sender
+{
+    
+}
+- (IBAction)fastForwardEvent:(id)sender
+{
+    
+}
+- (IBAction)editPathEvent:(id)sender
+{
+    
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
