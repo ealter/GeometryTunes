@@ -212,8 +212,6 @@ const static NSTimeInterval playbackSpeed = 1.0;
 
 - (void)drawRect:(CGRect)rect
 {
-    // Draw Playback Menu at top of screen
-    
     [self drawGrid:UIGraphicsGetCurrentContext()];
     [self addSubview:pathView];
     [self bringSubviewToFront:pathView];
@@ -253,12 +251,8 @@ const static NSTimeInterval playbackSpeed = 1.0;
 
 - (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse
 {
-    //NSMutableArray *notes = pathView.path.notes;
-    //if(reverse) notes = [[notes reverseObjectEnumerator] allObjects];
-    
     NSTimeInterval speed = playbackSpeed * factor;
     if(reverse) playbackPosition = [pathView.path.notes count];
-    //NSValue *reverseObject = [NSValue value:&reverse withObjCType:@encode(bool *)];
     NSNumber *r = [NSNumber numberWithBool:reverse];
     if(playbackTimer)
         [playbackTimer invalidate];
