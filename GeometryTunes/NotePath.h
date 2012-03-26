@@ -12,6 +12,7 @@
 @interface NotePath : NSObject
 {
     UIBezierPath* path;
+    UIBezierPath* pulse;
     NSTimer *playbackTimer;
 }
 
@@ -26,7 +27,6 @@
 - (void)addNoteWithPos:(CGPoint)pos;
 - (void)removeNoteAtIndex:(unsigned)index;
 - (void)updateAndDisplayPath:(CGContextRef)context;
-
 - (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer*)player;
 - (void)pause;
 - (void)stop;

@@ -26,6 +26,7 @@ const static NSTimeInterval playbackSpeed = 1.0;
         notes = [[NSMutableArray alloc] init];
         numNotes = 0;
         path = nil;
+        pulse = nil;
         playbackPosition = 0;
         playbackTimer = nil;
         delegateGrid = nil;
@@ -84,6 +85,11 @@ const static NSTimeInterval playbackSpeed = 1.0;
         return;
     }
     pianoNote note = [delegateGrid getNoteFromCoords:[[notes objectAtIndex:playbackPosition] CGPointValue]];
+    CGPoint point = [[notes objectAtIndex:playbackPosition] CGPointValue];
+    pulse = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(point.x - 5, point.y - 5, 20, 20)];
+    pulse.lineWidth = 5;
+    [[UIColor redColor] setStroke];
+    [pulse stroke];
     if(note != NO_PIANO_NOTE)
     {
         assert(player);
