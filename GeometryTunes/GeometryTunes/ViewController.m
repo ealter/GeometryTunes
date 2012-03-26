@@ -44,7 +44,6 @@
 
 - (void)viewDidLoad
 {
-    NSLog(@"View did load");
     [super viewDidLoad];
     state = NORMAL_STATE;
     [grid setDelegate:self];
