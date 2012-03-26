@@ -22,7 +22,7 @@
 @property int gridHeight;
 @property int numBoxesX;
 @property int numBoxesY;
-@property (retain) id delegate;
+@property (retain) id delegate; //A ViewController
 
 @property int pianoOctave;
 

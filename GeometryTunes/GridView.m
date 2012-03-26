@@ -213,6 +213,7 @@ static NSString* finishEditingPathButtonStr = @"Finish";
 -(void) stopPlayback
 {
     [pathView stop];
+    [delegate setPlayStateToStopped];
 }
 
 -(void) saveButtonEvent:(id)sender;

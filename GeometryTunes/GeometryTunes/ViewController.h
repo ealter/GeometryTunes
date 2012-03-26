@@ -30,5 +30,6 @@ typedef enum STATE
 - (IBAction)editPathEvent:(id)sender;
 
 - (void)changeStateToNormal:(bool)informGrid;
+- (void)setPlayStateToStopped;
 
 @end

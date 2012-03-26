@@ -26,7 +26,7 @@ static NSString *pauseBtnText = @"Pause";
             [grid pausePlayback];
         else
             [self changeStateToNormal:true];
-        [sender setTitle:playBtnText forState:UIControlStateNormal];
+        [self setPlayStateToStopped];
     }
     else{
         if(state != NORMAL_STATE)
@@ -85,6 +85,11 @@ static NSString *pauseBtnText = @"Pause";
     if(informGrid)
         [grid changeToNormalState];
     state = NORMAL_STATE;
+}
+
+- (void)setPlayStateToStopped
+{
+    [playPauseButton setTitle:playBtnText forState:UIControlStateNormal];
 }
 
 - (void)didReceiveMemoryWarning

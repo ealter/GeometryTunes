@@ -74,8 +74,7 @@ const static NSTimeInterval playbackSpeed = 1.0;
     bool reverse = [r boolValue];
     if((reverse && playbackPosition == 0) || playbackPosition == [notes count])
     {
-        playbackPosition = 0;
-        [playbackTimer invalidate];
+        [delegateGrid stopPlayback];
         return;
     }
     pianoNote note = [delegateGrid getNoteFromCoords:[[notes objectAtIndex:playbackPosition] CGPointValue]];
@@ -84,8 +83,10 @@ const static NSTimeInterval playbackSpeed = 1.0;
         assert(player);
         [player playNoteWithPitch: [noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note]];
     }
-    if(reverse)playbackPosition--;
-    else playbackPosition++;
+    if(reverse)
+        playbackPosition--;
+    else
+        playbackPosition++;
 }
 
 - (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer *)p
