@@ -16,22 +16,15 @@
     NSMutableArray *cells; //2D array: 1st index is row
                            //          2nd index is col
     PathsView *pathView;
-    UIButton *toolbarButtons[7];
     int playbackPosition;
     NSTimer *playbackTimer;
 }
-
-typedef enum STATE
-{
-    NORMAL_STATE,
-    PIANO_STATE,
-    PATH_EDIT_STATE
-} STATE;
 
 @property int gridWidth;
 @property int gridHeight;
 @property int numBoxesX;
 @property int numBoxesY;
+@property (retain) id delegate;
 
 @property int pianoOctave;
 
@@ -40,8 +33,6 @@ typedef enum STATE
 
 @property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic, retain) UITapGestureRecognizer *tapButtonRecognizer;
-
-@property STATE state;
 
 - (void)sharedInitWithFrame:(CGRect)frame;
 
@@ -53,7 +44,6 @@ typedef enum STATE
 
 - (void)drawGrid:(CGContextRef)context;
 - (void)drawPlaybackMenu:(CGContextRef)context;
-- (void) makePlaybackButtons;
 
 - (CGPoint)getBoxFromCoords:(CGPoint)pos;
 

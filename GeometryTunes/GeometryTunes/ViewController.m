@@ -10,6 +10,30 @@
 
 @implementation ViewController
 
+@synthesize state;
+@synthesize grid;
+
+- (IBAction)playEvent:(id)sender
+{
+    
+}
+- (IBAction)pauseEvent:(id)sender
+{
+    
+}
+- (IBAction)rewindEvent:(id)sender
+{
+    
+}
+- (IBAction)fastForwardEvent:(id)sender
+{
+    
+}
+- (IBAction)editPathEvent:(id)sender
+{
+    
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -20,8 +44,10 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"View did load");
     [super viewDidLoad];
-    
+    state = NORMAL_STATE;
+    [grid setDelegate:self];
 }
 
 - (void)viewDidUnload
