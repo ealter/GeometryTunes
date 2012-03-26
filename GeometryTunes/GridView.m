@@ -30,8 +30,6 @@
 static NSString* editPathButtonStr = @"Edit Path";
 static NSString* finishEditingPathButtonStr = @"Finish";
 
-const static NSTimeInterval playbackSpeed = 1.0;
-
 - (GridCell*)cellAtX:(unsigned)x y:(unsigned)y
 {
     return [[cells objectAtIndex:x] objectAtIndex:y];
@@ -93,9 +91,6 @@ const static NSTimeInterval playbackSpeed = 1.0;
     assert(pianoOctave >= MIN_OCTAVE && pianoOctave <= MAX_OCTAVE);
     [self setState:NORMAL_STATE];
     piano = NULL;
-    
-    playbackPosition = 0;
-    playbackTimer = nil;
     
     cells = [[NSMutableArray alloc] initWithCapacity:numBoxesY];
     NSMutableArray *row;
@@ -212,19 +207,12 @@ const static NSTimeInterval playbackSpeed = 1.0;
 
 -(void) pausePlayback
 {
-    if(playbackTimer) {
-        [piano.notePlayer stopAllNotes];
-        [playbackTimer invalidate];
-    }
+    [pathView pause];
 }
 
 -(void) stopPlayback
 {
-    if(playbackTimer) {
-        [piano.notePlayer stopAllNotes];
-        [playbackTimer invalidate];
-        playbackPosition = 0;
-    }
+    [pathView stop];
 }
 
 -(void) saveButtonEvent:(id)sender;
@@ -287,40 +275,20 @@ const static NSTimeInterval playbackSpeed = 1.0;
         return CGPointMake(-1, -1);
     return box;
 }
-  
-- (void)playNote:(NSTimer*)t
+
+- (pianoNote)getNoteFromCoords:(CGPoint)pos
 {
-    NSNumber *r = t.userInfo;
-    bool reverse = [r boolValue];
-    NSMutableArray *points = pathView.path.notes;
-    if((reverse && playbackPosition == 0) || playbackPosition == [points count])
-    {
-        playbackPosition = 0;
-        [playbackTimer invalidate];
-        return;
-    }
-    CGPoint box = [self getBoxFromCoords:[[points objectAtIndex:playbackPosition] CGPointValue]];
-    assert(box.x >= 0 && box.y >= 0);
-    GridCell *cell = [self cellAtX:box.x y:box.y];
-    pianoNote note = [cell getNote];
-    if(note != NO_PIANO_NOTE)
-    {
-        assert(piano && piano.notePlayer);
-        [piano.notePlayer playNoteWithPitch: [noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note]]; //
-    }
-    if(reverse)playbackPosition--;
-    else playbackPosition++;
+    CGPoint box = [self getBoxFromCoords:pos];
+    return [[self cellAtX:box.x y:box.y] note];
 }
+
 
 - (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse
 {
-    NSTimeInterval speed = playbackSpeed * factor;
-    if(reverse) playbackPosition = [pathView.path.notes count];
-    NSNumber *r = [NSNumber numberWithBool:reverse];
-    if(playbackTimer)
-        [playbackTimer invalidate];
-    playbackTimer = [NSTimer scheduledTimerWithTimeInterval:speed target:self selector:@selector(playNote:) userInfo:r repeats:YES];
-
+    [pathView.path setDelegateGrid:self];
+    if(reverse)
+        factor = -factor;
+    [pathView playWithSpeedFactor:factor notePlayer:[piano notePlayer]];
 }
 
 @end

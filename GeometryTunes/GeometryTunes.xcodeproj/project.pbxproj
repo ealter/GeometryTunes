@@ -15,7 +15,6 @@
 		83194320150BD226003EF364 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8319431F150BD226003EF364 /* AppDelegate.m */; };
 		83194323150BD226003EF364 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 83194322150BD226003EF364 /* ViewController.m */; };
 		83194326150BD226003EF364 /* ViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 83194324150BD226003EF364 /* ViewController.xib */; };
-		8319432E150BD32B003EF364 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 8319432D150BD32B003EF364 /* GridView.m */; };
 		831FF091150DB113001E9014 /* noteColor.m in Sources */ = {isa = PBXBuildFile; fileRef = 831FF090150DB112001E9014 /* noteColor.m */; };
 		83535031151D7F0E00C7B574 /* Ab2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 83534FE3151D7F0E00C7B574 /* Ab2.mp3 */; };
 		83535032151D7F0E00C7B574 /* Ab3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 83534FE4151D7F0E00C7B574 /* Ab3.mp3 */; };
@@ -109,6 +108,7 @@
 		E25113F215192BE600BBE1F2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E25113F115192BE600BBE1F2 /* AVFoundation.framework */; };
 		E2687D90151FA3A8005BB1F8 /* PathsView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2687D8F151FA3A8005BB1F8 /* PathsView.m */; };
 		E28150FD150C513500C8A036 /* Piano.m in Sources */ = {isa = PBXBuildFile; fileRef = E28150FC150C513500C8A036 /* Piano.m */; };
+		E2D5ECF3152004F700C417C8 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D5ECF2152004F700C417C8 /* GridView.m */; };
 		E2E4AF59151ABE5300E033E4 /* GridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E4AF58151ABE5300E033E4 /* GridCell.m */; };
 /* End PBXBuildFile section */
 
@@ -127,7 +127,6 @@
 		83194322150BD226003EF364 /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
 		83194325150BD226003EF364 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/ViewController.xib; sourceTree = "<group>"; };
 		8319432C150BD32B003EF364 /* GridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridView.h; sourceTree = "<group>"; };
-		8319432D150BD32B003EF364 /* GridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridView.m; sourceTree = "<group>"; };
 		831FF08F150DB112001E9014 /* noteColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = noteColor.h; sourceTree = "<group>"; };
 		831FF090150DB112001E9014 /* noteColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = noteColor.m; sourceTree = "<group>"; };
 		83534FE3151D7F0E00C7B574 /* Ab2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Ab2.mp3; sourceTree = "<group>"; };
@@ -227,6 +226,7 @@
 		E2687D8F151FA3A8005BB1F8 /* PathsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathsView.m; sourceTree = "<group>"; };
 		E28150FB150C513500C8A036 /* Piano.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Piano.h; path = GeometryTunes/Piano.h; sourceTree = "<group>"; };
 		E28150FC150C513500C8A036 /* Piano.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Piano.m; path = GeometryTunes/Piano.m; sourceTree = "<group>"; };
+		E2D5ECF2152004F700C417C8 /* GridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridView.m; sourceTree = "<group>"; };
 		E2E4AF57151ABE5300E033E4 /* GridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridCell.h; sourceTree = "<group>"; };
 		E2E4AF58151ABE5300E033E4 /* GridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridCell.m; sourceTree = "<group>"; };
 		E2EBF93B151FAA4D00D34B53 /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
@@ -257,7 +257,7 @@
 				E2E4AF57151ABE5300E033E4 /* GridCell.h */,
 				E2E4AF58151ABE5300E033E4 /* GridCell.m */,
 				8319432C150BD32B003EF364 /* GridView.h */,
-				8319432D150BD32B003EF364 /* GridView.m */,
+				E2D5ECF2152004F700C417C8 /* GridView.m */,
 				831FF08F150DB112001E9014 /* noteColor.h */,
 				831FF090150DB112001E9014 /* noteColor.m */,
 				83E3726B151D7069000DCF85 /* NotePath.h */,
@@ -562,7 +562,6 @@
 				8319431C150BD226003EF364 /* main.m in Sources */,
 				83194320150BD226003EF364 /* AppDelegate.m in Sources */,
 				83194323150BD226003EF364 /* ViewController.m in Sources */,
-				8319432E150BD32B003EF364 /* GridView.m in Sources */,
 				E28150FD150C513500C8A036 /* Piano.m in Sources */,
 				831FF091150DB113001E9014 /* noteColor.m in Sources */,
 				E25113F01519230500BBE1F2 /* NotePlayer.m in Sources */,
@@ -570,6 +569,7 @@
 				83E3726D151D7069000DCF85 /* NotePath.m in Sources */,
 				CE5C7C70151E7D3900B81396 /* noteTypes.m in Sources */,
 				E2687D90151FA3A8005BB1F8 /* PathsView.m in Sources */,
+				E2D5ECF3152004F700C417C8 /* GridView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

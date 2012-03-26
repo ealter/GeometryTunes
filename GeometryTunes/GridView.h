@@ -16,8 +16,6 @@
     NSMutableArray *cells; //2D array: 1st index is row
                            //          2nd index is col
     PathsView *pathView;
-    int playbackPosition;
-    NSTimer *playbackTimer;
 }
 
 @property int gridWidth;
@@ -45,6 +43,7 @@
 - (void)drawGrid:(CGContextRef)context;
 
 - (CGPoint)getBoxFromCoords:(CGPoint)pos;
+- (pianoNote)getNoteFromCoords:(CGPoint)pos;
 
 - (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse;
 - (void)pausePlayback;

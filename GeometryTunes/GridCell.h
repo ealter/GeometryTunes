@@ -15,6 +15,6 @@
 }
 
 - (void)setNote:(pianoNote)note;
-- (pianoNote)getNote;
+- (pianoNote)note;
 
 @end
