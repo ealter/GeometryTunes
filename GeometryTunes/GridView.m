@@ -238,6 +238,14 @@ const static NSTimeInterval playbackSpeed = 1.0;
 
 -(void) rewButtonEvent:(id)sender;
 {
+    if(playbackTimer)
+        [playbackTimer invalidate];
+    if([self state] == NORMAL_STATE)
+    {
+        [self playPathWithSpeed:playbackSpeed * 0.5 reversed:TRUE];
+    }
+    else
+        [self changeToNormalState];
     NSLog(@"RewButtonPressed");
 }
 
