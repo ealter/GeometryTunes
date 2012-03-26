@@ -37,8 +37,8 @@
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave;
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned) x y:(unsigned)y;
 
-- (int)getBoxWidth;
-- (int)getBoxHeight;
+- (float)getBoxWidth;
+- (float)getBoxHeight;
 
 - (void)drawGrid:(CGContextRef)context;
 

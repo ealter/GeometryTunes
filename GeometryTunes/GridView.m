@@ -11,6 +11,9 @@
 #import "noteTypes.h"
 #import "ViewController.h"
 
+#define NUM_BOXES_X_INITIAL 8
+#define NUM_BOXES_Y_INITIAL 10
+
 @implementation GridView
 
 @synthesize numBoxesX;
@@ -81,8 +84,8 @@
     [self setBackgroundColor:[UIColor whiteColor]];
     gridWidth = frame.size.width;
     gridHeight = frame.size.height;
-    numBoxesX = 8;
-    numBoxesY = 10;
+    numBoxesX = NUM_BOXES_X_INITIAL;
+    numBoxesY = NUM_BOXES_Y_INITIAL;
     
     pianoOctave = INITIAL_PIANO_OCTAVE;
     assert(pianoOctave >= MIN_OCTAVE && pianoOctave <= MAX_OCTAVE);
@@ -92,12 +95,14 @@
     cells = [[NSMutableArray alloc] initWithCapacity:numBoxesY];
     NSMutableArray *row;
     
+    float boxWidth = [self getBoxWidth];
+    float boxHeight = [self getBoxHeight];
     for(int i=0; i<numBoxesX; i++)
     {
         row = [[NSMutableArray alloc] initWithCapacity:numBoxesX];
         for(int j=0; j<numBoxesY; j++)
         {
-            CGRect cell = CGRectMake(i * [self getBoxWidth], j * [self getBoxHeight], [self getBoxWidth], [self getBoxHeight]);
+            CGRect cell = CGRectMake(i * boxWidth, j * boxHeight, boxWidth, boxHeight);
             [row addObject:[[GridCell alloc]initWithFrame:cell]];
         }
         [cells addObject:row];
@@ -169,14 +174,14 @@
     [cell setNote:[noteTypes getPianoNoteOfPitch:pitch Octave:octave]];
 }
 
-- (int)getBoxWidth
+- (float)getBoxWidth
 {
-    return gridWidth / numBoxesX;
+    return gridWidth / ((float)numBoxesX);
 }
 
-- (int)getBoxHeight
+- (float)getBoxHeight
 {
-    return gridHeight / numBoxesY;
+    return gridHeight / ((float)numBoxesY);
 }
 
 - (void)drawGrid:(CGContextRef)context
@@ -261,7 +266,7 @@
 
 - (CGPoint) getBoxFromCoords:(CGPoint)pos 
 {
-    CGPoint box = CGPointMake((int)pos.x / [self getBoxWidth], (int)pos.y / [self getBoxHeight]);
+    CGPoint box = CGPointMake((int)(pos.x / [self getBoxWidth]), (int)(pos.y / [self getBoxHeight]));
     if (box.x > numBoxesX || box.y > numBoxesY)
         return CGPointMake(-1, -1);
     return box;
