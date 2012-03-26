@@ -50,19 +50,17 @@ static NSString *pauseBtnText = @"Pause";
 
 - (IBAction)rewindEvent:(id)sender
 {
-    [grid pausePlayback];
-    if(state == NORMAL_STATE)
-    {
-        [grid playPathWithSpeedFactor:0.5 reversed:true];
-    }
-    else
+    if(state != NORMAL_STATE)
         [self changeStateToNormal:true];
+    [grid pausePlayback];
+    [grid playPathWithSpeedFactor:0.5 reversed:true];
 }
 
 - (IBAction)fastForwardEvent:(id)sender
 {
     if(state != NORMAL_STATE)
         [self changeStateToNormal:true];
+    [grid pausePlayback];
     [grid playPathWithSpeedFactor:0.5 reversed:false];
 }
 
