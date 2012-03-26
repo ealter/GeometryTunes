@@ -1,2 +1,6 @@
 Make loops work
-Snap paths to middle of grid cell
+Move play pause rewind functions to new file
+FF and Rew faster
+Save / Load
+Finish documentation
+Don't have to double click to color a new cell

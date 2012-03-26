@@ -244,6 +244,29 @@ const static NSTimeInterval playbackSpeed = 1.0;
 
 -(void) saveButtonEvent:(id)sender;
 {
+    // add path and note colors to file
+    // save NSMutable array 'pathView.path.notes' to file
+    
+    /*
+    //Code from http://ipgames.wordpress.com/tutorials/writeread-data-to-plist-file/
+    NSError *error;
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    NSString *path = [documentsDirectory stringByAppendingPathComponent:@"data.plist"]; //need to create data.plist file
+    NSFileManager *fileManager = [NSFileManager defaultManager];
+    if(!([fileManager fileExistsAtPath:path]))
+    {
+        NSString *bundle = [[NSBundle mainBundle] pathForResource:@"data" ofType:@"plist"];
+        [fileManager copyItemAtPath:bundle toPath:path error:&error];
+    }
+    
+    
+    //write Data
+    NSMutableArray *data = [[NSMutableDictionary alloc] initWithContentsOfFile: path];
+    int value = 5 //change to data elements
+    [data writeToFile:path atomically:YES];
+    [data release]
+    */
     NSLog(@"SaveButtonPressed");
 }
 
