@@ -78,7 +78,7 @@ const static NSTimeInterval playbackSpeed = 1.0;
 {
     NSNumber *r = t.userInfo;
     bool reverse = [r boolValue];
-    if((reverse && playbackPosition == 0) || playbackPosition == [notes count])
+    if((reverse && playbackPosition < 0) || playbackPosition == [notes count])
     {
         [delegateGrid stopPlayback];
         return;
@@ -106,7 +106,8 @@ const static NSTimeInterval playbackSpeed = 1.0;
         reverse = true;
     }
     NSTimeInterval speed = playbackSpeed * factor;
-    if(reverse) playbackPosition = [notes count];
+    if(reverse)
+        playbackPosition = [notes count] - 1;
     NSNumber *r = [NSNumber numberWithBool:reverse];
     if(playbackTimer)
         [playbackTimer invalidate];
