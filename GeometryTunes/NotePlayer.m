@@ -37,15 +37,10 @@ static int getPlayerIndex(unsigned pitch, unsigned octave)
 - (id)init
 {
     self = [super init];
-    if (self) {
+    if (self)
         for(int i=MIN_OCTAVE; i<=MAX_OCTAVE; i++)
-        {
             for(int j=0; j<NOTES_IN_OCTAVE; j++)
-            {
                 [self loadSoundWithPitch:j octave:i];
-            }
-        }
-    }
     return self;
 }
 
