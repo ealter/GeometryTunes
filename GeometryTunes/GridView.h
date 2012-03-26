@@ -46,7 +46,9 @@
 
 - (CGPoint)getBoxFromCoords:(CGPoint)pos;
 
-- (void)playPathWithSpeed:(NSTimeInterval)speed reversed:(bool)reverse;
+- (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse;
+- (void)pausePlayback;
 
+- (void)changeToNormalState;
 
 @end

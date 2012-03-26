@@ -19,12 +19,15 @@ typedef enum STATE
 } STATE;
 
 @property STATE state;
-@property (retain) IBOutlet GridView* grid;
+@property (retain) IBOutlet GridView *grid;
+@property (retain) IBOutlet UIButton *editPathBtn;
 
 - (IBAction)playEvent:(id)sender;
 - (IBAction)pauseEvent:(id)sender;
 - (IBAction)rewindEvent:(id)sender;
 - (IBAction)fastForwardEvent:(id)sender;
 - (IBAction)editPathEvent:(id)sender;
+
+- (void)changeStateToNormal:(bool)informGrid;
 
 @end
