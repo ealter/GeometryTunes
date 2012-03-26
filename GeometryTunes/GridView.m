@@ -260,6 +260,8 @@ const static NSTimeInterval playbackSpeed = 1.0;
     if(reverse) playbackPosition = [pathView.path.notes count];
     //NSValue *reverseObject = [NSValue value:&reverse withObjCType:@encode(bool *)];
     NSNumber *r = [NSNumber numberWithBool:reverse];
+    if(playbackTimer)
+        [playbackTimer invalidate];
     playbackTimer = [NSTimer scheduledTimerWithTimeInterval:speed target:self selector:@selector(playNote:) userInfo:r repeats:YES];
 
 }
