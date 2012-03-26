@@ -15,4 +15,7 @@
 
 - (void)addNoteWithPos:(CGPoint)pos;
 
+- (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer*)player;
+- (void)pause;
+- (void)stop;
 @end

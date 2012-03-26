@@ -34,4 +34,19 @@
     [path addNoteWithPos:pos];
 }
 
+- (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer*)player
+{
+    [path playWithSpeedFactor:factor notePlayer:player];
+}
+
+- (void)pause
+{
+    [path pause];
+}
+
+- (void)stop
+{
+    [path stop];
+}
+
 @end

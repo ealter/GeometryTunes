@@ -11,6 +11,9 @@
 #import "noteTypes.h"
 #import "ViewController.h"
 
+#define NUM_BOXES_X_INITIAL 8
+#define NUM_BOXES_Y_INITIAL 10
+
 @implementation GridView
 
 @synthesize numBoxesX;
@@ -26,11 +29,6 @@
 
 @synthesize pianoOctave;
 @synthesize delegate;
-
-static NSString* editPathButtonStr = @"Edit Path";
-static NSString* finishEditingPathButtonStr = @"Finish";
-
-const static NSTimeInterval playbackSpeed = 1.0;
 
 - (GridCell*)cellAtX:(unsigned)x y:(unsigned)y
 {
@@ -86,26 +84,25 @@ const static NSTimeInterval playbackSpeed = 1.0;
     [self setBackgroundColor:[UIColor whiteColor]];
     gridWidth = frame.size.width;
     gridHeight = frame.size.height;
-    numBoxesX = 8;
-    numBoxesY = 10;
+    numBoxesX = NUM_BOXES_X_INITIAL;
+    numBoxesY = NUM_BOXES_Y_INITIAL;
     
     pianoOctave = INITIAL_PIANO_OCTAVE;
     assert(pianoOctave >= MIN_OCTAVE && pianoOctave <= MAX_OCTAVE);
     [self setState:NORMAL_STATE];
     piano = NULL;
     
-    playbackPosition = 0;
-    playbackTimer = nil;
-    
     cells = [[NSMutableArray alloc] initWithCapacity:numBoxesY];
     NSMutableArray *row;
     
+    float boxWidth = [self getBoxWidth];
+    float boxHeight = [self getBoxHeight];
     for(int i=0; i<numBoxesX; i++)
     {
         row = [[NSMutableArray alloc] initWithCapacity:numBoxesX];
         for(int j=0; j<numBoxesY; j++)
         {
-            CGRect cell = CGRectMake(i * [self getBoxWidth], j * [self getBoxHeight], [self getBoxWidth], [self getBoxHeight]);
+            CGRect cell = CGRectMake(i * boxWidth, j * boxHeight, boxWidth, boxHeight);
             [row addObject:[[GridCell alloc]initWithFrame:cell]];
         }
         [cells addObject:row];
@@ -121,13 +118,6 @@ const static NSTimeInterval playbackSpeed = 1.0;
     
     // Add gesture recognizer to the view
     [self addGestureRecognizer:tapGestureRecognizer];
-    
-    //Initialize playback features
-    /*struct PlaybackFeatures{
-        int playSpeed;
-        int currentNote;
-    };*/
-    NSLog(@"Finished init with frame");
 }
 
 -(void) handleTap:(UITapGestureRecognizer *)sender
@@ -184,14 +174,14 @@ const static NSTimeInterval playbackSpeed = 1.0;
     [cell setNote:[noteTypes getPianoNoteOfPitch:pitch Octave:octave]];
 }
 
-- (int)getBoxWidth
+- (float)getBoxWidth
 {
-    return gridWidth / numBoxesX;
+    return gridWidth / ((float)numBoxesX);
 }
 
-- (int)getBoxHeight
+- (float)getBoxHeight
 {
-    return gridHeight / numBoxesY;
+    return gridHeight / ((float)numBoxesY);
 }
 
 - (void)drawGrid:(CGContextRef)context
@@ -212,19 +202,13 @@ const static NSTimeInterval playbackSpeed = 1.0;
 
 -(void) pausePlayback
 {
-    if(playbackTimer) {
-        [piano.notePlayer stopAllNotes];
-        [playbackTimer invalidate];
-    }
+    [pathView pause];
 }
 
 -(void) stopPlayback
 {
-    if(playbackTimer) {
-        [piano.notePlayer stopAllNotes];
-        [playbackTimer invalidate];
-        playbackPosition = 0;
-    }
+    [pathView stop];
+    [delegate setPlayStateToStopped];
 }
 
 -(void) saveButtonEvent:(id)sender;
@@ -282,45 +266,25 @@ const static NSTimeInterval playbackSpeed = 1.0;
 
 - (CGPoint) getBoxFromCoords:(CGPoint)pos 
 {
-    CGPoint box = CGPointMake((int)pos.x / [self getBoxWidth], (int)pos.y / [self getBoxHeight]);
+    CGPoint box = CGPointMake((int)(pos.x / [self getBoxWidth]), (int)(pos.y / [self getBoxHeight]));
     if (box.x > numBoxesX || box.y > numBoxesY)
         return CGPointMake(-1, -1);
     return box;
 }
-  
-- (void)playNote:(NSTimer*)t
+
+- (pianoNote)getNoteFromCoords:(CGPoint)pos
 {
-    NSNumber *r = t.userInfo;
-    bool reverse = [r boolValue];
-    NSMutableArray *points = pathView.path.notes;
-    if((reverse && playbackPosition == 0) || playbackPosition == [points count])
-    {
-        playbackPosition = 0;
-        [playbackTimer invalidate];
-        return;
-    }
-    CGPoint box = [self getBoxFromCoords:[[points objectAtIndex:playbackPosition] CGPointValue]];
-    assert(box.x >= 0 && box.y >= 0);
-    GridCell *cell = [self cellAtX:box.x y:box.y];
-    pianoNote note = [cell getNote];
-    if(note != NO_PIANO_NOTE)
-    {
-        assert(piano && piano.notePlayer);
-        [piano.notePlayer playNoteWithPitch: [noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note]]; //
-    }
-    if(reverse)playbackPosition--;
-    else playbackPosition++;
+    CGPoint box = [self getBoxFromCoords:pos];
+    return [[self cellAtX:box.x y:box.y] note];
 }
+
 
 - (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse
 {
-    NSTimeInterval speed = playbackSpeed * factor;
-    if(reverse) playbackPosition = [pathView.path.notes count];
-    NSNumber *r = [NSNumber numberWithBool:reverse];
-    if(playbackTimer)
-        [playbackTimer invalidate];
-    playbackTimer = [NSTimer scheduledTimerWithTimeInterval:speed target:self selector:@selector(playNote:) userInfo:r repeats:YES];
-
+    [pathView.path setDelegateGrid:self];
+    if(reverse)
+        factor = -factor;
+    [pathView playWithSpeedFactor:factor notePlayer:[piano notePlayer]];
 }
 
 @end

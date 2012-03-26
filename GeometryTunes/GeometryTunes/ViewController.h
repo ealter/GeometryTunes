@@ -19,16 +19,17 @@ typedef enum STATE
 } STATE;
 
 @property STATE state;
-@property (retain) IBOutlet GridView *grid;
-@property (retain) IBOutlet UIButton *editPathBtn;
-@property (nonatomic, retain) UIButton *playPauseButton;
+@property (nonatomic, retain) IBOutlet GridView *grid;
+@property (nonatomic, retain) IBOutlet UIButton *editPathBtn;
+@property (nonatomic, retain) IBOutlet UIButton *playPauseButton;
 
-- (IBAction)playEvent:(id)sender;
-- (IBAction)pauseEvent:(id)sender;
+- (IBAction)playPauseEvent:(id)sender;
+- (IBAction)stopEvent:(id)sender;
 - (IBAction)rewindEvent:(id)sender;
 - (IBAction)fastForwardEvent:(id)sender;
 - (IBAction)editPathEvent:(id)sender;
 
 - (void)changeStateToNormal:(bool)informGrid;
+- (void)setPlayStateToStopped;
 
 @end

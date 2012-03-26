@@ -16,15 +16,13 @@
     NSMutableArray *cells; //2D array: 1st index is row
                            //          2nd index is col
     PathsView *pathView;
-    int playbackPosition;
-    NSTimer *playbackTimer;
 }
 
 @property int gridWidth;
 @property int gridHeight;
 @property int numBoxesX;
 @property int numBoxesY;
-@property (retain) id delegate;
+@property (retain) id delegate; //A ViewController
 
 @property int pianoOctave;
 
@@ -39,12 +37,13 @@
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave;
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned) x y:(unsigned)y;
 
-- (int)getBoxWidth;
-- (int)getBoxHeight;
+- (float)getBoxWidth;
+- (float)getBoxHeight;
 
 - (void)drawGrid:(CGContextRef)context;
 
 - (CGPoint)getBoxFromCoords:(CGPoint)pos;
+- (pianoNote)getNoteFromCoords:(CGPoint)pos;
 
 - (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse;
 - (void)pausePlayback;

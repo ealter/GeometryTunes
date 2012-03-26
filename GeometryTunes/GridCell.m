@@ -53,7 +53,7 @@
         [self setBackgroundColor:[noteColor colorFromNoteWithPitch:[noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note]]];
 }
 
-- (pianoNote)getNote
+- (pianoNote)note
 {
     return note;
 }
