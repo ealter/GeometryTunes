@@ -9,6 +9,7 @@
 #import "GridView.h"
 #import "GridCell.h"
 #import "noteTypes.h"
+#import "ViewController.h"
 
 @implementation GridView
 
@@ -24,7 +25,7 @@
 @synthesize tapButtonRecognizer;
 
 @synthesize pianoOctave;
-
+@synthesize delegate;
 
 static NSString* editPathButtonStr = @"Edit Path";
 static NSString* finishEditingPathButtonStr = @"Finish";
@@ -38,13 +39,19 @@ const static NSTimeInterval playbackSpeed = 1.0;
 
 - (STATE)state
 {
-    return delegate.state;
+    ViewController *del = delegate;
+    assert(del);
+    return del.state;
 }
 
 - (void)setState:(STATE)state
 {
-    [delegate setState:state];
-    delegate.state = state;
+    ViewController *del = delegate;
+    if(del)
+    {
+        [del setState:state];
+        del.state = state;
+    }
 }
 
 - (void)changeToNormalState
@@ -116,6 +123,7 @@ const static NSTimeInterval playbackSpeed = 1.0;
     
     // Add gesture recognizer to the view
     [self addGestureRecognizer:tapGestureRecognizer];
+    NSLog(@"Finished init with frame");
 }
 
 -(void) handleTap:(UITapGestureRecognizer *)sender
@@ -270,6 +278,7 @@ const static NSTimeInterval playbackSpeed = 1.0;
 
 - (void)drawRect:(CGRect)rect
 {
+    NSLog(@"Drawing rectangle");
     // Draw Playback Menu at top of screen
     CGContextRef playbackContext = UIGraphicsGetCurrentContext();
     CGContextSetLineWidth(playbackContext, 2.0);

@@ -9,7 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "Piano.h"
 #import "PathsView.h"
-#import "ViewController.h"
 
 @interface GridView : UIView
 {
@@ -19,13 +18,13 @@
     PathsView *pathView;
     int playbackPosition;
     NSTimer *playbackTimer;
-    ViewController *delegate;
 }
 
 @property int gridWidth;
 @property int gridHeight;
 @property int numBoxesX;
 @property int numBoxesY;
+@property (retain) id delegate;
 
 @property int pianoOctave;
 

@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GridView.h"
 
 @interface ViewController : UIViewController
 
@@ -18,5 +19,6 @@ typedef enum STATE
 } STATE;
 
 @property STATE state;
+@property (retain) IBOutlet GridView* grid;
 
 @end

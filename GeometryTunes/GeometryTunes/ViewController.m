@@ -11,6 +11,7 @@
 @implementation ViewController
 
 @synthesize state;
+@synthesize grid;
 
 - (void)didReceiveMemoryWarning
 {
@@ -22,9 +23,10 @@
 
 - (void)viewDidLoad
 {
+    NSLog(@"View did load");
     [super viewDidLoad];
     state = NORMAL_STATE;
-    NSLog(@"View loaded");
+    [grid setDelegate:self];
 }
 
 - (void)viewDidUnload
