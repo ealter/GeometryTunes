@@ -197,7 +197,7 @@ const static NSTimeInterval playbackSpeed = 1.0;
 -(void) playButtonEvent:(id)sender;
 {
     [self changeToNormalState];
-    [self playPathWithSpeed:playbackSpeed];
+    [self playPathWithSpeed:playbackSpeed reversed:FALSE];
 }
 
 -(void) pauseButtonEvent:(id)sender;
@@ -222,7 +222,7 @@ const static NSTimeInterval playbackSpeed = 1.0;
         [playbackTimer invalidate];
     if(state == NORMAL_STATE)
     {
-        [self playPathWithSpeed:playbackSpeed * 0.5];
+        [self playPathWithSpeed:playbackSpeed * 0.5 reversed:FALSE];
     }
     else
         [self changeToNormalState];
@@ -316,11 +316,14 @@ const static NSTimeInterval playbackSpeed = 1.0;
         return CGPointMake(-1, -1);
     return box;
 }
-
+  
 - (void)playNote:(NSTimer*)t
 {
+    bool *reverse = NULL;//= t.userInfo;
+    [t.userInfo getValue:reverse];
+    assert(reverse);
     NSMutableArray *points = pathView.path.notes;
-    if(playbackPosition == [points count])
+    if((reverse && playbackPosition == 0) || playbackPosition == [points count])
     {
         playbackPosition = 0;
         [playbackTimer invalidate];
@@ -335,12 +338,19 @@ const static NSTimeInterval playbackSpeed = 1.0;
         assert(piano && piano.notePlayer);
         [piano.notePlayer playNoteWithPitch: [noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note]];
     }
-    playbackPosition++;
+    if(reverse)playbackPosition--;
+    else playbackPosition++;
 }
 
-- (void)playPathWithSpeed:(NSTimeInterval)speed
+- (void)playPathWithSpeed:(NSTimeInterval)speed reversed:(bool)reverse
 {
-    playbackTimer = [NSTimer scheduledTimerWithTimeInterval:speed target:self selector:@selector(playNote:) userInfo:nil repeats:YES];
+    //NSMutableArray *notes = pathView.path.notes;
+    //if(reverse) notes = [[notes reverseObjectEnumerator] allObjects];
+    
+    if(reverse) playbackPosition = [pathView.path.notes count];
+    NSValue *reverseObject = [NSValue value:&reverse withObjCType:@encode(bool *)];
+    playbackTimer = [NSTimer scheduledTimerWithTimeInterval:speed target:self selector:@selector(playNote:) userInfo:reverseObject repeats:YES];
+
 }
 
 @end

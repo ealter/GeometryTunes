@@ -13,7 +13,8 @@
     UIBezierPath* path;
 }
 
-@property (readonly, retain) NSMutableArray *notes; //The type of each element is NSValue representation of CGPoint
+ //Contains NSValue representations of CGPoints of path vertices
+@property (readonly, retain) NSMutableArray *notes;
 @property (readonly) int numNotes;
 
 - (id)init;

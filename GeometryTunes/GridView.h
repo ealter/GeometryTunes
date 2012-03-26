@@ -57,6 +57,7 @@ typedef enum STATE
 
 - (CGPoint)getBoxFromCoords:(CGPoint)pos;
 
-- (void)playPathWithSpeed:(NSTimeInterval)speed;
+- (void)playPathWithSpeed:(NSTimeInterval)speed reversed:(bool)reverse;
+
 
 @end
