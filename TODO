@@ -1,8 +1,4 @@
 FF and Rew faster
-<<<<<<< HEAD
-Pause doesn't pause right away
-=======
->>>>>>> b1a92431e08fe566e484271af12582988e615647
 Make loops work
 Move play pause rewind functions to new file
 Save / Load
