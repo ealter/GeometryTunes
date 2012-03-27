@@ -130,42 +130,45 @@
 -(void) handleTap:(UITapGestureRecognizer *)sender
 {
     CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
-    if([self state] == NORMAL_STATE)
+    switch([self state])
     {
-        [self setState:PIANO_STATE];
-        CGPoint box = [self getBoxFromCoords:pos];
-        assert(box.x >= 0 && box.x < numBoxesX);
-        assert(box.y >= 0 && box.y < numBoxesY);
-        
-        currentX = box.x;
-        currentY = box.y;
-        
-        [self changeCell:[self cellAtX:currentX y:currentY] isBold:true];
-        int pianoHeight = 200;
-        int pianoY = gridHeight - pianoHeight;
-        if((box.y+1) * [self getBoxHeight] > pianoY) {
-            pianoY = 0;
-        }
+        case NORMAL_STATE:
+            [self setState:PIANO_STATE];
+            CGPoint box = [self getBoxFromCoords:pos];
+            assert(box.x >= 0 && box.x < numBoxesX);
+            assert(box.y >= 0 && box.y < numBoxesY);
             
-        CGRect pianoRect = CGRectMake(0, pianoY, gridWidth, pianoHeight);
-        if (piano)
-            piano = [piano initWithFrame:pianoRect delegate:self];
-        else
-            piano = [[Piano alloc] initWithFrame:pianoRect delegate:self];
-        [piano setOctave:pianoOctave];
-        [self addSubview:piano];
-    }
-    else if([self state] == PIANO_STATE)
-    {
-        if(!CGRectContainsPoint([piano frame], pos))
-            [self changeToNormalState];
-    }
-    else if([self state] == PATH_EDIT_STATE)
-    {
-        CGPoint box = [self getBoxFromCoords:pos];
-        CGPoint point = CGPointMake((box.x + 0.5) * [self getBoxWidth], (box.y + 0.5) * [self getBoxHeight]);
-        [pathView addNoteWithPos:point];
-        [pathView setNeedsDisplay];
+            currentX = box.x;
+            currentY = box.y;
+            
+            [self changeCell:[self cellAtX:currentX y:currentY] isBold:true];
+            int pianoHeight = 200;
+            int pianoY = gridHeight - pianoHeight;
+            if((box.y+1) * [self getBoxHeight] > pianoY) {
+                pianoY = 0;
+            }
+            
+            CGRect pianoRect = CGRectMake(0, pianoY, gridWidth, pianoHeight);
+            if (piano)
+                piano = [piano initWithFrame:pianoRect delegate:self];
+            else
+                piano = [[Piano alloc] initWithFrame:pianoRect delegate:self];
+            [piano setOctave:pianoOctave];
+            [self addSubview:piano];
+            break;
+            
+        case PIANO_STATE:
+            if(!CGRectContainsPoint([piano frame], pos))
+                [self changeToNormalState];
+            break;
+        case PATH_EDIT_STATE:
+            box = [self getBoxFromCoords:pos];
+            CGPoint point = CGPointMake((box.x + 0.5) * [self getBoxWidth], (box.y + 0.5) * [self getBoxHeight]);
+            [pathView addNoteWithPos:point];
+            [pathView setNeedsDisplay];
+            break;
+        default:
+            assert(0); //Unknown state!
     }
 }
 

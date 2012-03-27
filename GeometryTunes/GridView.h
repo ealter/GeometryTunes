@@ -10,23 +10,24 @@
     PathsView *pathView;
 }
 
-@property int gridWidth;
-@property int gridHeight;
-@property int numBoxesX;
-@property int numBoxesY;
+@property (nonatomic) int gridWidth;
+@property (nonatomic) int gridHeight;
+@property (nonatomic) int numBoxesX;
+@property (nonatomic) int numBoxesY;
+
 @property (retain) id delegate; //A ViewController
 
-@property int pianoOctave;
+@property (nonatomic) int pianoOctave;
 
-@property unsigned currentX; //These are used when editing a square
-@property unsigned currentY;
+@property (nonatomic) unsigned currentX; //These are used when editing a square
+@property (nonatomic) unsigned currentY;
 
 @property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic, retain) UITapGestureRecognizer *tapButtonRecognizer;
 
 - (void)sharedInitWithFrame:(CGRect)frame;
 
-- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave;
+- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave; //Uses the currentX and currentY
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned) x y:(unsigned)y;
 
 - (float)getBoxWidth;
