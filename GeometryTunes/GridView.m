@@ -34,12 +34,7 @@
 {
     return [[cells objectAtIndex:x] objectAtIndex:y];
 }
-/*
--(CGRect)rectAtX:(unsigned)x y:(unsigned)y
-{
-    return rects[x][y];
-}
-*/
+
 - (STATE)state
 {
     ViewController *del = delegate;
@@ -274,7 +269,6 @@
     {
         if([self state] == PIANO_STATE)
             [piano removeFromSuperview];
-        //TODO: change Edit Path button text
         [self setState:PATH_EDIT_STATE];
     }
 }
