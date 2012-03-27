@@ -1,11 +1,3 @@
-//
-//  GridCell.m
-//  GeometryTunes
-//
-//  Created by Music2 on 3/21/12.
-//  Copyright (c) 2012 Tufts University. All rights reserved.
-//
-
 #import "GridCell.h"
 #import "noteColor.h"
 #import "Piano.h"

@@ -1,11 +1,3 @@
-//
-//  noteTypes.h
-//  GeometryTunes
-//
-//  Created by Lion User on 3/24/12.
-//  Copyright (c) 2012 Tufts University. All rights reserved.
-//
-
 #import <Foundation/Foundation.h>
 
 @interface noteTypes : NSObject

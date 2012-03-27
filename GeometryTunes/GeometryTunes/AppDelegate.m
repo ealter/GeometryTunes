@@ -1,11 +1,3 @@
-//
-//  AppDelegate.m
-//  GeometryTunes
-//
-//  Created by Dylan Portelance on 3/10/12.
-//  Copyright (c) 2012 Tufts University. All rights reserved.
-//
-
 #import "AppDelegate.h"
 
 #import "ViewController.h"

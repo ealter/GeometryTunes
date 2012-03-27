@@ -1,11 +1,3 @@
-//
-//  Piano.m
-//  GeometryTunes
-//
-//  Created by Music2 on 3/10/12.
-//  Copyright (c) 2012 Tufts University. All rights reserved.
-//
-
 #import "Piano.h"
 
 @implementation Piano
