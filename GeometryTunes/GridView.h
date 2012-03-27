@@ -10,8 +10,6 @@
     PathsView *pathView;
 }
 
-@property (nonatomic) int gridWidth;
-@property (nonatomic) int gridHeight;
 @property (nonatomic) int numBoxesX;
 @property (nonatomic) int numBoxesY;
 
@@ -25,7 +23,7 @@
 @property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic, retain) UITapGestureRecognizer *tapButtonRecognizer;
 
-- (void)sharedInitWithFrame:(CGRect)frame;
+- (void)sharedInit;
 
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave; //Uses the currentX and currentY
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned) x y:(unsigned)y;

@@ -9,9 +9,7 @@
 @implementation GridView
 
 @synthesize numBoxesX;
-@synthesize numBoxesY; 
-@synthesize gridWidth;
-@synthesize gridHeight;
+@synthesize numBoxesY;
 
 @synthesize currentX;
 @synthesize currentY;
@@ -69,7 +67,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        [self sharedInitWithFrame:frame];
+        [self sharedInit];
     }
     return self;
 }
@@ -78,16 +76,15 @@
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self sharedInitWithFrame:[self bounds]];
+        [self sharedInit];
     }
     return self;
 }
 
--(void)sharedInitWithFrame:(CGRect)frame
+-(void)sharedInit
 {
     [self setBackgroundColor:[UIColor whiteColor]];
-    gridWidth = frame.size.width;
-    gridHeight = frame.size.height;
+    
     numBoxesX = NUM_BOXES_X_INITIAL;
     numBoxesY = NUM_BOXES_Y_INITIAL;
     
@@ -115,7 +112,7 @@
         [cells addObject:row];
     }
     
-    pathView = [[PathsView alloc]initWithFrame:frame];
+    pathView = [[PathsView alloc]initWithFrame:[self bounds]];
     
     // Initialize tap gesture recognizer
     tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)]; 
@@ -143,12 +140,12 @@
             
             [self changeCell:[self cellAtX:currentX y:currentY] isBold:true];
             int pianoHeight = 200;
-            int pianoY = gridHeight - pianoHeight;
+            int pianoY = [self bounds].size.height - pianoHeight;
             if((box.y+1) * [self getBoxHeight] > pianoY) {
                 pianoY = 0;
             }
             
-            CGRect pianoRect = CGRectMake(0, pianoY, gridWidth, pianoHeight);
+            CGRect pianoRect = CGRectMake(0, pianoY, [self bounds].size.width, pianoHeight);
             if (piano)
                 piano = [piano initWithFrame:pianoRect delegate:self];
             else
@@ -188,12 +185,12 @@
 
 - (float)getBoxWidth
 {
-    return gridWidth / ((float)numBoxesX);
+    return [self bounds].size.width / numBoxesX;
 }
 
 - (float)getBoxHeight
 {
-    return gridHeight / ((float)numBoxesY);
+    return [self bounds].size.height / numBoxesY;
 }
 
 - (void)drawGrid:(CGContextRef)context
