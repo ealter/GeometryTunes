@@ -37,15 +37,6 @@
     return self;
 }
 
-- (void)drawRect:(CGRect)rect
-{
-    /* Set UIView Border */
-    CGContextRef contextRef = UIGraphicsGetCurrentContext();
-    CGContextSetLineWidth(contextRef, 2.0);
-    CGContextSetRGBStrokeColor(contextRef, 0.0, 0.0, 0.0, 1.0);
-    CGContextStrokeRect(contextRef, rect);
-}
-
 - (void)setNote:(pianoNote)n
 {
     note = n;

@@ -62,8 +62,20 @@
     if([self state] == PIANO_STATE)
         [piano removeFromSuperview];
     [self setState:NORMAL_STATE];
+    [self changeCell:[self cellAtX:currentX y:currentY] isBold:false];
     ViewController *del = delegate;
     [del changeStateToNormal:false];
+}
+
+- (void)changeCell:(GridCell *)cell isBold:(bool)isBold
+{
+    assert(cell);
+    float borderWidth;
+    if(isBold)
+        borderWidth = 8;
+    else
+        borderWidth = 2;
+    [[cell layer] setBorderWidth:borderWidth];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -99,23 +111,21 @@
     
     cells = [[NSMutableArray alloc] initWithCapacity:numBoxesY];
     NSMutableArray *row;
-    //rects = (CGRect **)malloc(sizeof(CGRect *) * numBoxesY);
-    //CGRect *rectRow;
     
     float boxWidth = [self getBoxWidth];
     float boxHeight = [self getBoxHeight];
     for(int i=0; i<numBoxesX; i++)
     {
         row = [[NSMutableArray alloc] initWithCapacity:numBoxesX];
-        //rectRow = (CGRect *)malloc(sizeof(CGRect *) * numBoxesX);
         for(int j=0; j<numBoxesY; j++)
         {
-            CGRect cell = CGRectMake(i * boxWidth, j * boxHeight, boxWidth, boxHeight);
-            [row addObject:[[GridCell alloc]initWithFrame:cell]];
-            //rectRow[j] = cell;
+            CGRect cellBounds = CGRectMake(i * boxWidth, j * boxHeight, boxWidth, boxHeight);
+            GridCell *cell = [[GridCell alloc]initWithFrame:cellBounds];
+            [[cell layer] setBorderColor:[[UIColor blackColor] CGColor]];
+            [self changeCell:cell isBold:false];
+            [row addObject:cell];
         }
         [cells addObject:row];
-        //rects[i] = rectRow;
     }
     
     pathView = [[PathsView alloc]initWithFrame:frame];
@@ -140,11 +150,10 @@
         assert(box.x >= 0 && box.x < numBoxesX);
         assert(box.y >= 0 && box.y < numBoxesY);
         
-        //CGRect selectedCell = [self rectAtX:box.x y:box.y];
-        //CGFloat xCord = [selectedCell CGRectWidth];
-        
         currentX = box.x;
         currentY = box.y;
+        
+        [self changeCell:[self cellAtX:currentX y:currentY] isBold:true];
         int pianoHeight = 200;
         int pianoY = gridHeight - pianoHeight;
         if((box.y+1) * [self getBoxHeight] > pianoY) {
