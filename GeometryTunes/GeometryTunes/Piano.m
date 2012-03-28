@@ -126,7 +126,7 @@
             [btn setTitle:@"Clear" forState:UIControlStateNormal];
             eventHandler = @selector(noteClearEvent);
         }
-        btn.titleLabel.font = [UIFont systemFontOfSize:40];
+        btn.titleLabel.font = [UIFont systemFontOfSize:20];
         btn.titleLabel.textColor = [UIColor blackColor];
         [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
         [btn.layer setBorderColor:[[UIColor blackColor] CGColor]];
