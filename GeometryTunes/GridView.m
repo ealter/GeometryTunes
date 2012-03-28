@@ -127,11 +127,12 @@
 -(void) handleTap:(UITapGestureRecognizer *)sender
 {
     CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
+    CGPoint box = [self getBoxFromCoords:pos];
     switch([self state])
     {
         case NORMAL_STATE:
             [self setState:PIANO_STATE];
-            CGPoint box = [self getBoxFromCoords:pos];
+             box = [self getBoxFromCoords:pos];
             assert(box.x >= 0 && box.x < numBoxesX);
             assert(box.y >= 0 && box.y < numBoxesY);
             
@@ -139,7 +140,7 @@
             currentY = box.y;
             
             [self changeCell:[self cellAtX:currentX y:currentY] isBold:true];
-            int pianoHeight = 200;
+            int pianoHeight = 200; //TODO change to const
             int pianoY = [self bounds].size.height - pianoHeight;
             if((box.y+1) * [self getBoxHeight] > pianoY) {
                 pianoY = 0;
@@ -155,8 +156,17 @@
             break;
             
         case PIANO_STATE:
-            if(!CGRectContainsPoint([piano frame], pos))
-                [self changeToNormalState];
+            //if(!CGRectContainsPoint([piano frame], pos))
+                //[self changeToNormalState];
+            [self changeCell:[self cellAtX:currentX y:currentY] isBold:false];
+            
+             box = [self getBoxFromCoords:pos];
+            assert(box.x >= 0 && box.x < numBoxesX);
+            assert(box.y >= 0 && box.y < numBoxesY);
+            currentX = box.x;
+            currentY = box.y;
+            [self changeCell:[self cellAtX:currentX y:currentY] isBold:true];
+            
             break;
         case PATH_EDIT_STATE:
             box = [self getBoxFromCoords:pos];
