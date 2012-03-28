@@ -2,12 +2,14 @@
 #import "NotePlayer.h"
 #import "noteTypes.h"
 
+@class GridView;
+
 @interface Piano : UIView
 {
     NSMutableArray *notes;
     int numNotes;
     int numWhiteNotes;
-    id delegate; //A Gridview type
+    GridView *delegate;
     bool addNote; //True if the next note should be new
 }
 

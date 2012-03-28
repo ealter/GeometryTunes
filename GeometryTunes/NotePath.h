@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "NotePlayer.h"
+@class GridView;
 
 @interface NotePath : NSObject
 {
@@ -13,7 +14,7 @@
 @property (readonly) int numNotes;
 @property int playbackPosition;
 @property (retain) NotePlayer *player;
-@property (retain) id delegateGrid;
+@property (retain) GridView* delegateGrid;
 
 - (id)init;
 - (void)addNoteWithPos:(CGPoint)pos;
