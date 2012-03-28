@@ -95,6 +95,7 @@
 		8353507D151D7F0E00C7B574 /* Gb6.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 8353502F151D7F0E00C7B574 /* Gb6.mp3 */; };
 		8353507E151D7F0E00C7B574 /* Gb7.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 83535030151D7F0E00C7B574 /* Gb7.mp3 */; };
 		83E3726D151D7069000DCF85 /* NotePath.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E3726C151D7069000DCF85 /* NotePath.m */; };
+		CE2446B91522D21300C2DB33 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2446B81522D21300C2DB33 /* QuartzCore.framework */; };
 		CE498606151E27E4005228F4 /* A1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CE4985FE151E27E4005228F4 /* A1.mp3 */; };
 		CE498607151E27E4005228F4 /* A2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CE4985FF151E27E4005228F4 /* A2.mp3 */; };
 		CE498608151E27E4005228F4 /* A3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CE498600151E27E4005228F4 /* A3.mp3 */; };
@@ -209,6 +210,7 @@
 		83535030151D7F0E00C7B574 /* Gb7.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = Gb7.mp3; sourceTree = "<group>"; };
 		83E3726B151D7069000DCF85 /* NotePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotePath.h; sourceTree = "<group>"; };
 		83E3726C151D7069000DCF85 /* NotePath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePath.m; sourceTree = "<group>"; };
+		CE2446B81522D21300C2DB33 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CE4985FE151E27E4005228F4 /* A1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = A1.mp3; sourceTree = "<group>"; };
 		CE4985FF151E27E4005228F4 /* A2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = A2.mp3; sourceTree = "<group>"; };
 		CE498600151E27E4005228F4 /* A3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = A3.mp3; sourceTree = "<group>"; };
@@ -237,6 +239,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE2446B91522D21300C2DB33 /* QuartzCore.framework in Frameworks */,
 				E25113F215192BE600BBE1F2 /* AVFoundation.framework in Frameworks */,
 				83194310150BD226003EF364 /* UIKit.framework in Frameworks */,
 				83194312150BD226003EF364 /* Foundation.framework in Frameworks */,
@@ -250,6 +253,7 @@
 		83194300150BD226003EF364 = {
 			isa = PBXGroup;
 			children = (
+				CE2446B81522D21300C2DB33 /* QuartzCore.framework */,
 				E2EBF93B151FAA4D00D34B53 /* CoreFoundation.framework */,
 				E25113F115192BE600BBE1F2 /* AVFoundation.framework */,
 				8319430E150BD226003EF364 /* Frameworks */,

@@ -1,5 +1,6 @@
 #import "NotePath.h"
 #import "GridView.h"
+#import "NotePlayer.h"
 
 @implementation NotePath
 

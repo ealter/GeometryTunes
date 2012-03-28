@@ -1,5 +1,6 @@
 #import <UIKit/UIKit.h>
 #import "NotePath.h"
+@class NotePlayer;
 
 @interface PathsView : UIView
 

@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
-#import "NotePlayer.h"
 #import "noteTypes.h"
+#import "NotePlayer.h"
 
 @class GridView;
 

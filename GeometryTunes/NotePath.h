@@ -1,5 +1,5 @@
 #import <Foundation/Foundation.h>
-#import "NotePlayer.h"
+@class NotePlayer;
 @class GridView;
 
 @interface NotePath : NSObject

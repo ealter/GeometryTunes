@@ -1,6 +1,7 @@
 #import <UIKit/UIKit.h>
 #import "Piano.h"
-#import "PathsView.h"
+
+@class PathsView;
 
 @interface GridView : UIView
 {

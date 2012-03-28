@@ -1,6 +1,7 @@
 #import "GridCell.h"
 #import "noteColor.h"
 #import "Piano.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation GridCell
 

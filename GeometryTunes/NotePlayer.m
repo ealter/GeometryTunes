@@ -1,5 +1,6 @@
 #import "NotePlayer.h"
 #import "noteTypes.h"
+#import <AVFoundation/AVFoundation.h>
 
 @implementation NotePlayer
 

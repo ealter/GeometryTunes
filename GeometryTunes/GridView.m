@@ -2,6 +2,8 @@
 #import "GridCell.h"
 #import "noteTypes.h"
 #import "ViewController.h"
+#import "PathsView.h"
+#import <QuartzCore/QuartzCore.h>
 
 #define NUM_BOXES_X_INITIAL 8
 #define NUM_BOXES_Y_INITIAL 10

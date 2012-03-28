@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
-#import "AVFoundation/AVFoundation.h"
 #import "noteTypes.h"
+
+@class AVAudioPlayer;
 
 @interface NotePlayer : NSObject
 {
