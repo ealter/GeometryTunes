@@ -179,20 +179,23 @@
     }
 }
 
-- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned)x y:(unsigned)y
+- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned)x y:(unsigned)y appendNote:(bool)appendNote
 {
     assert(pitch < NOTES_IN_OCTAVE);
     assert(octave <= MAX_OCTAVE && octave >= MIN_OCTAVE);
     assert(x < numBoxesX && y < numBoxesY);
     GridCell *cell = [self cellAtX:x y:y];
-    [cell setLastNote:[noteTypes getPianoNoteOfPitch:pitch Octave:octave]];
+    pianoNote note = [noteTypes getPianoNoteOfPitch:pitch Octave:octave];
+    if(appendNote)
+        [cell addNote:note];
+    else
+        [cell setLastNote:note];
 }
 
-- (void)changeNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave
+- (void)changeNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave appendNote:(bool)appendNote
 {
-    [self changeNoteWithPitch:pitch octave:octave x:currentX y:currentY];
+    [self changeNoteWithPitch:pitch octave:octave x:currentX y:currentY appendNote:appendNote];
 }
-
 
 - (void)clearNoteAtX:(unsigned int)x y:(unsigned int)y
 {
