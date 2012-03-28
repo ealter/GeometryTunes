@@ -23,5 +23,6 @@
 - (void)noteAddEvent;
 
 + (bool)isBlackNote:(int)pitch;
+- (void)removeFromSuperview;
 
 @end

@@ -175,7 +175,6 @@
 
 - (void)noteClearEvent
 {
-    addNote = false;
     [delegate clearNote];
 }
 
@@ -183,6 +182,12 @@
 {
     int n = pitch % NOTES_IN_OCTAVE;
     return n == 1 || n == 3 || n == 6 || n == 8 | n == 10;
+}
+
+- (void)removeFromSuperview
+{
+    [super removeFromSuperview];
+    addNote = false;
 }
 
 @end
