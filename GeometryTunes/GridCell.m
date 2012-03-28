@@ -4,8 +4,6 @@
 
 @implementation GridCell
 
-@synthesize notes;
-
 - (void)sharedInit
 {
     notes = [[NSMutableArray alloc] init];
@@ -44,6 +42,11 @@
         [self setBackgroundColor:[UIColor whiteColor]];
     }
     [self.layer needsDisplay];
+}
+
+- (NSMutableArray*)notes
+{
+    return notes;
 }
 
 - (void)setLastNote:(pianoNote)note
