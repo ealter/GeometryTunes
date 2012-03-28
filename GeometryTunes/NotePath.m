@@ -3,7 +3,6 @@
 
 @implementation NotePath
 
-@synthesize numNotes;
 @synthesize notes;
 @synthesize playbackPosition;
 @synthesize player;
@@ -15,8 +14,7 @@ const static NSTimeInterval playbackSpeed = 1.0;
 {
     self = [super init];
     if (self) {
-        notes = [[NSMutableArray alloc] init];
-        numNotes = 0;
+        notes = [[NSMutableArray alloc] initWithCapacity:100];
         path = nil;
         pulse = nil;
         playbackPosition = 0;
@@ -29,21 +27,26 @@ const static NSTimeInterval playbackSpeed = 1.0;
 - (void)addNoteWithPos:(CGPoint)pos 
 {
     [notes addObject:[NSValue valueWithCGPoint:pos]];
-    numNotes++;
 }
 
 - (void)removeNoteAtIndex:(unsigned)index
 {
     [notes removeObjectAtIndex:index];
-    numNotes--;
+} // removes every other node, needs to be debugged
+
+
+- (void) removeAllNotes
+{
+    [notes removeAllObjects];
+    [path removeAllPoints];
 }
 
 - (void)buildPath
 {
     path = [UIBezierPath bezierPath];
-    
+    int count = notes.count;
     const float radius = 5;
-    for (int i = 0; i < numNotes; i++) {
+    for (int i = 0; i < count; i++) {
         CGPoint point = [[notes objectAtIndex:i] CGPointValue];
         if (i == 0)
             [path moveToPoint:point];

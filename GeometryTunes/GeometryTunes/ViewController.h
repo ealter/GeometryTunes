@@ -20,7 +20,7 @@ typedef enum STATE
 - (IBAction)rewindEvent:(id)sender;
 - (IBAction)fastForwardEvent:(id)sender;
 - (IBAction)editPathEvent:(id)sender;
-
+- (IBAction)clearPathEvent:(id)sender; 
 - (void)changeStateToNormal:(bool)informGrid;
 - (void)setPlayStateToStopped;
 

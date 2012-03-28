@@ -24,6 +24,11 @@
     [path addNoteWithPos:pos];
 }
 
+- (void)removeAllNotes
+{
+    [path removeAllNotes];
+}
+
 - (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer*)player
 {
     [path playWithSpeedFactor:factor notePlayer:player];
