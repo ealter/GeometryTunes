@@ -48,21 +48,32 @@
     const float whiteKeyWidth = ((float)width) / (numWhiteNotes+octaveButtonRelativeSize*2);
     float x = 0;
     
-    UIColor *octavesBackground = [UIColor blueColor];
-    UIFont  *octavesFont = [UIFont systemFontOfSize:70];
-    UIColor *octavesTextColor = [UIColor blackColor];
-    
     float buttonWidth = whiteKeyWidth*octaveButtonRelativeSize;
-    UIButton *octaveDown = [[UIButton alloc]initWithFrame:CGRectMake(x, 0, buttonWidth, height)];
-    [octaveDown setBackgroundColor:octavesBackground];
-    [octaveDown setTitle:@"-" forState:UIControlStateNormal];
-    octaveDown.titleLabel.font = octavesFont;
-    octaveDown.titleLabel.textColor = octavesTextColor;
-    [octaveDown setTitleColor:octavesTextColor forState:UIControlStateNormal];
-    octaveDown.tag = -1;
-    [octaveDown addTarget:self action:@selector(OctaveChanged:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
     
-    [self addSubview:octaveDown];
+    for(int i = 0, heightOffset = 0; i < 2; heightOffset += height/2, i++)
+    {
+        UIButton *octaveBtn = [[UIButton alloc]initWithFrame:CGRectMake(x, heightOffset, buttonWidth, height/2)];
+        [octaveBtn setBackgroundColor:[UIColor blueColor]];
+        if(i == 0)
+        {
+            [octaveBtn setTitle:@"+" forState:UIControlStateNormal];
+            octaveBtn.tag = 1;
+        }
+        else
+        {
+            [octaveBtn setTitle:@"-" forState:UIControlStateNormal];
+            octaveBtn.tag = -1;
+        }
+        octaveBtn.titleLabel.font = [UIFont systemFontOfSize:70];
+        octaveBtn.titleLabel.textColor = [UIColor blackColor];
+        [octaveBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [octaveBtn.layer setBorderColor:[[UIColor blackColor] CGColor]];
+        [octaveBtn.layer setBorderWidth:2];
+        [octaveBtn addTarget:self action:@selector(OctaveChanged:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
+        
+        [self addSubview:octaveBtn];
+    }
+    
     x += buttonWidth;
     
     float blackKeyWidth = whiteKeyWidth/2;
@@ -99,17 +110,31 @@
         [notes addObject:note];
     }
     
-    buttonWidth = whiteKeyWidth*1.5;
-    UIButton *octaveUp = [[UIButton alloc]initWithFrame:CGRectMake(x, 0, buttonWidth, height)];
-    [octaveUp setBackgroundColor:octavesBackground];
-    [octaveUp setTitle:@"+" forState:UIControlStateNormal];
-    octaveUp.titleLabel.font = octavesFont;
-    octaveUp.titleLabel.textColor = octavesTextColor;
-    [octaveUp setTitleColor:octavesTextColor forState:UIControlStateNormal];
-    octaveUp.tag = 1;
-    [octaveUp addTarget:self action:@selector(OctaveChanged:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
-    
-    [self addSubview:octaveUp];
+    //Make the "Add note" and "Clear" buttons
+    for(int i = 0, heightOffset = 0; i < 2; heightOffset += height/2, i++)
+    {
+        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(x, heightOffset, buttonWidth, height/2)];
+        [btn setBackgroundColor:[UIColor blueColor]];
+        SEL eventHandler; //TODO: Set this value
+        if(i == 0)
+        {
+            [btn setTitle:@"Add Note" forState:UIControlStateNormal];
+            eventHandler = @selector(noteAddEvent);
+        }
+        else
+        {
+            [btn setTitle:@"Clear" forState:UIControlStateNormal];
+            eventHandler = @selector(noteClearEvent);
+        }
+        btn.titleLabel.font = [UIFont systemFontOfSize:40];
+        btn.titleLabel.textColor = [UIColor blackColor];
+        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+        [btn.layer setBorderColor:[[UIColor blackColor] CGColor]];
+        [btn.layer setBorderWidth:2];
+        [btn addTarget:self action:eventHandler forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
+        
+        [self addSubview:btn];
+    }
 }
 
 - (void)KeyClicked:(id)sender
@@ -119,7 +144,8 @@
     int pitch = note.tag % NOTES_IN_OCTAVE;
     int oct   = note.tag / NOTES_IN_OCTAVE + octave;
     [notePlayer playNoteWithPitch:pitch octave:oct];
-    [delegate changeNoteWithPitch:pitch octave:oct];
+    [delegate changeNoteWithPitch:pitch octave:oct appendNote:addNote];
+    addNote = false;
 }
 
 - (void)OctaveChanged:(id)sender
@@ -142,10 +168,26 @@
     }
 }
 
+- (void)noteAddEvent
+{
+    addNote = true;
+}
+
+- (void)noteClearEvent
+{
+    [delegate clearNote];
+}
+
 + (bool)isBlackNote:(int)pitch
 {
     int n = pitch % NOTES_IN_OCTAVE;
     return n == 1 || n == 3 || n == 6 || n == 8 | n == 10;
+}
+
+- (void)removeFromSuperview
+{
+    [super removeFromSuperview];
+    addNote = false;
 }
 
 @end
