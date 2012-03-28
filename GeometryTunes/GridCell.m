@@ -40,6 +40,9 @@
         assert(note != NO_PIANO_NOTE);
         [self setBackgroundColor:[noteColor colorFromNoteWithPitch:[noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note]]];
     }
+    else {
+        [self setBackgroundColor:[UIColor whiteColor]];
+    }
     [self.layer needsDisplay];
 }
 
