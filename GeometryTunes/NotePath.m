@@ -83,11 +83,11 @@ const static NSTimeInterval playbackSpeed = 1.0;
     
     // pulse code begin (unfinished)
     
-    CGPoint point = [[notes objectAtIndex:playbackPosition] CGPointValue];
+    /*CGPoint point = [[notes objectAtIndex:playbackPosition] CGPointValue];
     pulse = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(point.x - 5, point.y - 5, 20, 20)];
     pulse.lineWidth = 5;
     [[UIColor redColor] setStroke];
-    [pulse stroke];
+    [pulse stroke];*/
     
     // pulse code end
     

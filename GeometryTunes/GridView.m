@@ -134,13 +134,13 @@
 {
     CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
     CGPoint box = [self getBoxFromCoords:pos];
+    assert(box.x >= 0 && box.x < numBoxesX);
+    assert(box.y >= 0 && box.y < numBoxesY);
     switch([self state])
     {
         case NORMAL_STATE:
             [self setState:PIANO_STATE];
              box = [self getBoxFromCoords:pos];
-            assert(box.x >= 0 && box.x < numBoxesX);
-            assert(box.y >= 0 && box.y < numBoxesY);
             
             currentX = box.x;
             currentY = box.y;
@@ -166,12 +166,12 @@
                 //[self changeToNormalState];
             [self changeCell:[self cellAtX:currentX y:currentY] isBold:false];
             
-             box = [self getBoxFromCoords:pos];
-            assert(box.x >= 0 && box.x < numBoxesX);
-            assert(box.y >= 0 && box.y < numBoxesY);
-            currentX = box.x;
-            currentY = box.y;
-            [self changeCell:[self cellAtX:currentX y:currentY] isBold:true];
+            if(!CGRectContainsPoint([piano frame], pos))
+            {
+                currentX = box.x;
+                currentY = box.y;
+                [self changeCell:[self cellAtX:currentX y:currentY] isBold:true];
+            }
             
             break;
         case PATH_EDIT_STATE:
