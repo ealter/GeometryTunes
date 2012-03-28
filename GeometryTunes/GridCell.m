@@ -42,7 +42,7 @@
     else {
         [self setBackgroundColor:[UIColor whiteColor]];
     }
-    [self.layer needsDisplay];
+    [self.layer setNeedsDisplay];
 }
 
 - (NSMutableArray*)notes
@@ -75,5 +75,19 @@
 }
 
 //TODO: display the extra colors with drawrect
+- (void)drawRect:(CGRect)rect
+{
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    
+    int numNotes = [notes count];
+    float rectHeight = [self bounds].size.height / numNotes;
+    for(int i = 1, offset = rectHeight; i < numNotes; i++, offset += rectHeight)
+    {
+        pianoNote note = [[notes objectAtIndex:i] unsignedIntValue];
+        UIColor *color = [noteColor colorFromNoteWithPitch:[noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note]];
+        CGContextSetFillColorWithColor(context, [color CGColor]);
+        CGContextFillRect(context, CGRectMake(0, offset, [self bounds].size.width, rectHeight));
+    }
+}
 
 @end
