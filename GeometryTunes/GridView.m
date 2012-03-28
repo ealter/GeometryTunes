@@ -125,11 +125,12 @@
     
     swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipe:)];
     
-    swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp; //| UISwipeGestureRecognizerDirectionDown 
-    swipeGestureRecognizer.numberOfTouchesRequired = 2;
+    swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp | UISwipeGestureRecognizerDirectionDown;
+    swipeGestureRecognizer.numberOfTouchesRequired = 1; //TODO: maybe change to 2?
     
     // Add gesture recognizer to the view
     [self addGestureRecognizer:tapGestureRecognizer];
+    [self addGestureRecognizer:swipeGestureRecognizer];
 }
 
 -(void) handleTap:(UITapGestureRecognizer *)sender
@@ -189,8 +190,6 @@
 
 -  (void) handleSwipe:(UIGestureRecognizer *)sender
 {
-    NSLog(@"Swiped");
-    
     CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
     if(!CGRectContainsPoint([piano frame], pos))
         [self changeToNormalState];
