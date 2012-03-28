@@ -51,7 +51,7 @@
     if(numNotes == 0)
         [notes addObject:n];
     else
-        [notes insertObject:n atIndex:numNotes - 1];
+        [notes replaceObjectAtIndex:numNotes - 1 withObject:n];
     [self setNotes:notes];
 }
 
