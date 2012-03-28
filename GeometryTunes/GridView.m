@@ -305,7 +305,8 @@
     [pathView.path setDelegateGrid:self];
     if(reverse)
         factor = -factor;
-    [pathView playWithSpeedFactor:factor notePlayer:[piano notePlayer]];
+    if(piano) //Note: This assumes that the grid is blank if the piano doesn't exist
+        [pathView playWithSpeedFactor:factor notePlayer:[piano notePlayer]];
 }
 
 @end
