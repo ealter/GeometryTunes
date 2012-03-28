@@ -25,8 +25,8 @@
 
 - (void)sharedInit;
 
-- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave; //Uses the currentX and currentY
-- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned) x y:(unsigned)y;
+- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave appendNote:(bool)appendNote; //Uses the currentX and currentY
+- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned) x y:(unsigned)y appendNote:(bool)appendNote;
 //These set the last note
 
 - (void)clearNote;
