@@ -3,7 +3,7 @@
 
 @interface GridCell : UIView
 
-@property (readonly) NSMutableArray *notes; //An array of NSNumber*'s that each represent a pianoNote
+@property (readwrite) NSMutableArray *notes; //An array of NSNumber*'s that each represent a pianoNote
 
 - (void)setNotes:(NSMutableArray*)notes;
 - (void)setLastNote:(pianoNote)note; //Changes the last note. If there are no notes, it adds one

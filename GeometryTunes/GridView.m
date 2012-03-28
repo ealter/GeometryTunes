@@ -47,7 +47,7 @@
     if([self state] == PIANO_STATE)
         [piano removeFromSuperview];
     [self setState:NORMAL_STATE];
-    [self changeCell:[self cellAtX:currentX y:currentY] isBold:false];
+    //[self changeCell:[self cellAtX:currentX y:currentY] isBold:false];
     ViewController *del = delegate;
     [del changeStateToNormal:false];
 }
