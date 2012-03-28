@@ -74,7 +74,6 @@
     [self setNotes:[[NSMutableArray alloc]init]];
 }
 
-//TODO: display the extra colors with drawrect
 - (void)drawRect:(CGRect)rect
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
