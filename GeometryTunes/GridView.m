@@ -18,6 +18,7 @@
 
 @synthesize tapGestureRecognizer;
 @synthesize tapButtonRecognizer;
+@synthesize swipeGestureRecognizer;
 
 @synthesize pianoOctave;
 @synthesize delegate;
@@ -122,6 +123,11 @@
     // The number of taps in order for gesture to be recognized
     tapGestureRecognizer.numberOfTapsRequired = 1;
     
+    swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipe:)];
+    
+    swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp; //| UISwipeGestureRecognizerDirectionDown 
+    swipeGestureRecognizer.numberOfTouchesRequired = 2;
+    
     // Add gesture recognizer to the view
     [self addGestureRecognizer:tapGestureRecognizer];
 }
@@ -179,6 +185,20 @@
         default:
             assert(0); //Unknown state!
     }
+}
+
+-  (void) handleSwipe:(UIGestureRecognizer *)sender
+{
+    NSLog(@"Swiped");
+    
+    CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
+    if(!CGRectContainsPoint([piano frame], pos))
+        [self changeToNormalState];
+}
+
+- (void) resetPath 
+{
+    [pathView removeAllNotes];
 }
 
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned)x y:(unsigned)y appendNote:(bool)appendNote

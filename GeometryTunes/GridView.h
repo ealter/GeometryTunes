@@ -22,9 +22,12 @@
 @property (nonatomic) unsigned currentY;
 
 @property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
-@property (nonatomic, retain) UITapGestureRecognizer *tapButtonRecognizer;
+@property (nonatomic, retain) UITapGestureRecognizer *tapButtonRecognizer; //Not used anymore?
+@property (nonatomic, retain) UISwipeGestureRecognizer *swipeGestureRecognizer;
 
 - (void)sharedInit;
+
+- (void) resetPath; 
 
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave appendNote:(bool)appendNote; //Uses the currentX and currentY
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned) x y:(unsigned)y appendNote:(bool)appendNote;

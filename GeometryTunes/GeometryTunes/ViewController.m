@@ -68,6 +68,11 @@ static NSString *pauseBtnText = @"Pause";
     }
 }
 
+- (IBAction)clearPathEvent:(id)sender
+{
+    [grid resetPath];
+}
+
 - (void)changeStateToNormal:(bool)informGrid
 {
     if(state == PATH_EDIT_STATE)
