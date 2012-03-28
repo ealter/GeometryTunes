@@ -42,16 +42,6 @@
     }
 }
 
-- (void)changeToNormalState
-{
-    if([self state] == PIANO_STATE)
-        [piano removeFromSuperview];
-    [self setState:NORMAL_STATE];
-    //[self changeCell:[self cellAtX:currentX y:currentY] isBold:false];
-    ViewController *del = delegate;
-    [del changeStateToNormal:false];
-}
-
 - (void)changeCell:(GridCell *)cell isBold:(bool)isBold
 {
     assert(cell);
@@ -61,6 +51,16 @@
     else
         borderWidth = 2;
     [[cell layer] setBorderWidth:borderWidth];
+}
+
+- (void)changeToNormalState
+{
+    if([self state] == PIANO_STATE)
+        [piano removeFromSuperview];
+    [self setState:NORMAL_STATE];
+    [self changeCell:[self cellAtX:currentX y:currentY] isBold:false];
+    ViewController *del = delegate;
+    [del changeStateToNormal:false];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -169,23 +169,20 @@
     }
 }
 
-- (void)changeNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave appendNote:(bool)appendNote
-{
-    [self changeNoteWithPitch:pitch octave:octave x:currentX y:currentY appendNote:appendNote];
-}
-
-- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned)x y:(unsigned)y appendNote:(bool)appendNote
+- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned)x y:(unsigned)y
 {
     assert(pitch < NOTES_IN_OCTAVE);
     assert(octave <= MAX_OCTAVE && octave >= MIN_OCTAVE);
     assert(x < numBoxesX && y < numBoxesY);
     GridCell *cell = [self cellAtX:x y:y];
-    pianoNote note = [noteTypes getPianoNoteOfPitch:pitch Octave:octave];
-    if(appendNote)
-        [cell addNote:note];
-    else
-        [cell setLastNote:note];
+    [cell setLastNote:[noteTypes getPianoNoteOfPitch:pitch Octave:octave]];
 }
+
+- (void)changeNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave
+{
+    [self changeNoteWithPitch:pitch octave:octave x:currentX y:currentY];
+}
+
 
 - (void)clearNoteAtX:(unsigned int)x y:(unsigned int)y
 {
