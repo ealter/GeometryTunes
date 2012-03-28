@@ -53,16 +53,31 @@
     UIColor *octavesTextColor = [UIColor blackColor];
     
     float buttonWidth = whiteKeyWidth*octaveButtonRelativeSize;
-    UIButton *octaveDown = [[UIButton alloc]initWithFrame:CGRectMake(x, 0, buttonWidth, height)];
-    [octaveDown setBackgroundColor:octavesBackground];
-    [octaveDown setTitle:@"-" forState:UIControlStateNormal];
-    octaveDown.titleLabel.font = octavesFont;
-    octaveDown.titleLabel.textColor = octavesTextColor;
-    [octaveDown setTitleColor:octavesTextColor forState:UIControlStateNormal];
-    octaveDown.tag = -1;
-    [octaveDown addTarget:self action:@selector(OctaveChanged:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
     
-    [self addSubview:octaveDown];
+    for(int i = 0, heightOffset = 0; i < 2; heightOffset += height/2, i++)
+    {
+        UIButton *octaveBtn = [[UIButton alloc]initWithFrame:CGRectMake(x, heightOffset, buttonWidth, height/2)];
+        [octaveBtn setBackgroundColor:octavesBackground];
+        if(i == 0)
+        {
+            [octaveBtn setTitle:@"+" forState:UIControlStateNormal];
+            octaveBtn.tag = 1;
+        }
+        else
+        {
+            [octaveBtn setTitle:@"-" forState:UIControlStateNormal];
+            octaveBtn.tag = -1;
+        }
+        octaveBtn.titleLabel.font = octavesFont;
+        octaveBtn.titleLabel.textColor = octavesTextColor;
+        [octaveBtn setTitleColor:octavesTextColor forState:UIControlStateNormal];
+        [octaveBtn.layer setBorderColor:[[UIColor blackColor] CGColor]];
+        [octaveBtn.layer setBorderWidth:2];
+        [octaveBtn addTarget:self action:@selector(OctaveChanged:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
+        
+        [self addSubview:octaveBtn];
+    }
+    
     x += buttonWidth;
     
     float blackKeyWidth = whiteKeyWidth/2;
@@ -98,18 +113,6 @@
         [note.layer setBorderColor:[[UIColor blackColor] CGColor]];
         [notes addObject:note];
     }
-    
-    buttonWidth = whiteKeyWidth*1.5;
-    UIButton *octaveUp = [[UIButton alloc]initWithFrame:CGRectMake(x, 0, buttonWidth, height)];
-    [octaveUp setBackgroundColor:octavesBackground];
-    [octaveUp setTitle:@"+" forState:UIControlStateNormal];
-    octaveUp.titleLabel.font = octavesFont;
-    octaveUp.titleLabel.textColor = octavesTextColor;
-    [octaveUp setTitleColor:octavesTextColor forState:UIControlStateNormal];
-    octaveUp.tag = 1;
-    [octaveUp addTarget:self action:@selector(OctaveChanged:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
-    
-    [self addSubview:octaveUp];
 }
 
 - (void)KeyClicked:(id)sender
