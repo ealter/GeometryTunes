@@ -4,9 +4,11 @@
 
 @implementation GridCell
 
+@synthesize notes;
+
 - (void)sharedInit
 {
-    note = NO_PIANO_NOTE;
+    notes = [[NSMutableArray alloc] init];
     [self setBackgroundColor:[UIColor clearColor]];
 }
 
@@ -29,16 +31,42 @@
     return self;
 }
 
-- (void)setNote:(pianoNote)n
+- (void)setNotes:(NSMutableArray *)n
 {
-    note = n;
-    if(n != NO_PIANO_NOTE)
+    notes = n;
+    if([notes count] >= 1)
+    {
+        pianoNote note = [[notes objectAtIndex:0] unsignedIntValue];
+        assert(note != NO_PIANO_NOTE);
         [self setBackgroundColor:[noteColor colorFromNoteWithPitch:[noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note]]];
+    }
+    [self.layer needsDisplay];
 }
 
-- (pianoNote)note
+- (void)setLastNote:(pianoNote)note
 {
-    return note;
+    assert(note != NO_PIANO_NOTE);
+    int numNotes = [notes count];
+    NSNumber *n = [NSNumber numberWithUnsignedInt:note];
+    if(numNotes == 0)
+        [notes addObject:n];
+    else
+        [notes insertObject:n atIndex:numNotes - 1];
+    [self setNotes:notes];
 }
+
+- (void)addNote:(pianoNote)note
+{
+    assert(note != NO_PIANO_NOTE);
+    [notes addObject:[NSNumber numberWithUnsignedInt:note]];
+    [self setNotes:notes];
+}
+
+- (void)clearNotes
+{
+    [self setNotes:[[NSMutableArray alloc]init]];
+}
+
+//TODO: display the extra colors with drawrect
 
 @end

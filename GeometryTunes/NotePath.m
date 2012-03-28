@@ -76,7 +76,7 @@ const static NSTimeInterval playbackSpeed = 1.0;
         [delegateGrid stopPlayback];
         return;
     }
-    pianoNote note = [delegateGrid getNoteFromCoords:[[notes objectAtIndex:playbackPosition] CGPointValue]];
+    NSMutableArray *currentNotes = [delegateGrid getNotesFromCoords:[[notes objectAtIndex:playbackPosition] CGPointValue]];
     
     // pulse code begin (unfinished)
     
@@ -88,10 +88,14 @@ const static NSTimeInterval playbackSpeed = 1.0;
     
     // pulse code end
     
-    if(note != NO_PIANO_NOTE)
+    assert(player);
+    for(NSNumber *n in currentNotes)
     {
-        assert(player);
-        [player playNoteWithPitch: [noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note]];
+        pianoNote note = [n unsignedIntValue];
+        if(note != NO_PIANO_NOTE)
+        {
+            [player playNoteWithPitch: [noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note]];
+        }
     }
     if(reverse)
         playbackPosition--;

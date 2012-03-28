@@ -180,7 +180,17 @@
     assert(octave <= MAX_OCTAVE && octave >= MIN_OCTAVE);
     assert(x < numBoxesX && y < numBoxesY);
     GridCell *cell = [self cellAtX:x y:y];
-    [cell setNote:[noteTypes getPianoNoteOfPitch:pitch Octave:octave]];
+    [cell setLastNote:[noteTypes getPianoNoteOfPitch:pitch Octave:octave]];
+}
+
+- (void)clearNoteAtX:(unsigned int)x y:(unsigned int)y
+{
+    [[self cellAtX:x y:y] clearNotes];
+}
+
+- (void)clearNote
+{
+    [self clearNoteAtX:currentX y:currentY];
 }
 
 - (float)getBoxWidth
@@ -280,12 +290,11 @@
     return box;
 }
 
-- (pianoNote)getNoteFromCoords:(CGPoint)pos
+- (NSMutableArray*)getNotesFromCoords:(CGPoint)pos
 {
     CGPoint box = [self getBoxFromCoords:pos];
-    return [[self cellAtX:box.x y:box.y] note];
+    return [[self cellAtX:box.x y:box.y] notes];
 }
-
 
 - (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse
 {

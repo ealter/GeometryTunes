@@ -27,6 +27,10 @@
 
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave; //Uses the currentX and currentY
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned) x y:(unsigned)y;
+//These set the last note
+
+- (void)clearNote;
+- (void)clearNoteAtX:(unsigned)x y:(unsigned)y;
 
 - (float)getBoxWidth;
 - (float)getBoxHeight;
@@ -34,7 +38,7 @@
 - (void)drawGrid:(CGContextRef)context;
 
 - (CGPoint)getBoxFromCoords:(CGPoint)pos;
-- (pianoNote)getNoteFromCoords:(CGPoint)pos;
+- (NSMutableArray*)getNotesFromCoords:(CGPoint)pos;
 
 - (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse;
 - (void)pausePlayback;
