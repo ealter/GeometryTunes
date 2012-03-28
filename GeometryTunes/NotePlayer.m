@@ -37,11 +37,6 @@ static int getPlayerIndex(unsigned pitch, unsigned octave)
     return self;
 }
 
-
-/*
- * Slow to play on simulator. Trouble finding files from AVAudio
- * Should be faster on actual device
- */
 - (void)playNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave
 {
     assert(octave >= MIN_OCTAVE && octave <= MAX_OCTAVE);

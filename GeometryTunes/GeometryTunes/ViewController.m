@@ -1,4 +1,5 @@
 #import "ViewController.h"
+#import <AVFoundation/AVFoundation.h>
 
 @implementation ViewController
 
@@ -23,7 +24,6 @@ static NSString *pauseBtnText = @"Pause";
     else{
         if(state != NORMAL_STATE)
             [self changeStateToNormal:true];
-        NSLog(@"Time to play");
         [grid playPathWithSpeedFactor:1 reversed:false];
         
         [sender setTitle:pauseBtnText forState:UIControlStateNormal];
@@ -100,6 +100,14 @@ static NSString *pauseBtnText = @"Pause";
     [super viewDidLoad];
     state = NORMAL_STATE;
     [grid setDelegate:self];
+    
+    //Fix slowdown when loading the first sound
+    NSURL *sound1 = [[NSURL alloc]initFileURLWithPath:[[NSBundle mainBundle] pathForResource:@"A5" ofType:@"mp3"]];
+    assert(sound1);
+    
+    AVAudioPlayer *player = [[AVAudioPlayer alloc] initWithContentsOfURL:sound1 error:nil];
+    
+    [player prepareToPlay];
 }
 
 - (void)viewDidUnload
