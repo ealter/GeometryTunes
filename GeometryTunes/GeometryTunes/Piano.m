@@ -7,7 +7,7 @@
 #import "noteColor.h"
 #import "GridView.h"
 
-@synthesize octave, pitchOffset;
+@synthesize octave, pitchOffset, numNotes;
 @synthesize notePlayer;
 
 - (id)initWithFrame:(CGRect)frame delegate:(GridView*)del
@@ -34,7 +34,6 @@
     octave = INITIAL_PIANO_OCTAVE;
     numNotes = NOTES_IN_OCTAVE;
     pitchOffset = 0;
-    numWhiteNotes = [Piano whiteNotesFromPitch:pitchOffset numNotes:numNotes];
     notes = [NSMutableArray arrayWithCapacity:numNotes];
     notePlayer = [[NotePlayer alloc]init];
     [self setBackgroundColor:[UIColor whiteColor]];
@@ -46,7 +45,7 @@
     int width = rect.size.width;
     int height = rect.size.height;
     const float octaveButtonRelativeSize = 1.3;
-    const float whiteKeyWidth = ((float)width) / (numWhiteNotes+octaveButtonRelativeSize*2);
+    const float whiteKeyWidth = ((float)width) / ([self numWhiteNotes]+octaveButtonRelativeSize*2);
     float x = 0;
     
     float buttonWidth = whiteKeyWidth*octaveButtonRelativeSize;
@@ -197,6 +196,11 @@
             numWhiteNotes++;
     }
     return numWhiteNotes;
+}
+
+- (int)numWhiteNotes
+{
+    return [Piano whiteNotesFromPitch:pitchOffset numNotes:numNotes];
 }
 
 - (void)removeFromSuperview
