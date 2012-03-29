@@ -45,7 +45,6 @@
 - (void)drawGrid:(CGContextRef)context;
 
 - (CGPoint)getBoxFromCoords:(CGPoint)pos;
-- (NSMutableArray*)getNotesFromCoords:(CGPoint)pos;
 
 - (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse;
 - (void)pausePlayback;

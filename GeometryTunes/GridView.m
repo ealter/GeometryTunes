@@ -343,12 +343,6 @@
     return box;
 }
 
-- (NSMutableArray*)getNotesFromCoords:(CGPoint)pos
-{
-    CGPoint box = [self getBoxFromCoords:pos];
-    return [[self cellAtX:box.x y:box.y] notes];
-}
-
 - (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse
 {
     [pathView.path setDelegateGrid:self];
