@@ -39,8 +39,8 @@
 - (void)playNote;
 - (void)playNoteAtX:(unsigned)x y:(unsigned)y;
 
-- (float)getBoxWidth;
-- (float)getBoxHeight;
+- (float)boxWidth;
+- (float)boxHeight;
 
 - (void)drawGrid:(CGContextRef)context;
 
