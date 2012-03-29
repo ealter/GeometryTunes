@@ -2,6 +2,7 @@
 #import "Piano.h"
 
 @class PathsView;
+@class ViewController;
 
 @interface GridView : UIView
 {
@@ -14,7 +15,7 @@
 @property (nonatomic) int numBoxesX;
 @property (nonatomic) int numBoxesY;
 
-@property (retain) id delegate; //A ViewController
+@property (retain) ViewController *delegate;
 
 @property (nonatomic) int pianoOctave;
 
@@ -33,6 +34,9 @@
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned) x y:(unsigned)y appendNote:(bool)appendNote;
 //These set the last note
 
+- (NSMutableArray*)notes;
+- (NSMutableArray*)notesAtX:(unsigned)x y:(unsigned)y;
+
 - (void)clearNote;
 - (void)clearNoteAtX:(unsigned)x y:(unsigned)y;
 
@@ -42,7 +46,7 @@
 - (float)boxWidth;
 - (float)boxHeight;
 
-- (void)drawGrid:(CGContextRef)context;
+- (void)drawGrid;
 
 - (CGPoint)getBoxFromCoords:(CGPoint)pos;
 

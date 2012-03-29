@@ -7,6 +7,8 @@
 @synthesize grid;
 @synthesize editPathBtn;
 @synthesize playPauseButton;
+@synthesize speedSlider;
+@synthesize speedTextField;
 
 static NSString *playBtnText = @"Play";
 static NSString *pauseBtnText = @"Pause";
@@ -66,6 +68,20 @@ static NSString *pauseBtnText = @"Pause";
         [editPathBtn setTitle:@"Stop Path" forState:UIControlStateNormal];
         state = PATH_EDIT_STATE;
     }
+}
+
+- (IBAction) sliderValueChanged:(id)sender
+{
+    //NSString *speed = [sender value];
+    //speedTextField.text = [NSString stringWithFormat:@"%.1f", [sender value]];
+    
+    NSString *textValue = [speedTextField text];  
+    float value = [textValue floatValue];  
+    if (value < -20) value = -20;  
+    if (value > 20) value = 20;  
+    //speedSlider.value = value;  
+    speedTextField.text = [NSString stringWithFormat:@"%.1f", value];  
+    //if ([speedTextField canResignFirstResponder]) [speedTextField resignFirstResponder]; 
 }
 
 - (IBAction)clearPathEvent:(id)sender

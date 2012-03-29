@@ -9,7 +9,7 @@
 @synthesize player;
 @synthesize delegateGrid;
 
-const static NSTimeInterval playbackSpeed = 1.0;
+const static NSTimeInterval playbackSpeed = 0.75;
 
 - (id)init 
 {
@@ -35,6 +35,7 @@ const static NSTimeInterval playbackSpeed = 1.0;
     [notes removeObjectAtIndex:index];
 } // removes every other node, needs to be debugged
 
+<<<<<<< HEAD
 
 - (void) removeAllNotes
 {
@@ -43,6 +44,8 @@ const static NSTimeInterval playbackSpeed = 1.0;
     
 }
 
+=======
+>>>>>>> c8dcd637cbf856b9f1907ba6404a354cbc47ae09
 - (void)buildPath
 {
     path = [UIBezierPath bezierPath];
@@ -70,6 +73,12 @@ const static NSTimeInterval playbackSpeed = 1.0;
     [path stroke];
     
     CGContextRestoreGState(context);
+}
+
+- (void) removeAllNotes
+{
+    [notes removeAllObjects];
+    [path removeAllPoints];
 }
 
 - (void)playNote:(NSTimer*)t
@@ -112,7 +121,7 @@ const static NSTimeInterval playbackSpeed = 1.0;
     }
     NSTimeInterval speed = playbackSpeed * factor;
     //if(reverse)
-        //playbackPosition = [notes count] - 1; Causes Rew to start from end every time
+        //playbackPosition = [notes count] - 1; Commented out for reason: Causes Rew to start from end every time
     if(reverse)
         playbackPosition = playbackPosition - 1;
     NSNumber *r = [NSNumber numberWithBool:reverse];

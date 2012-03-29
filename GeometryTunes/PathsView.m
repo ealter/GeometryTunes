@@ -27,6 +27,7 @@
 - (void)removeAllNotes
 {
     [path removeAllNotes];
+    [self setNeedsDisplay];
 }
 
 - (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer*)player

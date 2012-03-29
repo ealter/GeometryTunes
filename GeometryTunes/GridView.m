@@ -30,19 +30,14 @@
 
 - (STATE)state
 {
-    ViewController *del = delegate;
-    assert(del);
-    return del.state;
+    assert(delegate);
+    return [delegate state];
 }
 
 - (void)setState:(STATE)state
 {
-    ViewController *del = delegate;
-    if(del)
-    {
-        [del setState:state];
-        del.state = state;
-    }
+    if(delegate)
+        [delegate setState:state];
 }
 
 - (void)changeCell:(GridCell *)cell isBold:(bool)isBold
@@ -62,8 +57,7 @@
         [piano removeFromSuperview];
     [self setState:NORMAL_STATE];
     [self changeCell:[self cellAtX:currentX y:currentY] isBold:false];
-    ViewController *del = delegate;
-    [del changeStateToNormal:false];
+    [delegate changeStateToNormal:false];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -167,13 +161,14 @@
         case PIANO_STATE:
             //if(!CGRectContainsPoint([piano frame], pos))
                 //[self changeToNormalState];
-            [self changeCell:[self cellAtX:currentX y:currentY] isBold:false];
             
             if(!CGRectContainsPoint([piano frame], pos))
             {
+                [self changeCell:[self cellAtX:currentX y:currentY] isBold:false];
                 currentX = box.x;
                 currentY = box.y;
                 [self changeCell:[self cellAtX:currentX y:currentY] isBold:true];
+                [piano gridCellHasChanged];
             }
             
             break;
@@ -256,7 +251,7 @@
     return [self bounds].size.height / numBoxesY;
 }
 
-- (void)drawGrid:(CGContextRef)context
+- (void)drawGrid
 {
     for (int y = 0; y < numBoxesY; y++) {
         for (int x = 0; x < numBoxesX; x++) {
@@ -330,7 +325,7 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    [self drawGrid:UIGraphicsGetCurrentContext()];
+    [self drawGrid];
     [self addSubview:pathView];
     [self bringSubviewToFront:pathView];
 }
@@ -350,6 +345,16 @@
         factor = -factor;
     if(piano) //Note: This assumes that the grid is blank if the piano doesn't exist
         [pathView playWithSpeedFactor:factor notePlayer:[piano notePlayer]];
+}
+
+- (NSMutableArray*)notesAtX:(unsigned int)x y:(unsigned int)y
+{
+    return [[self cellAtX:x y:y] notes];
+}
+
+- (NSMutableArray*)notes
+{
+    return [self notesAtX:currentX y:currentY];
 }
 
 @end
