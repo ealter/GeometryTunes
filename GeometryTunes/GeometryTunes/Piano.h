@@ -14,6 +14,7 @@
 }
 
 @property unsigned octave;
+@property int pitchOffset;
 @property (retain) NotePlayer *notePlayer;
 
 - (id)sharedInit;
@@ -25,6 +26,7 @@
 - (void)noteAddEvent;
 
 + (bool)isBlackNote:(int)pitch;
++ (int)whiteNotesFromPitch:(unsigned)pitch numNotes:(unsigned)numNotes;
 - (void)removeFromSuperview;
 
 @end

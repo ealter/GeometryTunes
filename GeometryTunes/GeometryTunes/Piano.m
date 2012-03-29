@@ -7,7 +7,7 @@
 #import "noteColor.h"
 #import "GridView.h"
 
-@synthesize octave;
+@synthesize octave, pitchOffset;
 @synthesize notePlayer;
 
 - (id)initWithFrame:(CGRect)frame delegate:(GridView*)del
@@ -33,7 +33,8 @@
 {
     octave = INITIAL_PIANO_OCTAVE;
     numNotes = NOTES_IN_OCTAVE;
-    numWhiteNotes = 7;
+    pitchOffset = 0;
+    numWhiteNotes = [Piano whiteNotesFromPitch:pitchOffset numNotes:numNotes];
     notes = [NSMutableArray arrayWithCapacity:numNotes];
     notePlayer = [[NotePlayer alloc]init];
     [self setBackgroundColor:[UIColor whiteColor]];
@@ -82,7 +83,7 @@
     int whiteKeyNum = 0;
     bool isBlack;
 
-    for(int i=0; i<numNotes; i++)
+    for(int i=pitchOffset; i<numNotes + pitchOffset; i++)
     {
         if([Piano isBlackNote:i])
         {
@@ -185,6 +186,17 @@
 {
     int n = pitch % NOTES_IN_OCTAVE;
     return n == 1 || n == 3 || n == 6 || n == 8 | n == 10;
+}
+
++ (int)whiteNotesFromPitch:(unsigned int)pitch numNotes:(unsigned int)numNotes
+{
+    int numWhiteNotes = 0;
+    for(int i = 0; i < numNotes; i++)
+    {
+        if(![self isBlackNote:pitch + i])
+            numWhiteNotes++;
+    }
+    return numWhiteNotes;
 }
 
 - (void)removeFromSuperview
