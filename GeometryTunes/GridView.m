@@ -167,10 +167,10 @@
         case PIANO_STATE:
             //if(!CGRectContainsPoint([piano frame], pos))
                 //[self changeToNormalState];
-            [self changeCell:[self cellAtX:currentX y:currentY] isBold:false];
             
             if(!CGRectContainsPoint([piano frame], pos))
             {
+                [self changeCell:[self cellAtX:currentX y:currentY] isBold:false];
                 currentX = box.x;
                 currentY = box.y;
                 [self changeCell:[self cellAtX:currentX y:currentY] isBold:true];
