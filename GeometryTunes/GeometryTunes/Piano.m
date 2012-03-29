@@ -191,4 +191,9 @@
     addNote = false;
 }
 
+-(void)boldPianoNote:(pianoNote)note
+{
+    //convert piano note to index of UIButton in notes
+}
+
 @end

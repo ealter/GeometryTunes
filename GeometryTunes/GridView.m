@@ -54,6 +54,12 @@
     else
         borderWidth = 2;
     [[cell layer] setBorderWidth:borderWidth];
+    
+    //Bold piano keys with same notes
+    // int notesInCellCount = [cell.notes count];
+    // for(int i=0; i < notesInCellCount; i++){
+    //   [piano boldPianoNote:[cell getNoteAtIndex:i]];
+    // }
 }
 
 - (void)changeToNormalState
@@ -165,7 +171,7 @@
             break;
             
         case PIANO_STATE:
-            //if(!CGRectContainsPoint([piano frame], pos))
+            //if(!CGRectContainsPoint([piano frame], pos)) //No need to double click
                 //[self changeToNormalState];
             [self changeCell:[self cellAtX:currentX y:currentY] isBold:false];
             

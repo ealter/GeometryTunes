@@ -27,4 +27,6 @@
 + (bool)isBlackNote:(int)pitch;
 - (void)removeFromSuperview;
 
+- (void)boldPianoNote:(pianoNote)note; //takes in pianoNote type
+
 @end

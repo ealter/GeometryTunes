@@ -69,6 +69,11 @@
     [self setNotes:notes];
 }
 
+- (id)getNoteAtIndex:(int)i
+{
+    return [notes objectAtIndex:i];
+}
+
 - (void)clearNotes
 {
     [self setNotes:[[NSMutableArray alloc]init]];
