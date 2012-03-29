@@ -208,4 +208,30 @@
     addNote = false;
 }
 
+- (int)indexOfPitch:(unsigned int)pitch octave:(unsigned int)octave_
+{
+    assert(pitch < NOTES_IN_OCTAVE);
+    int i = (octave_ - octave) * NOTES_IN_OCTAVE + pitch - pitchOffset;
+    if (i >= 0 && i < numNotes)
+        return i;
+    else
+        return -1;
+}
+
+- (void)boldNotes:(NSMutableArray *)boldNotes
+{
+    //First unbold all notes
+    for(UIButton *note in notes)
+    {
+        [note.layer setBorderWidth:1];
+    }
+    for(NSNumber *note in boldNotes)
+    {
+        pianoNote p = [note unsignedIntValue];
+        int index = [self indexOfPitch:[noteTypes pitchOfPianoNote:p] octave:[noteTypes octaveOfPianoNote:p]];
+        if(index != -1)
+            [[[notes objectAtIndex:index] layer] setBorderWidth:4];
+    }
+}
+
 @end

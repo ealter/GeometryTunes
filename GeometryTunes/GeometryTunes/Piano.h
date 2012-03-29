@@ -28,6 +28,10 @@
 
 - (int)numWhiteNotes;
 
+- (void)boldNotes:(NSMutableArray*)notes;
+
+- (int)indexOfPitch:(unsigned)pitch octave:(unsigned)octave; //Returns the index in the notes array. If it is not in the array, it returns -1
+
 + (bool)isBlackNote:(int)pitch;
 + (int)whiteNotesFromPitch:(unsigned)pitch numNotes:(unsigned)numNotes;
 

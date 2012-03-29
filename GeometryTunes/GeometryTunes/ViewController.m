@@ -1,9 +1,6 @@
 #import "ViewController.h"
 #import <AVFoundation/AVFoundation.h>
 
-#define PLAY_SPEED .125
-#define FF_AND_REW_SPEED .25
-
 @implementation ViewController
 
 @synthesize state;
@@ -29,7 +26,7 @@ static NSString *pauseBtnText = @"Pause";
     else{
         if(state != NORMAL_STATE)
             [self changeStateToNormal:true];
-        [grid playPathWithSpeedFactor:PLAY_SPEED reversed:false];
+        [grid playPathWithSpeedFactor:1 reversed:false];
         
         [sender setTitle:pauseBtnText forState:UIControlStateNormal];
     }
@@ -50,7 +47,7 @@ static NSString *pauseBtnText = @"Pause";
     if(state != NORMAL_STATE)
         [self changeStateToNormal:true];
     [grid pausePlayback];
-    [grid playPathWithSpeedFactor:FF_AND_REW_SPEED reversed:true];
+    [grid playPathWithSpeedFactor:0.5 reversed:true];
 }
 
 - (IBAction)fastForwardEvent:(id)sender
@@ -58,7 +55,7 @@ static NSString *pauseBtnText = @"Pause";
     if(state != NORMAL_STATE)
         [self changeStateToNormal:true];
     [grid pausePlayback];
-    [grid playPathWithSpeedFactor:FF_AND_REW_SPEED reversed:false];
+    [grid playPathWithSpeedFactor:0.5 reversed:false];
 }
 
 - (IBAction)editPathEvent:(id)sender
