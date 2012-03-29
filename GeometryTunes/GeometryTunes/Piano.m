@@ -142,7 +142,6 @@
 - (void)KeyClicked:(id)sender
 {
     UIButton *note = sender;
-    NSLog(@"Key: %d", note.tag);
     int pitch = note.tag % NOTES_IN_OCTAVE;
     int oct   = note.tag / NOTES_IN_OCTAVE + octave;
     [delegate changeNoteWithPitch:pitch octave:oct appendNote:addNote];
