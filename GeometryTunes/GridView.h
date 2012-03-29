@@ -12,6 +12,8 @@
     PathsView *pathView;
 }
 
+typedef CGPoint CellPos; //Represents a coordinate system for the grid (0,0) is top left. (1,0) is one to the right of that
+
 @property (nonatomic) int numBoxesX;
 @property (nonatomic) int numBoxesY;
 
@@ -48,7 +50,7 @@
 
 - (void)drawGrid;
 
-- (CGPoint)getBoxFromCoords:(CGPoint)pos;
+- (CellPos)getBoxFromCoords:(CGPoint)pos;
 
 - (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse;
 - (void)pausePlayback;

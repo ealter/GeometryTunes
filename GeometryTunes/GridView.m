@@ -130,7 +130,7 @@
 -(void) handleTap:(UITapGestureRecognizer *)sender
 {
     CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
-    CGPoint box = [self getBoxFromCoords:pos];
+    CellPos box = [self getBoxFromCoords:pos];
     assert(box.x >= 0 && box.x < numBoxesX);
     assert(box.y >= 0 && box.y < numBoxesY);
     switch([self state])
@@ -330,9 +330,9 @@
     [self bringSubviewToFront:pathView];
 }
 
-- (CGPoint) getBoxFromCoords:(CGPoint)pos 
+- (CellPos) getBoxFromCoords:(CGPoint)pos 
 {
-    CGPoint box = CGPointMake((int)(pos.x / [self boxWidth]), (int)(pos.y / [self boxHeight]));
+    CellPos box = CGPointMake((int)(pos.x / [self boxWidth]), (int)(pos.y / [self boxHeight]));
     if (box.x > numBoxesX || box.y > numBoxesY)
         return CGPointMake(-1, -1);
     return box;
