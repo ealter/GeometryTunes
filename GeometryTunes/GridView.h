@@ -36,6 +36,9 @@
 - (void)clearNote;
 - (void)clearNoteAtX:(unsigned)x y:(unsigned)y;
 
+- (void)playNote;
+- (void)playNoteAtX:(unsigned)x y:(unsigned)y;
+
 - (float)getBoxWidth;
 - (float)getBoxHeight;
 

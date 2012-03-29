@@ -228,6 +228,24 @@
     [self clearNoteAtX:currentX y:currentY];
 }
 
+- (void)playNote
+{
+    [self playNoteAtX:currentX y:currentY];
+}
+
+- (void)playNoteAtX:(unsigned)x y:(unsigned)y
+{
+    NSMutableArray *notes = [[self cellAtX:x y:y] notes];
+    for(NSNumber *n in notes)
+    {
+        pianoNote note = [n unsignedIntValue];
+        if(note != NO_PIANO_NOTE)
+        {
+            [[piano notePlayer] playNoteWithPitch: [noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note]];
+        }
+    }
+}
+
 - (float)getBoxWidth
 {
     return [self bounds].size.width / numBoxesX;
