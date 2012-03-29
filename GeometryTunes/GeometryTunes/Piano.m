@@ -1,6 +1,8 @@
 #import "Piano.h"
 #import <QuartzCore/QuartzCore.h>
 
+#define NOTES_IN_KEYBOARD NOTES_IN_OCTAVE
+
 @implementation Piano
 
 #import "noteTypes.h"
@@ -32,7 +34,7 @@
 - (id)sharedInit
 {
     octave = INITIAL_PIANO_OCTAVE;
-    numNotes = NOTES_IN_OCTAVE;
+    numNotes = NOTES_IN_KEYBOARD;
     pitchOffset = 0;
     notes = [NSMutableArray arrayWithCapacity:numNotes];
     notePlayer = [[NotePlayer alloc]init];
