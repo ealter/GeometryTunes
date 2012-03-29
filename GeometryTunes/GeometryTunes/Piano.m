@@ -137,6 +137,8 @@
         
         [self addSubview:btn];
     }
+    
+    [self boldNotes:[delegate notes]];
 }
 
 - (void)KeyClicked:(id)sender
@@ -147,6 +149,7 @@
     [delegate changeNoteWithPitch:pitch octave:oct appendNote:addNote];
     [delegate playNote];
     addNote = false;
+    [self boldNotes:[delegate notes]];
 }
 
 - (void)OctaveChanged:(id)sender
@@ -168,6 +171,7 @@
         }
         [delegate setPianoOctave:octave];
     }
+    [self boldNotes:[delegate notes]];
 }
 
 - (void)noteAddEvent
@@ -229,6 +233,7 @@
     {
         pianoNote p = [note unsignedIntValue];
         int index = [self indexOfPitch:[noteTypes pitchOfPianoNote:p] octave:[noteTypes octaveOfPianoNote:p]];
+        NSLog(@"index: %d", index);
         if(index != -1)
             [[[notes objectAtIndex:index] layer] setBorderWidth:4];
     }

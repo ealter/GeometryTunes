@@ -352,4 +352,14 @@
         [pathView playWithSpeedFactor:factor notePlayer:[piano notePlayer]];
 }
 
+- (NSMutableArray*)notesAtX:(unsigned int)x y:(unsigned int)y
+{
+    return [[self cellAtX:x y:y] notes];
+}
+
+- (NSMutableArray*)notes
+{
+    return [self notesAtX:currentX y:currentY];
+}
+
 @end

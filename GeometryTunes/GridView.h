@@ -33,6 +33,9 @@
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned) x y:(unsigned)y appendNote:(bool)appendNote;
 //These set the last note
 
+- (NSMutableArray*)notes;
+- (NSMutableArray*)notesAtX:(unsigned)x y:(unsigned)y;
+
 - (void)clearNote;
 - (void)clearNoteAtX:(unsigned)x y:(unsigned)y;
 
