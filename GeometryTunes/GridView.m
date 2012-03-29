@@ -174,6 +174,7 @@
                 currentX = box.x;
                 currentY = box.y;
                 [self changeCell:[self cellAtX:currentX y:currentY] isBold:true];
+                [piano gridCellHasChanged];
             }
             
             break;

@@ -24,6 +24,8 @@
 - (void)noteClearEvent;
 - (void)noteAddEvent;
 
+- (void)gridCellHasChanged; //Means that the note the piano is editing has changed
+
 - (void)removeFromSuperview;
 
 - (int)numWhiteNotes;

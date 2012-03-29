@@ -174,6 +174,11 @@
     [self boldNotes:[delegate notes]];
 }
 
+- (void)gridCellHasChanged
+{
+    [self boldNotes:[delegate notes]];
+}
+
 - (void)noteAddEvent
 {
     addNote = true;
