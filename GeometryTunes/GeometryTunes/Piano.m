@@ -42,9 +42,8 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    CGRect screenRect = [self bounds];
-    int width = screenRect.size.width;
-    int height = screenRect.size.height;
+    int width = rect.size.width;
+    int height = rect.size.height;
     const float octaveButtonRelativeSize = 1.3;
     const float whiteKeyWidth = ((float)width) / (numWhiteNotes+octaveButtonRelativeSize*2);
     float x = 0;

@@ -256,7 +256,7 @@
     return [self bounds].size.height / numBoxesY;
 }
 
-- (void)drawGrid:(CGContextRef)context
+- (void)drawGrid
 {
     for (int y = 0; y < numBoxesY; y++) {
         for (int x = 0; x < numBoxesX; x++) {
@@ -330,7 +330,7 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    [self drawGrid:UIGraphicsGetCurrentContext()];
+    [self drawGrid];
     [self addSubview:pathView];
     [self bringSubviewToFront:pathView];
 }

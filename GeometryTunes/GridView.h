@@ -42,7 +42,7 @@
 - (float)boxWidth;
 - (float)boxHeight;
 
-- (void)drawGrid:(CGContextRef)context;
+- (void)drawGrid;
 
 - (CGPoint)getBoxFromCoords:(CGPoint)pos;
 
