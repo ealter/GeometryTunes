@@ -100,7 +100,7 @@
             x += whiteKeyWidth;
         }
         
-        [note setBackgroundColor:[noteColor colorFromNoteWithPitch:i octave:octave]];
+        [note setBackgroundColor:[noteColor colorFromNoteWithPitch:i % NOTES_IN_OCTAVE octave:octave + i/NOTES_IN_OCTAVE]];
         note.tag = i;
         [note addTarget:self action:@selector(KeyClicked:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
         [self addSubview:note];
@@ -116,7 +116,9 @@
     {
         UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(x, heightOffset, buttonWidth, height/2)];
         [btn setBackgroundColor:[UIColor blueColor]];
-        SEL eventHandler; //TODO: Set this value
+        SEL eventHandler;
+        btn.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
+        btn.titleLabel.textAlignment = UITextAlignmentCenter;
         if(i == 0)
         {
             [btn setTitle:@"Add Note" forState:UIControlStateNormal];
@@ -153,8 +155,9 @@
 {
     UIButton *octaveBtn = sender;
     int newOctave = octave + octaveBtn.tag;
-    if(newOctave > MAX_OCTAVE)
-        octave = MAX_OCTAVE;
+    int maxOctave = MAX_OCTAVE + numNotes / NOTES_IN_OCTAVE;
+    if(newOctave > maxOctave)
+        octave = maxOctave;
     else if(newOctave < MIN_OCTAVE)
         octave = MIN_OCTAVE;
     else
@@ -163,7 +166,7 @@
         for(int i=0; i<numNotes; i++)
         {
             UIButton *note = [notes objectAtIndex:i];
-            [note setBackgroundColor:[noteColor colorFromNoteWithPitch:i octave:octave]];
+            [note setBackgroundColor:[noteColor colorFromNoteWithPitch:i % NOTES_IN_OCTAVE octave:octave + i / NOTES_IN_OCTAVE]];
         }
         [delegate setPianoOctave:octave];
     }
