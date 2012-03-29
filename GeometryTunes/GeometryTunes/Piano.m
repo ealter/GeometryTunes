@@ -7,7 +7,7 @@
 #import "noteColor.h"
 #import "GridView.h"
 
-@synthesize octave;
+@synthesize octave, pitchOffset, numNotes;
 @synthesize notePlayer;
 
 - (id)initWithFrame:(CGRect)frame delegate:(GridView*)del
@@ -33,7 +33,7 @@
 {
     octave = INITIAL_PIANO_OCTAVE;
     numNotes = NOTES_IN_OCTAVE;
-    numWhiteNotes = 7;
+    pitchOffset = 0;
     notes = [NSMutableArray arrayWithCapacity:numNotes];
     notePlayer = [[NotePlayer alloc]init];
     [self setBackgroundColor:[UIColor whiteColor]];
@@ -42,11 +42,10 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    CGRect screenRect = [self bounds];
-    int width = screenRect.size.width;
-    int height = screenRect.size.height;
+    int width = rect.size.width;
+    int height = rect.size.height;
     const float octaveButtonRelativeSize = 1.3;
-    const float whiteKeyWidth = ((float)width) / (numWhiteNotes+octaveButtonRelativeSize*2);
+    const float whiteKeyWidth = ((float)width) / ([self numWhiteNotes]+octaveButtonRelativeSize*2);
     float x = 0;
     
     float buttonWidth = whiteKeyWidth*octaveButtonRelativeSize;
@@ -83,7 +82,7 @@
     int whiteKeyNum = 0;
     bool isBlack;
 
-    for(int i=0; i<numNotes; i++)
+    for(int i=pitchOffset; i<numNotes + pitchOffset; i++)
     {
         if([Piano isBlackNote:i])
         {
@@ -100,7 +99,7 @@
             x += whiteKeyWidth;
         }
         
-        [note setBackgroundColor:[noteColor colorFromNoteWithPitch:i octave:octave]];
+        [note setBackgroundColor:[noteColor colorFromNoteWithPitch:i % NOTES_IN_OCTAVE octave:octave + i/NOTES_IN_OCTAVE]];
         note.tag = i;
         [note addTarget:self action:@selector(KeyClicked:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
         [self addSubview:note];
@@ -116,7 +115,9 @@
     {
         UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(x, heightOffset, buttonWidth, height/2)];
         [btn setBackgroundColor:[UIColor blueColor]];
-        SEL eventHandler; //TODO: Set this value
+        SEL eventHandler;
+        btn.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
+        btn.titleLabel.textAlignment = UITextAlignmentCenter;
         if(i == 0)
         {
             [btn setTitle:@"Add Note" forState:UIControlStateNormal];
@@ -141,11 +142,10 @@
 - (void)KeyClicked:(id)sender
 {
     UIButton *note = sender;
-    NSLog(@"Key: %d", note.tag);
     int pitch = note.tag % NOTES_IN_OCTAVE;
     int oct   = note.tag / NOTES_IN_OCTAVE + octave;
-    [notePlayer playNoteWithPitch:pitch octave:oct];
     [delegate changeNoteWithPitch:pitch octave:oct appendNote:addNote];
+    [delegate playNote];
     addNote = false;
 }
 
@@ -153,8 +153,9 @@
 {
     UIButton *octaveBtn = sender;
     int newOctave = octave + octaveBtn.tag;
-    if(newOctave > MAX_OCTAVE)
-        octave = MAX_OCTAVE;
+    int maxOctave = MAX_OCTAVE + numNotes / NOTES_IN_OCTAVE;
+    if(newOctave > maxOctave)
+        octave = maxOctave;
     else if(newOctave < MIN_OCTAVE)
         octave = MIN_OCTAVE;
     else
@@ -163,7 +164,7 @@
         for(int i=0; i<numNotes; i++)
         {
             UIButton *note = [notes objectAtIndex:i];
-            [note setBackgroundColor:[noteColor colorFromNoteWithPitch:i octave:octave]];
+            [note setBackgroundColor:[noteColor colorFromNoteWithPitch:i % NOTES_IN_OCTAVE octave:octave + i / NOTES_IN_OCTAVE]];
         }
         [delegate setPianoOctave:octave];
     }
@@ -183,6 +184,22 @@
 {
     int n = pitch % NOTES_IN_OCTAVE;
     return n == 1 || n == 3 || n == 6 || n == 8 | n == 10;
+}
+
++ (int)whiteNotesFromPitch:(unsigned int)pitch numNotes:(unsigned int)numNotes
+{
+    int numWhiteNotes = 0;
+    for(int i = 0; i < numNotes; i++)
+    {
+        if(![self isBlackNote:pitch + i])
+            numWhiteNotes++;
+    }
+    return numWhiteNotes;
+}
+
+- (int)numWhiteNotes
+{
+    return [Piano whiteNotesFromPitch:pitchOffset numNotes:numNotes];
 }
 
 - (void)removeFromSuperview

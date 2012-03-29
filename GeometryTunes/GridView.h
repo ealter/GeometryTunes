@@ -36,13 +36,15 @@
 - (void)clearNote;
 - (void)clearNoteAtX:(unsigned)x y:(unsigned)y;
 
-- (float)getBoxWidth;
-- (float)getBoxHeight;
+- (void)playNote;
+- (void)playNoteAtX:(unsigned)x y:(unsigned)y;
 
-- (void)drawGrid:(CGContextRef)context;
+- (float)boxWidth;
+- (float)boxHeight;
+
+- (void)drawGrid;
 
 - (CGPoint)getBoxFromCoords:(CGPoint)pos;
-- (NSMutableArray*)getNotesFromCoords:(CGPoint)pos;
 
 - (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse;
 - (void)pausePlayback;

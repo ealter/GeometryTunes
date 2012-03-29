@@ -99,8 +99,8 @@
     cells = [[NSMutableArray alloc] initWithCapacity:numBoxesY];
     NSMutableArray *row;
     
-    float boxWidth = [self getBoxWidth];
-    float boxHeight = [self getBoxHeight];
+    float boxWidth = [self boxWidth];
+    float boxHeight = [self boxHeight];
     for(int i=0; i<numBoxesX; i++)
     {
         row = [[NSMutableArray alloc] initWithCapacity:numBoxesX];
@@ -151,7 +151,7 @@
             [self changeCell:[self cellAtX:currentX y:currentY] isBold:true];
             int pianoHeight = 200; //TODO change to const
             int pianoY = [self bounds].size.height - pianoHeight;
-            if((box.y+1) * [self getBoxHeight] > pianoY) {
+            if((box.y+1) * [self boxHeight] > pianoY) {
                 pianoY = 0;
             }
             
@@ -179,7 +179,7 @@
             break;
         case PATH_EDIT_STATE:
             box = [self getBoxFromCoords:pos];
-            CGPoint point = CGPointMake((box.x + 0.5) * [self getBoxWidth], (box.y + 0.5) * [self getBoxHeight]);
+            CGPoint point = CGPointMake((box.x + 0.5) * [self boxWidth], (box.y + 0.5) * [self boxHeight]);
             [pathView addNoteWithPos:point];
             [pathView setNeedsDisplay];
             break;
@@ -228,17 +228,35 @@
     [self clearNoteAtX:currentX y:currentY];
 }
 
-- (float)getBoxWidth
+- (void)playNote
+{
+    [self playNoteAtX:currentX y:currentY];
+}
+
+- (void)playNoteAtX:(unsigned)x y:(unsigned)y
+{
+    NSMutableArray *notes = [[self cellAtX:x y:y] notes];
+    for(NSNumber *n in notes)
+    {
+        pianoNote note = [n unsignedIntValue];
+        if(note != NO_PIANO_NOTE)
+        {
+            [[piano notePlayer] playNoteWithPitch: [noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note]];
+        }
+    }
+}
+
+- (float)boxWidth
 {
     return [self bounds].size.width / numBoxesX;
 }
 
-- (float)getBoxHeight
+- (float)boxHeight
 {
     return [self bounds].size.height / numBoxesY;
 }
 
-- (void)drawGrid:(CGContextRef)context
+- (void)drawGrid
 {
     for (int y = 0; y < numBoxesY; y++) {
         for (int x = 0; x < numBoxesX; x++) {
@@ -312,23 +330,17 @@
 
 - (void)drawRect:(CGRect)rect
 {
-    [self drawGrid:UIGraphicsGetCurrentContext()];
+    [self drawGrid];
     [self addSubview:pathView];
     [self bringSubviewToFront:pathView];
 }
 
 - (CGPoint) getBoxFromCoords:(CGPoint)pos 
 {
-    CGPoint box = CGPointMake((int)(pos.x / [self getBoxWidth]), (int)(pos.y / [self getBoxHeight]));
+    CGPoint box = CGPointMake((int)(pos.x / [self boxWidth]), (int)(pos.y / [self boxHeight]));
     if (box.x > numBoxesX || box.y > numBoxesY)
         return CGPointMake(-1, -1);
     return box;
-}
-
-- (NSMutableArray*)getNotesFromCoords:(CGPoint)pos
-{
-    CGPoint box = [self getBoxFromCoords:pos];
-    return [[self cellAtX:box.x y:box.y] notes];
 }
 
 - (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse
