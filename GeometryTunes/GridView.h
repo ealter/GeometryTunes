@@ -2,6 +2,7 @@
 #import "Piano.h"
 
 @class PathsView;
+@class ViewController;
 
 @interface GridView : UIView
 {
@@ -14,7 +15,7 @@
 @property (nonatomic) int numBoxesX;
 @property (nonatomic) int numBoxesY;
 
-@property (retain) id delegate; //A ViewController
+@property (retain) ViewController *delegate;
 
 @property (nonatomic) int pianoOctave;
 

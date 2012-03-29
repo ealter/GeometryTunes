@@ -30,19 +30,14 @@
 
 - (STATE)state
 {
-    ViewController *del = delegate;
-    assert(del);
-    return del.state;
+    assert(delegate);
+    return [delegate state];
 }
 
 - (void)setState:(STATE)state
 {
-    ViewController *del = delegate;
-    if(del)
-    {
-        [del setState:state];
-        del.state = state;
-    }
+    if(delegate)
+        [delegate setState:state];
 }
 
 - (void)changeCell:(GridCell *)cell isBold:(bool)isBold
@@ -62,8 +57,7 @@
         [piano removeFromSuperview];
     [self setState:NORMAL_STATE];
     [self changeCell:[self cellAtX:currentX y:currentY] isBold:false];
-    ViewController *del = delegate;
-    [del changeStateToNormal:false];
+    [delegate changeStateToNormal:false];
 }
 
 - (id)initWithFrame:(CGRect)frame
