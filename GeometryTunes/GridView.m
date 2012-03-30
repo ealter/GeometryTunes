@@ -120,6 +120,7 @@
     swipeGestureRecognizer.numberOfTouchesRequired = 1; //TODO: maybe change to 2?
     
     // Add gesture recognizer to the view
+    [tapGestureRecognizer setCancelsTouchesInView:false];
     [self addGestureRecognizer:tapGestureRecognizer];
     [self addGestureRecognizer:swipeGestureRecognizer];
 }
@@ -150,7 +151,6 @@
                 piano = [piano initWithFrame:pianoRect delegate:self];
             else
                 piano = [[Piano alloc] initWithFrame:pianoRect delegate:self];
-            [piano setOctave:pianoOctave];
             [self addSubview:piano];
             break;
             

@@ -11,8 +11,6 @@
     bool addNote; //True if the next note should be new
 }
 
-@property unsigned octave;
-@property int pitchOffset;
 @property (retain) NotePlayer *notePlayer;
 @property (readonly) int numNotes;
 
@@ -20,7 +18,6 @@
 - (id)initWithFrame:(CGRect)frame delegate:(id)delagate;
 
 - (void)KeyClicked:(id)sender;
-- (void)OctaveChanged:(id)sender;
 - (void)noteClearEvent;
 - (void)noteAddEvent;
 

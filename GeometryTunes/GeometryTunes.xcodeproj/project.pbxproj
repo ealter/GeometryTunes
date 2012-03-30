@@ -96,6 +96,7 @@
 		8353507E151D7F0E00C7B574 /* Gb7.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 83535030151D7F0E00C7B574 /* Gb7.mp3 */; };
 		83E3726D151D7069000DCF85 /* NotePath.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E3726C151D7069000DCF85 /* NotePath.m */; };
 		CE2446B91522D21300C2DB33 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2446B81522D21300C2DB33 /* QuartzCore.framework */; };
+		CE43316A15261456006EC577 /* scrollViewWithButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = CE43316915261456006EC577 /* scrollViewWithButtons.m */; };
 		CE498606151E27E4005228F4 /* A1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CE4985FE151E27E4005228F4 /* A1.mp3 */; };
 		CE498607151E27E4005228F4 /* A2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CE4985FF151E27E4005228F4 /* A2.mp3 */; };
 		CE498608151E27E4005228F4 /* A3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = CE498600151E27E4005228F4 /* A3.mp3 */; };
@@ -211,6 +212,8 @@
 		83E3726B151D7069000DCF85 /* NotePath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotePath.h; sourceTree = "<group>"; };
 		83E3726C151D7069000DCF85 /* NotePath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePath.m; sourceTree = "<group>"; };
 		CE2446B81522D21300C2DB33 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		CE43316815261456006EC577 /* scrollViewWithButtons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scrollViewWithButtons.h; sourceTree = "<group>"; };
+		CE43316915261456006EC577 /* scrollViewWithButtons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = scrollViewWithButtons.m; sourceTree = "<group>"; };
 		CE4985FE151E27E4005228F4 /* A1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = A1.mp3; sourceTree = "<group>"; };
 		CE4985FF151E27E4005228F4 /* A2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = A2.mp3; sourceTree = "<group>"; };
 		CE498600151E27E4005228F4 /* A3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = A3.mp3; sourceTree = "<group>"; };
@@ -274,6 +277,8 @@
 				E2687D8F151FA3A8005BB1F8 /* PathsView.m */,
 				E28150FB150C513500C8A036 /* Piano.h */,
 				E28150FC150C513500C8A036 /* Piano.m */,
+				CE43316815261456006EC577 /* scrollViewWithButtons.h */,
+				CE43316915261456006EC577 /* scrollViewWithButtons.m */,
 				83534FE2151D7F0E00C7B574 /* pianoSounds */,
 				8319430C150BD226003EF364 /* Products */,
 			);
@@ -574,6 +579,7 @@
 				CE5C7C70151E7D3900B81396 /* noteTypes.m in Sources */,
 				E2687D90151FA3A8005BB1F8 /* PathsView.m in Sources */,
 				E2D5ECF3152004F700C417C8 /* GridView.m in Sources */,
+				CE43316A15261456006EC577 /* scrollViewWithButtons.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
