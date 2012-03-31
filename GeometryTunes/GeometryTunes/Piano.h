@@ -13,7 +13,6 @@
 }
 
 @property (retain) NotePlayer *notePlayer;
-@property (readonly) int numNotes;
 @property (readonly, retain) scrollViewWithButtons *piano;
 @property (readonly) CGPoint contentOffset;
 

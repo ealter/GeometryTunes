@@ -12,7 +12,6 @@
 #import "noteColor.h"
 #import "GridView.h"
 
-@synthesize numNotes;
 @synthesize notePlayer, piano, contentOffset;
 
 - (id)initWithFrame:(CGRect)frame delegate:(GridView*)del
@@ -36,7 +35,6 @@
 
 - (id)sharedInit
 {
-    numNotes = NOTES_IN_KEYBOARD;
     notes = [NSMutableArray arrayWithCapacity:(MAX_OCTAVE - MIN_OCTAVE + 1) * NOTES_IN_OCTAVE];
     notePlayer = [[NotePlayer alloc]init];
     [self setBackgroundColor:[UIColor whiteColor]];
@@ -181,7 +179,7 @@
 
 - (int)numWhiteNotes
 {
-    return [Piano whiteNotesFromPitch:0 numNotes:numNotes];
+    return [Piano whiteNotesFromPitch:0 numNotes:NOTES_IN_KEYBOARD];
 }
 
 - (void)removeFromSuperview
