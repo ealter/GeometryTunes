@@ -18,8 +18,6 @@ typedef CGPoint CellPos; //Represents a coordinate system for the grid (0,0) is 
 
 @property (retain) ViewController *delegate;
 
-@property (nonatomic) int pianoOctave;
-
 @property (nonatomic) CellPos currentCell; //Used when editing a square
 
 @property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;

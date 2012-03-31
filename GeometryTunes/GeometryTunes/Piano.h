@@ -3,6 +3,7 @@
 #import "NotePlayer.h"
 
 @class GridView;
+@class scrollViewWithButtons;
 
 @interface Piano : UIView
 {
@@ -13,6 +14,8 @@
 
 @property (retain) NotePlayer *notePlayer;
 @property (readonly) int numNotes;
+@property (readonly, retain) scrollViewWithButtons *piano;
+@property (readonly) CGPoint contentOffset;
 
 - (id)sharedInit;
 - (id)initWithFrame:(CGRect)frame delegate:(id)delagate;

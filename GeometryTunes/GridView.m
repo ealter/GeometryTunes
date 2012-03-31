@@ -18,7 +18,6 @@
 @synthesize tapButtonRecognizer;
 @synthesize swipeGestureRecognizer;
 
-@synthesize pianoOctave;
 @synthesize delegate;
 
 - (GridCell*)cellAtPos:(CellPos)cellPos
@@ -81,9 +80,7 @@
     [self setBackgroundColor:[UIColor whiteColor]];
     
     numBoxes = CGPointMake(NUM_BOXES_X_INITIAL, NUM_BOXES_Y_INITIAL);
-    
-    pianoOctave = INITIAL_PIANO_OCTAVE;
-    assert(pianoOctave >= MIN_OCTAVE && pianoOctave <= MAX_OCTAVE);
+
     [self setState:NORMAL_STATE];
     piano = NULL;
     

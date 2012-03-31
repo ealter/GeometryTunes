@@ -3,6 +3,8 @@
 #import "scrollViewWithButtons.h"
 
 #define NOTES_IN_KEYBOARD NOTES_IN_OCTAVE
+#define INITIAL_PITCH 0
+#define INITIAL_OCTAVE 3
 
 @implementation Piano
 
@@ -11,7 +13,7 @@
 #import "GridView.h"
 
 @synthesize numNotes;
-@synthesize notePlayer;
+@synthesize notePlayer, piano, contentOffset;
 
 - (id)initWithFrame:(CGRect)frame delegate:(GridView*)del
 {
@@ -38,7 +40,8 @@
     notes = [NSMutableArray arrayWithCapacity:(MAX_OCTAVE - MIN_OCTAVE + 1) * NOTES_IN_OCTAVE];
     notePlayer = [[NotePlayer alloc]init];
     [self setBackgroundColor:[UIColor whiteColor]];
-    [self setUserInteractionEnabled:YES];
+    if(piano)
+        [piano setContentOffset:contentOffset];
     return self;
 }
 
@@ -57,7 +60,16 @@
     bool isBlack;
 
     CGRect pianoSize = CGRectMake(0, 0, width - buttonWidth, height);
-    scrollViewWithButtons *piano = [[scrollViewWithButtons alloc]initWithFrame:pianoSize];
+    if(!piano)
+    {
+        piano = [[scrollViewWithButtons alloc]initWithFrame:pianoSize];
+        [piano setContentOffset:CGPointMake(whiteKeyWidth * [Piano whiteNotesFromPitch:0 numNotes:(INITIAL_OCTAVE - MIN_OCTAVE) * NOTES_IN_OCTAVE + INITIAL_PITCH], 0)];
+    }
+    else
+    {
+        piano = [piano initWithFrame:pianoSize];
+        [piano setContentOffset:contentOffset];
+    }
     [piano setCanCancelContentTouches:true];
     [piano setContentSize:CGSizeMake(whiteKeyWidth * ((MAX_OCTAVE - MIN_OCTAVE + 1) * [Piano whiteNotesFromPitch:0 numNotes:NOTES_IN_OCTAVE]), height)];
     [piano setDelaysContentTouches:NO];
@@ -174,6 +186,7 @@
 
 - (void)removeFromSuperview
 {
+    contentOffset = [piano contentOffset];
     [super removeFromSuperview];
     addNote = false;
 }
