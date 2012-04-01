@@ -191,9 +191,8 @@
     addNote = false;
 }
 
--(void)boldPianoNote:(pianoNote)note
+-(void)boldNote:(unsigned int)pitch octave:(unsigned int)octave_ isBold:(_Bool)isBold
 {
-    //convert piano note to index of UIButton in notes
 }
 
 @end
