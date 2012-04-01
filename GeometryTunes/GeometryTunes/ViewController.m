@@ -6,6 +6,7 @@
 @synthesize state;
 @synthesize grid;
 @synthesize editPathBtn;
+@synthesize clearPathBtn;
 @synthesize playPauseButton;
 @synthesize speedSlider;
 @synthesize speedTextField;
@@ -13,6 +14,7 @@
 static NSString *playBtnText = @"Play";
 static NSString *pauseBtnText = @"Pause";
 static bool playbarPresent = 0;
+//static bool clearPathBtnPresent = 0;
 
 - (IBAction)playPauseEvent:(id)sender
 {
@@ -71,17 +73,6 @@ static bool playbarPresent = 0;
     [grid playPathWithSpeedFactor:0.5 reversed:false];
 }
 
-- (IBAction)editPathEvent:(id)sender
-{
-    if(state == PATH_EDIT_STATE)
-        [self changeStateToNormal:true];
-    else
-    {
-        [self changeStateToNormal:true];
-        [editPathBtn setTitle:@"Stop Path" forState:UIControlStateNormal];
-        state = PATH_EDIT_STATE;
-    }
-}
 
 - (IBAction) sliderValueChanged:(id)sender
 {
@@ -97,15 +88,30 @@ static bool playbarPresent = 0;
     //if ([speedTextField canResignFirstResponder]) [speedTextField resignFirstResponder]; 
 }
 
+- (IBAction)editPathEvent:(id)sender
+{
+    //if(!clearPathBtnPresent)
+    //    [self.view addSubview:clearPathBtn];
+    if(state == PATH_EDIT_STATE)
+        [self changeStateToNormal:true];
+    else
+    {
+        [self changeStateToNormal:true];
+        [editPathBtn setTitle:@"Stop Path" forState:UIControlStateNormal];
+        state = PATH_EDIT_STATE;
+    }
+}
+
 - (IBAction)clearPathEvent:(id)sender
 {
+    //[clearPathBtn removeFromSuperview];
     [grid resetPath];
 }
 
 - (void)changeStateToNormal:(bool)informGrid
 {
     if(state == PATH_EDIT_STATE)
-        [editPathBtn setTitle:@"Edit Path" forState:UIControlStateNormal];
+        [editPathBtn setTitle:@"Create Path" forState:UIControlStateNormal];
     if(informGrid)
         [grid changeToNormalState];
     state = NORMAL_STATE;
@@ -203,6 +209,8 @@ static bool playbarPresent = 0;
     [stop removeFromSuperview];
     [ff removeFromSuperview];
     playbarPresent = 0;
+    //[clearPathBtn removeFromSuperview];
+    //clearPathBtnPresent = 0;
     
     //Fix slowdown when loading the first sound
     NSURL *sound1 = [[NSURL alloc]initFileURLWithPath:[[NSBundle mainBundle] pathForResource:@"A5" ofType:@"mp3"]];

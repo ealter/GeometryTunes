@@ -144,7 +144,7 @@
 					<object class="IBUIButton" id="299639481">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{658, 20}, {90, 44}}</string>
+						<string key="NSFrame">{{648, 20}, {110, 44}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
 						<bool key="IBUIOpaque">NO</bool>
@@ -152,7 +152,7 @@
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<int key="IBUIButtonType">1</int>
-						<string key="IBUINormalTitle">Edit Path</string>
+						<string key="IBUINormalTitle">Create Path</string>
 						<reference key="IBUIHighlightedTitleColor" ref="1044549773"/>
 						<object class="NSColor" key="IBUINormalTitleColor">
 							<int key="NSColorSpace">1</int>
@@ -165,7 +165,7 @@
 					<object class="IBUIButton" id="529893041">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{551, 20}, {99, 44}}</string>
+						<string key="NSFrame">{{541, 20}, {99, 44}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="299639481"/>
@@ -305,6 +305,14 @@
 					<int key="connectionID">46</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">clearPathBtn</string>
+						<reference key="source" ref="841351856"/>
+						<reference key="destination" ref="529893041"/>
+					</object>
+					<int key="connectionID">53</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">playPauseEvent:</string>
 						<reference key="source" ref="125709341"/>
@@ -439,12 +447,12 @@
 							<reference ref="646428076"/>
 							<reference ref="132223026"/>
 							<reference ref="125709341"/>
-							<reference ref="529893041"/>
 							<reference ref="299639481"/>
 							<reference ref="1052929876"/>
 							<reference ref="920546043"/>
 							<reference ref="289312227"/>
 							<reference ref="36369109"/>
+							<reference ref="529893041"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -519,7 +527,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">52</int>
+			<int key="maxID">53</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -584,6 +592,7 @@
 						</object>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="clearPathBtn">UIButton</string>
 						<string key="editPathBtn">UIButton</string>
 						<string key="ff">UIButton</string>
 						<string key="grid">GridView</string>
@@ -594,6 +603,10 @@
 						<string key="stop">UIButton</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="clearPathBtn">
+							<string key="name">clearPathBtn</string>
+							<string key="candidateClassName">UIButton</string>
+						</object>
 						<object class="IBToOneOutletInfo" key="editPathBtn">
 							<string key="name">editPathBtn</string>
 							<string key="candidateClassName">UIButton</string>
