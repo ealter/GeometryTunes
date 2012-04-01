@@ -79,6 +79,7 @@
     [self setNotes:[[NSMutableArray alloc]init]];
 }
 
+// Creates a colored rect for each note played from cell
 - (void)drawRect:(CGRect)rect
 {
     CGContextRef context = UIGraphicsGetCurrentContext();

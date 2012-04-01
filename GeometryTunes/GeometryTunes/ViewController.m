@@ -109,6 +109,58 @@ static NSString *pauseBtnText = @"Pause";
     // Release any cached data, images, etc that aren't in use.
 }
 
+-(IBAction)changeButtonBackgroundColor:(id)sender
+{
+    [sender setBackgroundColor:[UIColor cyanColor]];
+}
+
+-(IBAction)resetButtonBackroundColor:(id)sender
+{
+    [sender setBackgroundColor:[UIColor whiteColor]];
+}
+
+- (void)addGradientToRect:(CGRect)rect 
+{
+    CGContextRef currentContext = UIGraphicsGetCurrentContext();
+    
+    CGGradientRef glossGradient;
+    CGColorSpaceRef rgbColorspace;
+    size_t num_locations = 2;
+    CGFloat locations[2] = { 0.0, 1.0 };
+    CGFloat components[8] = { 1.0, 1.0, 1.0, 0.35,  // Start color
+        1.0, 1.0, 1.0, 0.06 }; // End color
+    
+    rgbColorspace = CGColorSpaceCreateDeviceRGB();
+    glossGradient = CGGradientCreateWithColorComponents(rgbColorspace, components, locations, num_locations);
+    
+    CGRect currentBounds = self.view.bounds;
+    CGPoint topCenter = CGPointMake(CGRectGetMidX(currentBounds), 0.0f);
+    CGPoint midCenter = CGPointMake(CGRectGetMidX(currentBounds), CGRectGetMidY(currentBounds));
+    CGContextDrawLinearGradient(currentContext, glossGradient, topCenter, midCenter, 0);
+    
+    CGGradientRelease(glossGradient);
+    CGColorSpaceRelease(rgbColorspace); 
+}
+
+
+-(void)changeButtonStyles
+{
+    //CGRect stopBorder = CGRectMake(200, 18, 76, 48);
+    //UIView* myView = [[UIView alloc]initWithFrame:stopBorder];
+    
+    CGRect stopRect = CGRectMake(202, 20, 72, 44);
+    [self addGradientToRect:stopRect];
+    [stop setFrame:stopRect];
+    stop.backgroundColor = [UIColor whiteColor];
+    stop.layer.cornerRadius = 0;
+    stop.layer.borderWidth = 1;
+    stop.layer.borderColor = [UIColor grayColor].CGColor;
+    stop.clipsToBounds = YES;
+    [self.view bringSubviewToFront: stop];
+    
+    self.view.backgroundColor = [UIColor blackColor];
+}
+
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -116,6 +168,15 @@ static NSString *pauseBtnText = @"Pause";
     [super viewDidLoad];
     state = NORMAL_STATE;
     [grid setDelegate:self];
+    
+    [self changeButtonStyles];
+     
+    /*
+     _myButton.layer.cornerRadius = 8;
+     _myButton.layer.borderWidth = 1;
+     _myButton.layer.borderColor = [UIColor grayColor].CGColor;
+     _myButton.clipsToBounds = YES;
+     */
     
     //Fix slowdown when loading the first sound
     NSURL *sound1 = [[NSURL alloc]initFileURLWithPath:[[NSBundle mainBundle] pathForResource:@"A5" ofType:@"mp3"]];

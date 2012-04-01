@@ -5,6 +5,11 @@
 {
     IBOutlet UISlider *speedSlider;  
     IBOutlet UILabel *speedTextField;
+    IBOutlet UIButton *stop;
+    IBOutlet UIButton *rew;
+    IBOutlet UIButton *ff;
+    
+    UIView *stopBorder;
 }
 
 typedef enum STATE
@@ -30,5 +35,7 @@ typedef enum STATE
 - (void)changeStateToNormal:(bool)informGrid;
 - (void)setPlayStateToStopped;
 - (IBAction) sliderValueChanged:(id)sender;
+- (IBAction)changeButtonBackgroundColor:(id)sender;
+- (IBAction)resetButtonBackroundColor:(id)sender;
 
 @end
