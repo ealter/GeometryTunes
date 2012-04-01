@@ -1,5 +1,10 @@
 #import "Piano.h"
 #import <QuartzCore/QuartzCore.h>
+#import "scrollViewWithButtons.h"
+
+#define NOTES_IN_KEYBOARD NOTES_IN_OCTAVE
+#define INITIAL_PITCH 0
+#define INITIAL_OCTAVE 3
 
 @implementation Piano
 
@@ -7,8 +12,7 @@
 #import "noteColor.h"
 #import "GridView.h"
 
-@synthesize octave;
-@synthesize notePlayer;
+@synthesize notePlayer, piano, contentOffset;
 
 - (id)initWithFrame:(CGRect)frame delegate:(GridView*)del
 {
@@ -31,65 +35,52 @@
 
 - (id)sharedInit
 {
-    octave = INITIAL_PIANO_OCTAVE;
-    numNotes = NOTES_IN_OCTAVE;
-    numWhiteNotes = 7;
-    notes = [NSMutableArray arrayWithCapacity:numNotes];
+    notes = [NSMutableArray arrayWithCapacity:(MAX_OCTAVE - MIN_OCTAVE + 1) * NOTES_IN_OCTAVE];
     notePlayer = [[NotePlayer alloc]init];
     [self setBackgroundColor:[UIColor whiteColor]];
+    if(piano)
+        [piano setContentOffset:contentOffset];
     return self;
 }
 
 - (void)drawRect:(CGRect)rect
 {
-    CGRect screenRect = [self bounds];
-    int width = screenRect.size.width;
-    int height = screenRect.size.height;
-    const float octaveButtonRelativeSize = 1.3;
-    const float whiteKeyWidth = ((float)width) / (numWhiteNotes+octaveButtonRelativeSize*2);
-    float x = 0;
+    int width = rect.size.width;
+    int height = rect.size.height;
+    const float buttonRelativeSize = 1.3;
+    const float whiteKeyWidth = ((float)width) / ([self numWhiteNotes]+buttonRelativeSize);
     
-    float buttonWidth = whiteKeyWidth*octaveButtonRelativeSize;
-    
-    for(int i = 0, heightOffset = 0; i < 2; heightOffset += height/2, i++)
-    {
-        UIButton *octaveBtn = [[UIButton alloc]initWithFrame:CGRectMake(x, heightOffset, buttonWidth, height/2)];
-        [octaveBtn setBackgroundColor:[UIColor blueColor]];
-        if(i == 0)
-        {
-            [octaveBtn setTitle:@"+" forState:UIControlStateNormal];
-            octaveBtn.tag = 1;
-        }
-        else
-        {
-            [octaveBtn setTitle:@"-" forState:UIControlStateNormal];
-            octaveBtn.tag = -1;
-        }
-        octaveBtn.titleLabel.font = [UIFont systemFontOfSize:70];
-        octaveBtn.titleLabel.textColor = [UIColor blackColor];
-        [octaveBtn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [octaveBtn.layer setBorderColor:[[UIColor blackColor] CGColor]];
-        [octaveBtn.layer setBorderWidth:2];
-        [octaveBtn addTarget:self action:@selector(OctaveChanged:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
-        
-        [self addSubview:octaveBtn];
-    }
-    
-    x += buttonWidth;
-    
+    float buttonWidth = whiteKeyWidth*buttonRelativeSize;
     float blackKeyWidth = whiteKeyWidth/2;
     float blackKeyHeight = height*2/3;
     UIButton *note;
     int whiteKeyNum = 0;
     bool isBlack;
 
-    for(int i=0; i<numNotes; i++)
+    CGRect pianoSize = CGRectMake(0, 0, width - buttonWidth, height);
+    if(!piano)
+    {
+        piano = [[scrollViewWithButtons alloc]initWithFrame:pianoSize];
+        [piano setContentOffset:CGPointMake(whiteKeyWidth * [Piano whiteNotesFromPitch:0 numNotes:(INITIAL_OCTAVE - MIN_OCTAVE) * NOTES_IN_OCTAVE + INITIAL_PITCH], 0)];
+    }
+    else
+    {
+        piano = [piano initWithFrame:pianoSize];
+        [piano setContentOffset:contentOffset];
+    }
+    [piano setCanCancelContentTouches:true];
+    [piano setContentSize:CGSizeMake(whiteKeyWidth * ((MAX_OCTAVE - MIN_OCTAVE + 1) * [Piano whiteNotesFromPitch:0 numNotes:NOTES_IN_OCTAVE]), height)];
+    [piano setDelaysContentTouches:NO];
+    [self addSubview:piano];
+    
+    float x = 0;
+    for(int i=0; i<((MAX_OCTAVE - MIN_OCTAVE + 1) * NOTES_IN_OCTAVE); i++)
     {
         if([Piano isBlackNote:i])
         {
             isBlack = true;
             //The note is a black note                      
-            note = [[UIButton alloc]initWithFrame:CGRectMake(x-blackKeyWidth/2, 0, blackKeyWidth, blackKeyHeight)]; 
+            note = [[UIButton alloc]initWithFrame:CGRectMake(x-blackKeyWidth/2, 0, blackKeyWidth, blackKeyHeight)];
         }
         else
         {
@@ -100,23 +91,26 @@
             x += whiteKeyWidth;
         }
         
-        [note setBackgroundColor:[noteColor colorFromNoteWithPitch:i octave:octave]];
+        [note setBackgroundColor:[noteColor colorFromNoteWithPitch:i % NOTES_IN_OCTAVE octave:i/NOTES_IN_OCTAVE + MIN_OCTAVE]];
         note.tag = i;
-        [note addTarget:self action:@selector(KeyClicked:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
-        [self addSubview:note];
+        [piano addSubview:note];
+        [note addTarget:self action:@selector(KeyClicked:) forControlEvents:UIControlEventTouchUpInside];
         if(!isBlack)
-            [self sendSubviewToBack:note];
+            [piano sendSubviewToBack:note];
         [note.layer setBorderWidth:1];
         [note.layer setBorderColor:[[UIColor blackColor] CGColor]];
         [notes addObject:note];
     }
     
+    x = width - buttonWidth;
     //Make the "Add note" and "Clear" buttons
     for(int i = 0, heightOffset = 0; i < 2; heightOffset += height/2, i++)
     {
         UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(x, heightOffset, buttonWidth, height/2)];
         [btn setBackgroundColor:[UIColor blueColor]];
-        SEL eventHandler; //TODO: Set this value
+        SEL eventHandler;
+        btn.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
+        btn.titleLabel.textAlignment = UITextAlignmentCenter;
         if(i == 0)
         {
             [btn setTitle:@"Add Note" forState:UIControlStateNormal];
@@ -136,37 +130,24 @@
         
         [self addSubview:btn];
     }
+    
+    [self boldNotes:[delegate notes]];
 }
 
 - (void)KeyClicked:(id)sender
 {
     UIButton *note = sender;
-    NSLog(@"Key: %d", note.tag);
     int pitch = note.tag % NOTES_IN_OCTAVE;
-    int oct   = note.tag / NOTES_IN_OCTAVE + octave;
-    [notePlayer playNoteWithPitch:pitch octave:oct];
+    int oct   = note.tag / NOTES_IN_OCTAVE + MIN_OCTAVE;
     [delegate changeNoteWithPitch:pitch octave:oct appendNote:addNote];
+    [delegate playNote];
     addNote = false;
+    [self boldNotes:[delegate notes]];
 }
 
-- (void)OctaveChanged:(id)sender
+- (void)gridCellHasChanged
 {
-    UIButton *octaveBtn = sender;
-    int newOctave = octave + octaveBtn.tag;
-    if(newOctave > MAX_OCTAVE)
-        octave = MAX_OCTAVE;
-    else if(newOctave < MIN_OCTAVE)
-        octave = MIN_OCTAVE;
-    else
-    {
-        octave = newOctave;
-        for(int i=0; i<numNotes; i++)
-        {
-            UIButton *note = [notes objectAtIndex:i];
-            [note setBackgroundColor:[noteColor colorFromNoteWithPitch:i octave:octave]];
-        }
-        [delegate setPianoOctave:octave];
-    }
+    [self boldNotes:[delegate notes]];
 }
 
 - (void)noteAddEvent
@@ -185,14 +166,55 @@
     return n == 1 || n == 3 || n == 6 || n == 8 | n == 10;
 }
 
++ (int)whiteNotesFromPitch:(unsigned int)pitch numNotes:(unsigned int)numNotes
+{
+    int numWhiteNotes = 0;
+    for(int i = 0; i < numNotes; i++)
+    {
+        if(![self isBlackNote:pitch + i])
+            numWhiteNotes++;
+    }
+    return numWhiteNotes;
+}
+
+- (int)numWhiteNotes
+{
+    return [Piano whiteNotesFromPitch:0 numNotes:NOTES_IN_KEYBOARD];
+}
+
 - (void)removeFromSuperview
 {
+    contentOffset = [piano contentOffset];
     [super removeFromSuperview];
     addNote = false;
 }
 
+
 -(void)boldNote:(unsigned int)pitch octave:(unsigned int)octave_ isBold:(_Bool)isBold
 {
+
+}
+- (int)indexOfPitch:(unsigned int)pitch octave:(unsigned int)octave
+{
+    assert(pitch < NOTES_IN_OCTAVE);
+    return octave * NOTES_IN_OCTAVE + pitch;
+}
+
+- (void)boldNotes:(NSMutableArray *)boldNotes
+{
+    //First unbold all notes
+    for(UIButton *note in notes)
+    {
+        [note.layer setBorderWidth:1];
+    }
+    for(NSNumber *note in boldNotes)
+    {
+        pianoNote p = [note unsignedIntValue];
+        int index = [self indexOfPitch:[noteTypes pitchOfPianoNote:p] octave:[noteTypes octaveOfPianoNote:p] - MIN_OCTAVE];
+        if(index != -1)
+            [[[notes objectAtIndex:index] layer] setBorderWidth:4];
+    }
+
 }
 
 @end

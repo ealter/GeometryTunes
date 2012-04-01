@@ -11,7 +11,7 @@
 
  //Contains NSValue representations of CGPoints of path vertices
 @property (readonly, retain) NSMutableArray *notes;
-@property int playbackPosition;
+@property int playbackPosition; //The index in the NSMutableArray. 0 means that we are at the beginning of the path
 @property (retain) NotePlayer *player;
 @property (retain) GridView* delegateGrid;
 
