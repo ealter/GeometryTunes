@@ -12,9 +12,16 @@
 
 static NSString *playBtnText = @"Play";
 static NSString *pauseBtnText = @"Pause";
+static bool playbarPresent = 0;
 
 - (IBAction)playPauseEvent:(id)sender
 {
+    if(!playbarPresent){
+        [self.view addSubview:ff];
+        [self.view addSubview:rew];
+        [self.view addSubview:stop];
+        playbarPresent = 1;
+    }
     if([playPauseButton.currentTitle compare:playBtnText]){
         NSLog(@"Time to pause");
         if(state == NORMAL_STATE)
@@ -34,6 +41,12 @@ static NSString *pauseBtnText = @"Pause";
 
 - (IBAction)stopEvent:(id)sender
 {
+    if(playbarPresent){
+        [ff removeFromSuperview];
+        [rew removeFromSuperview];
+        [stop removeFromSuperview];
+        playbarPresent = 0;
+    }
     if(state == NORMAL_STATE){
         [grid stopPlayback];
         [playPauseButton setTitle:playBtnText forState:UIControlStateNormal];
@@ -145,8 +158,6 @@ static NSString *pauseBtnText = @"Pause";
 
 -(void)changeButtonStyles
 {
-    //CGRect stopBorder = CGRectMake(200, 18, 76, 48);
-    //UIView* myView = [[UIView alloc]initWithFrame:stopBorder];
     
     CGRect stopRect = CGRectMake(202, 20, 72, 44);
     [self addGradientToRect:stopRect];
@@ -156,9 +167,26 @@ static NSString *pauseBtnText = @"Pause";
     stop.layer.borderWidth = 1;
     stop.layer.borderColor = [UIColor grayColor].CGColor;
     stop.clipsToBounds = YES;
-    [self.view bringSubviewToFront: stop];
+    //[self.view bringSubviewToFront: stop];
     
-    self.view.backgroundColor = [UIColor blackColor];
+    
+    CGRect rewRect = CGRectMake(143, 20, 72, 44);
+    [self addGradientToRect:rewRect];
+    [rew setFrame:rewRect];
+    rew.backgroundColor = [UIColor whiteColor];
+    rew.layer.cornerRadius = 10;
+    rew.layer.borderWidth = 1;
+    rew.layer.borderColor = [UIColor grayColor].CGColor;
+    rew.clipsToBounds = YES;
+    
+    CGRect ffRect = CGRectMake(260, 20, 72, 44);
+    [self addGradientToRect:ffRect];
+    [ff setFrame:ffRect];
+    ff.backgroundColor = [UIColor whiteColor];
+    ff.layer.cornerRadius = 10;
+    ff.layer.borderWidth = 1;
+    ff.layer.borderColor = [UIColor grayColor].CGColor;
+    ff.clipsToBounds = YES;
 }
 
 #pragma mark - View lifecycle
@@ -169,14 +197,12 @@ static NSString *pauseBtnText = @"Pause";
     state = NORMAL_STATE;
     [grid setDelegate:self];
     
+    self.view.backgroundColor = [UIColor blackColor];
     [self changeButtonStyles];
-     
-    /*
-     _myButton.layer.cornerRadius = 8;
-     _myButton.layer.borderWidth = 1;
-     _myButton.layer.borderColor = [UIColor grayColor].CGColor;
-     _myButton.clipsToBounds = YES;
-     */
+    [rew removeFromSuperview];
+    [stop removeFromSuperview];
+    [ff removeFromSuperview];
+    playbarPresent = 0;
     
     //Fix slowdown when loading the first sound
     NSURL *sound1 = [[NSURL alloc]initFileURLWithPath:[[NSBundle mainBundle] pathForResource:@"A5" ofType:@"mp3"]];
