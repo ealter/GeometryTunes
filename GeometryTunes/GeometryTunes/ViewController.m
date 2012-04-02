@@ -173,6 +173,7 @@ static bool playbarPresent = 0;
     stop.layer.borderWidth = 1;
     stop.layer.borderColor = [UIColor grayColor].CGColor;
     stop.clipsToBounds = YES;
+    //stop.alpha = .5;
     //[self.view bringSubviewToFront: stop];
     
     
@@ -193,6 +194,24 @@ static bool playbarPresent = 0;
     ff.layer.borderWidth = 1;
     ff.layer.borderColor = [UIColor grayColor].CGColor;
     ff.clipsToBounds = YES;
+    
+    editPathBtn.backgroundColor = [UIColor whiteColor];
+    editPathBtn.alpha = .5;
+    CGRect blackBackground = CGRectMake(648, 42, 110, 44);
+    UIButton *createPathBtn = [[UIButton alloc]initWithFrame:blackBackground];
+    [createPathBtn setTitle:@"Create Path" forState:UIControlStateNormal];
+    [createPathBtn setTitleColor:[UIColor whiteColor] forState:UIControlStateNormal];
+    
+    [editPathBtn addSubview:createPathBtn];
+    [editPathBtn bringSubviewToFront:createPathBtn];
+    
+    
+    //backgroundView.backgroundColor = [UIColor blackColor];
+    
+    //[self.view addSubview:backgroundView];
+    //[backgroundView addSubview:editPathBtn];
+    //editPathBtn.backgroundColor = [UIColor clearColor];
+    //editPathBtn.alpha =.5;
 }
 
 #pragma mark - View lifecycle
@@ -203,7 +222,15 @@ static bool playbarPresent = 0;
     state = NORMAL_STATE;
     [grid setDelegate:self];
     
-    self.view.backgroundColor = [UIColor blackColor];
+    CGRect topRect = CGRectMake(0, 0, 768, 89); //width of screen, height down to gridview
+    UIView *menuView = [[UIView alloc]initWithFrame:topRect];
+    menuView.backgroundColor = [UIColor greenColor];
+    UIColor *background = [[UIColor alloc]initWithPatternImage:[UIImage imageNamed:@"woodBackground.jpg"]];
+    menuView.backgroundColor = background;
+    [self.view addSubview:menuView];
+    [self.view sendSubviewToBack:menuView];
+    
+    //self.view.backgroundColor = [UIColor blackColor];
     [self changeButtonStyles];
     [rew removeFromSuperview];
     [stop removeFromSuperview];
@@ -211,6 +238,7 @@ static bool playbarPresent = 0;
     playbarPresent = 0;
     //[clearPathBtn removeFromSuperview];
     //clearPathBtnPresent = 0;
+    
     
     //Fix slowdown when loading the first sound
     NSURL *sound1 = [[NSURL alloc]initFileURLWithPath:[[NSBundle mainBundle] pathForResource:@"A5" ofType:@"mp3"]];
