@@ -35,8 +35,6 @@ const static NSTimeInterval playbackSpeed = 0.75;
     [notes removeObjectAtIndex:index];
 } // removes every other node, needs to be debugged
 
-<<<<<<< HEAD
-
 - (void) removeAllNotes
 {
     [notes removeAllObjects];
@@ -44,8 +42,6 @@ const static NSTimeInterval playbackSpeed = 0.75;
     
 }
 
-=======
->>>>>>> c8dcd637cbf856b9f1907ba6404a354cbc47ae09
 - (void)buildPath
 {
     path = [UIBezierPath bezierPath];
@@ -73,12 +69,6 @@ const static NSTimeInterval playbackSpeed = 0.75;
     [path stroke];
     
     CGContextRestoreGState(context);
-}
-
-- (void) removeAllNotes
-{
-    [notes removeAllObjects];
-    [path removeAllPoints];
 }
 
 - (void)playNote:(NSTimer*)t
