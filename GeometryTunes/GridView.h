@@ -12,15 +12,13 @@
     PathsView *pathView;
 }
 
-@property (nonatomic) int numBoxesX;
-@property (nonatomic) int numBoxesY;
+typedef CGPoint CellPos; //Represents a coordinate system for the grid (0,0) is top left. (1,0) is one to the right of that
+
+@property (nonatomic) CellPos numBoxes;
 
 @property (retain) ViewController *delegate;
 
-@property (nonatomic) int pianoOctave;
-
-@property (nonatomic) unsigned currentX; //These are used when editing a square
-@property (nonatomic) unsigned currentY;
+@property (nonatomic) CellPos currentCell; //Used when editing a square
 
 @property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic, retain) UITapGestureRecognizer *tapButtonRecognizer; //Not used anymore?
@@ -30,25 +28,25 @@
 
 - (void) resetPath; 
 
-- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave appendNote:(bool)appendNote; //Uses the currentX and currentY
-- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned) x y:(unsigned)y appendNote:(bool)appendNote;
+- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave appendNote:(bool)appendNote; //Uses the currentCell
+- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave cellPos:(CellPos)cellPos appendNote:(bool)appendNote;
 //These set the last note
 
 - (NSMutableArray*)notes;
-- (NSMutableArray*)notesAtX:(unsigned)x y:(unsigned)y;
+- (NSMutableArray*)notesAtCell:(CellPos)cellPos;
 
 - (void)clearNote;
-- (void)clearNoteAtX:(unsigned)x y:(unsigned)y;
+- (void)clearNoteForCell:(CellPos)cellPos;
 
 - (void)playNote;
-- (void)playNoteAtX:(unsigned)x y:(unsigned)y;
+- (void)playNoteForCell:(CellPos)cellPos;
 
 - (float)boxWidth;
 - (float)boxHeight;
 
 - (void)drawGrid;
 
-- (CGPoint)getBoxFromCoords:(CGPoint)pos;
+- (CellPos)getBoxFromCoords:(CGPoint)pos;
 
 - (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse;
 - (void)pausePlayback;

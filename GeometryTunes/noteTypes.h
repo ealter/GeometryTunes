@@ -4,7 +4,6 @@
 
 #define MIN_OCTAVE 1
 #define MAX_OCTAVE 7
-#define INITIAL_PIANO_OCTAVE 4
 #define NOTES_IN_OCTAVE 12
 #define NO_PIANO_NOTE (-1)
 

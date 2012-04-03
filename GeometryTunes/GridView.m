@@ -10,22 +10,19 @@
 
 @implementation GridView
 
-@synthesize numBoxesX;
-@synthesize numBoxesY;
+@synthesize numBoxes;
 
-@synthesize currentX;
-@synthesize currentY;
+@synthesize currentCell;
 
 @synthesize tapGestureRecognizer;
 @synthesize tapButtonRecognizer;
 @synthesize swipeGestureRecognizer;
 
-@synthesize pianoOctave;
 @synthesize delegate;
 
-- (GridCell*)cellAtX:(unsigned)x y:(unsigned)y
+- (GridCell*)cellAtPos:(CellPos)cellPos
 {
-    return [[cells objectAtIndex:x] objectAtIndex:y];
+    return [[cells objectAtIndex:cellPos.x] objectAtIndex:cellPos.y];
 }
 
 - (STATE)state
@@ -49,6 +46,12 @@
     else
         borderWidth = 2;
     [[cell layer] setBorderWidth:borderWidth];
+    
+    //Bold piano keys with same notes
+    // int notesInCellCount = [cell.notes count];
+    // for(int i=0; i < notesInCellCount; i++){
+    //   [piano boldPianoNote:[cell getNoteAtIndex:i]];
+    // }
 }
 
 - (void)changeToNormalState
@@ -56,7 +59,7 @@
     if([self state] == PIANO_STATE)
         [piano removeFromSuperview];
     [self setState:NORMAL_STATE];
-    [self changeCell:[self cellAtX:currentX y:currentY] isBold:false];
+    [self changeCell:[self cellAtPos:currentCell] isBold:false];
     [delegate changeStateToNormal:false];
 }
 
@@ -82,23 +85,20 @@
 {
     [self setBackgroundColor:[UIColor whiteColor]];
     
-    numBoxesX = NUM_BOXES_X_INITIAL;
-    numBoxesY = NUM_BOXES_Y_INITIAL;
-    
-    pianoOctave = INITIAL_PIANO_OCTAVE;
-    assert(pianoOctave >= MIN_OCTAVE && pianoOctave <= MAX_OCTAVE);
+    numBoxes = CGPointMake(NUM_BOXES_X_INITIAL, NUM_BOXES_Y_INITIAL);
+
     [self setState:NORMAL_STATE];
     piano = NULL;
     
-    cells = [[NSMutableArray alloc] initWithCapacity:numBoxesY];
+    cells = [[NSMutableArray alloc] initWithCapacity:numBoxes.y];
     NSMutableArray *row;
     
     float boxWidth = [self boxWidth];
     float boxHeight = [self boxHeight];
-    for(int i=0; i<numBoxesX; i++)
+    for(int i=0; i<numBoxes.x; i++)
     {
-        row = [[NSMutableArray alloc] initWithCapacity:numBoxesX];
-        for(int j=0; j<numBoxesY; j++)
+        row = [[NSMutableArray alloc] initWithCapacity:numBoxes.x];
+        for(int j=0; j<numBoxes.y; j++)
         {
             CGRect cellBounds = CGRectMake(i * boxWidth, j * boxHeight, boxWidth, boxHeight);
             GridCell *cell = [[GridCell alloc]initWithFrame:cellBounds];
@@ -123,6 +123,7 @@
     swipeGestureRecognizer.numberOfTouchesRequired = 1; //TODO: maybe change to 2?
     
     // Add gesture recognizer to the view
+    [tapGestureRecognizer setCancelsTouchesInView:false];
     [self addGestureRecognizer:tapGestureRecognizer];
     [self addGestureRecognizer:swipeGestureRecognizer];
 }
@@ -130,19 +131,18 @@
 -(void) handleTap:(UITapGestureRecognizer *)sender
 {
     CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
-    CGPoint box = [self getBoxFromCoords:pos];
-    assert(box.x >= 0 && box.x < numBoxesX);
-    assert(box.y >= 0 && box.y < numBoxesY);
+    CellPos box = [self getBoxFromCoords:pos];
+    assert(box.x >= 0 && box.x < numBoxes.x);
+    assert(box.y >= 0 && box.y < numBoxes.y);
     switch([self state])
     {
         case NORMAL_STATE:
             [self setState:PIANO_STATE];
              box = [self getBoxFromCoords:pos];
             
-            currentX = box.x;
-            currentY = box.y;
+            currentCell = box;
             
-            [self changeCell:[self cellAtX:currentX y:currentY] isBold:true];
+            [self changeCell:[self cellAtPos:currentCell] isBold:true];
             int pianoHeight = 200; //TODO change to const
             int pianoY = [self bounds].size.height - pianoHeight;
             if((box.y+1) * [self boxHeight] > pianoY) {
@@ -154,20 +154,18 @@
                 piano = [piano initWithFrame:pianoRect delegate:self];
             else
                 piano = [[Piano alloc] initWithFrame:pianoRect delegate:self];
-            [piano setOctave:pianoOctave];
             [self addSubview:piano];
             break;
             
         case PIANO_STATE:
-            //if(!CGRectContainsPoint([piano frame], pos))
+            //if(!CGRectContainsPoint([piano frame], pos)) //No need to double click
                 //[self changeToNormalState];
             
             if(!CGRectContainsPoint([piano frame], pos))
             {
-                [self changeCell:[self cellAtX:currentX y:currentY] isBold:false];
-                currentX = box.x;
-                currentY = box.y;
-                [self changeCell:[self cellAtX:currentX y:currentY] isBold:true];
+                [self changeCell:[self cellAtPos:currentCell] isBold:false];
+                currentCell = box;
+                [self changeCell:[self cellAtPos:currentCell] isBold:true];
                 [piano gridCellHasChanged];
             }
             
@@ -195,12 +193,12 @@
     [pathView removeAllNotes];
 }
 
-- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave x:(unsigned)x y:(unsigned)y appendNote:(bool)appendNote
+- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave cellPos:(CellPos)cellPos appendNote:(bool)appendNote
 {
     assert(pitch < NOTES_IN_OCTAVE);
     assert(octave <= MAX_OCTAVE && octave >= MIN_OCTAVE);
-    assert(x < numBoxesX && y < numBoxesY);
-    GridCell *cell = [self cellAtX:x y:y];
+    assert(cellPos.x < numBoxes.x && cellPos.y < numBoxes.y);
+    GridCell *cell = [self cellAtPos:cellPos];
     pianoNote note = [noteTypes getPianoNoteOfPitch:pitch Octave:octave];
     if(appendNote)
         [cell addNote:note];
@@ -210,27 +208,27 @@
 
 - (void)changeNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave appendNote:(bool)appendNote
 {
-    [self changeNoteWithPitch:pitch octave:octave x:currentX y:currentY appendNote:appendNote];
+    [self changeNoteWithPitch:pitch octave:octave cellPos:currentCell appendNote:appendNote];
 }
 
-- (void)clearNoteAtX:(unsigned int)x y:(unsigned int)y
+- (void)clearNoteForCell:(CellPos)cellPos
 {
-    [[self cellAtX:x y:y] clearNotes];
+    [[self cellAtPos:cellPos] clearNotes];
 }
 
 - (void)clearNote
 {
-    [self clearNoteAtX:currentX y:currentY];
+    [self clearNoteForCell:currentCell];
 }
 
 - (void)playNote
 {
-    [self playNoteAtX:currentX y:currentY];
+    [self playNoteForCell:currentCell];
 }
 
-- (void)playNoteAtX:(unsigned)x y:(unsigned)y
+- (void)playNoteForCell:(CellPos)cellPos
 {
-    NSMutableArray *notes = [[self cellAtX:x y:y] notes];
+    NSMutableArray *notes = [[self cellAtPos:cellPos] notes];
     for(NSNumber *n in notes)
     {
         pianoNote note = [n unsignedIntValue];
@@ -243,19 +241,19 @@
 
 - (float)boxWidth
 {
-    return [self bounds].size.width / numBoxesX;
+    return [self bounds].size.width / numBoxes.x;
 }
 
 - (float)boxHeight
 {
-    return [self bounds].size.height / numBoxesY;
+    return [self bounds].size.height / numBoxes.y;
 }
 
 - (void)drawGrid
 {
-    for (int y = 0; y < numBoxesY; y++) {
-        for (int x = 0; x < numBoxesX; x++) {
-            GridCell *cell = [self cellAtX:x y:y];
+    for (int y = 0; y < numBoxes.y; y++) {
+        for (int x = 0; x < numBoxes.x; x++) {
+            GridCell *cell = [self cellAtPos:CGPointMake(x, y)];
             [self addSubview:cell];
         }
     }
@@ -330,10 +328,10 @@
     [self bringSubviewToFront:pathView];
 }
 
-- (CGPoint) getBoxFromCoords:(CGPoint)pos 
+- (CellPos) getBoxFromCoords:(CGPoint)pos 
 {
-    CGPoint box = CGPointMake((int)(pos.x / [self boxWidth]), (int)(pos.y / [self boxHeight]));
-    if (box.x > numBoxesX || box.y > numBoxesY)
+    CellPos box = CGPointMake((int)(pos.x / [self boxWidth]), (int)(pos.y / [self boxHeight]));
+    if (box.x > numBoxes.x || box.y > numBoxes.y)
         return CGPointMake(-1, -1);
     return box;
 }
@@ -347,14 +345,14 @@
         [pathView playWithSpeedFactor:factor notePlayer:[piano notePlayer]];
 }
 
-- (NSMutableArray*)notesAtX:(unsigned int)x y:(unsigned int)y
+- (NSMutableArray*)notesAtCell:(CellPos)cellPos
 {
-    return [[self cellAtX:x y:y] notes];
+    return [[self cellAtPos:cellPos] notes];
 }
 
 - (NSMutableArray*)notes
 {
-    return [self notesAtX:currentX y:currentY];
+    return [self notesAtCell:currentCell];
 }
 
 @end

@@ -9,7 +9,11 @@
 @synthesize player;
 @synthesize delegateGrid;
 
-const static NSTimeInterval playbackSpeed = 0.75;
+
+const static NSTimeInterval playbackSpeed = 0.25;
+
+
+
 
 - (id)init 
 {
@@ -80,8 +84,8 @@ const static NSTimeInterval playbackSpeed = 0.75;
         [delegateGrid stopPlayback];
         return;
     }
-    CGPoint coords = [delegateGrid getBoxFromCoords:[[notes objectAtIndex:playbackPosition] CGPointValue]];
-    [delegateGrid playNoteAtX:coords.x y:coords.y];
+    CellPos coords = [delegateGrid getBoxFromCoords:[[notes objectAtIndex:playbackPosition] CGPointValue]];
+    [delegateGrid playNoteForCell:coords];
     
     // pulse code begin (unfinished)
     

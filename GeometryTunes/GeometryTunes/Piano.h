@@ -3,6 +3,7 @@
 #import "NotePlayer.h"
 
 @class GridView;
+@class scrollViewWithButtons;
 
 @interface Piano : UIView
 {
@@ -11,22 +12,23 @@
     bool addNote; //True if the next note should be new
 }
 
-@property unsigned octave;
-@property int pitchOffset;
 @property (retain) NotePlayer *notePlayer;
-@property (readonly) int numNotes;
+@property (readonly, retain) scrollViewWithButtons *piano;
+@property (readonly) CGPoint contentOffset;
 
 - (id)sharedInit;
 - (id)initWithFrame:(CGRect)frame delegate:(id)delagate;
 
 - (void)KeyClicked:(id)sender;
-- (void)OctaveChanged:(id)sender;
 - (void)noteClearEvent;
 - (void)noteAddEvent;
 
 - (void)gridCellHasChanged; //Means that the note the piano is editing has changed
 
 - (void)removeFromSuperview;
+
+
+- (void)boldNote:(unsigned)pitch octave:(unsigned)octave isBold:(bool)isBold;
 
 - (int)numWhiteNotes;
 
@@ -36,5 +38,6 @@
 
 + (bool)isBlackNote:(int)pitch;
 + (int)whiteNotesFromPitch:(unsigned)pitch numNotes:(unsigned)numNotes;
+
 
 @end

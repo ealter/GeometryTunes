@@ -69,11 +69,17 @@
     [self setNotes:notes];
 }
 
+- (id)getNoteAtIndex:(int)i
+{
+    return [notes objectAtIndex:i];
+}
+
 - (void)clearNotes
 {
     [self setNotes:[[NSMutableArray alloc]init]];
 }
 
+// Creates a colored rect for each note played from cell
 - (void)drawRect:(CGRect)rect
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
