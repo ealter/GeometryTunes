@@ -16,7 +16,7 @@ typedef enum STATE
 
 @property STATE state;
 @property (nonatomic, retain) IBOutlet GridView *grid; 
-@property (nonatomic, retain) IBOutlet UIButton *editPathBtn; //TODO: merge these with above IBOutlets
+@property (nonatomic, retain) IBOutlet UIButton *editPathBtn;
 @property (nonatomic, retain) IBOutlet UIButton *playPauseButton;
 @property (nonatomic, retain) IBOutlet UISlider *speedSlider;
 @property (nonatomic, retain) IBOutlet UILabel *speedTextField;
