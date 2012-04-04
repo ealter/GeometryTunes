@@ -111,6 +111,8 @@
 		E2687D90151FA3A8005BB1F8 /* PathsView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2687D8F151FA3A8005BB1F8 /* PathsView.m */; };
 		E28150FD150C513500C8A036 /* Piano.m in Sources */ = {isa = PBXBuildFile; fileRef = E28150FC150C513500C8A036 /* Piano.m */; };
 		E2C5D77D15291FF40008BA08 /* woodBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2C5D77C15291FF40008BA08 /* woodBackground.jpg */; };
+		E2C768FB152CD28600998B48 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E2C768FA152CD28600998B48 /* Icon.png */; };
+		E2C768FD152CD2D200998B48 /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = E2C768FC152CD2D200998B48 /* default.png */; };
 		E2D5ECF3152004F700C417C8 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D5ECF2152004F700C417C8 /* GridView.m */; };
 		E2E4AF59151ABE5300E033E4 /* GridCell.m in Sources */ = {isa = PBXBuildFile; fileRef = E2E4AF58151ABE5300E033E4 /* GridCell.m */; };
 /* End PBXBuildFile section */
@@ -233,6 +235,8 @@
 		E28150FB150C513500C8A036 /* Piano.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Piano.h; path = GeometryTunes/Piano.h; sourceTree = "<group>"; };
 		E28150FC150C513500C8A036 /* Piano.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Piano.m; path = GeometryTunes/Piano.m; sourceTree = "<group>"; };
 		E2C5D77C15291FF40008BA08 /* woodBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = woodBackground.jpg; path = images/woodBackground.jpg; sourceTree = "<group>"; };
+		E2C768FA152CD28600998B48 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		E2C768FC152CD2D200998B48 /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		E2D5ECF2152004F700C417C8 /* GridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridView.m; sourceTree = "<group>"; };
 		E2E4AF57151ABE5300E033E4 /* GridCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridCell.h; sourceTree = "<group>"; };
 		E2E4AF58151ABE5300E033E4 /* GridCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridCell.m; sourceTree = "<group>"; };
@@ -276,6 +280,8 @@
 				CE5C7C6E151E7D3900B81396 /* noteTypes.h */,
 				CE5C7C6F151E7D3900B81396 /* noteTypes.m */,
 				E2687D8E151FA3A8005BB1F8 /* PathsView.h */,
+				E2C768FA152CD28600998B48 /* Icon.png */,
+				E2C768FC152CD2D200998B48 /* default.png */,
 				E2687D8F151FA3A8005BB1F8 /* PathsView.m */,
 				E28150FB150C513500C8A036 /* Piano.h */,
 				E28150FC150C513500C8A036 /* Piano.m */,
@@ -570,6 +576,8 @@
 				CE49860C151E27E4005228F4 /* A7.mp3 in Resources */,
 				CE49860D151E27E4005228F4 /* Ab1.mp3 in Resources */,
 				E2C5D77D15291FF40008BA08 /* woodBackground.jpg in Resources */,
+				E2C768FB152CD28600998B48 /* Icon.png in Resources */,
+				E2C768FD152CD2D200998B48 /* default.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

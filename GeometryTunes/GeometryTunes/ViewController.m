@@ -70,7 +70,6 @@ static NSString *pauseBtnText = @"Pause";
 
 - (IBAction)clearPathEvent:(id)sender
 {
-    //[clearPathBtn removeFromSuperview];
     [grid resetPath];
 }
 
@@ -92,34 +91,6 @@ static NSString *pauseBtnText = @"Pause";
 {
     [super didReceiveMemoryWarning];
     // Release any cached data, images, etc that aren't in use.
-}
-
--(IBAction)changeButtonBackgroundColor:(id)sender
-{
-    [sender setBackgroundColor:[UIColor cyanColor]];
-}
-
-- (void)addGradientToRect:(CGRect)rect 
-{
-    CGContextRef currentContext = UIGraphicsGetCurrentContext();
-    
-    CGGradientRef glossGradient;
-    CGColorSpaceRef rgbColorspace;
-    size_t num_locations = 2;
-    CGFloat locations[2] = { 0.0, 1.0 };
-    CGFloat components[8] = { 1.0, 1.0, 1.0, 0.35,  // Start color
-        1.0, 1.0, 1.0, 0.06 }; // End color
-    
-    rgbColorspace = CGColorSpaceCreateDeviceRGB();
-    glossGradient = CGGradientCreateWithColorComponents(rgbColorspace, components, locations, num_locations);
-    
-    CGRect currentBounds = self.view.bounds;
-    CGPoint topCenter = CGPointMake(CGRectGetMidX(currentBounds), 0.0f);
-    CGPoint midCenter = CGPointMake(CGRectGetMidX(currentBounds), CGRectGetMidY(currentBounds));
-    CGContextDrawLinearGradient(currentContext, glossGradient, topCenter, midCenter, 0);
-    
-    CGGradientRelease(glossGradient);
-    CGColorSpaceRelease(rgbColorspace); 
 }
 
 #pragma mark - View lifecycle
@@ -170,7 +141,7 @@ static NSString *pauseBtnText = @"Pause";
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    return YES;
+    return NO;
 }
 
 @end

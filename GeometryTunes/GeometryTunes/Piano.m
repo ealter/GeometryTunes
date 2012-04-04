@@ -5,6 +5,7 @@
 #define NOTES_IN_KEYBOARD NOTES_IN_OCTAVE
 #define INITIAL_PITCH 0
 #define INITIAL_OCTAVE 3
+#define BUTTON_RELATIVE_SIZE 1.3
 
 @implementation Piano
 
@@ -38,8 +39,9 @@
     notes = [NSMutableArray arrayWithCapacity:(MAX_OCTAVE - MIN_OCTAVE + 1) * NOTES_IN_OCTAVE];
     notePlayer = [[NotePlayer alloc]init];
     [self setBackgroundColor:[UIColor whiteColor]];
-    if(piano)
+    if(piano) {
         [piano setContentOffset:contentOffset];
+    }
     return self;
 }
 
@@ -47,10 +49,10 @@
 {
     int width = rect.size.width;
     int height = rect.size.height;
-    const float buttonRelativeSize = 1.3;
-    const float whiteKeyWidth = ((float)width) / ([self numWhiteNotes]+buttonRelativeSize);
+    //const float buttonRelativeSize = 1.3;
+    const float whiteKeyWidth = ((float)width) / ([self numWhiteNotes]+BUTTON_RELATIVE_SIZE);
     
-    float buttonWidth = whiteKeyWidth*buttonRelativeSize;
+    float buttonWidth = whiteKeyWidth*BUTTON_RELATIVE_SIZE;
     float blackKeyWidth = whiteKeyWidth/2;
     float blackKeyHeight = height*2/3;
     UIButton *note;
@@ -90,6 +92,7 @@
             note = [[UIButton alloc]initWithFrame:CGRectMake(x, 0, whiteKeyWidth, height)];
             x += whiteKeyWidth;
         }
+        
         
         [note setBackgroundColor:[noteColor colorFromNoteWithPitch:i % NOTES_IN_OCTAVE octave:i/NOTES_IN_OCTAVE + MIN_OCTAVE]];
         note.tag = i;
@@ -189,11 +192,6 @@
     addNote = false;
 }
 
-
--(void)boldNote:(unsigned int)pitch octave:(unsigned int)octave_ isBold:(_Bool)isBold
-{
-
-}
 - (int)indexOfPitch:(unsigned int)pitch octave:(unsigned int)octave
 {
     assert(pitch < NOTES_IN_OCTAVE);
