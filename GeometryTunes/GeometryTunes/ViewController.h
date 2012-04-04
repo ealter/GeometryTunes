@@ -2,10 +2,6 @@
 #import "GridView.h"
 
 @interface ViewController : UIViewController
-{
-    IBOutlet UISlider *speedSlider;  
-    IBOutlet UILabel *speedTextField;
-}
 
 typedef enum STATE
 {
