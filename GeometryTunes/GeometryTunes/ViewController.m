@@ -7,8 +7,6 @@
 @synthesize grid;
 @synthesize editPathBtn;
 @synthesize playPauseButton;
-@synthesize speedSlider;
-@synthesize speedTextField;
 
 static NSString *playBtnText = @"Play";
 static NSString *pauseBtnText = @"Pause";
@@ -58,25 +56,8 @@ static NSString *pauseBtnText = @"Pause";
     [grid playPathWithSpeedFactor:0.5 reversed:false];
 }
 
-
-- (IBAction) sliderValueChanged:(id)sender
-{
-    //NSString *speed = [sender value];
-    //speedTextField.text = [NSString stringWithFormat:@"%.1f", [sender value]];
-    
-    NSString *textValue = [speedTextField text];  
-    float value = [textValue floatValue];  
-    if (value < -20) value = -20;  
-    if (value > 20) value = 20;  
-    //speedSlider.value = value;  
-    speedTextField.text = [NSString stringWithFormat:@"%.1f", value];  
-    //if ([speedTextField canResignFirstResponder]) [speedTextField resignFirstResponder]; 
-}
-
 - (IBAction)editPathEvent:(id)sender
 {
-    //if(!clearPathBtnPresent)
-    //    [self.view addSubview:clearPathBtn];
     if(state == PATH_EDIT_STATE)
         [self changeStateToNormal:true];
     else
@@ -116,11 +97,6 @@ static NSString *pauseBtnText = @"Pause";
 -(IBAction)changeButtonBackgroundColor:(id)sender
 {
     [sender setBackgroundColor:[UIColor cyanColor]];
-}
-
--(IBAction)resetButtonBackroundColor:(id)sender
-{
-    [sender setBackgroundColor:[UIColor whiteColor]];
 }
 
 - (void)addGradientToRect:(CGRect)rect 

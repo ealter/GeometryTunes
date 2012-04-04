@@ -257,15 +257,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">resetButtonBackroundColor:</string>
-						<reference key="source" ref="36369109"/>
-						<reference key="destination" ref="841351856"/>
-						<int key="IBEventType">7</int>
-					</object>
-					<int key="connectionID">48</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">rewindEvent:</string>
 						<reference key="source" ref="289312227"/>
 						<reference key="destination" ref="841351856"/>
@@ -275,30 +266,12 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">resetButtonBackroundColor:</string>
-						<reference key="source" ref="289312227"/>
-						<reference key="destination" ref="841351856"/>
-						<int key="IBEventType">7</int>
-					</object>
-					<int key="connectionID">50</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">fastForwardEvent:</string>
 						<reference key="source" ref="132223026"/>
 						<reference key="destination" ref="841351856"/>
 						<int key="IBEventType">7</int>
 					</object>
 					<int key="connectionID">20</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBCocoaTouchEventConnection" key="connection">
-						<string key="label">resetButtonBackroundColor:</string>
-						<reference key="source" ref="132223026"/>
-						<reference key="destination" ref="841351856"/>
-						<int key="IBEventType">7</int>
-					</object>
-					<int key="connectionID">52</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
@@ -427,21 +400,15 @@
 					<string key="className">ViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="changeButtonBackgroundColor:">id</string>
 						<string key="clearPathEvent:">id</string>
 						<string key="editPathEvent:">id</string>
 						<string key="fastForwardEvent:">id</string>
 						<string key="playPauseEvent:">id</string>
 						<string key="resetButtonBackroundColor:">id</string>
 						<string key="rewindEvent:">id</string>
-						<string key="sliderValueChanged:">id</string>
 						<string key="stopEvent:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="changeButtonBackgroundColor:">
-							<string key="name">changeButtonBackgroundColor:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="clearPathEvent:">
 							<string key="name">clearPathEvent:</string>
 							<string key="candidateClassName">id</string>
@@ -464,10 +431,6 @@
 						</object>
 						<object class="IBActionInfo" key="rewindEvent:">
 							<string key="name">rewindEvent:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="sliderValueChanged:">
-							<string key="name">sliderValueChanged:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="stopEvent:">
