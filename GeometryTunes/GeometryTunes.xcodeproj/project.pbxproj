@@ -21,7 +21,6 @@
 		CE43316A15261456006EC577 /* scrollViewWithButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = CE43316915261456006EC577 /* scrollViewWithButtons.m */; };
 		CE5C7C70151E7D3900B81396 /* noteTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5C7C6F151E7D3900B81396 /* noteTypes.m */; };
 		E25113F01519230500BBE1F2 /* NotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E25113EF1519230500BBE1F2 /* NotePlayer.m */; };
-		E25113F215192BE600BBE1F2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E25113F115192BE600BBE1F2 /* AVFoundation.framework */; };
 		E2687D90151FA3A8005BB1F8 /* PathsView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2687D8F151FA3A8005BB1F8 /* PathsView.m */; };
 		E28150FD150C513500C8A036 /* Piano.m in Sources */ = {isa = PBXBuildFile; fileRef = E28150FC150C513500C8A036 /* Piano.m */; };
 		E2BD6FE6152E4E5300868501 /* crsynth.dlsc in Resources */ = {isa = PBXBuildFile; fileRef = E2BD6FDF152E4E5300868501 /* crsynth.dlsc */; };
@@ -96,7 +95,6 @@
 			files = (
 				E2D80E35152E487B00B2E1C7 /* AudioToolbox.framework in Frameworks */,
 				CE2446B91522D21300C2DB33 /* QuartzCore.framework in Frameworks */,
-				E25113F215192BE600BBE1F2 /* AVFoundation.framework in Frameworks */,
 				83194310150BD226003EF364 /* UIKit.framework in Frameworks */,
 				83194312150BD226003EF364 /* Foundation.framework in Frameworks */,
 				83194314150BD226003EF364 /* CoreGraphics.framework in Frameworks */,
