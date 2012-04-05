@@ -1,6 +1,5 @@
 #import "NotePlayer.h"
 #import "noteTypes.h"
-#import <AVFoundation/AVFoundation.h>
 #import <AudioToolBox/AudioServices.h>
 
 @implementation NotePlayer
@@ -52,7 +51,6 @@ static unsigned midiNote(unsigned pitch, unsigned octave)
             0x74, 0x68, 0xF7, 0x79, 0xD0, 0xF2, 0xED, 0x2D,
             0xE4, 0x62, 0x89, 0x45, 0x9F, 0xC7, 0xA5, 0x62,
 		};
-		//err = api->initializeWithSoundLib (&handle, _callback, (void *) self, lib, NULL, key);
         err = api->initializeWithSoundLib (&handle, nil, nil, lib, NULL, key);
 	}
     
@@ -74,30 +72,11 @@ static unsigned midiNote(unsigned pitch, unsigned octave)
 
 }
 
-- (void)loadSoundWithPitch:(unsigned)pitch octave:(unsigned)octave
-{
-    assert(pitch < NOTES_IN_OCTAVE);
-    assert(octave >= MIN_OCTAVE && octave <= MAX_OCTAVE);
-    char* pitchNames[] = {"C", "Db", "D", "Eb", "E", "F", "Gb", "G", "Ab", "A", "Bb", "B"};
-    assert(sizeof(pitchNames)/sizeof(pitchNames[0]) == NOTES_IN_OCTAVE);
-    
-    NSString *fname = [[NSString alloc]initWithFormat:@"%s%d", pitchNames[pitch], octave];
-    NSString* soundFilePath = [[NSBundle mainBundle] pathForResource:fname ofType:@"mp3"];
-    assert(soundFilePath);
-    NSURL *fileURL = [[NSURL alloc] initFileURLWithPath:soundFilePath];
-    AVAudioPlayer* p = [[AVAudioPlayer alloc] initWithContentsOfURL:fileURL error:nil];
-    
-    players[getPlayerIndex(pitch, octave)] = p;
-}
-
 - (id)init
 {
     self = [super init];
     if (self)
     {
-        for(int i=MIN_OCTAVE; i<=MAX_OCTAVE; i++)
-            for(int j=0; j<NOTES_IN_OCTAVE; j++)
-                [self loadSoundWithPitch:j octave:i];
         [self initMidiPlayer];
     }
     return self;
@@ -107,12 +86,6 @@ static unsigned midiNote(unsigned pitch, unsigned octave)
 {
     assert(octave >= MIN_OCTAVE && octave <= MAX_OCTAVE);
     assert(pitch < NOTES_IN_OCTAVE);
-    /*AVAudioPlayer *note = players[getPlayerIndex(pitch, octave)];
-    assert(note);
-    //[note prepareToPlay];
-    if([note isPlaying])
-        note.currentTime = 0;
-    [note play];*/
     NSNumber *note = [NSNumber numberWithInt:midiNote(pitch, octave)];
     [self noteOn:note];
     [self performSelector:@selector(noteOff:) withObject:note afterDelay:duration];
@@ -122,12 +95,6 @@ static unsigned midiNote(unsigned pitch, unsigned octave)
 {
     for(int i=0; i<(MAX_OCTAVE - MIN_OCTAVE + 1) * NOTES_IN_OCTAVE; i++)
     {
-        /*AVAudioPlayer *p = players[i];
-        if([p isPlaying])
-        {
-            [p pause];
-            p.currentTime = 0;
-        }*/
         //TODO: implement this
     }
 }

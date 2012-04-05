@@ -4,7 +4,7 @@
 
 #define NOTES_IN_KEYBOARD NOTES_IN_OCTAVE
 #define INITIAL_PITCH 0
-#define INITIAL_OCTAVE 3
+#define INITIAL_OCTAVE 5
 #define BUTTON_RELATIVE_SIZE 1.3
 
 @implementation Piano
