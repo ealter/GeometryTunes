@@ -141,6 +141,7 @@ static NSString *pauseBtnText = @"Pause";
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
+    if(interfaceOrientation == UIInterfaceOrientationPortrait) return YES;
     return NO;
 }
 
