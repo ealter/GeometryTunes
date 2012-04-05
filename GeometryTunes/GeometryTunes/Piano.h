@@ -28,8 +28,6 @@
 - (void)removeFromSuperview;
 
 
-- (void)boldNote:(unsigned)pitch octave:(unsigned)octave isBold:(bool)isBold;
-
 - (int)numWhiteNotes;
 
 - (void)boldNotes:(NSMutableArray*)notes;
