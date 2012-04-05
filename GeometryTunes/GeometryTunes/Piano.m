@@ -143,7 +143,7 @@
     int pitch = note.tag % NOTES_IN_OCTAVE;
     int oct   = note.tag / NOTES_IN_OCTAVE + MIN_OCTAVE;
     [delegate changeNoteWithPitch:pitch octave:oct appendNote:addNote];
-    [delegate playNote];
+    [delegate playNoteForDuration:1]; //TODO: change this to play while the button is being clicked
     addNote = false;
     [self boldNotes:[delegate notes]];
 }
