@@ -60,7 +60,6 @@
 		CE5C7C6F151E7D3900B81396 /* noteTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = noteTypes.m; sourceTree = "<group>"; };
 		E25113EE1519230500BBE1F2 /* NotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotePlayer.h; sourceTree = "<group>"; };
 		E25113EF1519230500BBE1F2 /* NotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePlayer.m; sourceTree = "<group>"; };
-		E25113F115192BE600BBE1F2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		E2687D8E151FA3A8005BB1F8 /* PathsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathsView.h; sourceTree = "<group>"; };
 		E2687D8F151FA3A8005BB1F8 /* PathsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathsView.m; sourceTree = "<group>"; };
 		E28150FB150C513500C8A036 /* Piano.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Piano.h; path = GeometryTunes/Piano.h; sourceTree = "<group>"; };
@@ -103,18 +102,13 @@
 		83194300150BD226003EF364 = {
 			isa = PBXGroup;
 			children = (
-				E2D80E34152E487B00B2E1C7 /* AudioToolbox.framework */,
-				E25113F115192BE600BBE1F2 /* AVFoundation.framework */,
-				E2EBF93B151FAA4D00D34B53 /* CoreFoundation.framework */,
 				E2C768FC152CD2D200998B48 /* default.png */,
-				CE2446B81522D21300C2DB33 /* QuartzCore.framework */,
 				8319430E150BD226003EF364 /* Frameworks */,
 				83194315150BD226003EF364 /* GeometryTunes */,
 				E2E4AF57151ABE5300E033E4 /* GridCell.h */,
 				E2E4AF58151ABE5300E033E4 /* GridCell.m */,
 				8319432C150BD32B003EF364 /* GridView.h */,
 				E2D5ECF2152004F700C417C8 /* GridView.m */,
-				E2C768FA152CD28600998B48 /* Icon.png */,
 				E2C5D77A15291FA00008BA08 /* images */,
 				E2BD6FDE152E4E2F00868501 /* midi */,
 				831FF08F150DB112001E9014 /* noteColor.h */,
@@ -127,8 +121,7 @@
 				CE5C7C6F151E7D3900B81396 /* noteTypes.m */,
 				E2687D8E151FA3A8005BB1F8 /* PathsView.h */,
 				E2687D8F151FA3A8005BB1F8 /* PathsView.m */,
-				E28150FB150C513500C8A036 /* Piano.h */,
-				E28150FC150C513500C8A036 /* Piano.m */,
+				E205F7B5152E6F6C001CAF14 /* Keyboard */,
 				8319430C150BD226003EF364 /* Products */,
 				CE43316815261456006EC577 /* scrollViewWithButtons.h */,
 				CE43316915261456006EC577 /* scrollViewWithButtons.m */,
@@ -146,6 +139,9 @@
 		8319430E150BD226003EF364 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CE2446B81522D21300C2DB33 /* QuartzCore.framework */,
+				E2D80E34152E487B00B2E1C7 /* AudioToolbox.framework */,
+				E2EBF93B151FAA4D00D34B53 /* CoreFoundation.framework */,
 				8319430F150BD226003EF364 /* UIKit.framework */,
 				83194311150BD226003EF364 /* Foundation.framework */,
 				83194313150BD226003EF364 /* CoreGraphics.framework */,
@@ -177,6 +173,15 @@
 			name = "Supporting Files";
 			sourceTree = "<group>";
 		};
+		E205F7B5152E6F6C001CAF14 /* Keyboard */ = {
+			isa = PBXGroup;
+			children = (
+				E28150FB150C513500C8A036 /* Piano.h */,
+				E28150FC150C513500C8A036 /* Piano.m */,
+			);
+			name = Keyboard;
+			sourceTree = "<group>";
+		};
 		E2BD6FDE152E4E2F00868501 /* midi */ = {
 			isa = PBXGroup;
 			children = (
@@ -196,6 +201,7 @@
 		E2C5D77A15291FA00008BA08 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				E2C768FA152CD28600998B48 /* Icon.png */,
 				E2C5D77C15291FF40008BA08 /* woodBackground.jpg */,
 			);
 			name = images;
