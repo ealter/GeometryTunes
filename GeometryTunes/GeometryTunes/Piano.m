@@ -93,7 +93,6 @@
             x += whiteKeyWidth;
         }
         
-        
         [note setBackgroundColor:[noteColor colorFromNoteWithPitch:i % NOTES_IN_OCTAVE octave:i/NOTES_IN_OCTAVE + MIN_OCTAVE]];
         note.tag = i;
         [piano addSubview:note];
@@ -151,7 +150,6 @@
 
 - (void)KeyUnclicked:(id)sender
 {
-    NSLog(@"Key unclicked");
     UIButton *note = sender;
     int pitch = note.tag % NOTES_IN_OCTAVE;
     int oct   = note.tag / NOTES_IN_OCTAVE + MIN_OCTAVE;
