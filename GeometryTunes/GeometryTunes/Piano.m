@@ -215,8 +215,8 @@
     }
     for(NSNumber *note in boldNotes)
     {
-        pianoNote p = [note unsignedIntValue];
-        int index = [self indexOfPitch:[noteTypes pitchOfPianoNote:p] octave:[noteTypes octaveOfPianoNote:p] - MIN_OCTAVE];
+        midinote p = [note unsignedIntValue];
+        int index = [self indexOfPitch:p % NOTES_IN_OCTAVE octave:p / NOTES_IN_OCTAVE - MIN_OCTAVE];
         if(index != -1)
             [[[notes objectAtIndex:index] layer] setBorderWidth:4];
     }

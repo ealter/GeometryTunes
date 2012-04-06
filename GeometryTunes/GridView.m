@@ -192,7 +192,7 @@
     assert(octave <= MAX_OCTAVE && octave >= MIN_OCTAVE);
     assert(cellPos.x < numBoxes.x && cellPos.y < numBoxes.y);
     GridCell *cell = [self cellAtPos:cellPos];
-    pianoNote note = [noteTypes getPianoNoteOfPitch:pitch Octave:octave];
+    midinote note = pitch + octave * NOTES_IN_OCTAVE;
     if(appendNote)
         [cell addNote:note];
     else
@@ -224,11 +224,8 @@
     NSMutableArray *notes = [[self cellAtPos:cellPos] notes];
     for(NSNumber *n in notes)
     {
-        pianoNote note = [n unsignedIntValue];
-        if(note != NO_PIANO_NOTE)
-        {
-            [[piano notePlayer] playNoteWithPitch: [noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note] duration:duration];
-        }
+        midinote note = [n unsignedIntValue];
+        [[piano notePlayer] playNoteWithPitch: note % NOTES_IN_OCTAVE octave:note / NOTES_IN_OCTAVE duration:duration];
     }
 }
 
