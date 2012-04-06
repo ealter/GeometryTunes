@@ -1,0 +1,8 @@
+This file is for ideas that we should discuss (not ready for todo list yet)
+
+Make adding a note like tetris. You craft a note on the sidebar of the piano and
+once you are ready, you swipe to push the note up to the grid. Once it is on the
+grid, the note cannot be changed (though the whole square can be reset). To add
+multiple notes at once, you use multitouch (i.e. 3 fingers to tap the whole
+chord). You see the chord building on the right. This would remove the addNote
+button (which would be replaced by multitouch).
