@@ -171,9 +171,8 @@
             
             break;
         case PATH_EDIT_STATE:
-            box = [self getBoxFromCoords:pos];
-            CGPoint point = CGPointMake((box.x + 0.5) * [self boxWidth], (box.y + 0.5) * [self boxHeight]);
-            [pathView addNoteWithPos:point];
+            //CGPoint point = CGPointMake((box.x + 0.5) * [self boxWidth], (box.y + 0.5) * [self boxHeight]); //Snap to center
+            [pathView addNoteWithPos:pos];
             [pathView setNeedsDisplay];
             break;
         default:

@@ -1,5 +1,4 @@
 FF and Rew faster (slider tempo)
-Pulse on beat
 Multiple paths when reversing back on itself
 Editing the path
 Make loops work
@@ -15,7 +14,6 @@ Get rid of snap-to-center
 
 Late todos:
 Make the grid scrollable
-
 
 For Eliot:
 get rid of pianonote abstraction
