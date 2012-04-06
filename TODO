@@ -10,8 +10,6 @@ Add path scrollable
 Add button to hide/show path
 half, quarter notes
 
-Get rid of snap-to-center
-
 Late todos:
 Make the grid scrollable
 
@@ -21,3 +19,4 @@ When clicking on the piano, make it play all the notes in that square
 
 For Dylan:
 Get pulse code to work
+Undo/redo

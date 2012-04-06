@@ -46,12 +46,6 @@
     else
         borderWidth = 2;
     [[cell layer] setBorderWidth:borderWidth];
-    
-    //Bold piano keys with same notes
-    // int notesInCellCount = [cell.notes count];
-    // for(int i=0; i < notesInCellCount; i++){
-    //   [piano boldPianoNote:[cell getNoteAtIndex:i]];
-    // }
 }
 
 - (void)changeToNormalState
