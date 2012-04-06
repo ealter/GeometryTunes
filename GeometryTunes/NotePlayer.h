@@ -1,6 +1,5 @@
 #import <Foundation/Foundation.h>
 #import "noteTypes.h"
-#import "crmd.h"
 
 @interface NotePlayer : NSObject
 

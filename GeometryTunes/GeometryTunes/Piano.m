@@ -97,7 +97,8 @@
         [note setBackgroundColor:[noteColor colorFromNoteWithPitch:i % NOTES_IN_OCTAVE octave:i/NOTES_IN_OCTAVE + MIN_OCTAVE]];
         note.tag = i;
         [piano addSubview:note];
-        [note addTarget:self action:@selector(KeyClicked:) forControlEvents:UIControlEventTouchUpInside];
+        [note addTarget:self action:@selector(KeyClicked:) forControlEvents:UIControlEventTouchDown];
+        [note addTarget:self action:@selector(KeyUnclicked:) forControlEvents:UIControlEventTouchUpInside];
         if(!isBlack)
             [piano sendSubviewToBack:note];
         [note.layer setBorderWidth:1];
@@ -143,9 +144,18 @@
     int pitch = note.tag % NOTES_IN_OCTAVE;
     int oct   = note.tag / NOTES_IN_OCTAVE + MIN_OCTAVE;
     [delegate changeNoteWithPitch:pitch octave:oct appendNote:addNote];
-    [delegate playNoteForDuration:1]; //TODO: change this to play while the button is being clicked
+    [notePlayer noteOn:[NSNumber numberWithInt:oct * NOTES_IN_OCTAVE + pitch]];
     addNote = false;
     [self boldNotes:[delegate notes]];
+}
+
+- (void)KeyUnclicked:(id)sender
+{
+    NSLog(@"Key unclicked");
+    UIButton *note = sender;
+    int pitch = note.tag % NOTES_IN_OCTAVE;
+    int oct   = note.tag / NOTES_IN_OCTAVE + MIN_OCTAVE;
+    [notePlayer noteOff:[NSNumber numberWithInt:oct * NOTES_IN_OCTAVE + pitch]];
 }
 
 - (void)gridCellHasChanged

@@ -9,11 +9,7 @@
 @synthesize player;
 @synthesize delegateGrid;
 
-
 const static NSTimeInterval playbackSpeed = 0.25;
-
-
-
 
 - (id)init 
 {
