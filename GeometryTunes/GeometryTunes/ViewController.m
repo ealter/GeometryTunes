@@ -86,6 +86,12 @@ static NSString *pauseBtnText = @"Pause";
     [playPauseButton setTitle:playBtnText forState:UIControlStateNormal];
 }
 
+- (void)addWoodBackground
+{
+    UIColor *background = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"woodBackground.jpg"]];
+    self.view.backgroundColor = background;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -99,6 +105,7 @@ static NSString *pauseBtnText = @"Pause";
     [super viewDidLoad];
     state = NORMAL_STATE;
     [grid setDelegate:self];
+    [self addWoodBackground];
 }
 
 - (void)viewDidUnload
