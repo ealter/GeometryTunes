@@ -20,6 +20,11 @@
 - (id)initWithFrame:(CGRect)frame delegate:(id)delagate;
 
 - (void)KeyClicked:(id)sender;
+
+- (void)KeyUnclicked:(id)sender;
+
+- (void)noteClearEvent;
+
 - (void)noteAddEvent;
 - (void)noteClearEvent;
 
