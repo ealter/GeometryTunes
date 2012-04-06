@@ -84,7 +84,7 @@ const static NSTimeInterval playbackSpeed = 0.25;
         return;
     }
     CellPos coords = [delegateGrid getBoxFromCoords:[[notes objectAtIndex:playbackPosition] CGPointValue]];
-    [delegateGrid playNoteForCell:coords];
+    [delegateGrid playNoteForCell:coords duration:[t timeInterval]];
     
     // pulse code begin (unfinished)
     

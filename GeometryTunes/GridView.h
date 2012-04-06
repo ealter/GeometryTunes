@@ -38,8 +38,8 @@ typedef CGPoint CellPos; //Represents a coordinate system for the grid (0,0) is 
 - (void)clearNote;
 - (void)clearNoteForCell:(CellPos)cellPos;
 
-- (void)playNote;
-- (void)playNoteForCell:(CellPos)cellPos;
+- (void)playNoteForDuration:(NSTimeInterval)duration;
+- (void)playNoteForCell:(CellPos)cellPos duration:(NSTimeInterval)duration;
 
 - (float)boxWidth;
 - (float)boxHeight;

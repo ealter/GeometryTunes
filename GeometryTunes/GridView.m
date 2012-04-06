@@ -221,12 +221,12 @@
     [self clearNoteForCell:currentCell];
 }
 
-- (void)playNote
+- (void)playNoteForDuration:(NSTimeInterval)duration
 {
-    [self playNoteForCell:currentCell];
+    [self playNoteForCell:currentCell duration:duration];
 }
 
-- (void)playNoteForCell:(CellPos)cellPos
+- (void)playNoteForCell:(CellPos)cellPos duration:(NSTimeInterval)duration
 {
     NSMutableArray *notes = [[self cellAtPos:cellPos] notes];
     for(NSNumber *n in notes)
@@ -234,7 +234,7 @@
         pianoNote note = [n unsignedIntValue];
         if(note != NO_PIANO_NOTE)
         {
-            [[piano notePlayer] playNoteWithPitch: [noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note]];
+            [[piano notePlayer] playNoteWithPitch: [noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note] duration:duration];
         }
     }
 }

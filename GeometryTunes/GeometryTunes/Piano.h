@@ -20,12 +20,13 @@
 - (id)initWithFrame:(CGRect)frame delegate:(id)delagate;
 
 - (void)KeyClicked:(id)sender;
-- (void)noteClearEvent;
 - (void)noteAddEvent;
+- (void)noteClearEvent;
 
 - (void)gridCellHasChanged; //Means that the note the piano is editing has changed
 
 - (void)removeFromSuperview;
+
 
 - (int)numWhiteNotes;
 

@@ -2,7 +2,7 @@
 
 @interface noteTypes : NSObject
 
-#define MIN_OCTAVE 1
+#define MIN_OCTAVE 2
 #define MAX_OCTAVE 7
 #define NOTES_IN_OCTAVE 12
 #define NO_PIANO_NOTE (-1)
