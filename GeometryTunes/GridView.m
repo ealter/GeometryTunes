@@ -46,12 +46,6 @@
     else
         borderWidth = 2;
     [[cell layer] setBorderWidth:borderWidth];
-    
-    //Bold piano keys with same notes
-    // int notesInCellCount = [cell.notes count];
-    // for(int i=0; i < notesInCellCount; i++){
-    //   [piano boldPianoNote:[cell getNoteAtIndex:i]];
-    // }
 }
 
 - (void)changeToNormalState
@@ -171,9 +165,8 @@
             
             break;
         case PATH_EDIT_STATE:
-            box = [self getBoxFromCoords:pos];
-            CGPoint point = CGPointMake((box.x + 0.5) * [self boxWidth], (box.y + 0.5) * [self boxHeight]);
-            [pathView addNoteWithPos:point];
+            //CGPoint point = CGPointMake((box.x + 0.5) * [self boxWidth], (box.y + 0.5) * [self boxHeight]); //Snap to center
+            [pathView addNoteWithPos:pos];
             [pathView setNeedsDisplay];
             break;
         default:

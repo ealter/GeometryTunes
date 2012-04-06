@@ -1,9 +1,22 @@
-half, quarter notes
 FF and Rew faster (slider tempo)
-Pulse on beat
 Multiple paths when reversing back on itself
 Editing the path
 Make loops work
 Save / Load
 Finish documentation
 Portrait to Landscape
+
+Add path scrollable
+Add button to hide/show path
+half, quarter notes
+
+Late todos:
+Make the grid scrollable
+
+For Eliot:
+get rid of pianonote abstraction
+When clicking on the piano, make it play all the notes in that square
+
+For Dylan:
+Get pulse code to work
+Undo/redo

@@ -97,7 +97,7 @@
         note.tag = i;
         [piano addSubview:note];
         [note addTarget:self action:@selector(KeyClicked:) forControlEvents:UIControlEventTouchDown];
-        [note addTarget:self action:@selector(KeyUnclicked:) forControlEvents:UIControlEventTouchUpInside];
+        [note addTarget:self action:@selector(KeyUnclicked:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchCancel];
         if(!isBlack)
             [piano sendSubviewToBack:note];
         [note.layer setBorderWidth:1];
