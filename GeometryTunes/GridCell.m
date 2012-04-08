@@ -35,9 +35,8 @@
     notes = n;
     if([notes count] >= 1)
     {
-        pianoNote note = [[notes objectAtIndex:0] unsignedIntValue];
-        assert(note != NO_PIANO_NOTE);
-        [self setBackgroundColor:[noteColor colorFromNoteWithPitch:[noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note]]];
+        midinote note = [[notes objectAtIndex:0] intValue];
+        [self setBackgroundColor:[noteColor colorFromNoteWithPitch:note % NOTES_IN_OCTAVE octave:note / NOTES_IN_OCTAVE]];
     }
     else {
         [self setBackgroundColor:[UIColor whiteColor]];
@@ -50,9 +49,8 @@
     return notes;
 }
 
-- (void)setLastNote:(pianoNote)note
+- (void)setLastNote:(midinote)note
 {
-    assert(note != NO_PIANO_NOTE);
     int numNotes = [notes count];
     NSNumber *n = [NSNumber numberWithUnsignedInt:note];
     if(numNotes == 0)
@@ -62,9 +60,8 @@
     [self setNotes:notes];
 }
 
-- (void)addNote:(pianoNote)note
+- (void)addNote:(midinote)note
 {
-    assert(note != NO_PIANO_NOTE);
     [notes addObject:[NSNumber numberWithUnsignedInt:note]];
     [self setNotes:notes];
 }
@@ -88,8 +85,8 @@
     float rectHeight = [self bounds].size.height / numNotes;
     for(int i = 1, offset = rectHeight; i < numNotes; i++, offset += rectHeight)
     {
-        pianoNote note = [[notes objectAtIndex:i] unsignedIntValue];
-        UIColor *color = [noteColor colorFromNoteWithPitch:[noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note]];
+        midinote note = [[notes objectAtIndex:i] unsignedIntValue];
+        UIColor *color = [noteColor colorFromNoteWithPitch:note % NOTES_IN_OCTAVE octave:note / NOTES_IN_OCTAVE];
         CGContextSetFillColorWithColor(context, [color CGColor]);
         CGContextFillRect(context, CGRectMake(0, offset, [self bounds].size.width, rectHeight));
     }

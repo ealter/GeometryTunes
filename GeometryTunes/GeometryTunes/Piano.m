@@ -4,7 +4,11 @@
 
 #define NOTES_IN_KEYBOARD NOTES_IN_OCTAVE
 #define INITIAL_PITCH 0
-#define INITIAL_OCTAVE 3
+#define INITIAL_OCTAVE 5
+#define BUTTON_RELATIVE_SIZE 1.3
+
+//How long a note is played when it is clicked on the piano
+#define NOTE_DURATION 1
 
 @implementation Piano
 
@@ -38,8 +42,9 @@
     notes = [NSMutableArray arrayWithCapacity:(MAX_OCTAVE - MIN_OCTAVE + 1) * NOTES_IN_OCTAVE];
     notePlayer = [[NotePlayer alloc]init];
     [self setBackgroundColor:[UIColor whiteColor]];
-    if(piano)
+    if(piano) {
         [piano setContentOffset:contentOffset];
+    }
     return self;
 }
 
@@ -47,10 +52,10 @@
 {
     int width = rect.size.width;
     int height = rect.size.height;
-    const float buttonRelativeSize = 1.3;
-    const float whiteKeyWidth = ((float)width) / ([self numWhiteNotes]+buttonRelativeSize);
+    //const float buttonRelativeSize = 1.3;
+    const float whiteKeyWidth = ((float)width) / ([self numWhiteNotes]+BUTTON_RELATIVE_SIZE);
     
-    float buttonWidth = whiteKeyWidth*buttonRelativeSize;
+    float buttonWidth = whiteKeyWidth*BUTTON_RELATIVE_SIZE;
     float blackKeyWidth = whiteKeyWidth/2;
     float blackKeyHeight = height*2/3;
     UIButton *note;
@@ -95,6 +100,7 @@
         note.tag = i;
         [piano addSubview:note];
         [note addTarget:self action:@selector(KeyClicked:) forControlEvents:UIControlEventTouchUpInside];
+
         if(!isBlack)
             [piano sendSubviewToBack:note];
         [note.layer setBorderWidth:1];
@@ -140,7 +146,7 @@
     int pitch = note.tag % NOTES_IN_OCTAVE;
     int oct   = note.tag / NOTES_IN_OCTAVE + MIN_OCTAVE;
     [delegate changeNoteWithPitch:pitch octave:oct appendNote:addNote];
-    [delegate playNote];
+    [delegate playNoteForDuration:NOTE_DURATION];
     addNote = false;
     [self boldNotes:[delegate notes]];
 }
@@ -189,11 +195,6 @@
     addNote = false;
 }
 
-
--(void)boldNote:(unsigned int)pitch octave:(unsigned int)octave_ isBold:(_Bool)isBold
-{
-
-}
 - (int)indexOfPitch:(unsigned int)pitch octave:(unsigned int)octave
 {
     assert(pitch < NOTES_IN_OCTAVE);
@@ -209,8 +210,8 @@
     }
     for(NSNumber *note in boldNotes)
     {
-        pianoNote p = [note unsignedIntValue];
-        int index = [self indexOfPitch:[noteTypes pitchOfPianoNote:p] octave:[noteTypes octaveOfPianoNote:p] - MIN_OCTAVE];
+        midinote p = [note unsignedIntValue];
+        int index = [self indexOfPitch:p % NOTES_IN_OCTAVE octave:p / NOTES_IN_OCTAVE - MIN_OCTAVE];
         if(index != -1)
             [[[notes objectAtIndex:index] layer] setBorderWidth:4];
     }

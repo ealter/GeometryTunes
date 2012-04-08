@@ -46,12 +46,6 @@
     else
         borderWidth = 2;
     [[cell layer] setBorderWidth:borderWidth];
-    
-    //Bold piano keys with same notes
-    // int notesInCellCount = [cell.notes count];
-    // for(int i=0; i < notesInCellCount; i++){
-    //   [piano boldPianoNote:[cell getNoteAtIndex:i]];
-    // }
 }
 
 - (void)changeToNormalState
@@ -171,9 +165,8 @@
             
             break;
         case PATH_EDIT_STATE:
-            box = [self getBoxFromCoords:pos];
-            CGPoint point = CGPointMake((box.x + 0.5) * [self boxWidth], (box.y + 0.5) * [self boxHeight]);
-            [pathView addNoteWithPos:point];
+            //CGPoint point = CGPointMake((box.x + 0.5) * [self boxWidth], (box.y + 0.5) * [self boxHeight]); //Snap to center
+            [pathView addNoteWithPos:pos];
             [pathView setNeedsDisplay];
             break;
         default:
@@ -199,7 +192,7 @@
     assert(octave <= MAX_OCTAVE && octave >= MIN_OCTAVE);
     assert(cellPos.x < numBoxes.x && cellPos.y < numBoxes.y);
     GridCell *cell = [self cellAtPos:cellPos];
-    pianoNote note = [noteTypes getPianoNoteOfPitch:pitch Octave:octave];
+    midinote note = pitch + octave * NOTES_IN_OCTAVE;
     if(appendNote)
         [cell addNote:note];
     else
@@ -221,21 +214,18 @@
     [self clearNoteForCell:currentCell];
 }
 
-- (void)playNote
+- (void)playNoteForDuration:(NSTimeInterval)duration
 {
-    [self playNoteForCell:currentCell];
+    [self playNoteForCell:currentCell duration:duration];
 }
 
-- (void)playNoteForCell:(CellPos)cellPos
+- (void)playNoteForCell:(CellPos)cellPos duration:(NSTimeInterval)duration
 {
     NSMutableArray *notes = [[self cellAtPos:cellPos] notes];
     for(NSNumber *n in notes)
     {
-        pianoNote note = [n unsignedIntValue];
-        if(note != NO_PIANO_NOTE)
-        {
-            [[piano notePlayer] playNoteWithPitch: [noteTypes pitchOfPianoNote:note] octave:[noteTypes octaveOfPianoNote:note]];
-        }
+        midinote note = [n unsignedIntValue];
+        [[piano notePlayer] playNoteWithPitch: note % NOTES_IN_OCTAVE octave:note / NOTES_IN_OCTAVE duration:duration];
     }
 }
 
@@ -274,39 +264,6 @@
 {
     [pathView stop];
     [delegate setPlayStateToStopped];
-}
-
--(void) saveButtonEvent:(id)sender;
-{
-    // add path and note colors to file
-    // save NSMutable array 'pathView.path.notes' to file
-    
-    /*
-    //Code from http://ipgames.wordpress.com/tutorials/writeread-data-to-plist-file/
-    NSError *error;
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    NSString *path = [documentsDirectory stringByAppendingPathComponent:@"data.plist"]; //need to create data.plist file
-    NSFileManager *fileManager = [NSFileManager defaultManager];
-    if(!([fileManager fileExistsAtPath:path]))
-    {
-        NSString *bundle = [[NSBundle mainBundle] pathForResource:@"data" ofType:@"plist"];
-        [fileManager copyItemAtPath:bundle toPath:path error:&error];
-    }
-    
-    
-    //write Data
-    NSMutableArray *data = [[NSMutableDictionary alloc] initWithContentsOfFile: path];
-    int value = 5 //change to data elements
-    [data writeToFile:path atomically:YES];
-    [data release]
-    */
-    NSLog(@"SaveButtonPressed");
-}
-
--(void) loadButtonEvent:(id)sender;
-{
-    NSLog(@"LoadButtonPressed");
 }
 
 -(void) editButtonEvent:(id)sender;

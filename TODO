@@ -1,9 +1,20 @@
-half, quarter notes
 FF and Rew faster (slider tempo)
-Pulse on beat
 Multiple paths when reversing back on itself
 Editing the path
 Make loops work
 Save / Load
 Finish documentation
 Portrait to Landscape
+
+Add path scrollable
+Add button to hide/show path
+half, quarter notes
+
+Make the song stop if you start editing a note
+
+Late todos:
+Make the grid scrollable
+
+For Dylan:
+Get pulse code to work
+Undo/redo

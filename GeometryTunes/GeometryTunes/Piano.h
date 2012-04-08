@@ -20,6 +20,7 @@
 - (id)initWithFrame:(CGRect)frame delegate:(id)delagate;
 
 - (void)KeyClicked:(id)sender;
+
 - (void)noteClearEvent;
 - (void)noteAddEvent;
 
@@ -27,8 +28,6 @@
 
 - (void)removeFromSuperview;
 
-
-- (void)boldNote:(unsigned)pitch octave:(unsigned)octave isBold:(bool)isBold;
 
 - (int)numWhiteNotes;
 
