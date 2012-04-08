@@ -123,8 +123,6 @@
 				E2687D8F151FA3A8005BB1F8 /* PathsView.m */,
 				E205F7B5152E6F6C001CAF14 /* Keyboard */,
 				8319430C150BD226003EF364 /* Products */,
-				CE43316815261456006EC577 /* scrollViewWithButtons.h */,
-				CE43316915261456006EC577 /* scrollViewWithButtons.m */,
 			);
 			sourceTree = "<group>";
 		};
@@ -176,6 +174,8 @@
 		E205F7B5152E6F6C001CAF14 /* Keyboard */ = {
 			isa = PBXGroup;
 			children = (
+				CE43316815261456006EC577 /* scrollViewWithButtons.h */,
+				CE43316915261456006EC577 /* scrollViewWithButtons.m */,
 				E28150FB150C513500C8A036 /* Piano.h */,
 				E28150FC150C513500C8A036 /* Piano.m */,
 			);

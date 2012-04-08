@@ -137,6 +137,14 @@
         [self addSubview:btn];
     }
     
+    //Add the cancel button
+    /*width = 40;
+    height = width;
+    UIButton *cancelBtn = [[UIButton alloc]initWithFrame:CGRectMake(rect.size.width - width, 0, width, height)];
+    [cancelBtn setBackgroundColor:[UIColor blackColor]];
+    [cancelBtn addTarget:delegate action:@selector(changeToNormalState) forControlEvents:UIControlEventTouchUpInside];
+    [self addSubview:cancelBtn];*/
+    
     [self boldNotes:[delegate notes]];
 }
 
