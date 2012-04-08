@@ -10,12 +10,10 @@ Add path scrollable
 Add button to hide/show path
 half, quarter notes
 
+Make the song stop if you start editing a note
+
 Late todos:
 Make the grid scrollable
-
-For Eliot:
-get rid of pianonote abstraction
-When clicking on the piano, make it play all the notes in that square
 
 For Dylan:
 Get pulse code to work

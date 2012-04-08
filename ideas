@@ -1,0 +1,28 @@
+This file is for ideas that we should discuss (not ready for todo list yet)
+
+Make adding a note like tetris. You craft a note on the sidebar of the piano and
+once you are ready, you swipe to push the note up to the grid. Once it is on the
+grid, the note cannot be changed (though the whole square can be reset). To add
+multiple notes at once, you use multitouch (i.e. 3 fingers to tap the whole
+chord). You see the chord building on the right. This would remove the addNote
+button (which would be replaced by multitouch).
+
+Remove the grid. Change the notes to circles that you can place in arbitrary
+space. The circles can overlap if you want them to do so (though the path would
+only play the note that is visible). You would be able to move the notes by
+dragging gestures.
+  As a subidea, we could implement a small physics engine for the notes. 2 notes
+  could collide and move/play their sounds (like knock hockey)
+
+Instead of rewind and fastforward, use the speed slider. To get to a different
+note, click on a note while the piece is playing to go to that note.
+
+Speed slider goes on the top right of the screen and is always present
+
+Instead of a grid, use an empty space. Users could draw a line from any point to
+any other point. The lines would however be discrete in length (i.e. increments
+of 10 or so pixels). The lines would represent the notes and instead of coloring
+grid squares, we could color the lines. Therefore, the purpose of the app would
+be to make pretty pictures that play your favorite song. The length of the line
+would determine its duration. Each line would have a marker on both ends to
+signify that the line ended.

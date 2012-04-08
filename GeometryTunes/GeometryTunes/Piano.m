@@ -7,6 +7,9 @@
 #define INITIAL_OCTAVE 5
 #define BUTTON_RELATIVE_SIZE 1.3
 
+//How long a note is played when it is clicked on the piano
+#define NOTE_DURATION 1
+
 @implementation Piano
 
 #import "noteTypes.h"
@@ -96,8 +99,8 @@
         [note setBackgroundColor:[noteColor colorFromNoteWithPitch:i % NOTES_IN_OCTAVE octave:i/NOTES_IN_OCTAVE + MIN_OCTAVE]];
         note.tag = i;
         [piano addSubview:note];
-        [note addTarget:self action:@selector(KeyClicked:) forControlEvents:UIControlEventTouchDown];
-        [note addTarget:self action:@selector(KeyUnclicked:) forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchCancel];
+        [note addTarget:self action:@selector(KeyClicked:) forControlEvents:UIControlEventTouchUpInside];
+
         if(!isBlack)
             [piano sendSubviewToBack:note];
         [note.layer setBorderWidth:1];
@@ -143,17 +146,9 @@
     int pitch = note.tag % NOTES_IN_OCTAVE;
     int oct   = note.tag / NOTES_IN_OCTAVE + MIN_OCTAVE;
     [delegate changeNoteWithPitch:pitch octave:oct appendNote:addNote];
-    [notePlayer noteOn:[NSNumber numberWithInt:oct * NOTES_IN_OCTAVE + pitch]];
+    [delegate playNoteForDuration:NOTE_DURATION];
     addNote = false;
     [self boldNotes:[delegate notes]];
-}
-
-- (void)KeyUnclicked:(id)sender
-{
-    UIButton *note = sender;
-    int pitch = note.tag % NOTES_IN_OCTAVE;
-    int oct   = note.tag / NOTES_IN_OCTAVE + MIN_OCTAVE;
-    [notePlayer noteOff:[NSNumber numberWithInt:oct * NOTES_IN_OCTAVE + pitch]];
 }
 
 - (void)gridCellHasChanged
@@ -215,8 +210,8 @@
     }
     for(NSNumber *note in boldNotes)
     {
-        pianoNote p = [note unsignedIntValue];
-        int index = [self indexOfPitch:[noteTypes pitchOfPianoNote:p] octave:[noteTypes octaveOfPianoNote:p] - MIN_OCTAVE];
+        midinote p = [note unsignedIntValue];
+        int index = [self indexOfPitch:p % NOTES_IN_OCTAVE octave:p / NOTES_IN_OCTAVE - MIN_OCTAVE];
         if(index != -1)
             [[[notes objectAtIndex:index] layer] setBorderWidth:4];
     }
