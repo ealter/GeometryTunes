@@ -11,4 +11,7 @@
 - (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer*)player;
 - (void)pause;
 - (void)stop;
+
+- (void)setSpeedFactor:(float)factor;
+
 @end

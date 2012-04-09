@@ -27,7 +27,7 @@ static NSString *pauseBtnText = @"Pause";
             [self changeStateToNormal:true];
         [grid playPathWithSpeedFactor:tempo reversed:false];
         
-        [sender setTitle:pauseBtnText forState:UIControlStateNormal];
+        [playPauseButton setTitle:pauseBtnText forState:UIControlStateNormal];
     }
 }
 
@@ -89,13 +89,14 @@ static NSString *pauseBtnText = @"Pause";
 }
 
 - (IBAction) sliderValueChanged:(UISlider *)sender {  
-    tempoTextField.text = [NSString stringWithFormat:@"%.1f", [sender value]]; 
+    //NSLog(@"%.1f BPM", ([sender value])*60);
+    tempoTextField.text = [NSString stringWithFormat:@"%.1f BPM", ([sender value])*60]; 
     tempo = 1 / [sender value];
-    //[grid pausePlayback];
-    if(tempo < 0)
-        [grid playPathWithSpeedFactor:tempo reversed:true];
-    else
-        [grid playPathWithSpeedFactor:tempo reversed:false];
+    
+    
+    if([playPauseButton.currentTitle compare:playBtnText]){ //If playing
+        [grid setSpeedFactor:tempo];
+    }
 }
 
 - (void)addWoodBackground

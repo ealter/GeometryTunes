@@ -52,7 +52,7 @@
 						<string key="NSFrame">{{20, 20}, {72, 44}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="145200864"/>
+						<reference key="NSNextKeyView" ref="864116444"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
@@ -147,25 +147,25 @@
 						<reference key="IBUIFontDescription" ref="155530480"/>
 						<reference key="IBUIFont" ref="260356195"/>
 					</object>
-					<object class="IBUISlider" id="145200864">
+					<object class="IBUISlider" id="864116444">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{116, 31}, {156, 23}}</string>
+						<string key="NSFrame">{{117, 20}, {156, 23}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="884340343"/>
+						<reference key="NSNextKeyView" ref="28868202"/>
 						<bool key="IBUIOpaque">NO</bool>
+						<array key="IBUIGestureRecognizers"/>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<float key="IBUIValue">1</float>
-						<float key="IBUIMinValue">-5</float>
 						<float key="IBUIMaxValue">5</float>
 					</object>
-					<object class="IBUILabel" id="884340343">
+					<object class="IBUILabel" id="28868202">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{291, 32}, {42, 21}}</string>
+						<string key="NSFrame">{{119, 50}, {121, 21}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="36369109"/>
@@ -174,11 +174,8 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText">1</string>
-						<object class="NSColor" key="IBUITextColor" id="557266949">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MCAwIDAAA</bytes>
-						</object>
+						<string key="IBUIText">60 BPM</string>
+						<reference key="IBUITextColor" ref="1044549773"/>
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">1</int>
 						<float key="IBUIMinimumFontSize">10</float>
@@ -229,7 +226,7 @@
 			<object class="IBUIButton" id="132223026">
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
-				<string key="NSFrameSize">{72, 44}</string>
+				<string key="NSFrameSize">{72, 48}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView"/>
@@ -267,7 +264,10 @@
 					<bytes key="NSRGB">MC4wNDk3MzU2NTUxOSAwLjg0MTgzNjczNDcgMC4xNDQwODM5NTkzAA</bytes>
 				</object>
 				<nil key="IBUIHighlightedColor"/>
-				<reference key="IBUIShadowColor" ref="557266949"/>
+				<object class="NSColor" key="IBUIShadowColor" id="557266949">
+					<int key="NSColorSpace">1</int>
+					<bytes key="NSRGB">MCAwIDAAA</bytes>
+				</object>
 				<string key="IBUIShadowOffset">{0, 1}</string>
 				<int key="IBUIBaselineAdjustment">1</int>
 				<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
@@ -276,7 +276,7 @@
 					<int key="type">2</int>
 					<double key="pointSize">20</double>
 				</object>
-				<object class="NSFont" key="IBUIFont" id="922984018">
+				<object class="NSFont" key="IBUIFont" id="843854020">
 					<string key="NSName">Helvetica-Bold</string>
 					<double key="NSSize">20</double>
 					<int key="NSfFlags">16</int>
@@ -307,7 +307,7 @@
 				<bool key="IBUIAdjustsFontSizeToFit">NO</bool>
 				<float key="IBUIMinimumFontSize">10</float>
 				<reference key="IBUIFontDescription" ref="71155581"/>
-				<reference key="IBUIFont" ref="922984018"/>
+				<reference key="IBUIFont" ref="843854020"/>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
@@ -348,7 +348,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">tempoSlider</string>
 						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="145200864"/>
+						<reference key="destination" ref="864116444"/>
 					</object>
 					<int key="connectionID">61</int>
 				</object>
@@ -356,7 +356,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">tempoTextField</string>
 						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="884340343"/>
+						<reference key="destination" ref="28868202"/>
 					</object>
 					<int key="connectionID">62</int>
 				</object>
@@ -417,7 +417,7 @@
 				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">sliderValueChanged:</string>
-						<reference key="source" ref="145200864"/>
+						<reference key="source" ref="864116444"/>
 						<reference key="destination" ref="841351856"/>
 						<int key="IBEventType">13</int>
 					</object>
@@ -452,8 +452,8 @@
 							<reference ref="529893041"/>
 							<reference ref="299639481"/>
 							<reference ref="36369109"/>
-							<reference ref="145200864"/>
-							<reference ref="884340343"/>
+							<reference ref="864116444"/>
+							<reference ref="28868202"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -486,12 +486,13 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">58</int>
-						<reference key="object" ref="145200864"/>
+						<reference key="object" ref="864116444"/>
+						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="766721923"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">59</int>
-						<reference key="object" ref="884340343"/>
+						<reference key="object" ref="28868202"/>
 						<reference key="parent" ref="766721923"/>
 					</object>
 					<object class="IBObjectRecord">
@@ -540,7 +541,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">62</int>
+			<int key="maxID">68</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

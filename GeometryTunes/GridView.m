@@ -295,10 +295,9 @@
 
 - (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse
 {
+    NSLog(@"GRID VIEW");
     [pathView.path setDelegateGrid:self];
-    if(reverse)
-        factor = -factor;
-    if(piano) //Note: This assumes that the grid is blank if the piano doesn't exist
+    //if(piano) //Note: This assumes that the grid is blank if the piano doesn't exist
         [pathView playWithSpeedFactor:factor notePlayer:[piano notePlayer]];
 }
 
@@ -310,6 +309,11 @@
 - (NSMutableArray*)notes
 {
     return [self notesAtCell:currentCell];
+}
+
+- (void)setSpeedFactor:(float)factor
+{
+    [pathView setSpeedFactor:factor];
 }
 
 @end

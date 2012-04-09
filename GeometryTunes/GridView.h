@@ -49,6 +49,7 @@ typedef CGPoint CellPos; //Represents a coordinate system for the grid (0,0) is 
 - (CellPos)getBoxFromCoords:(CGPoint)pos;
 
 - (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse;
+- (void)setSpeedFactor:(float)factor;
 - (void)pausePlayback;
 - (void)stopPlayback;
 
