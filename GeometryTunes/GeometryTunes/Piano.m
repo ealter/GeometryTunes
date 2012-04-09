@@ -138,12 +138,31 @@
     [self boldNotes:[delegate notes]];
 }
 
+//Determines whether the cell being edited already contains the note
+- (BOOL)containsNote:(midinote)note
+{
+    NSMutableArray *cellNotes = [delegate notes];
+    for(NSNumber *n in cellNotes)
+    {
+        if([n unsignedIntValue] == note)
+            return TRUE;
+    }
+    return FALSE;
+}
+
 - (void)KeyClicked:(id)sender
 {
     UIButton *note = sender;
     int pitch = note.tag % NOTES_IN_OCTAVE;
     int oct   = note.tag / NOTES_IN_OCTAVE + MIN_OCTAVE;
-    [delegate changeNoteWithPitch:pitch octave:oct appendNote:addNote];
+    midinote n = pitch + oct * NOTES_IN_OCTAVE;
+    if([self containsNote:n])
+    {
+        [[delegate notes] removeObject:[NSNumber numberWithUnsignedInt:n]];
+        [delegate updateDisplayAtCurrentCell];
+    }
+    else
+        [delegate changeNoteWithPitch:pitch octave:oct appendNote:addNote];
     [delegate playNoteForDuration:NOTE_DURATION];
     addNote = false;
     [self boldNotes:[delegate notes]];

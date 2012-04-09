@@ -204,6 +204,11 @@
     [self changeNoteWithPitch:pitch octave:octave cellPos:currentCell appendNote:appendNote];
 }
 
+- (void)updateDisplayAtCurrentCell
+{
+    [[self cellAtPos:currentCell] setNeedsDisplay];
+}
+
 - (void)clearNoteForCell:(CellPos)cellPos
 {
     [[self cellAtPos:cellPos] clearNotes];

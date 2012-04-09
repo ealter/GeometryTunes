@@ -35,6 +35,8 @@ typedef CGPoint CellPos; //Represents a coordinate system for the grid (0,0) is 
 - (NSMutableArray*)notes;
 - (NSMutableArray*)notesAtCell:(CellPos)cellPos;
 
+- (void)updateDisplayAtCurrentCell;
+
 - (void)clearNote;
 - (void)clearNoteForCell:(CellPos)cellPos;
 
