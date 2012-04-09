@@ -14,6 +14,9 @@ typedef enum STATE
 @property (nonatomic, retain) IBOutlet GridView *grid; 
 @property (nonatomic, retain) IBOutlet UIButton *editPathBtn;
 @property (nonatomic, retain) IBOutlet UIButton *playPauseButton;
+@property (nonatomic, retain) IBOutlet UISlider *tempoSlider;  
+@property (nonatomic, retain) IBOutlet UILabel *tempoTextField;
+@property float tempo;
 
 //Playback methods
 - (IBAction)playPauseEvent:(id)sender;
@@ -21,6 +24,7 @@ typedef enum STATE
 - (IBAction)rewindEvent:(id)sender;
 - (IBAction)fastForwardEvent:(id)sender;
 - (void)setPlayStateToStopped;
+- (IBAction)sliderValueChanged:(id)sender;
 
 //Path methods
 - (IBAction)editPathEvent:(id)sender;
