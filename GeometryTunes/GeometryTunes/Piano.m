@@ -107,33 +107,20 @@
     }
     
     x = width - buttonWidth;
-    //Make the "Add note" and "Clear" buttons
-    for(int i = 0, heightOffset = 0; i < 2; heightOffset += height/2, i++)
-    {
-        UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(x, heightOffset, buttonWidth, height/2)];
-        [btn setBackgroundColor:[UIColor blueColor]];
-        SEL eventHandler;
-        btn.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
-        btn.titleLabel.textAlignment = UITextAlignmentCenter;
-        if(i == 0)
-        {
-            [btn setTitle:@"Add Note" forState:UIControlStateNormal];
-            eventHandler = @selector(noteAddEvent);
-        }
-        else
-        {
-            [btn setTitle:@"Clear" forState:UIControlStateNormal];
-            eventHandler = @selector(noteClearEvent);
-        }
-        btn.titleLabel.font = [UIFont systemFontOfSize:20];
-        btn.titleLabel.textColor = [UIColor blackColor];
-        [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
-        [btn.layer setBorderColor:[[UIColor blackColor] CGColor]];
-        [btn.layer setBorderWidth:2];
-        [btn addTarget:self action:eventHandler forControlEvents:UIControlEventTouchUpInside | UIControlEventTouchDown];
-        
-        [self addSubview:btn];
-    }
+    //Make "clear" button
+    UIButton *btn = [[UIButton alloc]initWithFrame:CGRectMake(x, 0, buttonWidth, height)];
+    [btn setBackgroundColor:[UIColor blueColor]];
+    btn.titleLabel.lineBreakMode = UILineBreakModeWordWrap;
+    btn.titleLabel.textAlignment = UITextAlignmentCenter;
+    [btn setTitle:@"Clear" forState:UIControlStateNormal];
+    btn.titleLabel.font = [UIFont systemFontOfSize:25];
+    btn.titleLabel.textColor = [UIColor blackColor];
+    [btn setTitleColor:[UIColor blackColor] forState:UIControlStateNormal];
+    [btn.layer setBorderColor:[[UIColor blackColor] CGColor]];
+    [btn.layer setBorderWidth:2];
+    [btn addTarget:self action:@selector(noteClearEvent) forControlEvents:UIControlEventTouchUpInside];
+    
+    [self addSubview:btn];
     
     [self boldNotes:[delegate notes]];
 }
