@@ -26,8 +26,6 @@
 
 - (void)gridCellHasChanged; //Means that the note the piano is editing has changed
 
-- (int)numWhiteNotes;
-
 - (void)boldNotes:(NSMutableArray*)notes;
 
 - (int)indexOfPitch:(unsigned)pitch octave:(unsigned)octave; //Returns the index in the notes array. If it is not in the array, it returns -1

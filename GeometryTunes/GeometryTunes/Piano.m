@@ -51,7 +51,7 @@
     int width = rect.size.width;
     int height = rect.size.height;
     //const float buttonRelativeSize = 1.3;
-    const float whiteKeyWidth = ((float)width) / ([self numWhiteNotes]+BUTTON_RELATIVE_SIZE);
+    const float whiteKeyWidth = ((float)width) / ([Piano whiteNotesFromPitch:0 numNotes:NOTES_IN_KEYBOARD] + BUTTON_RELATIVE_SIZE);
     
     float buttonWidth = whiteKeyWidth*BUTTON_RELATIVE_SIZE;
     float blackKeyWidth = whiteKeyWidth/2;
@@ -179,11 +179,6 @@
             numWhiteNotes++;
     }
     return numWhiteNotes;
-}
-
-- (int)numWhiteNotes
-{
-    return [Piano whiteNotesFromPitch:0 numNotes:NOTES_IN_KEYBOARD];
 }
 
 - (void)removeFromSuperview
