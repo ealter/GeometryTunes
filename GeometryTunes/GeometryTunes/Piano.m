@@ -1,6 +1,9 @@
 #import "Piano.h"
 #import <QuartzCore/QuartzCore.h>
 #import "scrollViewWithButtons.h"
+#import "noteTypes.h"
+#import "noteColor.h"
+#import "GridView.h"
 
 #define NOTES_IN_KEYBOARD NOTES_IN_OCTAVE
 #define INITIAL_PITCH 0
@@ -11,10 +14,6 @@
 #define NOTE_DURATION 1
 
 @implementation Piano
-
-#import "noteTypes.h"
-#import "noteColor.h"
-#import "GridView.h"
 
 @synthesize notePlayer, piano, contentOffset;
 
@@ -39,7 +38,6 @@
 
 - (id)sharedInit
 {
-    notes = [NSMutableArray arrayWithCapacity:(MAX_OCTAVE - MIN_OCTAVE + 1) * NOTES_IN_OCTAVE];
     notePlayer = [[NotePlayer alloc]init];
     [self setBackgroundColor:[UIColor whiteColor]];
     if(piano) {
@@ -105,7 +103,7 @@
             [piano sendSubviewToBack:note];
         [note.layer setBorderWidth:1];
         [note.layer setBorderColor:[[UIColor blackColor] CGColor]];
-        [notes addObject:note];
+        notes[i] = note;
     }
     
     x = width - buttonWidth;
@@ -204,16 +202,16 @@
 - (void)boldNotes:(NSMutableArray *)boldNotes
 {
     //First unbold all notes
-    for(UIButton *note in notes)
+    for(int i=0; i<TOTAL_NUM_KEYS; i++)
     {
-        [note.layer setBorderWidth:1];
+        [notes[i].layer setBorderWidth:1];
     }
     for(NSNumber *note in boldNotes)
     {
         midinote p = [note unsignedIntValue];
         int index = [self indexOfPitch:p % NOTES_IN_OCTAVE octave:p / NOTES_IN_OCTAVE - MIN_OCTAVE];
         if(index != -1)
-            [[[notes objectAtIndex:index] layer] setBorderWidth:4];
+            [[notes[index] layer] setBorderWidth:4];
     }
 
 }

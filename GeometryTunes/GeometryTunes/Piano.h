@@ -5,9 +5,11 @@
 @class GridView;
 @class scrollViewWithButtons;
 
+#define TOTAL_NUM_KEYS ((MAX_OCTAVE - MIN_OCTAVE + 1) * NOTES_IN_OCTAVE)
+
 @interface Piano : UIView
 {
-    NSMutableArray *notes;
+    UIButton *notes[TOTAL_NUM_KEYS];
     GridView *delegate;
     bool addNote; //True if the next note should be new
 }
