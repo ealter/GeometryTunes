@@ -79,7 +79,7 @@
 {
     [self setBackgroundColor:[UIColor whiteColor]];
     
-    numBoxes = CGPointMake(NUM_BOXES_X_INITIAL, NUM_BOXES_Y_INITIAL);
+    numBoxes = [GridView cellPosMakeX:NUM_BOXES_X_INITIAL y:NUM_BOXES_Y_INITIAL];
 
     [self setState:NORMAL_STATE];
     piano = NULL;
@@ -248,7 +248,7 @@
 {
     for (int y = 0; y < numBoxes.y; y++) {
         for (int x = 0; x < numBoxes.x; x++) {
-            GridCell *cell = [self cellAtPos:CGPointMake(x, y)];
+            GridCell *cell = [self cellAtPos:[GridView cellPosMakeX:x y:y]];
             [self addSubview:cell];
         }
     }
@@ -292,9 +292,8 @@
 
 - (CellPos) getBoxFromCoords:(CGPoint)pos 
 {
-    CellPos box = CGPointMake((int)(pos.x / [self boxWidth]), (int)(pos.y / [self boxHeight]));
-    if (box.x > numBoxes.x || box.y > numBoxes.y)
-        return CGPointMake(-1, -1);
+    CellPos box = [GridView cellPosMakeX:(pos.x / [self boxWidth]) y:(pos.y / [self boxHeight])];
+    assert(box.x <= numBoxes.x || box.y <= numBoxes.y);
     return box;
 }
 
@@ -315,6 +314,12 @@
 - (NSMutableArray*)notes
 {
     return [self notesAtCell:currentCell];
+}
+
++ (CellPos)cellPosMakeX:(unsigned int)x y:(unsigned int)y
+{
+    CellPos pos = {x,y};
+    return pos;
 }
 
 @end
