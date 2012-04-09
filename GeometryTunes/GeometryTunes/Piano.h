@@ -5,11 +5,12 @@
 @class GridView;
 @class scrollViewWithButtons;
 
+#define TOTAL_NUM_KEYS ((MAX_OCTAVE - MIN_OCTAVE + 1) * NOTES_IN_OCTAVE)
+
 @interface Piano : UIView
 {
-    NSMutableArray *notes;
+    UIButton *notes[TOTAL_NUM_KEYS];
     GridView *delegate;
-    bool addNote; //True if the next note should be new
 }
 
 @property (retain) NotePlayer *notePlayer;
@@ -20,19 +21,10 @@
 - (id)initWithFrame:(CGRect)frame delegate:(id)delagate;
 
 - (void)KeyClicked:(id)sender;
-- (void)KeyUnclicked:(id)sender;
 
-- (void)noteClearEvent;
-
-- (void)noteAddEvent;
 - (void)noteClearEvent;
 
 - (void)gridCellHasChanged; //Means that the note the piano is editing has changed
-
-- (void)removeFromSuperview;
-
-
-- (int)numWhiteNotes;
 
 - (void)boldNotes:(NSMutableArray*)notes;
 

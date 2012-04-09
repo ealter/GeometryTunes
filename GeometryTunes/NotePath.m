@@ -16,7 +16,7 @@ const static NSTimeInterval playbackSpeed = 1;
 {
     self = [super init];
     if (self) {
-        notes = [[NSMutableArray alloc] initWithCapacity:100];
+        notes = [[NSMutableArray alloc] init];
         path = nil;
         pulse = nil;
         playbackPosition = 0;
