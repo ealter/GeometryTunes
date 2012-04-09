@@ -11,7 +11,6 @@
 {
     UIButton *notes[TOTAL_NUM_KEYS];
     GridView *delegate;
-    bool addNote; //True if the next note should be new
 }
 
 @property (retain) NotePlayer *notePlayer;
@@ -23,7 +22,6 @@
 
 - (void)KeyClicked:(id)sender;
 
-- (void)noteAddEvent;
 - (void)noteClearEvent;
 
 - (void)gridCellHasChanged; //Means that the note the piano is editing has changed

@@ -77,7 +77,7 @@
     [self addSubview:piano];
     
     float x = 0;
-    for(int i=0; i<((MAX_OCTAVE - MIN_OCTAVE + 1) * NOTES_IN_OCTAVE); i++)
+    for(int i=0; i<TOTAL_NUM_KEYS; i++)
     {
         if([Piano isBlackNote:i])
         {
@@ -162,20 +162,14 @@
         [delegate updateDisplayAtCurrentCell];
     }
     else
-        [delegate changeNoteWithPitch:pitch octave:oct appendNote:addNote];
+        [delegate changeNoteWithPitch:pitch octave:oct appendNote:TRUE];
     [delegate playNoteForDuration:NOTE_DURATION];
-    addNote = false;
     [self boldNotes:[delegate notes]];
 }
 
 - (void)gridCellHasChanged
 {
     [self boldNotes:[delegate notes]];
-}
-
-- (void)noteAddEvent
-{
-    addNote = true;
 }
 
 - (void)noteClearEvent
@@ -186,7 +180,7 @@
 + (bool)isBlackNote:(int)pitch
 {
     int n = pitch % NOTES_IN_OCTAVE;
-    return n == 1 || n == 3 || n == 6 || n == 8 | n == 10;
+    return n == 1 || n == 3 || n == 6 || n == 8 || n == 10;
 }
 
 + (int)whiteNotesFromPitch:(unsigned int)pitch numNotes:(unsigned int)numNotes
@@ -209,7 +203,6 @@
 {
     contentOffset = [piano contentOffset];
     [super removeFromSuperview];
-    addNote = false;
 }
 
 - (int)indexOfPitch:(unsigned int)pitch octave:(unsigned int)octave
