@@ -8,6 +8,8 @@
 #define NUM_BOXES_X_INITIAL 8
 #define NUM_BOXES_Y_INITIAL 10
 
+#define DEFAULT_DURATION 1
+
 @implementation GridView
 
 @synthesize numBoxes;
@@ -160,6 +162,7 @@
                 [self changeCell:[self cellAtPos:currentCell] isBold:false];
                 currentCell = box;
                 [self changeCell:[self cellAtPos:currentCell] isBold:true];
+                [self playNoteForDuration:DEFAULT_DURATION];
                 [piano gridCellHasChanged];
             }
             
