@@ -302,9 +302,8 @@
 
 - (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse
 {
-    NSLog(@"GRID VIEW");
-    [pathView.path setDelegateGrid:self];
-    //if(piano) //Note: This assumes that the grid is blank if the piano doesn't exist
+    [pathView setDelegateGrid:self];
+    if(piano) //Note: This assumes that the grid is blank if the piano doesn't exist
         [pathView playWithSpeedFactor:factor notePlayer:[piano notePlayer]];
 }
 

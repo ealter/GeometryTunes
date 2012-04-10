@@ -88,11 +88,10 @@ static NSString *pauseBtnText = @"Pause";
     [playPauseButton setTitle:playBtnText forState:UIControlStateNormal];
 }
 
-- (IBAction) sliderValueChanged:(UISlider *)sender {  
+- (IBAction) sliderValueChanged:(UISlider *)sender {
     //NSLog(@"%.1f BPM", ([sender value])*60);
     tempoTextField.text = [NSString stringWithFormat:@"%.1f BPM", ([sender value])*60]; 
     tempo = 1 / [sender value];
-    
     
     if([playPauseButton.currentTitle compare:playBtnText]){ //If playing
         [grid setSpeedFactor:tempo];

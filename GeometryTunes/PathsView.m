@@ -1,4 +1,6 @@
 #import "PathsView.h"
+#import "NotePath.h"
+#import "GridView.h"
 
 @implementation PathsView
 
@@ -32,7 +34,6 @@
 
 - (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer*)player
 {
-    NSLog(@"PATH's VIEW");
     [path playWithSpeedFactor:factor notePlayer:player];
 }
 
@@ -49,6 +50,11 @@
 - (void)setSpeedFactor:(float)factor
 {
     [path setSpeedFactor:factor];
+}
+
+- (void)setDelegateGrid:(GridView *)grid
+{
+    [path setDelegateGrid:grid];
 }
 
 @end
