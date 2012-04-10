@@ -95,6 +95,12 @@
         }
         
         [note setBackgroundColor:[noteColor colorFromNoteWithPitch:i % NOTES_IN_OCTAVE octave:i/NOTES_IN_OCTAVE + MIN_OCTAVE]];
+        if([Piano isBlackNote:i])
+        {
+            note.layer.shadowColor = [UIColor blackColor].CGColor;
+            note.layer.shadowOpacity = 0.8;
+            note.layer.shadowRadius = 7;
+        }
         note.tag = i;
         [piano addSubview:note];
         [note addTarget:self action:@selector(KeyClicked:) forControlEvents:UIControlEventTouchUpInside];

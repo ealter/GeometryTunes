@@ -80,7 +80,8 @@
         midinote note = [[notes objectAtIndex:i] unsignedIntValue];
         UIColor *color = [noteColor colorFromNoteWithPitch:note % NOTES_IN_OCTAVE octave:note / NOTES_IN_OCTAVE];
         CGContextSetFillColorWithColor(context, [color CGColor]);
-        CGContextFillRect(context, CGRectMake(0, offset, [self bounds].size.width, rectHeight));
+        CGRect rect = CGRectMake(0, offset, [self bounds].size.width, rectHeight);
+        CGContextFillRect(context, rect);
     }
 }
 
