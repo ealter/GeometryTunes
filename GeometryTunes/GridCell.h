@@ -10,7 +10,7 @@
 - (void)setNotes:(NSMutableArray*)notes;
 - (void)setLastNote:(midinote)note; //Changes the last note. If there are no notes, it adds one
 - (void)addNote:(midinote)note; //Adds a note to the end of the array
-- (id)getNoteAtIndex:(int)i; //returns midinote type
+- (NSNumber*)getNoteAtIndex:(int)i; //returns midinote type
 - (void)clearNotes;
 
 @end
