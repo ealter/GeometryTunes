@@ -91,7 +91,6 @@ const static NSTimeInterval playbackSpeed = 1;
 
 - (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer *)p
 {
-    NSLog(@"NOTE PATH");
     assert(delegateGrid);
     [self setPlayer:p];
     

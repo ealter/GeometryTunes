@@ -6,7 +6,7 @@
 @synthesize grid;
 @synthesize editPathBtn;
 @synthesize playPauseButton;
-@synthesize tempoSlider, tempoTextField;
+@synthesize tempoTextField;
 @synthesize tempo;
 
 static NSString *playBtnText = @"Play";
