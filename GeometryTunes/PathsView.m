@@ -1,16 +1,18 @@
 #import "PathsView.h"
 #import "NotePath.h"
 #import "GridView.h"
+#import "ViewController.h"
 
 @implementation PathsView
 
-@synthesize path;
+@synthesize path, delegateGrid;
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
         path = [[NotePath alloc] init];
+        [path setPathView:self];
         [self setBackgroundColor:[UIColor clearColor]];
     }
     return self;
@@ -47,13 +49,19 @@
     [path stop];
 }
 
+- (void)playHasStopped:(NotePath *)path
+{
+    [[delegateGrid delegate] setPlayStateToStopped];
+}
+
 - (void)setSpeedFactor:(float)factor
 {
     [path setSpeedFactor:factor];
 }
 
-- (void)setDelegateGrid:(GridView *)grid
+- (void)setGrid:(GridView *)grid
 {
+    [self setDelegateGrid:grid];
     [path setDelegateGrid:grid];
 }
 

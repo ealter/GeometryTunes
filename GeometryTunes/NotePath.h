@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 @class NotePlayer;
 @class GridView;
+@class PathsView;
 
 @interface NotePath : NSObject
 {
@@ -15,6 +16,7 @@
 @property int playbackPosition; //The index in the NSMutableArray. 0 means that we are at the beginning of the path
 @property (retain) NotePlayer *player;
 @property (retain) GridView* delegateGrid;
+@property (retain) PathsView *pathView;
 
 @property (nonatomic) float speedFactor;
 

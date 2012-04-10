@@ -15,7 +15,6 @@ static NSString *pauseBtnText = @"Pause";
 - (IBAction)playPauseEvent:(id)sender
 {
     if([playPauseButton.currentTitle compare:playBtnText]){
-        NSLog(@"Time to pause");
         if(state == NORMAL_STATE)
             [grid pausePlayback];
         else
@@ -35,7 +34,7 @@ static NSString *pauseBtnText = @"Pause";
 {
     if(state == NORMAL_STATE){
         [grid stopPlayback];
-        [playPauseButton setTitle:playBtnText forState:UIControlStateNormal];
+        [self setPlayStateToStopped];
     }
     else
         [self changeStateToNormal:true];

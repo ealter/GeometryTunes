@@ -1,13 +1,14 @@
 #import "NotePath.h"
 #import "GridView.h"
 #import "NotePlayer.h"
+#import "PathsView.h"
 
 @implementation NotePath
 
 @synthesize notes;
 @synthesize playbackPosition;
 @synthesize player;
-@synthesize delegateGrid;
+@synthesize delegateGrid, pathView;
 @synthesize speedFactor;
 
 const static NSTimeInterval playbackSpeed = 1;
@@ -23,6 +24,7 @@ const static NSTimeInterval playbackSpeed = 1;
         playbackTimer = nil;
         delegateGrid = nil;
         shouldChangeSpeed = false;
+        pathView = nil;
     }
     return self;
 }
@@ -116,6 +118,7 @@ const static NSTimeInterval playbackSpeed = 1;
 {
     [self pause];
     playbackPosition = 0;
+    [pathView playHasStopped:self];
 }
 
 - (void)setSpeedFactor:(float)_speedFactor

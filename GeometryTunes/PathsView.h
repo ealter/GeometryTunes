@@ -7,6 +7,7 @@
 @interface PathsView : UIView
 
 @property (readonly, retain) NotePath *path;
+@property GridView *delegateGrid;
 
 - (void)addNoteWithPos:(CGPoint)pos;
 - (void)removeAllNotes;
@@ -16,6 +17,8 @@
 
 - (void)setSpeedFactor:(float)factor;
 
-- (void)setDelegateGrid:(GridView*)grid;
+- (void)setGrid:(GridView*)grid;
+
+- (void)playHasStopped:(NotePath *)path;
 
 @end
