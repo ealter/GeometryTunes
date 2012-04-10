@@ -74,23 +74,9 @@ const static NSTimeInterval playbackSpeed = 1;
 
 - (void)playNote:(NSTimer*)t
 {
-        CellPos coords = [delegateGrid getBoxFromCoords:[[notes objectAtIndex:playbackPosition] CGPointValue]];
-        [delegateGrid playNoteForCell:coords duration:[t timeInterval]];
-    
-        
-        //timerEventCount = 0;
-        
-        // pulse code begin (unfinished)
-    
-        /*CGPoint point = [[notes objectAtIndex:playbackPosition] CGPointValue];
-         pulse = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(point.x - 5, point.y - 5, 20, 20)];
-         pulse.lineWidth = 5;
-         [[UIColor redColor] setStroke];
-         [pulse stroke];*/
-    
-        // pulse code end
-        
-        playbackPosition++;
+    CellPos coords = [delegateGrid getBoxFromCoords:[[notes objectAtIndex:playbackPosition] CGPointValue]];
+    [delegateGrid playNoteForCell:coords duration:[t timeInterval]];
+    playbackPosition++;
     if(playbackPosition >= [notes count])
     {
         [self stop];
