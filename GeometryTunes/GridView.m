@@ -48,6 +48,7 @@
     else
         borderWidth = 2;
     [[cell layer] setBorderWidth:borderWidth];
+    [[cell layer] setCornerRadius:6.0f];
 }
 
 - (void)changeToNormalState
