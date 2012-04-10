@@ -12,7 +12,13 @@
     PathsView *pathView;
 }
 
-typedef CGPoint CellPos; //Represents a coordinate system for the grid (0,0) is top left. (1,0) is one to the right of that
+//typedef CGPoint CellPos; //Represents a coordinate system for the grid (0,0) is top left. (1,0) is one to the right of that
+typedef struct CellPos {
+    unsigned x;
+    unsigned y;
+} CellPos;
+
++ (CellPos)cellPosMakeX:(unsigned)x y:(unsigned) y;
 
 @property (nonatomic) CellPos numBoxes;
 
@@ -35,6 +41,8 @@ typedef CGPoint CellPos; //Represents a coordinate system for the grid (0,0) is 
 - (NSMutableArray*)notes;
 - (NSMutableArray*)notesAtCell:(CellPos)cellPos;
 
+- (void)updateDisplayAtCurrentCell;
+
 - (void)clearNote;
 - (void)clearNoteForCell:(CellPos)cellPos;
 
@@ -49,6 +57,7 @@ typedef CGPoint CellPos; //Represents a coordinate system for the grid (0,0) is 
 - (CellPos)getBoxFromCoords:(CGPoint)pos;
 
 - (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse;
+- (void)setSpeedFactor:(float)factor;
 - (void)pausePlayback;
 - (void)stopPlayback;
 

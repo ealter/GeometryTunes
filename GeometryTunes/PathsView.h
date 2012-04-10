@@ -1,6 +1,8 @@
 #import <UIKit/UIKit.h>
-#import "NotePath.h"
+
+@class NotePath;
 @class NotePlayer;
+@class GridView;
 
 @interface PathsView : UIView
 
@@ -11,4 +13,9 @@
 - (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer*)player;
 - (void)pause;
 - (void)stop;
+
+- (void)setSpeedFactor:(float)factor;
+
+- (void)setDelegateGrid:(GridView*)grid;
+
 @end

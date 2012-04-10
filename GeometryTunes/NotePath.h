@@ -7,6 +7,7 @@
     UIBezierPath* path;
     UIBezierPath* pulse;
     NSTimer *playbackTimer;
+    bool shouldChangeSpeed;
 }
 
  //Contains NSValue representations of CGPoints of path vertices
@@ -14,6 +15,8 @@
 @property int playbackPosition; //The index in the NSMutableArray. 0 means that we are at the beginning of the path
 @property (retain) NotePlayer *player;
 @property (retain) GridView* delegateGrid;
+
+@property (nonatomic) float speedFactor;
 
 - (id)init;
 - (void)addNoteWithPos:(CGPoint)pos;

@@ -1,4 +1,6 @@
 #import "PathsView.h"
+#import "NotePath.h"
+#import "GridView.h"
 
 @implementation PathsView
 
@@ -43,6 +45,16 @@
 - (void)stop
 {
     [path stop];
+}
+
+- (void)setSpeedFactor:(float)factor
+{
+    [path setSpeedFactor:factor];
+}
+
+- (void)setDelegateGrid:(GridView *)grid
+{
+    [path setDelegateGrid:grid];
 }
 
 @end
