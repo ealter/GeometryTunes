@@ -32,6 +32,7 @@
 
 - (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer*)player
 {
+    NSLog(@"PATH's VIEW");
     [path playWithSpeedFactor:factor notePlayer:player];
 }
 
@@ -43,6 +44,11 @@
 - (void)stop
 {
     [path stop];
+}
+
+- (void)setSpeedFactor:(float)factor
+{
+    [path setSpeedFactor:factor];
 }
 
 @end

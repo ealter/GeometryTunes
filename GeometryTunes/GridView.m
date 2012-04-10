@@ -8,6 +8,8 @@
 #define NUM_BOXES_X_INITIAL 8
 #define NUM_BOXES_Y_INITIAL 10
 
+#define DEFAULT_DURATION 1
+
 @implementation GridView
 
 @synthesize numBoxes;
@@ -79,7 +81,7 @@
 {
     [self setBackgroundColor:[UIColor whiteColor]];
     
-    numBoxes = CGPointMake(NUM_BOXES_X_INITIAL, NUM_BOXES_Y_INITIAL);
+    numBoxes = [GridView cellPosMakeX:NUM_BOXES_X_INITIAL y:NUM_BOXES_Y_INITIAL];
 
     [self setState:NORMAL_STATE];
     piano = NULL;
@@ -160,6 +162,7 @@
                 [self changeCell:[self cellAtPos:currentCell] isBold:false];
                 currentCell = box;
                 [self changeCell:[self cellAtPos:currentCell] isBold:true];
+                [self playNoteForDuration:DEFAULT_DURATION];
                 [piano gridCellHasChanged];
             }
             
@@ -204,6 +207,11 @@
     [self changeNoteWithPitch:pitch octave:octave cellPos:currentCell appendNote:appendNote];
 }
 
+- (void)updateDisplayAtCurrentCell
+{
+    [[self cellAtPos:currentCell] setNeedsDisplay];
+}
+
 - (void)clearNoteForCell:(CellPos)cellPos
 {
     [[self cellAtPos:cellPos] clearNotes];
@@ -243,7 +251,7 @@
 {
     for (int y = 0; y < numBoxes.y; y++) {
         for (int x = 0; x < numBoxes.x; x++) {
-            GridCell *cell = [self cellAtPos:CGPointMake(x, y)];
+            GridCell *cell = [self cellAtPos:[GridView cellPosMakeX:x y:y]];
             [self addSubview:cell];
         }
     }
@@ -287,18 +295,16 @@
 
 - (CellPos) getBoxFromCoords:(CGPoint)pos 
 {
-    CellPos box = CGPointMake((int)(pos.x / [self boxWidth]), (int)(pos.y / [self boxHeight]));
-    if (box.x > numBoxes.x || box.y > numBoxes.y)
-        return CGPointMake(-1, -1);
+    CellPos box = [GridView cellPosMakeX:(pos.x / [self boxWidth]) y:(pos.y / [self boxHeight])];
+    assert(box.x <= numBoxes.x || box.y <= numBoxes.y);
     return box;
 }
 
 - (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse
 {
+    NSLog(@"GRID VIEW");
     [pathView.path setDelegateGrid:self];
-    if(reverse)
-        factor = -factor;
-    if(piano) //Note: This assumes that the grid is blank if the piano doesn't exist
+    //if(piano) //Note: This assumes that the grid is blank if the piano doesn't exist
         [pathView playWithSpeedFactor:factor notePlayer:[piano notePlayer]];
 }
 
@@ -310,6 +316,18 @@
 - (NSMutableArray*)notes
 {
     return [self notesAtCell:currentCell];
+}
+
+
+- (void)setSpeedFactor:(float)factor
+{
+    [pathView setSpeedFactor:factor];
+}
+
++ (CellPos)cellPosMakeX:(unsigned int)x y:(unsigned int)y
+{
+    CellPos pos = {x,y};
+    return pos;
 }
 
 @end

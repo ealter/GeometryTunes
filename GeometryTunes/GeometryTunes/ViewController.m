@@ -6,6 +6,8 @@
 @synthesize grid;
 @synthesize editPathBtn;
 @synthesize playPauseButton;
+@synthesize tempoSlider, tempoTextField;
+@synthesize tempo;
 
 static NSString *playBtnText = @"Play";
 static NSString *pauseBtnText = @"Pause";
@@ -23,9 +25,9 @@ static NSString *pauseBtnText = @"Pause";
     else{
         if(state != NORMAL_STATE)
             [self changeStateToNormal:true];
-        [grid playPathWithSpeedFactor:1 reversed:false];
+        [grid playPathWithSpeedFactor:tempo reversed:false];
         
-        [sender setTitle:pauseBtnText forState:UIControlStateNormal];
+        [playPauseButton setTitle:pauseBtnText forState:UIControlStateNormal];
     }
 }
 
@@ -86,6 +88,23 @@ static NSString *pauseBtnText = @"Pause";
     [playPauseButton setTitle:playBtnText forState:UIControlStateNormal];
 }
 
+- (IBAction) sliderValueChanged:(UISlider *)sender {  
+    //NSLog(@"%.1f BPM", ([sender value])*60);
+    tempoTextField.text = [NSString stringWithFormat:@"%.1f BPM", ([sender value])*60]; 
+    tempo = 1 / [sender value];
+    
+    
+    if([playPauseButton.currentTitle compare:playBtnText]){ //If playing
+        [grid setSpeedFactor:tempo];
+    }
+}
+
+- (void)addWoodBackground
+{
+    UIColor *background = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"woodBackground.jpg"]];
+    self.view.backgroundColor = background;
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
@@ -97,8 +116,10 @@ static NSString *pauseBtnText = @"Pause";
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    tempo = 1;
     state = NORMAL_STATE;
     [grid setDelegate:self];
+    [self addWoodBackground];
 }
 
 - (void)viewDidUnload
@@ -132,6 +153,7 @@ static NSString *pauseBtnText = @"Pause";
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
+    if(interfaceOrientation == UIInterfaceOrientationPortrait) return YES;
     return NO;
 }
 

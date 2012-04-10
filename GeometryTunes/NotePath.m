@@ -8,19 +8,21 @@
 @synthesize playbackPosition;
 @synthesize player;
 @synthesize delegateGrid;
+@synthesize speedFactor;
 
-const static NSTimeInterval playbackSpeed = 0.25;
+const static NSTimeInterval playbackSpeed = 1;
 
 - (id)init 
 {
     self = [super init];
     if (self) {
-        notes = [[NSMutableArray alloc] initWithCapacity:100];
+        notes = [[NSMutableArray alloc] init];
         path = nil;
         pulse = nil;
         playbackPosition = 0;
         playbackTimer = nil;
         delegateGrid = nil;
+        shouldChangeSpeed = false;
     }
     return self;
 }
@@ -72,51 +74,49 @@ const static NSTimeInterval playbackSpeed = 0.25;
 
 - (void)playNote:(NSTimer*)t
 {
-    NSNumber *r = t.userInfo;
-    bool reverse = [r boolValue];
-    if((reverse && playbackPosition < 0) || playbackPosition == [notes count])
-    {
-        [delegateGrid stopPlayback];
-        return;
-    }
-    CellPos coords = [delegateGrid getBoxFromCoords:[[notes objectAtIndex:playbackPosition] CGPointValue]];
-    [delegateGrid playNoteForCell:coords duration:[t timeInterval]];
+        CellPos coords = [delegateGrid getBoxFromCoords:[[notes objectAtIndex:playbackPosition] CGPointValue]];
+        [delegateGrid playNoteForCell:coords duration:[t timeInterval]];
     
-    // pulse code begin (unfinished)
+        
+        //timerEventCount = 0;
+        
+        // pulse code begin (unfinished)
     
-    /*CGPoint point = [[notes objectAtIndex:playbackPosition] CGPointValue];
-    pulse = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(point.x - 5, point.y - 5, 20, 20)];
-    pulse.lineWidth = 5;
-    [[UIColor redColor] setStroke];
-    [pulse stroke];*/
+        /*CGPoint point = [[notes objectAtIndex:playbackPosition] CGPointValue];
+         pulse = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(point.x - 5, point.y - 5, 20, 20)];
+         pulse.lineWidth = 5;
+         [[UIColor redColor] setStroke];
+         [pulse stroke];*/
     
-    // pulse code end
-    
-    if(reverse)
-        playbackPosition--;
-    else
+        // pulse code end
+        
         playbackPosition++;
+    if(playbackPosition >= [notes count])
+    {
+        [self stop];
+    }
+    if(shouldChangeSpeed)
+    {
+        shouldChangeSpeed = false;
+        [t invalidate];
+        playbackTimer = [NSTimer scheduledTimerWithTimeInterval:speedFactor * playbackSpeed target:self selector:@selector(playNote:) userInfo:nil repeats:YES];
+    }
 }
 
 - (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer *)p
 {
+    NSLog(@"NOTE PATH");
     assert(delegateGrid);
     [self setPlayer:p];
-    bool reverse = false;
-    if(factor < 0)
-    {
-        factor = -factor;
-        reverse = true;
-    }
-    NSTimeInterval speed = playbackSpeed * factor;
-    //if(reverse)
-        //playbackPosition = [notes count] - 1; Commented out for reason: Causes Rew to start from end every time
-    if(reverse)
-        playbackPosition = playbackPosition - 1;
-    NSNumber *r = [NSNumber numberWithBool:reverse];
+    
+    shouldChangeSpeed = false;
+    
+    //NSTimeInterval speed = playbackSpeed * factor;
+    speedFactor = factor;
+    
     if(playbackTimer)
         [playbackTimer invalidate];
-    playbackTimer = [NSTimer scheduledTimerWithTimeInterval:speed target:self selector:@selector(playNote:) userInfo:r repeats:YES];
+    playbackTimer = [NSTimer scheduledTimerWithTimeInterval:speedFactor * playbackSpeed target:self selector:@selector(playNote:) userInfo:nil repeats:YES];
 }
 
 - (void)pause
@@ -131,6 +131,12 @@ const static NSTimeInterval playbackSpeed = 0.25;
 {
     [self pause];
     playbackPosition = 0;
+}
+
+- (void)setSpeedFactor:(float)_speedFactor
+{
+    speedFactor = _speedFactor;
+    shouldChangeSpeed = true;
 }
 
 @end

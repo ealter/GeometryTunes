@@ -33,15 +33,7 @@
 - (void)setNotes:(NSMutableArray *)n
 {
     notes = n;
-    if([notes count] >= 1)
-    {
-        midinote note = [[notes objectAtIndex:0] intValue];
-        [self setBackgroundColor:[noteColor colorFromNoteWithPitch:note % NOTES_IN_OCTAVE octave:note / NOTES_IN_OCTAVE]];
-    }
-    else {
-        [self setBackgroundColor:[UIColor whiteColor]];
-    }
-    [self.layer setNeedsDisplay];
+    [self setNeedsDisplay];
 }
 
 - (NSMutableArray*)notes
@@ -82,8 +74,8 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     
     int numNotes = [notes count];
-    float rectHeight = [self bounds].size.height / numNotes;
-    for(int i = 1, offset = rectHeight; i < numNotes; i++, offset += rectHeight)
+    float rectHeight = rect.size.height / numNotes;
+    for(int i = 0, offset = 0; i < numNotes; i++, offset += rectHeight)
     {
         midinote note = [[notes objectAtIndex:i] unsignedIntValue];
         UIColor *color = [noteColor colorFromNoteWithPitch:note % NOTES_IN_OCTAVE octave:note / NOTES_IN_OCTAVE];
