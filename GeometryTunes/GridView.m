@@ -79,7 +79,7 @@
 
 -(void)sharedInit
 {
-    [self setBackgroundColor:[UIColor whiteColor]];
+    [self setBackgroundColor:[UIColor blackColor]];
     
     numBoxes = [GridView cellPosMakeX:NUM_BOXES_X_INITIAL y:NUM_BOXES_Y_INITIAL];
 
@@ -98,7 +98,7 @@
         {
             CGRect cellBounds = CGRectMake(i * boxWidth, j * boxHeight, boxWidth, boxHeight);
             GridCell *cell = [[GridCell alloc]initWithFrame:cellBounds];
-            [[cell layer] setBorderColor:[[UIColor blackColor] CGColor]];
+            [[cell layer] setBorderColor:[[UIColor grayColor] CGColor]];
             [self changeCell:cell isBold:false];
             [row addObject:cell];
         }
