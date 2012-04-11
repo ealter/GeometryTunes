@@ -155,4 +155,13 @@ const static NSTimeInterval playbackSpeed = 1;
     return minIndex;
 }
 
+- (void)setPlaybackPosition:(int)_playbackPosition
+{
+    playbackPosition = _playbackPosition;
+    if(playbackTimer && [playbackTimer isValid])
+    {
+        [self playWithSpeedFactor:[playbackTimer timeInterval] notePlayer:player];
+    }
+}
+
 @end
