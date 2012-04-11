@@ -107,6 +107,7 @@ const static NSTimeInterval playbackSpeed = 1;
     if(playbackTimer)
         [playbackTimer invalidate];
     playbackTimer = [NSTimer scheduledTimerWithTimeInterval:speedFactor * playbackSpeed target:self selector:@selector(playNote:) userInfo:nil repeats:YES];
+    [playbackTimer fire];
 }
 
 - (void)pause
