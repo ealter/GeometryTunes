@@ -130,4 +130,29 @@ const static NSTimeInterval playbackSpeed = 1;
     shouldChangeSpeed = true;
 }
 
+- (float)distanceFrom:(CGPoint)pos noteIndex:(int)i
+{
+    CGPoint notePos = [[notes objectAtIndex:i] CGPointValue];
+    float deltaX = notePos.x - pos.x;
+    float deltaY = notePos.y - pos.y;
+    return deltaX*deltaX + deltaY*deltaY;
+}
+
+- (int)closestNodeFrom:(CGPoint)pos
+{
+    int numNotes = [notes count];
+    int minIndex = 0;
+    float minDistance = FLT_MAX;
+    for(int i = 0; i<numNotes; i++)
+    {
+        float dist = [self distanceFrom:pos noteIndex:i];
+        if(dist < minDistance)
+        {
+            minDistance = dist;
+            minIndex = i;
+        }
+    }
+    return minIndex;
+}
+
 @end

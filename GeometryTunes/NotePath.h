@@ -29,4 +29,7 @@
 - (void)pause;
 - (void)stop;
 
+- (float)distanceFrom:(CGPoint)pos noteIndex:(int)i; //Returns the sum of the squares
+- (int)closestNodeFrom:(CGPoint)pos; //returns the index in the note array of the closest node to that point
+
 @end

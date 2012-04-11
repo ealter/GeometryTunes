@@ -8,6 +8,7 @@
 
 @synthesize path, delegateGrid, pulseCircle;
 @synthesize tapGestureRecognizer;
+@synthesize tapDistanceTolerance;
 
 - (void)initPulseCircle
 {
@@ -34,8 +35,23 @@
         [self setBackgroundColor:[UIColor clearColor]];
         
         [self initPulseCircle];
+        
+        tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
+        [tapGestureRecognizer setEnabled:FALSE];
+        [self addGestureRecognizer:tapGestureRecognizer];
+        tapDistanceTolerance = 90 * 90;
     }
     return self;
+}
+
+- (void)handleTap:(UITapGestureRecognizer *)sender
+{
+    CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
+    int closestNode = [path closestNodeFrom:pos];
+    if([path distanceFrom:pos noteIndex:closestNode] <= tapDistanceTolerance)
+    {
+        [path setPlaybackPosition:closestNode];
+    }
 }
 
 - (void)drawRect:(CGRect)rect
@@ -56,21 +72,25 @@
 
 - (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer*)player
 {
+    [tapGestureRecognizer setEnabled:TRUE];
     [path playWithSpeedFactor:factor notePlayer:player];
 }
 
 - (void)pause
 {
+    [tapGestureRecognizer setEnabled:FALSE];
     [path pause];
 }
 
 - (void)stop
 {
+    [tapGestureRecognizer setEnabled:FALSE];
     [path stop];
 }
 
 - (void)playHasStopped:(NotePath *)path
 {
+    [tapGestureRecognizer setEnabled:FALSE];
     [[delegateGrid delegate] setPlayStateToStopped];
 }
 
@@ -83,6 +103,7 @@
 {
     [self setDelegateGrid:grid];
     [path setDelegateGrid:grid];
+    tapDistanceTolerance = [grid boxWidth] * [grid boxHeight];
 }
 
 - (void)pulseAt:(CGPoint)pos
