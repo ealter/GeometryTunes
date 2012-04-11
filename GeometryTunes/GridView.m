@@ -310,7 +310,6 @@
     return [self notesAtCell:currentCell];
 }
 
-
 - (void)setSpeedFactor:(float)factor
 {
     [pathView setSpeedFactor:factor];

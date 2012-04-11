@@ -38,9 +38,12 @@ static unsigned midiNote(unsigned pitch, unsigned octave)
 
 - (void)stopAllNotes
 {
-    for(int i=0; i<(MAX_OCTAVE - MIN_OCTAVE + 1) * NOTES_IN_OCTAVE; i++)
+    for(int octave = MIN_OCTAVE; octave <= MAX_OCTAVE; octave++)
     {
-        //TODO: implement this
+        for(int pitch = 0; pitch < NOTES_IN_OCTAVE; pitch++)
+        {
+            [self noteOff:[NSNumber numberWithInt:midiNote(pitch, octave)]];
+        }
     }
 }
 
