@@ -9,6 +9,7 @@
 @property (readonly, retain) NotePath *path;
 @property (retain) GridView *delegateGrid;
 @property (retain) UIImage *pulseCircle;
+@property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
 
 - (void)addNoteWithPos:(CGPoint)pos;
 - (void)removeAllNotes;

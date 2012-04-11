@@ -7,6 +7,23 @@
 @implementation PathsView
 
 @synthesize path, delegateGrid, pulseCircle;
+@synthesize tapGestureRecognizer;
+
+- (void)initPulseCircle
+{
+    CGFloat radius = 50;
+    CGSize size = CGSizeMake(radius*2,radius*2);
+    CGPoint centre = CGPointMake(radius,radius);
+    
+    UIGraphicsBeginImageContextWithOptions(size,NO, 0.0);
+    UIBezierPath * solidPath = [UIBezierPath bezierPathWithArcCenter:centre radius:radius startAngle:0 endAngle:2 * M_PI clockwise:YES];
+    [solidPath closePath];
+    [[UIColor whiteColor] set];
+    [solidPath fill];
+    
+    pulseCircle = UIGraphicsGetImageFromCurrentImageContext();
+    UIGraphicsEndImageContext();
+}
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -16,19 +33,7 @@
         [path setPathView:self];
         [self setBackgroundColor:[UIColor clearColor]];
         
-        //Initialize the pulse circle
-        CGFloat radius = 50;
-        CGSize size = CGSizeMake(radius*2,radius*2);
-        CGPoint centre = CGPointMake(radius,radius);
-        
-        UIGraphicsBeginImageContextWithOptions(size,NO, 0.0);
-        UIBezierPath * solidPath = [UIBezierPath bezierPathWithArcCenter:centre radius:radius startAngle:0 endAngle:2 * M_PI clockwise:YES];
-        [solidPath closePath];
-        [[UIColor whiteColor] set];
-        [solidPath fill];
-        
-        pulseCircle = UIGraphicsGetImageFromCurrentImageContext();
-        UIGraphicsEndImageContext();
+        [self initPulseCircle];
     }
     return self;
 }

@@ -17,7 +17,6 @@
 @synthesize currentCell;
 
 @synthesize tapGestureRecognizer;
-@synthesize tapButtonRecognizer;
 @synthesize swipeGestureRecognizer;
 
 @synthesize delegate;
