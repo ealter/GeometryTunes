@@ -1,13 +1,14 @@
 #import "NotePath.h"
 #import "GridView.h"
 #import "NotePlayer.h"
+#import "PathsView.h"
 
 @implementation NotePath
 
 @synthesize notes;
 @synthesize playbackPosition;
 @synthesize player;
-@synthesize delegateGrid;
+@synthesize delegateGrid, pathView;
 @synthesize speedFactor;
 
 const static NSTimeInterval playbackSpeed = 1;
@@ -23,6 +24,7 @@ const static NSTimeInterval playbackSpeed = 1;
         playbackTimer = nil;
         delegateGrid = nil;
         shouldChangeSpeed = false;
+        pathView = nil;
     }
     return self;
 }
@@ -75,14 +77,16 @@ const static NSTimeInterval playbackSpeed = 1;
 
 - (void)playNote:(NSTimer*)t
 {
-    CellPos coords = [delegateGrid getBoxFromCoords:[[notes objectAtIndex:playbackPosition] CGPointValue]];
+    CGPoint pos = [[notes objectAtIndex:playbackPosition] CGPointValue];
+    CellPos coords = [delegateGrid getBoxFromCoords:pos];
     [delegateGrid playNoteForCell:coords duration:[t timeInterval]];
+    [pathView pulseAt:pos];
     playbackPosition++;
     if(playbackPosition >= [notes count])
     {
         [self stop];
     }
-    if(shouldChangeSpeed)
+    else if(shouldChangeSpeed)
     {
         shouldChangeSpeed = false;
         [t invalidate];
@@ -92,6 +96,11 @@ const static NSTimeInterval playbackSpeed = 1;
 
 - (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer *)p
 {
+    if([notes count] < 1)
+    {
+        [self performSelector:@selector(stop) withObject:nil afterDelay:0];
+        return;
+    }
     assert(delegateGrid);
     [self setPlayer:p];
     
@@ -103,6 +112,7 @@ const static NSTimeInterval playbackSpeed = 1;
     if(playbackTimer)
         [playbackTimer invalidate];
     playbackTimer = [NSTimer scheduledTimerWithTimeInterval:speedFactor * playbackSpeed target:self selector:@selector(playNote:) userInfo:nil repeats:YES];
+    [playbackTimer fire];
 }
 
 - (void)pause
@@ -117,12 +127,48 @@ const static NSTimeInterval playbackSpeed = 1;
 {
     [self pause];
     playbackPosition = 0;
+    shouldChangeSpeed = false;
+    [pathView playHasStopped:self];
 }
 
 - (void)setSpeedFactor:(float)_speedFactor
 {
     speedFactor = _speedFactor;
     shouldChangeSpeed = true;
+}
+
+- (float)distanceFrom:(CGPoint)pos noteIndex:(int)i
+{
+    CGPoint notePos = [[notes objectAtIndex:i] CGPointValue];
+    float deltaX = notePos.x - pos.x;
+    float deltaY = notePos.y - pos.y;
+    return deltaX*deltaX + deltaY*deltaY;
+}
+
+- (int)closestNodeFrom:(CGPoint)pos
+{
+    int numNotes = [notes count];
+    int minIndex = 0;
+    float minDistance = FLT_MAX;
+    for(int i = 0; i<numNotes; i++)
+    {
+        float dist = [self distanceFrom:pos noteIndex:i];
+        if(dist < minDistance)
+        {
+            minDistance = dist;
+            minIndex = i;
+        }
+    }
+    return minIndex;
+}
+
+- (void)setPlaybackPosition:(int)_playbackPosition
+{
+    playbackPosition = _playbackPosition;
+    if(playbackTimer && [playbackTimer isValid])
+    {
+        [self playWithSpeedFactor:[playbackTimer timeInterval] notePlayer:player];
+    }
 }
 
 @end

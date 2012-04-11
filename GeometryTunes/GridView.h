@@ -27,7 +27,6 @@ typedef struct CellPos {
 @property (nonatomic) CellPos currentCell; //Used when editing a square
 
 @property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
-@property (nonatomic, retain) UITapGestureRecognizer *tapButtonRecognizer; //Not used anymore?
 @property (nonatomic, retain) UISwipeGestureRecognizer *swipeGestureRecognizer;
 
 - (void)sharedInit;

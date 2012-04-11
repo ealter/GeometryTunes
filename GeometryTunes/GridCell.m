@@ -58,7 +58,7 @@
     [self setNotes:notes];
 }
 
-- (id)getNoteAtIndex:(int)i
+- (NSNumber*)getNoteAtIndex:(int)i
 {
     return [notes objectAtIndex:i];
 }

@@ -17,7 +17,6 @@
 @synthesize currentCell;
 
 @synthesize tapGestureRecognizer;
-@synthesize tapButtonRecognizer;
 @synthesize swipeGestureRecognizer;
 
 @synthesize delegate;
@@ -39,16 +38,20 @@
         [delegate setState:state];
 }
 
+- (void)draw
+{
+    [self drawGrid];
+    [self addSubview:pathView];
+    [self bringSubviewToFront:pathView];
+}
+
 - (void)changeCell:(GridCell *)cell isBold:(bool)isBold
 {
     assert(cell);
-    float borderWidth;
     if(isBold)
-        borderWidth = 8;
+        [cell.layer setBorderWidth:8];
     else
-        borderWidth = 2;
-    [[cell layer] setBorderWidth:borderWidth];
-    [[cell layer] setCornerRadius:6.0f];
+        [cell.layer setBorderWidth:2];
 }
 
 - (void)changeToNormalState
@@ -101,6 +104,7 @@
             GridCell *cell = [[GridCell alloc]initWithFrame:cellBounds];
             [[cell layer] setBorderColor:[[UIColor grayColor] CGColor]];
             [self changeCell:cell isBold:false];
+            [cell.layer setCornerRadius:6.0f];
             [row addObject:cell];
         }
         [cells addObject:row];
@@ -108,21 +112,17 @@
     
     pathView = [[PathsView alloc]initWithFrame:[self bounds]];
     
-    // Initialize tap gesture recognizer
-    tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)]; 
-    
-    // The number of taps in order for gesture to be recognized
+    tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
     tapGestureRecognizer.numberOfTapsRequired = 1;
+    [tapGestureRecognizer setCancelsTouchesInView:false];
     
     swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipe:)];
-    
     swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp | UISwipeGestureRecognizerDirectionDown;
     swipeGestureRecognizer.numberOfTouchesRequired = 1; //TODO: maybe change to 2?
     
-    // Add gesture recognizer to the view
-    [tapGestureRecognizer setCancelsTouchesInView:false];
     [self addGestureRecognizer:tapGestureRecognizer];
     [self addGestureRecognizer:swipeGestureRecognizer];
+    [self draw];
 }
 
 -(void) handleTap:(UITapGestureRecognizer *)sender
@@ -155,9 +155,6 @@
             break;
             
         case PIANO_STATE:
-            //if(!CGRectContainsPoint([piano frame], pos)) //No need to double click
-                //[self changeToNormalState];
-            
             if(!CGRectContainsPoint([piano frame], pos))
             {
                 [self changeCell:[self cellAtPos:currentCell] isBold:false];
@@ -287,13 +284,6 @@
     }
 }
 
-- (void)drawRect:(CGRect)rect
-{
-    [self drawGrid];
-    [self addSubview:pathView];
-    [self bringSubviewToFront:pathView];
-}
-
 - (CellPos) getBoxFromCoords:(CGPoint)pos 
 {
     CellPos box = [GridView cellPosMakeX:(pos.x / [self boxWidth]) y:(pos.y / [self boxHeight])];
@@ -303,9 +293,11 @@
 
 - (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse
 {
-    [pathView setDelegateGrid:self];
+    [pathView setGrid:self];
     if(piano) //Note: This assumes that the grid is blank if the piano doesn't exist
         [pathView playWithSpeedFactor:factor notePlayer:[piano notePlayer]];
+    else
+        [delegate performSelector:@selector(setPlayStateToStopped) withObject:nil afterDelay:0];
 }
 
 - (NSMutableArray*)notesAtCell:(CellPos)cellPos
@@ -317,7 +309,6 @@
 {
     return [self notesAtCell:currentCell];
 }
-
 
 - (void)setSpeedFactor:(float)factor
 {

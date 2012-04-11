@@ -1,6 +1,7 @@
 #import <Foundation/Foundation.h>
 @class NotePlayer;
 @class GridView;
+@class PathsView;
 
 @interface NotePath : NSObject
 {
@@ -12,9 +13,10 @@
 
  //Contains NSValue representations of CGPoints of path vertices
 @property (readonly, retain) NSMutableArray *notes;
-@property int playbackPosition; //The index in the NSMutableArray. 0 means that we are at the beginning of the path
+@property (nonatomic) int playbackPosition; //The index in the NSMutableArray. 0 means that we are at the beginning of the path
 @property (retain) NotePlayer *player;
 @property (retain) GridView* delegateGrid;
+@property (retain) PathsView *pathView;
 
 @property (nonatomic) float speedFactor;
 
@@ -26,5 +28,8 @@
 - (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer*)player;
 - (void)pause;
 - (void)stop;
+
+- (float)distanceFrom:(CGPoint)pos noteIndex:(int)i; //Returns the sum of the squares
+- (int)closestNodeFrom:(CGPoint)pos; //returns the index in the note array of the closest node to that point
 
 @end
