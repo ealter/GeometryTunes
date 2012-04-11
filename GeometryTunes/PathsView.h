@@ -6,7 +6,7 @@
 
 @interface PathsView : UIView
 
-@property (retain) NSDictionary *paths;
+@property (retain) NSMutableDictionary *paths;
 @property (retain) GridView *delegateGrid;
 @property (retain) UIImage *pulseCircle;
 @property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;

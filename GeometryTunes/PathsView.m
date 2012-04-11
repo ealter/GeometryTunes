@@ -36,7 +36,7 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        paths = [[NSDictionary alloc]init];
+        paths = [[NSMutableDictionary alloc]init];
         currentPathName = nil;
         [self setBackgroundColor:[UIColor clearColor]];
         
@@ -52,11 +52,13 @@
 
 - (void)addPath:(NSString *)pathName
 {
+    assert(pathName);
     NotePath *path = [paths objectForKey:pathName];
     if(path == NULL)
     {
         path = [[NotePath alloc]init];
         [path setPathView:self];
+        assert(paths);
         [paths setValue:path forKey:pathName];
     }
     [self setCurrentPathName:pathName];

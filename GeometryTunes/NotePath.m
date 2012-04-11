@@ -43,7 +43,6 @@ const static NSTimeInterval playbackSpeed = 1;
 {
     [notes removeAllObjects];
     [path removeAllPoints];
-    
 }
 
 - (void)buildPath
