@@ -7,8 +7,8 @@
 @interface PathsView : UIView
 
 @property (readonly, retain) NotePath *path;
-@property GridView *delegateGrid;
-@property UIImage *pulseCircle;
+@property (retain) GridView *delegateGrid;
+@property (retain) UIImage *pulseCircle;
 
 - (void)addNoteWithPos:(CGPoint)pos;
 - (void)removeAllNotes;
