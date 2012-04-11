@@ -6,7 +6,7 @@
 @implementation NotePath
 
 @synthesize notes;
-@synthesize playbackPosition;
+@synthesize playbackPosition, isPlaying;
 @synthesize player;
 @synthesize delegateGrid, pathView;
 @synthesize speedFactor;
@@ -25,6 +25,7 @@ const static NSTimeInterval playbackSpeed = 1;
         delegateGrid = nil;
         shouldChangeSpeed = false;
         pathView = nil;
+        isPlaying = false;
     }
     return self;
 }
@@ -96,6 +97,7 @@ const static NSTimeInterval playbackSpeed = 1;
 
 - (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer *)p
 {
+    isPlaying = true;
     if([notes count] < 1)
     {
         [self performSelector:@selector(stop) withObject:nil afterDelay:0];
@@ -117,8 +119,8 @@ const static NSTimeInterval playbackSpeed = 1;
 
 - (void)pause
 {
+    isPlaying = false;
     if(playbackTimer) {
-        [player stopAllNotes];
         [playbackTimer invalidate];
     }
 }

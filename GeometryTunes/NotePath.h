@@ -17,6 +17,7 @@
 @property (retain) NotePlayer *player;
 @property (retain) GridView* delegateGrid;
 @property (retain) PathsView *pathView;
+@property (readonly) BOOL isPlaying;
 
 @property (nonatomic) float speedFactor;
 

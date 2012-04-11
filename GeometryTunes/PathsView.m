@@ -70,7 +70,7 @@
     NotePath *path = [self currentPath];
     if(!path)
         return;
-    int closestNode = [path closestNodeFrom:pos];
+    int closestNode = [path closestNodeFrom:pos]; //TODO: implement this to handle multiple paths
     if([path distanceFrom:pos noteIndex:closestNode] <= tapDistanceTolerance)
     {
         [path setPlaybackPosition:closestNode];
@@ -113,6 +113,10 @@
     {
         [[paths objectForKey:pathName] pause];
     }
+    if(currentPathName)
+    {
+        [[[self currentPath] player] stopAllNotes];
+    }
 }
 
 - (void)stop
@@ -122,12 +126,27 @@
     {
         [[paths objectForKey:pathName] stop];
     }
+    if(currentPathName)
+    {
+        [[[self currentPath] player] stopAllNotes];
+    }
 }
 
 - (void)playHasStopped:(NotePath *)path
 {
-    [tapGestureRecognizer setEnabled:FALSE];
-    [[delegateGrid delegate] setPlayStateToStopped];
+    //Check if the play has stopped for all paths
+    bool stillPlaying = false;
+    for (NSString *pathName in paths)
+    {
+        stillPlaying = stillPlaying || [[paths objectForKey:pathName] isPlaying];
+    }
+    if(!stillPlaying)
+    {
+        if(currentPathName)
+            [[[self currentPath] player] stopAllNotes];
+        [tapGestureRecognizer setEnabled:FALSE];
+        [[delegateGrid delegate] setPlayStateToStopped];
+    }
 }
 
 - (void)setSpeedFactor:(float)factor
