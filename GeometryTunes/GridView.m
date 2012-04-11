@@ -295,6 +295,8 @@
     [pathView setGrid:self];
     if(piano) //Note: This assumes that the grid is blank if the piano doesn't exist
         [pathView playWithSpeedFactor:factor notePlayer:[piano notePlayer]];
+    else
+        [delegate performSelector:@selector(setPlayStateToStopped) withObject:nil afterDelay:0];
 }
 
 - (NSMutableArray*)notesAtCell:(CellPos)cellPos
