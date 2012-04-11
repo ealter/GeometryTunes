@@ -67,13 +67,25 @@
 - (void)handleTap:(UITapGestureRecognizer *)sender
 {
     CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
-    NotePath *path = [self currentPath];
-    if(!path)
+    if([paths count] < 1)
         return;
-    int closestNode = [path closestNodeFrom:pos]; //TODO: implement this to handle multiple paths
-    if([path distanceFrom:pos noteIndex:closestNode] <= tapDistanceTolerance)
+    NSString *closestPath = nil;
+    int minIndex = 0;
+    float minDistance = FLT_MAX;
+    for (NSString *pathName in paths)
     {
-        [path setPlaybackPosition:closestNode];
+        int i = [[paths objectForKey:pathName] closestNodeFrom:pos];
+        float dist = [[paths objectForKey:pathName] distanceFrom:pos noteIndex:i];
+        if(dist <= minDistance)
+        {
+            minDistance = dist;
+            closestPath = pathName;
+            minIndex = i;
+        }
+    }
+    if(minDistance <= tapDistanceTolerance && closestPath != nil)
+    {
+        [[paths objectForKey:closestPath] setPlaybackPosition:minIndex];
     }
 }
 
