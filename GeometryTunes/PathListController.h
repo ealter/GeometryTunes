@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class PathsView;
+
 @interface PathListController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate>
+
+@property (strong) PathsView *pathView;
 
 @end

@@ -7,8 +7,11 @@
 //
 
 #import "PathListController.h"
+#import "PathsView.h"
 
 @implementation PathListController
+
+@synthesize pathView;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {

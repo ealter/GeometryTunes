@@ -69,9 +69,10 @@ static NSString *pauseBtnText = @"Pause";
         if(!pathList)
         {
             pathList = [[PathListController alloc]initWithNibName:@"PathListController" bundle:nil];
+            [pathList setPathView:[grid pathView]];
             pathListPopover = [[UIPopoverController alloc]initWithContentViewController:pathList];
         }
-        [pathListPopover presentPopoverFromRect:[editPathBtn bounds] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
+        [pathListPopover presentPopoverFromRect:[sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
     }
 }
 

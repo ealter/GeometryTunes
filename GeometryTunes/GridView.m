@@ -19,7 +19,7 @@
 @synthesize tapGestureRecognizer;
 @synthesize swipeGestureRecognizer;
 
-@synthesize delegate;
+@synthesize delegate, pathView;
 
 - (GridCell*)cellAtPos:(CellPos)cellPos
 {
