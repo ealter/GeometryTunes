@@ -105,19 +105,14 @@
     
     pathView = [[PathsView alloc]initWithFrame:[self bounds]];
     
-    // Initialize tap gesture recognizer
-    tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)]; 
-    
-    // The number of taps in order for gesture to be recognized
+    tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
     tapGestureRecognizer.numberOfTapsRequired = 1;
+    [tapGestureRecognizer setCancelsTouchesInView:false];
     
     swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipe:)];
-    
     swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp | UISwipeGestureRecognizerDirectionDown;
     swipeGestureRecognizer.numberOfTouchesRequired = 1; //TODO: maybe change to 2?
     
-    // Add gesture recognizer to the view
-    [tapGestureRecognizer setCancelsTouchesInView:false];
     [self addGestureRecognizer:tapGestureRecognizer];
     [self addGestureRecognizer:swipeGestureRecognizer];
 }
@@ -152,9 +147,6 @@
             break;
             
         case PIANO_STATE:
-            //if(!CGRectContainsPoint([piano frame], pos)) //No need to double click
-                //[self changeToNormalState];
-            
             if(!CGRectContainsPoint([piano frame], pos))
             {
                 [self changeCell:[self cellAtPos:currentCell] isBold:false];

@@ -86,7 +86,7 @@ const static NSTimeInterval playbackSpeed = 1;
     {
         [self stop];
     }
-    if(shouldChangeSpeed)
+    else if(shouldChangeSpeed)
     {
         shouldChangeSpeed = false;
         [t invalidate];
@@ -96,6 +96,11 @@ const static NSTimeInterval playbackSpeed = 1;
 
 - (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer *)p
 {
+    if([notes count] < 1)
+    {
+        [self performSelector:@selector(stop) withObject:nil afterDelay:0];
+        return;
+    }
     assert(delegateGrid);
     [self setPlayer:p];
     
@@ -122,6 +127,7 @@ const static NSTimeInterval playbackSpeed = 1;
 {
     [self pause];
     playbackPosition = 0;
+    shouldChangeSpeed = false;
     [pathView playHasStopped:self];
 }
 
