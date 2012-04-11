@@ -3,6 +3,7 @@
 #import "GridView.h"
 #import "ViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import <mach/mach_time.h>
 
 @implementation PathsView
 
@@ -205,6 +206,14 @@
 - (NSString*)nthPathName:(NSInteger)index
 {
     return currentPathName; //TODO: implement this
+}
+
+- (void)setCurrentPathName:(NSString *)_currentPathName
+{
+    currentPathName = _currentPathName;
+    NotePath *path = [paths objectForKey:currentPathName];
+    if(path)
+        [path setMostRecentAccess:mach_absolute_time()];
 }
 
 @end

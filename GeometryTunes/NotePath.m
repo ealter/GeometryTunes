@@ -10,6 +10,7 @@
 @synthesize player;
 @synthesize delegateGrid, pathView;
 @synthesize speedFactor;
+@synthesize mostRecentAccess;
 
 const static NSTimeInterval playbackSpeed = 1;
 
@@ -26,6 +27,7 @@ const static NSTimeInterval playbackSpeed = 1;
         shouldChangeSpeed = false;
         pathView = nil;
         isPlaying = false;
+        mostRecentAccess = 0;
     }
     return self;
 }
