@@ -38,6 +38,13 @@
         [delegate setState:state];
 }
 
+- (void)draw
+{
+    [self drawGrid];
+    [self addSubview:pathView];
+    [self bringSubviewToFront:pathView];
+}
+
 - (void)changeCell:(GridCell *)cell isBold:(bool)isBold
 {
     assert(cell);
@@ -115,6 +122,7 @@
     
     [self addGestureRecognizer:tapGestureRecognizer];
     [self addGestureRecognizer:swipeGestureRecognizer];
+    [self draw];
 }
 
 -(void) handleTap:(UITapGestureRecognizer *)sender
@@ -274,13 +282,6 @@
             [piano removeFromSuperview];
         [self setState:PATH_EDIT_STATE];
     }
-}
-
-- (void)drawRect:(CGRect)rect
-{
-    [self drawGrid];
-    [self addSubview:pathView];
-    [self bringSubviewToFront:pathView];
 }
 
 - (CellPos) getBoxFromCoords:(CGPoint)pos 
