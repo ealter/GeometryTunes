@@ -35,4 +35,6 @@ typedef enum STATE
 
 - (void)changeStateToNormal:(bool)informGrid;
 
+- (void)pathHasBeenSelected;
+
 @end

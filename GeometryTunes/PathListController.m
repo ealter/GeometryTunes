@@ -11,13 +11,14 @@
 
 @implementation PathListController
 
-@synthesize pathView;
+@synthesize pathView, pathPicker;
+@synthesize hasSelectedPath;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
+        hasSelectedPath = nil;
     }
     return self;
 }
@@ -57,19 +58,43 @@
 
 - (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
 {
-    //TODO: implement this (return number of paths + 1)
-    return 2;
+    if(pathView)
+        return [[pathView paths] count] + 1;
+    else
+        return 1;
 }
 
 - (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
 {
-    //TODO: implement this (return the path name)
-    return @"hello";
+    if(component == 0)
+    {
+        return @"New Path";
+    }
+    else if(pathView)
+    {
+        return [pathView nthPathName:component - 1];
+    }
+    else
+        return nil;
 }
 
 - (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
 {
-    //TODO: implement this
+    if (component == 0)
+    {
+        //Create a new path
+        NSString *pathName = [[NSString alloc]initWithFormat:@"path%d",component];
+        [pathView addPath:pathName];
+        [pathPicker reloadAllComponents];
+    }
+    else
+    {
+        [pathView setCurrentPathName:[pathView nthPathName:component - 1]];
+    }
+    if(hasSelectedPath != nil)
+    {
+        [self performSelector:hasSelectedPath];
+    }
 }
 
 @end

@@ -13,5 +13,7 @@
 @interface PathListController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate>
 
 @property (strong) PathsView *pathView;
+@property (nonatomic) SEL hasSelectedPath;
+@property (nonatomic, retain) IBOutlet UIPickerView *pathPicker;
 
 @end
