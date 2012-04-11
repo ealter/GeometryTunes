@@ -8,6 +8,7 @@
 
 @property (readonly, retain) NotePath *path;
 @property GridView *delegateGrid;
+@property UIImage *pulseCircle;
 
 - (void)addNoteWithPos:(CGPoint)pos;
 - (void)removeAllNotes;

@@ -6,7 +6,7 @@
 
 @implementation PathsView
 
-@synthesize path, delegateGrid;
+@synthesize path, delegateGrid, pulseCircle;
 
 - (id)initWithFrame:(CGRect)frame
 {
@@ -15,6 +15,20 @@
         path = [[NotePath alloc] init];
         [path setPathView:self];
         [self setBackgroundColor:[UIColor clearColor]];
+        
+        //Initialize the pulse circle
+        CGFloat radius = 50;
+        CGSize size = CGSizeMake(radius*2,radius*2);
+        CGPoint centre = CGPointMake(radius,radius);
+        
+        UIGraphicsBeginImageContextWithOptions(size,NO, 0.0);
+        UIBezierPath * solidPath = [UIBezierPath bezierPathWithArcCenter:centre radius:radius startAngle:0 endAngle:2 * M_PI clockwise:YES];
+        [solidPath closePath];
+        [[UIColor whiteColor] set];
+        [solidPath fill];
+        
+        pulseCircle = UIGraphicsGetImageFromCurrentImageContext();
+        UIGraphicsEndImageContext();
     }
     return self;
 }
@@ -68,13 +82,14 @@
 
 - (void)pulseAt:(CGPoint)pos
 {
-    const float width = 30;
+    assert(pulseCircle);
+    const float width = 40;
     const float height = width;
     
-    CALayer *pulse = [[CALayer alloc]init];
+    UIImageView *pulse = [[UIImageView alloc]initWithImage:pulseCircle];
+    [pulse setBackgroundColor:[UIColor clearColor]];
     [pulse setFrame:CGRectMake(pos.x - width/2, pos.y - height/2, width, height)];
-    [pulse setBackgroundColor:[[UIColor whiteColor] CGColor]];
-    [self.layer addSublayer:pulse];
+    [self addSubview:pulse];
     
     const float duration = 1.0;
     CABasicAnimation *theAnimation;
@@ -84,8 +99,8 @@
     theAnimation.fromValue=[NSNumber numberWithFloat:1.0];
     theAnimation.toValue=[NSNumber numberWithFloat:0.0];
     
-    [pulse addAnimation:theAnimation forKey:@"animateOpacity"];
-    [pulse performSelector:@selector(removeFromSuperlayer) withObject:nil afterDelay:duration];
+    [pulse.layer addAnimation:theAnimation forKey:@"animateOpacity"];
+    [pulse performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:duration];
 }
 
 @end
