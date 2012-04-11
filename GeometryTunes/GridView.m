@@ -41,13 +41,10 @@
 - (void)changeCell:(GridCell *)cell isBold:(bool)isBold
 {
     assert(cell);
-    float borderWidth;
     if(isBold)
-        borderWidth = 8;
+        [cell.layer setBorderWidth:8];
     else
-        borderWidth = 2;
-    [[cell layer] setBorderWidth:borderWidth];
-    [[cell layer] setCornerRadius:6.0f];
+        [cell.layer setBorderWidth:2];
 }
 
 - (void)changeToNormalState
@@ -100,6 +97,7 @@
             GridCell *cell = [[GridCell alloc]initWithFrame:cellBounds];
             [[cell layer] setBorderColor:[[UIColor grayColor] CGColor]];
             [self changeCell:cell isBold:false];
+            [cell.layer setCornerRadius:6.0f];
             [row addObject:cell];
         }
         [cells addObject:row];
