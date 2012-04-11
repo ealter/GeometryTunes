@@ -8,6 +8,7 @@
 @synthesize playPauseButton;
 @synthesize tempoTextField;
 @synthesize tempo;
+@synthesize pathList, pathListPopover;
 
 static NSString *playBtnText = @"Play";
 static NSString *pauseBtnText = @"Pause";
@@ -65,6 +66,12 @@ static NSString *pauseBtnText = @"Pause";
         [self changeStateToNormal:true];
         [editPathBtn setTitle:@"Stop Path" forState:UIControlStateNormal];
         state = PATH_EDIT_STATE;
+        if(!pathList)
+        {
+            pathList = [[PathListController alloc]initWithNibName:@"PathListController" bundle:nil];
+            pathListPopover = [[UIPopoverController alloc]initWithContentViewController:pathList];
+        }
+        [pathListPopover presentPopoverFromRect:[editPathBtn bounds] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
     }
 }
 

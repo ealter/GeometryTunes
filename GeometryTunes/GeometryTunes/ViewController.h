@@ -1,5 +1,6 @@
 #import <UIKit/UIKit.h>
 #import "GridView.h"
+#import "PathListController.h"
 
 @interface ViewController : UIViewController
 
@@ -16,6 +17,9 @@ typedef enum STATE
 @property (nonatomic, retain) IBOutlet UIButton *playPauseButton;
 @property (nonatomic, retain) IBOutlet UILabel *tempoTextField;
 @property float tempo;
+
+@property (strong, nonatomic) PathListController *pathList;
+@property (strong, nonatomic) UIPopoverController *pathListPopover;
 
 //Playback methods
 - (IBAction)playPauseEvent:(id)sender;
