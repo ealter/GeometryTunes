@@ -83,7 +83,8 @@ const static NSTimeInterval playbackSpeed = 1;
     playbackPosition++;
     if(playbackPosition >= [notes count])
     {
-        [self stop];
+        [self performSelector:@selector(stop) withObject:nil afterDelay:[t timeInterval]];
+        [t invalidate];
     }
     else if(shouldChangeSpeed)
     {
