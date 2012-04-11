@@ -2,6 +2,7 @@
 #import "NotePath.h"
 #import "GridView.h"
 #import "ViewController.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation PathsView
 
@@ -63,6 +64,28 @@
 {
     [self setDelegateGrid:grid];
     [path setDelegateGrid:grid];
+}
+
+- (void)pulseAt:(CGPoint)pos
+{
+    const float width = 30;
+    const float height = width;
+    
+    CALayer *pulse = [[CALayer alloc]init];
+    [pulse setFrame:CGRectMake(pos.x - width/2, pos.y - height/2, width, height)];
+    [pulse setBackgroundColor:[[UIColor whiteColor] CGColor]];
+    [self.layer addSublayer:pulse];
+    
+    const float duration = 1.0;
+    CABasicAnimation *theAnimation;
+    
+    theAnimation=[CABasicAnimation animationWithKeyPath:@"opacity"];
+    theAnimation.duration=duration;
+    theAnimation.fromValue=[NSNumber numberWithFloat:1.0];
+    theAnimation.toValue=[NSNumber numberWithFloat:0.0];
+    
+    [pulse addAnimation:theAnimation forKey:@"animateOpacity"];
+    [pulse performSelector:@selector(removeFromSuperlayer) withObject:nil afterDelay:duration];
 }
 
 @end

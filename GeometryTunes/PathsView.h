@@ -21,4 +21,6 @@
 
 - (void)playHasStopped:(NotePath *)path;
 
+- (void)pulseAt:(CGPoint)pos;
+
 @end

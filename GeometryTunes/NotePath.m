@@ -77,8 +77,10 @@ const static NSTimeInterval playbackSpeed = 1;
 
 - (void)playNote:(NSTimer*)t
 {
-    CellPos coords = [delegateGrid getBoxFromCoords:[[notes objectAtIndex:playbackPosition] CGPointValue]];
+    CGPoint pos = [[notes objectAtIndex:playbackPosition] CGPointValue];
+    CellPos coords = [delegateGrid getBoxFromCoords:pos];
     [delegateGrid playNoteForCell:coords duration:[t timeInterval]];
+    [pathView pulseAt:pos];
     playbackPosition++;
     if(playbackPosition >= [notes count])
     {
