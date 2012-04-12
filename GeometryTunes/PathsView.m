@@ -203,9 +203,23 @@
     [pulse performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:duration];
 }
 
+static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
+{
+    NSMutableDictionary *dict = (__bridge NSMutableDictionary*)context;
+    uint64_t date1 = [[dict objectForKey:path1] mostRecentAccess];
+    uint64_t date2 = [[dict objectForKey:path2] mostRecentAccess];
+    if (date1 > date2)
+        return NSOrderedAscending;
+    else if(date1 < date2)
+        return NSOrderedDescending;
+    else
+        return NSOrderedSame;
+}
+
 - (NSString*)nthPathName:(NSInteger)index
 {
-    return currentPathName; //TODO: implement this
+    NSArray *sortedKeys = [[paths allKeys] sortedArrayUsingFunction:comparePaths context:(__bridge void*)paths];
+    return [sortedKeys objectAtIndex:index];
 }
 
 - (void)setCurrentPathName:(NSString *)_currentPathName
