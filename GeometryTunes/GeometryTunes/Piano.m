@@ -8,7 +8,7 @@
 #define NOTES_IN_KEYBOARD NOTES_IN_OCTAVE
 #define INITIAL_PITCH 0
 #define INITIAL_OCTAVE 5
-#define BUTTON_RELATIVE_SIZE 1.3
+#define BUTTON_RELATIVE_SIZE 0.8
 
 //How long a note is played when it is clicked on the piano
 #define NOTE_DURATION 1
@@ -69,6 +69,7 @@
     if(!piano)
     {
         piano = [[scrollViewWithButtons alloc]initWithFrame:pianoSize];
+        [piano setBackgroundColor:[UIColor blackColor]];
         [piano setContentOffset:CGPointMake(whiteKeyWidth * [Piano whiteNotesFromPitch:0 numNotes:(INITIAL_OCTAVE - MIN_OCTAVE) * NOTES_IN_OCTAVE + INITIAL_PITCH], 0)];
     }
     else

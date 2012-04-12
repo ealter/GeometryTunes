@@ -23,6 +23,8 @@
 		E25113F01519230500BBE1F2 /* NotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E25113EF1519230500BBE1F2 /* NotePlayer.m */; };
 		E2687D90151FA3A8005BB1F8 /* PathsView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2687D8F151FA3A8005BB1F8 /* PathsView.m */; };
 		E28150FD150C513500C8A036 /* Piano.m in Sources */ = {isa = PBXBuildFile; fileRef = E28150FC150C513500C8A036 /* Piano.m */; };
+		E288F44E15353855000B0DC8 /* PathListController.m in Sources */ = {isa = PBXBuildFile; fileRef = E288F44C15353855000B0DC8 /* PathListController.m */; };
+		E288F44F15353855000B0DC8 /* PathListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E288F44D15353855000B0DC8 /* PathListController.xib */; };
 		E2BD6FE6152E4E5300868501 /* crsynth.dlsc in Resources */ = {isa = PBXBuildFile; fileRef = E2BD6FDF152E4E5300868501 /* crsynth.dlsc */; };
 		E2BD6FE7152E4E5300868501 /* Release-iphoneos in Resources */ = {isa = PBXBuildFile; fileRef = E2BD6FE0152E4E5300868501 /* Release-iphoneos */; };
 		E2BD6FEA152E4E5300868501 /* Release-iphonesimulator in Resources */ = {isa = PBXBuildFile; fileRef = E2BD6FE3152E4E5300868501 /* Release-iphonesimulator */; };
@@ -64,6 +66,9 @@
 		E2687D8F151FA3A8005BB1F8 /* PathsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathsView.m; sourceTree = "<group>"; };
 		E28150FB150C513500C8A036 /* Piano.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Piano.h; path = GeometryTunes/Piano.h; sourceTree = "<group>"; };
 		E28150FC150C513500C8A036 /* Piano.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = Piano.m; path = GeometryTunes/Piano.m; sourceTree = "<group>"; };
+		E288F44B15353855000B0DC8 /* PathListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathListController.h; sourceTree = "<group>"; };
+		E288F44C15353855000B0DC8 /* PathListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathListController.m; sourceTree = "<group>"; };
+		E288F44D15353855000B0DC8 /* PathListController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PathListController.xib; sourceTree = "<group>"; };
 		E2BD6FDB152E4DF700868501 /* crmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = crmd.h; path = crsynth/crmd.h; sourceTree = "<group>"; };
 		E2BD6FDC152E4DF700868501 /* crmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = crmp.h; path = crsynth/crmp.h; sourceTree = "<group>"; };
 		E2BD6FDF152E4E5300868501 /* crsynth.dlsc */ = {isa = PBXFileReference; lastKnownFileType = file; name = crsynth.dlsc; path = crsynth/crsynth.dlsc; sourceTree = "<group>"; };
@@ -113,10 +118,12 @@
 				E2BD6FDE152E4E2F00868501 /* midi */,
 				831FF08F150DB112001E9014 /* noteColor.h */,
 				831FF090150DB112001E9014 /* noteColor.m */,
-				83E3726B151D7069000DCF85 /* NotePath.h */,
-				83E3726C151D7069000DCF85 /* NotePath.m */,
+				E227B2BB153537F5002D9B13 /* Paths */,
 				E25113EE1519230500BBE1F2 /* NotePlayer.h */,
 				E25113EF1519230500BBE1F2 /* NotePlayer.m */,
+				E288F44B15353855000B0DC8 /* PathListController.h */,
+				E288F44C15353855000B0DC8 /* PathListController.m */,
+				E288F44D15353855000B0DC8 /* PathListController.xib */,
 				CE5C7C6E151E7D3900B81396 /* noteTypes.h */,
 				CE5C7C6F151E7D3900B81396 /* noteTypes.m */,
 				E2687D8E151FA3A8005BB1F8 /* PathsView.h */,
@@ -180,6 +187,15 @@
 				E28150FC150C513500C8A036 /* Piano.m */,
 			);
 			name = Keyboard;
+			sourceTree = "<group>";
+		};
+		E227B2BB153537F5002D9B13 /* Paths */ = {
+			isa = PBXGroup;
+			children = (
+				83E3726B151D7069000DCF85 /* NotePath.h */,
+				83E3726C151D7069000DCF85 /* NotePath.m */,
+			);
+			name = Paths;
 			sourceTree = "<group>";
 		};
 		E2BD6FDE152E4E2F00868501 /* midi */ = {
@@ -266,6 +282,7 @@
 				E2BD6FE6152E4E5300868501 /* crsynth.dlsc in Resources */,
 				E2BD6FE7152E4E5300868501 /* Release-iphoneos in Resources */,
 				E2BD6FEA152E4E5300868501 /* Release-iphonesimulator in Resources */,
+				E288F44F15353855000B0DC8 /* PathListController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -288,6 +305,7 @@
 				E2687D90151FA3A8005BB1F8 /* PathsView.m in Sources */,
 				E2D5ECF3152004F700C417C8 /* GridView.m in Sources */,
 				CE43316A15261456006EC577 /* scrollViewWithButtons.m in Sources */,
+				E288F44E15353855000B0DC8 /* PathListController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

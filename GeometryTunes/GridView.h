@@ -9,7 +9,6 @@
     Piano *piano;
     NSMutableArray *cells; //2D array: 1st index is row
                            //          2nd index is col
-    PathsView *pathView;
 }
 
 //typedef CGPoint CellPos; //Represents a coordinate system for the grid (0,0) is top left. (1,0) is one to the right of that
@@ -23,6 +22,7 @@ typedef struct CellPos {
 @property (nonatomic) CellPos numBoxes;
 
 @property (retain) ViewController *delegate;
+@property (nonatomic, retain) PathsView *pathView;
 
 @property (nonatomic) CellPos currentCell; //Used when editing a square
 

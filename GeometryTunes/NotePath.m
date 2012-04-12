@@ -6,10 +6,11 @@
 @implementation NotePath
 
 @synthesize notes;
-@synthesize playbackPosition;
+@synthesize playbackPosition, isPlaying;
 @synthesize player;
 @synthesize delegateGrid, pathView;
 @synthesize speedFactor;
+@synthesize mostRecentAccess;
 
 const static NSTimeInterval playbackSpeed = 1;
 
@@ -25,6 +26,8 @@ const static NSTimeInterval playbackSpeed = 1;
         delegateGrid = nil;
         shouldChangeSpeed = false;
         pathView = nil;
+        isPlaying = false;
+        mostRecentAccess = 0;
     }
     return self;
 }
@@ -43,7 +46,6 @@ const static NSTimeInterval playbackSpeed = 1;
 {
     [notes removeAllObjects];
     [path removeAllPoints];
-    
 }
 
 - (void)buildPath
@@ -84,7 +86,8 @@ const static NSTimeInterval playbackSpeed = 1;
     playbackPosition++;
     if(playbackPosition >= [notes count])
     {
-        [self stop];
+        [self performSelector:@selector(stop) withObject:nil afterDelay:[t timeInterval]];
+        [t invalidate];
     }
     else if(shouldChangeSpeed)
     {
@@ -96,6 +99,7 @@ const static NSTimeInterval playbackSpeed = 1;
 
 - (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer *)p
 {
+    isPlaying = true;
     if([notes count] < 1)
     {
         [self performSelector:@selector(stop) withObject:nil afterDelay:0];
@@ -117,8 +121,8 @@ const static NSTimeInterval playbackSpeed = 1;
 
 - (void)pause
 {
+    isPlaying = false;
     if(playbackTimer) {
-        [player stopAllNotes];
         [playbackTimer invalidate];
     }
 }
@@ -165,10 +169,6 @@ const static NSTimeInterval playbackSpeed = 1;
 - (void)setPlaybackPosition:(int)_playbackPosition
 {
     playbackPosition = _playbackPosition;
-    if(playbackTimer && [playbackTimer isValid])
-    {
-        [self playWithSpeedFactor:[playbackTimer timeInterval] notePlayer:player];
-    }
 }
 
 @end

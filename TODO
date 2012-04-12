@@ -11,6 +11,11 @@ half, quarter notes
 
 Make the song stop if you start editing a note
 
+Bugs involving multiple paths:
+Clearing a path
+Naming paths
+Syncing paths when clicking in the middle of one
+
 Late todos:
 Make the grid scrollable
 

@@ -3,12 +3,19 @@
 #import "GridView.h"
 #import "ViewController.h"
 #import <QuartzCore/QuartzCore.h>
+#import <mach/mach_time.h>
 
 @implementation PathsView
 
-@synthesize path, delegateGrid, pulseCircle;
+@synthesize delegateGrid, pulseCircle;
+@synthesize paths, currentPathName;
 @synthesize tapGestureRecognizer;
 @synthesize tapDistanceTolerance;
+
+- (NotePath*)currentPath
+{
+    return [paths objectForKey:currentPathName]; //TODO: what happens if currentPath=nil?
+}
 
 - (void)initPulseCircle
 {
@@ -30,8 +37,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        path = [[NotePath alloc] init];
-        [path setPathView:self];
+        paths = [[NSMutableDictionary alloc]init];
+        currentPathName = nil;
         [self setBackgroundColor:[UIColor clearColor]];
         
         [self initPulseCircle];
@@ -44,65 +51,132 @@
     return self;
 }
 
+- (void)addPath:(NSString *)pathName
+{
+    assert(pathName);
+    NotePath *path = [paths objectForKey:pathName];
+    if(path == NULL)
+    {
+        path = [[NotePath alloc]init];
+        [path setPathView:self];
+        assert(paths);
+        [paths setValue:path forKey:pathName];
+    }
+    [self setCurrentPathName:pathName];
+}
+
 - (void)handleTap:(UITapGestureRecognizer *)sender
 {
     CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
-    int closestNode = [path closestNodeFrom:pos];
-    if([path distanceFrom:pos noteIndex:closestNode] <= tapDistanceTolerance)
+    if([paths count] < 1)
+        return;
+    NSString *closestPath = nil;
+    int minIndex = 0;
+    float minDistance = FLT_MAX;
+    for (NSString *pathName in paths)
     {
-        [path setPlaybackPosition:closestNode];
+        int i = [[paths objectForKey:pathName] closestNodeFrom:pos];
+        float dist = [[paths objectForKey:pathName] distanceFrom:pos noteIndex:i];
+        if(dist <= minDistance)
+        {
+            minDistance = dist;
+            closestPath = pathName;
+            minIndex = i;
+        }
+    }
+    if(minDistance <= tapDistanceTolerance && closestPath != nil)
+    {
+        [[paths objectForKey:closestPath] setPlaybackPosition:minIndex];
     }
 }
 
 - (void)drawRect:(CGRect)rect
 {
-    [path updateAndDisplayPath:UIGraphicsGetCurrentContext()];
+    CGContextRef context = UIGraphicsGetCurrentContext();
+    for (NSString *pathName in paths)
+    {
+        [[paths objectForKey:pathName] updateAndDisplayPath:context];
+    }
 }
 
 - (void)addNoteWithPos:(CGPoint)pos
 {
-    [path addNoteWithPos:pos];
+    [[self currentPath] addNoteWithPos:pos];
 }
 
 - (void)removeAllNotes
 {
-    [path removeAllNotes];
+    [[self currentPath] removeAllNotes];
     [self setNeedsDisplay];
 }
 
 - (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer*)player
 {
     [tapGestureRecognizer setEnabled:TRUE];
-    [path playWithSpeedFactor:factor notePlayer:player];
+    for (NSString *pathName in paths)
+    {
+        [[paths objectForKey:pathName] playWithSpeedFactor:factor notePlayer:player];
+    }
 }
 
 - (void)pause
 {
     [tapGestureRecognizer setEnabled:FALSE];
-    [path pause];
+    for (NSString *pathName in paths)
+    {
+        [[paths objectForKey:pathName] pause];
+    }
+    if(currentPathName)
+    {
+        [[[self currentPath] player] stopAllNotes];
+    }
 }
 
 - (void)stop
 {
     [tapGestureRecognizer setEnabled:FALSE];
-    [path stop];
+    for (NSString *pathName in paths)
+    {
+        [[paths objectForKey:pathName] stop];
+    }
+    if(currentPathName)
+    {
+        [[[self currentPath] player] stopAllNotes];
+    }
 }
 
 - (void)playHasStopped:(NotePath *)path
 {
-    [tapGestureRecognizer setEnabled:FALSE];
-    [[delegateGrid delegate] setPlayStateToStopped];
+    //Check if the play has stopped for all paths
+    bool stillPlaying = false;
+    for (NSString *pathName in paths)
+    {
+        stillPlaying = stillPlaying || [[paths objectForKey:pathName] isPlaying];
+    }
+    if(!stillPlaying)
+    {
+        if(currentPathName)
+            [[[self currentPath] player] stopAllNotes];
+        [tapGestureRecognizer setEnabled:FALSE];
+        [[delegateGrid delegate] setPlayStateToStopped];
+    }
 }
 
 - (void)setSpeedFactor:(float)factor
 {
-    [path setSpeedFactor:factor];
+    for (NSString *pathName in paths)
+    {
+        [[paths objectForKey:pathName] setSpeedFactor:factor];
+    }
 }
 
 - (void)setGrid:(GridView *)grid
 {
     [self setDelegateGrid:grid];
-    [path setDelegateGrid:grid];
+    for (NSString *pathName in paths)
+    {
+        [[paths objectForKey:pathName] setDelegateGrid:grid];
+    }
     tapDistanceTolerance = [grid boxWidth] * [grid boxHeight];
 }
 
@@ -127,6 +201,33 @@
     
     [pulse.layer addAnimation:theAnimation forKey:@"animateOpacity"];
     [pulse performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:duration];
+}
+
+static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
+{
+    NSMutableDictionary *dict = (__bridge NSMutableDictionary*)context;
+    uint64_t date1 = [[dict objectForKey:path1] mostRecentAccess];
+    uint64_t date2 = [[dict objectForKey:path2] mostRecentAccess];
+    if (date1 > date2)
+        return NSOrderedAscending;
+    else if(date1 < date2)
+        return NSOrderedDescending;
+    else
+        return NSOrderedSame;
+}
+
+- (NSString*)nthPathName:(NSInteger)index
+{
+    NSArray *sortedKeys = [[paths allKeys] sortedArrayUsingFunction:comparePaths context:(__bridge void*)paths];
+    return [sortedKeys objectAtIndex:index];
+}
+
+- (void)setCurrentPathName:(NSString *)_currentPathName
+{
+    currentPathName = _currentPathName;
+    NotePath *path = [paths objectForKey:currentPathName];
+    if(path)
+        [path setMostRecentAccess:mach_absolute_time()];
 }
 
 @end
