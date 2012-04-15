@@ -126,7 +126,7 @@
     {
         [[paths objectForKey:pathName] pause];
     }
-    if(currentPathName)
+    if(currentPathName) //TODO: If currentPathName is nil but there exists a path, this will not work
     {
         [[[self currentPath] player] stopAllNotes];
     }
@@ -139,7 +139,7 @@
     {
         [[paths objectForKey:pathName] stop];
     }
-    if(currentPathName)
+    if(currentPathName) //TODO: If currentPathName is nil but there exists a path, this will not work
     {
         [[[self currentPath] player] stopAllNotes];
     }
@@ -155,7 +155,7 @@
     }
     if(!stillPlaying)
     {
-        if(currentPathName)
+        if(currentPathName) //TODO: If currentPathName is nil but there exists a path, this will not work
             [[[self currentPath] player] stopAllNotes];
         [tapGestureRecognizer setEnabled:FALSE];
         [[delegateGrid delegate] setPlayStateToStopped];
@@ -228,6 +228,14 @@ static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
     NotePath *path = [paths objectForKey:currentPathName];
     if(path)
         [path setMostRecentAccess:mach_absolute_time()];
+}
+
+- (void)deletePath:(NSString *)pathName
+{
+    if([currentPathName isEqualToString:pathName])
+        currentPathName = nil;
+    [paths removeObjectForKey:pathName];
+    [self setNeedsDisplay];
 }
 
 @end
