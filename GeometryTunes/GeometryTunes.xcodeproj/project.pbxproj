@@ -112,6 +112,7 @@
 		83194300150BD226003EF364 = {
 			isa = PBXGroup;
 			children = (
+				83F88F9C15391CCE007B0FA4 /* GTData.xcdatamodeld */,
 				E2C768FC152CD2D200998B48 /* default.png */,
 				8319430E150BD226003EF364 /* Frameworks */,
 				83194315150BD226003EF364 /* GeometryTunes */,
@@ -156,7 +157,6 @@
 				8319430F150BD226003EF364 /* UIKit.framework */,
 				83194311150BD226003EF364 /* Foundation.framework */,
 				83194313150BD226003EF364 /* CoreGraphics.framework */,
-				83F88F9C15391CCE007B0FA4 /* GTData.xcdatamodeld */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";

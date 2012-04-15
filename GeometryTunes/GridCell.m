@@ -2,6 +2,7 @@
 #import "noteColor.h"
 #import "Piano.h"
 #import <QuartzCore/QuartzCore.h>
+#import "AppDelegate.h"
 
 @implementation GridCell
 
@@ -17,6 +18,12 @@
     if (self)
     {
         [self sharedInit];
+        //add cell to data
+        //AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+        //NSNumber* xCoord;
+        //xCoord.doubleValue = frame.x;
+        //NSNumber* yCoord;
+        //[appDelegate saveCellwithXCoordinate:<#(NSNumber *)#> yCoordinate:<#(NSNumber *)#> andColor:<#(NSNumber *)#> andRemove:<#(_Bool)#>
     }
     return self;
 }
@@ -56,6 +63,7 @@
 {
     [notes addObject:[NSNumber numberWithUnsignedInt:note]];
     [self setNotes:notes];
+    //Add midinote (unsigned int) to cell as color
 }
 
 - (NSNumber*)getNoteAtIndex:(int)i
