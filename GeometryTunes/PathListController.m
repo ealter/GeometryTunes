@@ -12,7 +12,7 @@
 
 @implementation PathListController
 
-@synthesize pathView, pathPicker;
+@synthesize pathView, pathPicker, editPathBtn;
 @synthesize mainViewController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
@@ -36,7 +36,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.contentSizeForViewInPopover = CGSizeMake(200, 200);
+    self.contentSizeForViewInPopover = CGSizeMake(200, 300);
     assert(pathPicker);
 }
 
@@ -55,7 +55,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     assert(pathView);
-    return [[pathView paths] count] + 1;
+    return [[pathView paths] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -66,26 +66,31 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton; //todo: is this right?
     
-    if(indexPath.row == 0)
-        cell.textLabel.text = @"New path";
-    else
-        cell.textLabel.text = [pathView nthPathName:indexPath.row - 1];
+    cell.textLabel.text = [pathView nthPathName:indexPath.row];
     return cell;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     assert(pathView);
-    if (indexPath.row == 0) {
-        //Create a new path
-        NSString *pathName = [[NSString alloc]initWithFormat:@"path%d", [[pathView paths] count]];
-        [pathView addPath:pathName];
-        [pathPicker reloadData];
-    } else {
-        [pathView setCurrentPathName:[pathView nthPathName:indexPath.row]];
-    }
+    [pathView setCurrentPathName:[pathView nthPathName:indexPath.row]];
     if(mainViewController)
         [mainViewController pathHasBeenSelected];
+}
+
+- (IBAction)newPath
+{
+    NSString *pathName = [[NSString alloc]initWithFormat:@"path%d", [[pathView paths] count]]; //TODO: change this to make sure the name doesn't exist
+    [pathView addPath:pathName];
+    [pathPicker reloadData];
+    if(mainViewController)
+        [mainViewController pathHasBeenSelected];
+}
+
+- (IBAction)editPath
+{
+    [pathPicker setEditing:![pathPicker isEditing]];
+    //TODO: change the button text
 }
 
 @end

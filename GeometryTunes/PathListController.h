@@ -16,5 +16,9 @@
 @property (strong) PathsView *pathView;
 @property (nonatomic, strong) ViewController *mainViewController;
 @property (nonatomic, retain) IBOutlet UITableView *pathPicker;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *editPathBtn;
+
+- (IBAction)newPath;
+- (IBAction)editPath;
 
 @end
