@@ -17,7 +17,9 @@
 @property CRMD_HANDLE handle;
 @property CRMD_FUNC *api;
 
-- (void)saveContext;
+//- (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
+
+- (void)saveCellwithXCoordinate:(NSNumber *)xCoord yCoordinate:(NSNumber *)yCoord andColor:(NSNumber *)color andRemove:(bool)remove;
 
 @end

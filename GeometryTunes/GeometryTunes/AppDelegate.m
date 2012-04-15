@@ -2,6 +2,7 @@
 
 #import "ViewController.h"
 #import <AudioToolBox/AudioServices.h>
+#import <CoreData/CoreData.h>
 
 @implementation AppDelegate
 
@@ -116,6 +117,7 @@
      */
 }
 
+/*
 - (void)saveContext 
 {
     NSError *error = nil;
@@ -127,5 +129,37 @@
         }
     }
 }
+*/
 
+- (NSURL *) applicationDocumentsDirectory {
+    return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+}
+
+- (void)saveCellwithXCoordinate:(NSNumber *)xCoord yCoordinate:(NSNumber *)yCoord andColor:(NSNumber *)color andRemove:(_Bool)remove {
+    if(remove){ //check if cell exists first
+        NSError *error;
+        NSFetchRequest *request = [[NSFetchRequest alloc] init];
+        NSEntityDescription *searchEntity = [NSEntityDescription entityForName:@"Cell" inManagedObjectContext:self.managedObjectContext]; //add x and y coordinates into search
+        [request setEntity:searchEntity];
+        NSMutableArray *results = [[self.managedObjectContext executeFetchRequest: request error:&error]mutableCopy];
+        if([results count] == 0){
+            //change color array within cell
+        } else {
+            //add cell and color to stored data
+            NSManagedObject *cellObject = [NSEntityDescription insertNewObjectForEntityForName:@"Cells" inManagedObjectContext:self.managedObjectContext];
+            [cellObject setValue:xCoord forKey:@"xCoordinate"];
+            [cellObject setValue:yCoord forKey:@"yCoordinate"];
+            
+            NSManagedObject *colorObject = [NSEntityDescription insertNewObjectForEntityForName:@"Colors" inManagedObjectContext:self.managedObjectContext];
+            [colorObject setValue:color forKey:@"color"];
+            
+            //add color to cell
+            [cellObject setValue:color forKey:@"Colors"];
+            NSLog(@"Added cell and color");
+        }
+        
+    } else {
+        //remove color from cell
+    }
+}
 @end
