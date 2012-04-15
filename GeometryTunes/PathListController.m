@@ -80,7 +80,9 @@
 
 - (IBAction)newPath
 {
-    NSString *pathName = [[NSString alloc]initWithFormat:@"path%d", [[pathView paths] count]]; //TODO: change this to make sure the name doesn't exist
+    int pathNum = [[pathView paths] count];
+    NSString *pathName = @"path0";
+    for(; [[pathView paths] objectForKey:pathName] == nil; pathNum++, pathName = [[NSString alloc]initWithFormat:@"path%d", pathNum]);
     [pathView addPath:pathName];
     [pathPicker reloadData];
     if(mainViewController)
