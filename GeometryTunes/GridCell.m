@@ -19,11 +19,10 @@
     {
         [self sharedInit];
         //add cell to data
-        //AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-        //NSNumber* xCoord;
-        //xCoord.doubleValue = frame.x;
-        //NSNumber* yCoord;
-        //[appDelegate saveCellwithXCoordinate:<#(NSNumber *)#> yCoordinate:<#(NSNumber *)#> andColor:<#(NSNumber *)#> andRemove:<#(_Bool)#>
+        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+        NSNumber* xCoord = [[NSNumber alloc]initWithFloat:frame.origin.x];
+        NSNumber* yCoord = [[NSNumber alloc]initWithFloat:frame.origin.y];
+        [appDelegate saveCellwithXCoordinate:xCoord yCoordinate:yCoord andColor:0 andRemove:0];
     }
     return self;
 }

@@ -136,14 +136,20 @@
 }
 
 - (void)saveCellwithXCoordinate:(NSNumber *)xCoord yCoordinate:(NSNumber *)yCoord andColor:(NSNumber *)color andRemove:(_Bool)remove {
+    NSLog(@"Save");
     if(remove){ //check if cell exists first
         NSError *error;
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
         NSEntityDescription *searchEntity = [NSEntityDescription entityForName:@"Cell" inManagedObjectContext:self.managedObjectContext]; //add x and y coordinates into search
         [request setEntity:searchEntity];
         NSMutableArray *results = [[self.managedObjectContext executeFetchRequest: request error:&error]mutableCopy];
-        if([results count] == 0){
+        
+        if([results count] != 0){
             //change color array within cell
+            for(NSPropertyDescription *property in results){
+                NSLog(@"%@", property.name);
+            }
+            //NSLog()
         } else {
             //add cell and color to stored data
             NSManagedObject *cellObject = [NSEntityDescription insertNewObjectForEntityForName:@"Cells" inManagedObjectContext:self.managedObjectContext];
