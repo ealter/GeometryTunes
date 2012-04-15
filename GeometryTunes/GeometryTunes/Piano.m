@@ -24,11 +24,6 @@
         self = [self sharedInit];
         delegate = del;
     }
-    self.layer.shadowColor = [UIColor whiteColor].CGColor;
-    self.layer.shadowOpacity = 0.8;
-    self.layer.shadowRadius = 5;
-    self.layer.borderColor = [UIColor grayColor].CGColor;
-    self.layer.borderWidth = 3;
     return self;
 }
 
@@ -48,6 +43,11 @@
     if(piano) {
         [piano setContentOffset:contentOffset];
     }
+    self.layer.shadowColor = [UIColor whiteColor].CGColor;
+    self.layer.shadowOpacity = 0.8;
+    self.layer.shadowRadius = 5;
+    self.layer.borderColor = [UIColor grayColor].CGColor;
+    self.layer.borderWidth = 3;
     return self;
 }
 
