@@ -11,10 +11,10 @@
 @class PathsView;
 @class ViewController;
 
-@interface PathListController : UIViewController <UIPickerViewDataSource, UIPickerViewDelegate>
+@interface PathListController : UIViewController <UITableViewDelegate, UITableViewDataSource>
 
 @property (strong) PathsView *pathView;
 @property (nonatomic, strong) ViewController *mainViewController;
-@property (nonatomic, retain) IBOutlet UIPickerView *pathPicker;
+@property (nonatomic, retain) IBOutlet UITableView *pathPicker;
 
 @end

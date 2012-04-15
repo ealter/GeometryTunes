@@ -19,7 +19,6 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        
     }
     return self;
 }
@@ -38,6 +37,7 @@
 {
     [super viewDidLoad];
     self.contentSizeForViewInPopover = CGSizeMake(200, 200);
+    assert(pathPicker);
 }
 
 - (void)viewDidUnload
@@ -52,48 +52,37 @@
 	return YES;
 }
 
-- (NSInteger)numberOfComponentsInPickerView:(UIPickerView *)pickerView
-{
-    return 1;
-}
-
-- (NSInteger)pickerView:(UIPickerView *)pickerView numberOfRowsInComponent:(NSInteger)component
-{
-    if(pathView)
-        return [[pathView paths] count] + 1;
-    else
-        return 1;
-}
-
-- (NSString *)pickerView:(UIPickerView *)pickerView titleForRow:(NSInteger)row forComponent:(NSInteger)component
-{
-    if(row == 0)
-    {
-        return @"New Path";
-    }
-    else if(pathView)
-    {
-        return [pathView nthPathName:row - 1];
-    }
-    else
-    {
-        return nil;
-    }
-}
-
-- (void)pickerView:(UIPickerView *)pickerView didSelectRow:(NSInteger)row inComponent:(NSInteger)component
+- (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     assert(pathView);
-    if (row == 0)
-    {
+    return [[pathView paths] count] + 1;
+}
+
+- (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    static NSString *cellIdentifier = @"Path cell";
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifier];
+    if(!cell)
+        cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
+    cell.accessoryType = UITableViewCellAccessoryDetailDisclosureButton; //todo: is this right?
+    
+    if(indexPath.row == 0)
+        cell.textLabel.text = @"New path";
+    else
+        cell.textLabel.text = [pathView nthPathName:indexPath.row - 1];
+    return cell;
+}
+
+- (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    assert(pathView);
+    if (indexPath.row == 0) {
         //Create a new path
         NSString *pathName = [[NSString alloc]initWithFormat:@"path%d", [[pathView paths] count]];
         [pathView addPath:pathName];
-        [pathPicker reloadAllComponents];
-    }
-    else
-    {
-        [pathView setCurrentPathName:[pathView nthPathName:row - 1]];
+        [pathPicker reloadData];
+    } else {
+        [pathView setCurrentPathName:[pathView nthPathName:indexPath.row]];
     }
     if(mainViewController)
         [mainViewController pathHasBeenSelected];
