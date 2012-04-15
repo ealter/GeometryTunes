@@ -111,4 +111,10 @@
     //TODO: change the button text
 }
 
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    if(mainViewController && ![pathView currentPathName])
+        [mainViewController changeStateToNormal:true];
+}
+
 @end

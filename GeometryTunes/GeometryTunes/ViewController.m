@@ -72,6 +72,7 @@ static NSString *pauseBtnText = @"Pause";
             [pathList setPathView:[grid pathView]];
             [pathList setMainViewController:self];
             pathListPopover = [[UIPopoverController alloc]initWithContentViewController:pathList];
+            [pathListPopover setDelegate:pathList];
         }
         [pathListPopover presentPopoverFromRect:[sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
     }
