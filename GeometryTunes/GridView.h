@@ -48,6 +48,8 @@ typedef struct CellPos {
 - (void)playNoteForDuration:(NSTimeInterval)duration;
 - (void)playNoteForCell:(CellPos)cellPos duration:(NSTimeInterval)duration;
 
+- (void)pulseCell:(CellPos)pos;
+
 - (float)boxWidth;
 - (float)boxHeight;
 

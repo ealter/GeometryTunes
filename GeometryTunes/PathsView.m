@@ -183,6 +183,7 @@
 - (void)pulseAt:(CGPoint)pos
 {
     assert(pulseCircle);
+    [delegateGrid pulseCell:[delegateGrid getBoxFromCoords:pos]];
     const float width = 40;
     const float height = width;
     
