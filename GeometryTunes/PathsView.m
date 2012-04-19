@@ -252,4 +252,29 @@ static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
     [self setNeedsDisplay];
 }
 
+- (UIImageView *)getPathFollowerAtPos:(CGPoint)pos
+{
+    const float width = 40;
+    const float height = width;
+    
+    UIImageView *pulse = [[UIImageView alloc]initWithImage:pulseCircle];
+    [pulse setBackgroundColor:[UIColor clearColor]];
+    [pulse setFrame:CGRectMake(pos.x - width/2, pos.y - height/2, width, height)];
+    [self addSubview:pulse];
+    return pulse;
+}
+
+- (void)movePathFollower:(UIImageView *)follower pos:(CGPoint)pos delegate:(id)delegate
+{
+    CABasicAnimation *theAnimation;
+    
+    theAnimation=[CABasicAnimation animationWithKeyPath:@"position"];
+    theAnimation.duration=speedFactor;
+    theAnimation.fromValue=[NSValue valueWithCGPoint:follower.center];
+    theAnimation.toValue=[NSValue valueWithCGPoint:pos];
+    [theAnimation setDelegate:delegate];
+    
+    [follower.layer addAnimation:theAnimation forKey:@"animatePosition"];
+}
+
 @end

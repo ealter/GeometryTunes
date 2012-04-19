@@ -31,4 +31,7 @@
 
 - (NSString *)nthPathName:(NSInteger)index;
 
+- (UIImageView *)getPathFollowerAtPos:(CGPoint)pos;
+- (void)movePathFollower:(UIImageView *)follower pos:(CGPoint)pos delegate:(id)delegate;
+
 @end
