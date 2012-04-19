@@ -9,6 +9,8 @@
 @synthesize tempoTextField;
 @synthesize tempo;
 @synthesize pathList, pathListPopover;
+@synthesize helpMenu;
+//@synthesize document;
 
 static NSString *playBtnText = @"Play";
 static NSString *pauseBtnText = @"Pause";

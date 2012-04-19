@@ -9,10 +9,6 @@
 @synthesize window = _window;
 @synthesize viewController = _viewController;
 @synthesize api, handle;
-@synthesize managedObjectContext = __managedObjectContext;
-@synthesize managedObjectModel = __managedObjectModel;
-@synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
-
 
 - (void)initMidiPlayer
 {
@@ -68,7 +64,7 @@
 }
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
-{
+{   
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
@@ -135,21 +131,22 @@
     return [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
 }
 
-- (void)saveCellwithXCoordinate:(NSNumber *)xCoord yCoordinate:(NSNumber *)yCoord andColor:(NSNumber *)color andRemove:(_Bool)remove {
-    NSLog(@"Save");
-    if(remove){ //check if cell exists first
-        NSError *error;
+/*
+- (void)saveCellwithXCoordinate:(NSNumber *)xCoord yCoordinate:(NSNumber *)yCoord andColor:(NSNumber *)color andWantRemoved:(_Bool)wantRemoved {
+    if(!wantRemoved){ 
+        //check if cell exists first
+        NSError *error; 
         NSFetchRequest *request = [[NSFetchRequest alloc] init];
         NSEntityDescription *searchEntity = [NSEntityDescription entityForName:@"Cell" inManagedObjectContext:self.managedObjectContext]; //add x and y coordinates into search
         [request setEntity:searchEntity];
         NSMutableArray *results = [[self.managedObjectContext executeFetchRequest: request error:&error]mutableCopy];
         
+        NSLog(@"%d", [results count]);
         if([results count] != 0){
             //change color array within cell
             for(NSPropertyDescription *property in results){
-                NSLog(@"%@", property.name);
+                NSLog(@"Name: %@", property.name);
             }
-            //NSLog()
         } else {
             //add cell and color to stored data
             NSManagedObject *cellObject = [NSEntityDescription insertNewObjectForEntityForName:@"Cells" inManagedObjectContext:self.managedObjectContext];
@@ -168,4 +165,5 @@
         //remove color from cell
     }
 }
+ */
 @end

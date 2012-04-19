@@ -16,7 +16,9 @@ typedef enum STATE
 @property (nonatomic, retain) IBOutlet UIButton *editPathBtn;
 @property (nonatomic, retain) IBOutlet UIButton *playPauseButton;
 @property (nonatomic, retain) IBOutlet UILabel *tempoTextField;
+@property (nonatomic, retain) IBOutlet UIScrollView *helpMenu;
 @property float tempo;
+//@property CGPDFDocumentRef document;
 
 @property (strong, nonatomic) PathListController *pathList;
 @property (strong, nonatomic) UIPopoverController *pathListPopover;

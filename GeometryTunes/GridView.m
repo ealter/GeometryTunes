@@ -101,7 +101,7 @@
         for(int j=0; j<numBoxes.y; j++)
         {
             CGRect cellBounds = CGRectMake(i * boxWidth, j * boxHeight, boxWidth, boxHeight);
-            GridCell *cell = [[GridCell alloc]initWithFrame:cellBounds];
+            GridCell *cell = [[GridCell alloc]initWithFrame:cellBounds andXCoord:i andYCoord:j];
             [[cell layer] setBorderColor:[[UIColor grayColor] CGColor]];
             [self changeCell:cell isBold:false];
             [cell.layer setCornerRadius:6.0f];

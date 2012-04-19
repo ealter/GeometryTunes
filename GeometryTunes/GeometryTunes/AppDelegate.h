@@ -5,11 +5,6 @@
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
-// Core data stuff
-@property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext; // connection between code and data store
-@property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel; // contains methods for deleting or adding data
-@property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator; // connection between app and physical files
-
 @property (strong, nonatomic) UIWindow *window;
 
 @property (strong, nonatomic) ViewController *viewController;
@@ -20,6 +15,5 @@
 //- (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 
-- (void)saveCellwithXCoordinate:(NSNumber *)xCoord yCoordinate:(NSNumber *)yCoord andColor:(NSNumber *)color andRemove:(bool)remove;
 
 @end
