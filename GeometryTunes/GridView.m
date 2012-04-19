@@ -21,6 +21,8 @@
 
 @synthesize delegate, pathView;
 
+#define CELL_BORDER_COLOR [[UIColor grayColor] CGColor]
+
 - (GridCell*)cellAtPos:(CellPos)cellPos
 {
     return [[cells objectAtIndex:cellPos.x] objectAtIndex:cellPos.y];
@@ -49,9 +51,15 @@
 {
     assert(cell);
     if(isBold)
+    {
         [cell.layer setBorderWidth:8];
+        [cell.layer setBorderColor:[[UIColor whiteColor] CGColor]];
+    }
     else
+    {
         [cell.layer setBorderWidth:2];
+        [cell.layer setBorderColor:CELL_BORDER_COLOR];
+    }
 }
 
 - (void)changeToNormalState
@@ -102,7 +110,7 @@
         {
             CGRect cellBounds = CGRectMake(i * boxWidth, j * boxHeight, boxWidth, boxHeight);
             GridCell *cell = [[GridCell alloc]initWithFrame:cellBounds];
-            [[cell layer] setBorderColor:[[UIColor grayColor] CGColor]];
+            [[cell layer] setBorderColor:CELL_BORDER_COLOR];
             [self changeCell:cell isBold:false];
             [cell.layer setCornerRadius:6.0f];
             [row addObject:cell];
