@@ -83,11 +83,17 @@ const static NSTimeInterval playbackSpeed = 1;
 - (void)playNote:(NSTimer*)t
 {
     CGPoint pos = [[notes objectAtIndex:playbackPosition] CGPointValue];
+    NSLog(@"Note: x:%f, y:%f", pos.x, pos.y);
     CellPos coords = [delegateGrid getBoxFromCoords:pos];
     [delegateGrid playNoteForCell:coords duration:[t timeInterval]];
     [pathView pulseAt:pos];
-    if(playbackPosition + 1 < [notes count])
-        [pathView movePathFollower:pathFollower pos:[[notes objectAtIndex:playbackPosition + 1] CGPointValue] delegate:self];
+    if(playbackPosition < [notes count])
+    {
+        CGPoint pos = [[notes objectAtIndex:playbackPosition] CGPointValue];
+        [[pathFollower layer] setPosition:pos];
+        if(playbackPosition + 1 < [notes count])
+            [pathView movePathFollower:pathFollower pos:[[notes objectAtIndex:playbackPosition + 1] CGPointValue] delegate:self];
+    }
     playbackPosition++;
     if(playbackPosition >= [notes count])
     {
@@ -186,11 +192,7 @@ const static NSTimeInterval playbackSpeed = 1;
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
 {
-    if(playbackPosition < [notes count])
-    {
-        CGPoint pos = [[notes objectAtIndex:playbackPosition] CGPointValue];
-        [[pathFollower layer] setPosition:pos];
-    }
+    
 }
 
 @end
