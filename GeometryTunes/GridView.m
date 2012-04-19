@@ -323,25 +323,6 @@
     [pathView setSpeedFactor:factor];
 }
 
-- (void)pulseCell:(CellPos)pos
-{
-    GridCell *cell = [self cellAtPos:pos];
-    const CGRect oldBounds = [cell bounds];
-    const float sizeFactor = 1.1;
-    const CGRect newBounds = CGRectMake(oldBounds.origin.x, oldBounds.origin.y, oldBounds.size.width * sizeFactor, oldBounds.size.height * sizeFactor);
-    
-    const float duration = 0.3;
-    CABasicAnimation *theAnimation;
-    
-    theAnimation=[CABasicAnimation animationWithKeyPath:@"bounds"];
-    theAnimation.duration=duration/2;
-    theAnimation.fromValue=[NSValue valueWithCGRect:oldBounds];
-    theAnimation.toValue=[NSValue valueWithCGRect:newBounds];
-    theAnimation.autoreverses = true;
-    
-    [cell.layer addAnimation:theAnimation forKey:@"animateBounds"];
-}
-
 + (CellPos)cellPosMakeX:(unsigned int)x y:(unsigned int)y
 {
     CellPos pos = {x,y};

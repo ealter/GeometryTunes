@@ -11,6 +11,7 @@
 @synthesize paths, currentPathName;
 @synthesize tapGestureRecognizer;
 @synthesize tapDistanceTolerance;
+@synthesize speedFactor;
 
 - (NotePath*)currentPath
 {
@@ -47,6 +48,7 @@
         [tapGestureRecognizer setEnabled:FALSE];
         [self addGestureRecognizer:tapGestureRecognizer];
         tapDistanceTolerance = 90 * 90;
+        speedFactor = 1;
     }
     return self;
 }
@@ -113,6 +115,7 @@
 - (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer*)player
 {
     [tapGestureRecognizer setEnabled:TRUE];
+    speedFactor = factor;
     for (NSString *pathName in paths)
     {
         [[paths objectForKey:pathName] playWithSpeedFactor:factor notePlayer:player];
@@ -168,6 +171,7 @@
     {
         [[paths objectForKey:pathName] setSpeedFactor:factor];
     }
+    speedFactor = factor;
 }
 
 - (void)setGrid:(GridView *)grid
@@ -180,10 +184,19 @@
     tapDistanceTolerance = [grid boxWidth] * [grid boxHeight];
 }
 
+- (void)deemphasizeCell:(GridCell *)cell
+{
+    [delegateGrid changeCell:cell isBold:FALSE];
+}
+
 - (void)pulseAt:(CGPoint)pos
 {
     assert(pulseCircle);
-    [delegateGrid pulseCell:[delegateGrid getBoxFromCoords:pos]];
+    //Pulse the grid cell
+    GridCell *cell = [delegateGrid cellAtPos:[delegateGrid getBoxFromCoords:pos]];
+    [delegateGrid changeCell:cell isBold:TRUE];
+    [self performSelector:@selector(deemphasizeCell:) withObject:cell afterDelay:speedFactor];
+    
     const float width = 40;
     const float height = width;
     

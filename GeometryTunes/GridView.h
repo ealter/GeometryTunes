@@ -3,6 +3,7 @@
 
 @class PathsView;
 @class ViewController;
+@class GridCell;
 
 @interface GridView : UIView
 {
@@ -48,8 +49,6 @@ typedef struct CellPos {
 - (void)playNoteForDuration:(NSTimeInterval)duration;
 - (void)playNoteForCell:(CellPos)cellPos duration:(NSTimeInterval)duration;
 
-- (void)pulseCell:(CellPos)pos;
-
 - (float)boxWidth;
 - (float)boxHeight;
 
@@ -63,5 +62,8 @@ typedef struct CellPos {
 - (void)stopPlayback;
 
 - (void)changeToNormalState;
+
+- (void)changeCell:(GridCell *)cell isBold:(bool)isBold;
+- (GridCell*)cellAtPos:(CellPos)cellPos;
 
 @end
