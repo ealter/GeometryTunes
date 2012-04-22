@@ -18,7 +18,8 @@
 
 - (void)sharedInit
 {
-    notes = [[NSMutableArray alloc] init];
+    NSLog(@"shared init");
+    notesArray = [[NSMutableArray alloc] init];
     [self setBackgroundColor:[UIColor clearColor]];
 }
 /*
@@ -50,6 +51,7 @@
         //NSNumber* yCoord = [[NSNumber alloc]initWithInt:y];
         //[self saveCellwithXCoordinate:xCoord yCoordinate:yCoord andColor:0 andWantRemoved:false];
     }
+    notesArray = [[NSMutableArray alloc] init];
     return self;
 }
 
@@ -64,36 +66,40 @@
 
 - (void)setNotes:(NSMutableArray *)n
 {
-    notes = n;
+    notesArray = n;
     [self setNeedsDisplay];
 }
 
 - (NSMutableArray*)notes
 {
-    return notes;
+    return notesArray;
 }
 
 - (void)setLastNote:(midinote)note
 {
-    int numNotes = [notes count];
+    int numNotes = [notesArray count];
     NSNumber *n = [NSNumber numberWithUnsignedInt:note];
     if(numNotes == 0)
-        [notes addObject:n];
+        [notesArray addObject:n];
     else
-        [notes replaceObjectAtIndex:numNotes - 1 withObject:n];
-    [self setNotes:notes];
+        [notesArray replaceObjectAtIndex:numNotes - 1 withObject:n];
+    [self setNotes:notesArray];
 }
 
 - (void)addNote:(midinote)note
 {
-    [notes addObject:[NSNumber numberWithUnsignedInt:note]];
-    [self setNotes:notes];
+    if(!notesArray) {
+        NSLog(@"notesArray is null");
+        notesArray = [[NSMutableArray alloc] init];
+    }
+    [notesArray addObject:[NSNumber numberWithUnsignedInt:note]];
+    [self setNotes:notesArray];
     //Add midinote (unsigned int) to cell as color
 }
 
 - (NSNumber*)getNoteAtIndex:(int)i
 {
-    return [notes objectAtIndex:i];
+    return [notesArray objectAtIndex:i];
 }
 
 - (void)clearNotes
@@ -106,11 +112,11 @@
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
     
-    int numNotes = [notes count];
+    int numNotes = [notesArray count];
     float rectHeight = rect.size.height / numNotes;
     for(int i = 0, offset = 0; i < numNotes; i++, offset += rectHeight)
     {
-        midinote note = [[notes objectAtIndex:i] unsignedIntValue];
+        midinote note = [[notesArray objectAtIndex:i] unsignedIntValue];
         UIColor *color = [noteColor colorFromNoteWithPitch:note % NOTES_IN_OCTAVE octave:note / NOTES_IN_OCTAVE];
         CGContextSetFillColorWithColor(context, [color CGColor]);
         CGRect rect = CGRectMake(0, offset, [self bounds].size.width, rectHeight);
