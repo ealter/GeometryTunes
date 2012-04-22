@@ -2,6 +2,7 @@
 #import "GridCell.h"
 #import "noteTypes.h"
 #import "ViewController.h"
+#import "NotePlayer.h"
 #import "PathsView.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -241,7 +242,7 @@
     for(NSNumber *n in notes)
     {
         midinote note = [n unsignedIntValue];
-        [[piano notePlayer] playNoteWithPitch: note % NOTES_IN_OCTAVE octave:note / NOTES_IN_OCTAVE duration:duration];
+        [NotePlayer playNoteWithPitch: note % NOTES_IN_OCTAVE octave:note / NOTES_IN_OCTAVE duration:duration];
     }
 }
 
@@ -305,7 +306,7 @@
 {
     [pathView setGrid:self];
     if(piano) //Note: This assumes that the grid is blank if the piano doesn't exist
-        [pathView playWithSpeedFactor:factor notePlayer:[piano notePlayer]];
+        [pathView playWithSpeedFactor:factor];
     else
         [delegate performSelector:@selector(setPlayStateToStopped) withObject:nil afterDelay:0];
 }

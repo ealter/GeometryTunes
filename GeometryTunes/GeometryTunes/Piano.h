@@ -1,6 +1,5 @@
 #import <UIKit/UIKit.h>
 #import "noteTypes.h"
-#import "NotePlayer.h"
 
 @class GridView;
 @class scrollViewWithButtons;
@@ -13,7 +12,6 @@
     GridView *delegate;
 }
 
-@property (retain) NotePlayer *notePlayer;
 @property (readonly, retain) scrollViewWithButtons *piano;
 @property (readonly) CGPoint contentOffset;
 

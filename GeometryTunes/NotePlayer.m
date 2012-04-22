@@ -17,17 +17,7 @@ static unsigned midiNote(unsigned pitch, unsigned octave)
     return octave * NOTES_IN_OCTAVE + pitch;
 }
 
-- (id)init
-{
-    self = [super init];
-    if (self)
-    {
-        //put initialization code here
-    }
-    return self;
-}
-
-- (void)playNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave duration:(NSTimeInterval)duration
++ (void)playNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave duration:(NSTimeInterval)duration
 {
     assert(octave >= MIN_OCTAVE && octave <= MAX_OCTAVE);
     assert(pitch < NOTES_IN_OCTAVE);
@@ -36,7 +26,7 @@ static unsigned midiNote(unsigned pitch, unsigned octave)
     [self performSelector:@selector(noteOff:) withObject:note afterDelay:duration];
 }
 
-- (void)stopAllNotes
++ (void)stopAllNotes
 {
     for(int octave = MIN_OCTAVE; octave <= MAX_OCTAVE; octave++)
     {
@@ -47,13 +37,13 @@ static unsigned midiNote(unsigned pitch, unsigned octave)
     }
 }
 
-- (void)noteOn:(NSNumber *)note
++ (void)noteOn:(NSNumber *)note
 {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     appDelegate.api->setChannelMessage (appDelegate.handle, 0x00, 0x90, [note intValue], 0x7F);
 }
 
-- (void)noteOff:(NSNumber *)note
++ (void)noteOff:(NSNumber *)note
 {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     appDelegate.api->setChannelMessage (appDelegate.handle, 0x00, 0x90, [note intValue], 0x00);

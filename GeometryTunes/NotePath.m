@@ -8,7 +8,6 @@
 
 @synthesize notes;
 @synthesize playbackPosition, isPlaying;
-@synthesize player;
 @synthesize delegateGrid, pathView;
 @synthesize speedFactor;
 @synthesize mostRecentAccess;
@@ -83,7 +82,6 @@ const static NSTimeInterval playbackSpeed = 1;
 - (void)playNote:(NSTimer*)t
 {
     CGPoint pos = [[notes objectAtIndex:playbackPosition] CGPointValue];
-    NSLog(@"Note: x:%f, y:%f", pos.x, pos.y);
     CellPos coords = [delegateGrid getBoxFromCoords:pos];
     [delegateGrid playNoteForCell:coords duration:[t timeInterval]];
     [pathView pulseAt:pos];
@@ -108,7 +106,7 @@ const static NSTimeInterval playbackSpeed = 1;
     }
 }
 
-- (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer *)p
+- (void)playWithSpeedFactor:(float)factor
 {
     isPlaying = true;
     if([notes count] < 1)
@@ -120,7 +118,6 @@ const static NSTimeInterval playbackSpeed = 1;
         [pathFollower removeFromSuperview];
     pathFollower = [pathView getPathFollowerAtPos:[[notes objectAtIndex:0] CGPointValue]];
     assert(delegateGrid);
-    [self setPlayer:p];
     
     shouldChangeSpeed = false;
     

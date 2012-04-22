@@ -15,7 +15,7 @@
 
 @implementation Piano
 
-@synthesize notePlayer, piano, contentOffset;
+@synthesize piano, contentOffset;
 
 - (id)initWithFrame:(CGRect)frame delegate:(GridView*)del
 {
@@ -38,7 +38,6 @@
 
 - (id)sharedInit
 {
-    notePlayer = [[NotePlayer alloc]init];
     [self setBackgroundColor:[UIColor whiteColor]];
     if(piano) {
         [piano setContentOffset:contentOffset];

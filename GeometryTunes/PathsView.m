@@ -1,6 +1,7 @@
 #import "PathsView.h"
 #import "NotePath.h"
 #import "GridView.h"
+#import "NotePlayer.h"
 #import "ViewController.h"
 #import <QuartzCore/QuartzCore.h>
 #import <mach/mach_time.h>
@@ -112,13 +113,13 @@
     [self setNeedsDisplay];
 }
 
-- (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer*)player
+- (void)playWithSpeedFactor:(float)factor
 {
     [tapGestureRecognizer setEnabled:TRUE];
     speedFactor = factor;
     for (NSString *pathName in paths)
     {
-        [[paths objectForKey:pathName] playWithSpeedFactor:factor notePlayer:player];
+        [[paths objectForKey:pathName] playWithSpeedFactor:factor];
     }
 }
 
@@ -129,10 +130,7 @@
     {
         [[paths objectForKey:pathName] pause];
     }
-    if(currentPathName) //TODO: If currentPathName is nil but there exists a path, this will not work
-    {
-        [[[self currentPath] player] stopAllNotes];
-    }
+    [NotePlayer stopAllNotes];
 }
 
 - (void)stop
@@ -142,10 +140,7 @@
     {
         [[paths objectForKey:pathName] stop];
     }
-    if(currentPathName) //TODO: If currentPathName is nil but there exists a path, this will not work
-    {
-        [[[self currentPath] player] stopAllNotes];
-    }
+    [NotePlayer stopAllNotes];
 }
 
 - (void)playHasStopped:(NotePath *)path
@@ -158,8 +153,7 @@
     }
     if(!stillPlaying)
     {
-        if(currentPathName) //TODO: If currentPathName is nil but there exists a path, this will not work
-            [[[self currentPath] player] stopAllNotes];
+        [NotePlayer stopAllNotes];
         [tapGestureRecognizer setEnabled:FALSE];
         [[delegateGrid delegate] setPlayStateToStopped];
     }

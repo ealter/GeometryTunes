@@ -1,7 +1,6 @@
 #import <UIKit/UIKit.h>
 
 @class NotePath;
-@class NotePlayer;
 @class GridView;
 
 @interface PathsView : UIView
@@ -19,7 +18,7 @@
 
 - (void)addNoteWithPos:(CGPoint)pos;
 - (void)removeAllNotes;
-- (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer*)player;
+- (void)playWithSpeedFactor:(float)factor;
 - (void)pause;
 - (void)stop;
 

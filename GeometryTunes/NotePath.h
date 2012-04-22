@@ -1,5 +1,4 @@
 #import <Foundation/Foundation.h>
-@class NotePlayer;
 @class GridView;
 @class PathsView;
 
@@ -14,7 +13,6 @@
  //Contains NSValue representations of CGPoints of path vertices
 @property (readonly, retain) NSMutableArray *notes;
 @property (nonatomic) int playbackPosition; //The index in the NSMutableArray. 0 means that we are at the beginning of the path
-@property (retain) NotePlayer *player;
 @property (retain) GridView* delegateGrid;
 @property (retain) PathsView *pathView;
 @property (readonly) BOOL isPlaying;
@@ -28,7 +26,7 @@
 - (void)removeNoteAtIndex:(unsigned)index;
 - (void)removeAllNotes;
 - (void)updateAndDisplayPath:(CGContextRef)context;
-- (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer*)player;
+- (void)playWithSpeedFactor:(float)factor;
 - (void)pause;
 - (void)stop;
 
