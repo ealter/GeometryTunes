@@ -11,6 +11,7 @@
 @synthesize paths, currentPathName;
 @synthesize tapGestureRecognizer;
 @synthesize tapDistanceTolerance;
+@synthesize speedFactor;
 
 - (NotePath*)currentPath
 {
@@ -47,6 +48,7 @@
         [tapGestureRecognizer setEnabled:FALSE];
         [self addGestureRecognizer:tapGestureRecognizer];
         tapDistanceTolerance = 90 * 90;
+        speedFactor = 1;
     }
     return self;
 }
@@ -113,6 +115,7 @@
 - (void)playWithSpeedFactor:(float)factor notePlayer:(NotePlayer*)player
 {
     [tapGestureRecognizer setEnabled:TRUE];
+    speedFactor = factor;
     for (NSString *pathName in paths)
     {
         [[paths objectForKey:pathName] playWithSpeedFactor:factor notePlayer:player];
@@ -126,7 +129,7 @@
     {
         [[paths objectForKey:pathName] pause];
     }
-    if(currentPathName)
+    if(currentPathName) //TODO: If currentPathName is nil but there exists a path, this will not work
     {
         [[[self currentPath] player] stopAllNotes];
     }
@@ -139,7 +142,7 @@
     {
         [[paths objectForKey:pathName] stop];
     }
-    if(currentPathName)
+    if(currentPathName) //TODO: If currentPathName is nil but there exists a path, this will not work
     {
         [[[self currentPath] player] stopAllNotes];
     }
@@ -155,7 +158,7 @@
     }
     if(!stillPlaying)
     {
-        if(currentPathName)
+        if(currentPathName) //TODO: If currentPathName is nil but there exists a path, this will not work
             [[[self currentPath] player] stopAllNotes];
         [tapGestureRecognizer setEnabled:FALSE];
         [[delegateGrid delegate] setPlayStateToStopped];
@@ -168,6 +171,7 @@
     {
         [[paths objectForKey:pathName] setSpeedFactor:factor];
     }
+    speedFactor = factor;
 }
 
 - (void)setGrid:(GridView *)grid
@@ -180,9 +184,19 @@
     tapDistanceTolerance = [grid boxWidth] * [grid boxHeight];
 }
 
+- (void)deemphasizeCell:(GridCell *)cell
+{
+    [delegateGrid changeCell:cell isBold:FALSE];
+}
+
 - (void)pulseAt:(CGPoint)pos
 {
     assert(pulseCircle);
+    //Pulse the grid cell
+    GridCell *cell = [delegateGrid cellAtPos:[delegateGrid getBoxFromCoords:pos]];
+    [delegateGrid changeCell:cell isBold:TRUE];
+    [self performSelector:@selector(deemphasizeCell:) withObject:cell afterDelay:speedFactor];
+    
     const float width = 40;
     const float height = width;
     
@@ -228,6 +242,39 @@ static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
     NotePath *path = [paths objectForKey:currentPathName];
     if(path)
         [path setMostRecentAccess:mach_absolute_time()];
+}
+
+- (void)deletePath:(NSString *)pathName
+{
+    if([currentPathName isEqualToString:pathName])
+        currentPathName = nil;
+    [paths removeObjectForKey:pathName];
+    [self setNeedsDisplay];
+}
+
+- (UIImageView *)getPathFollowerAtPos:(CGPoint)pos
+{
+    const float width = 40;
+    const float height = width;
+    
+    UIImageView *pulse = [[UIImageView alloc]initWithImage:pulseCircle];
+    [pulse setBackgroundColor:[UIColor clearColor]];
+    [pulse setFrame:CGRectMake(pos.x - width/2, pos.y - height/2, width, height)];
+    [self addSubview:pulse];
+    return pulse;
+}
+
+- (void)movePathFollower:(UIImageView *)follower pos:(CGPoint)pos delegate:(id)delegate
+{
+    CABasicAnimation *theAnimation;
+    
+    theAnimation=[CABasicAnimation animationWithKeyPath:@"position"];
+    theAnimation.duration=speedFactor;
+    theAnimation.fromValue=[NSValue valueWithCGPoint:follower.center];
+    theAnimation.toValue=[NSValue valueWithCGPoint:pos];
+    [theAnimation setDelegate:delegate];
+    
+    [follower.layer addAnimation:theAnimation forKey:@"animatePosition"];
 }
 
 @end

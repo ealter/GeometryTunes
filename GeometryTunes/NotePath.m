@@ -2,6 +2,7 @@
 #import "GridView.h"
 #import "NotePlayer.h"
 #import "PathsView.h"
+#import <QuartzCore/QuartzCore.h>
 
 @implementation NotePath
 
@@ -11,6 +12,7 @@
 @synthesize delegateGrid, pathView;
 @synthesize speedFactor;
 @synthesize mostRecentAccess;
+@synthesize pathFollower;
 
 const static NSTimeInterval playbackSpeed = 1;
 
@@ -28,6 +30,7 @@ const static NSTimeInterval playbackSpeed = 1;
         pathView = nil;
         isPlaying = false;
         mostRecentAccess = 0;
+        pathFollower = nil;
     }
     return self;
 }
@@ -80,9 +83,17 @@ const static NSTimeInterval playbackSpeed = 1;
 - (void)playNote:(NSTimer*)t
 {
     CGPoint pos = [[notes objectAtIndex:playbackPosition] CGPointValue];
+    NSLog(@"Note: x:%f, y:%f", pos.x, pos.y);
     CellPos coords = [delegateGrid getBoxFromCoords:pos];
     [delegateGrid playNoteForCell:coords duration:[t timeInterval]];
     [pathView pulseAt:pos];
+    if(playbackPosition < [notes count])
+    {
+        CGPoint pos = [[notes objectAtIndex:playbackPosition] CGPointValue];
+        [[pathFollower layer] setPosition:pos];
+        if(playbackPosition + 1 < [notes count])
+            [pathView movePathFollower:pathFollower pos:[[notes objectAtIndex:playbackPosition + 1] CGPointValue] delegate:self];
+    }
     playbackPosition++;
     if(playbackPosition >= [notes count])
     {
@@ -105,6 +116,9 @@ const static NSTimeInterval playbackSpeed = 1;
         [self performSelector:@selector(stop) withObject:nil afterDelay:0];
         return;
     }
+    if(pathFollower)
+        [pathFollower removeFromSuperview];
+    pathFollower = [pathView getPathFollowerAtPos:[[notes objectAtIndex:0] CGPointValue]];
     assert(delegateGrid);
     [self setPlayer:p];
     
@@ -132,6 +146,11 @@ const static NSTimeInterval playbackSpeed = 1;
     [self pause];
     playbackPosition = 0;
     shouldChangeSpeed = false;
+    if(pathFollower)
+    {
+        [pathFollower removeFromSuperview];
+        pathFollower = nil;
+    }
     [pathView playHasStopped:self];
 }
 
@@ -169,6 +188,11 @@ const static NSTimeInterval playbackSpeed = 1;
 - (void)setPlaybackPosition:(int)_playbackPosition
 {
     playbackPosition = _playbackPosition;
+}
+
+- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
+{
+    
 }
 
 @end

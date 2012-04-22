@@ -11,7 +11,7 @@
 @class PathsView;
 @class ViewController;
 
-@interface PathListController : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface PathListController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIPopoverControllerDelegate>
 
 @property (strong) PathsView *pathView;
 @property (nonatomic, strong) ViewController *mainViewController;

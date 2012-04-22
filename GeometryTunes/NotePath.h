@@ -18,6 +18,7 @@
 @property (retain) GridView* delegateGrid;
 @property (retain) PathsView *pathView;
 @property (readonly) BOOL isPlaying;
+@property (nonatomic, retain) UIImageView *pathFollower;
 @property uint64_t mostRecentAccess;
 
 @property (nonatomic) float speedFactor;
