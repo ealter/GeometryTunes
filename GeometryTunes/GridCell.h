@@ -4,7 +4,7 @@
 
 @interface GridCell : UIView
 {
-    NSMutableArray *notesArray; //An array of NSNumber*'s that each represent a midinote
+    NSMutableArray *notes; //An array of NSNumber*'s that each represent a midinote
 }
 
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsContoller;

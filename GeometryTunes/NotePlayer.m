@@ -29,7 +29,6 @@ static unsigned midiNote(unsigned pitch, unsigned octave)
 
 - (void)playNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave duration:(NSTimeInterval)duration
 {
-    NSLog(@"   play octave %u", octave);
     assert(octave >= MIN_OCTAVE && octave <= MAX_OCTAVE);
     assert(pitch < NOTES_IN_OCTAVE);
     NSNumber *note = [NSNumber numberWithInt:midiNote(pitch, octave)];
