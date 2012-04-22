@@ -59,6 +59,23 @@ static NSString *pauseBtnText = @"Pause";
     [grid playPathWithSpeedFactor:0.5 reversed:false];
 }
 
+- (IBAction)newPathEvent:(id)sender
+{
+    [self changeStateToNormal:true];
+    [editPathBtn setTitle:@"Stop Path" forState:UIControlStateNormal];
+    state = PATH_EDIT_STATE;
+    if(!pathList)
+    {
+        pathList = [[PathListController alloc]initWithNibName:@"PathListController" bundle:nil];
+        [pathList setPathView:[grid pathView]];
+        [pathList setMainViewController:self];
+        pathListPopover = [[UIPopoverController alloc]initWithContentViewController:pathList];
+    }
+    [pathList newPath];
+    if(editPathBtn.hidden == true)
+        [editPathBtn setHidden:false];
+}
+
 - (IBAction)editPathEvent:(id)sender
 {
     if(state == PATH_EDIT_STATE)
@@ -76,6 +93,10 @@ static NSString *pauseBtnText = @"Pause";
             pathListPopover = [[UIPopoverController alloc]initWithContentViewController:pathList];
         }
         [pathListPopover presentPopoverFromRect:[sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
+        
+        //TODO change height when many paths
+        //CGSize popoverSize = CGSizeMake(200, 300);
+        //pathListPopover.popoverContentSize = popoverSize;
     }
 }
 
@@ -93,7 +114,7 @@ static NSString *pauseBtnText = @"Pause";
 - (void)changeStateToNormal:(bool)informGrid
 {
     if(state == PATH_EDIT_STATE)
-        [editPathBtn setTitle:@"Create Path" forState:UIControlStateNormal];
+        [editPathBtn setTitle:@"Edit Path" forState:UIControlStateNormal];
     if(informGrid)
         [grid changeToNormalState];
     state = NORMAL_STATE;
@@ -135,6 +156,7 @@ static NSString *pauseBtnText = @"Pause";
     state = NORMAL_STATE;
     [grid setDelegate:self];
     [self addWoodBackground];
+    [editPathBtn setHidden:true];
 }
 
 - (void)viewDidUnload

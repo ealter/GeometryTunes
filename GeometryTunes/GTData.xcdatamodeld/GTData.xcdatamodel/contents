@@ -3,7 +3,7 @@
     <entity name="Cells" syncable="YES">
         <attribute name="xCoordinate" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
         <attribute name="yCoordinate" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="CellColors" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Colors" syncable="YES"/>
+        <relationship name="CellColors" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Colors" syncable="YES"/>
     </entity>
     <entity name="Colors" syncable="YES">
         <attribute name="color" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>

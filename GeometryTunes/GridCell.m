@@ -45,9 +45,10 @@
         [self sharedInit];
         //add cell to data
         //AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-        NSNumber* xCoord = [[NSNumber alloc]initWithInt:x];
-        NSNumber* yCoord = [[NSNumber alloc]initWithInt:y];
-        [self saveCellwithXCoordinate:xCoord yCoordinate:yCoord andColor:0 andWantRemoved:false];
+        
+        //NSNumber* xCoord = [[NSNumber alloc]initWithInt:x];
+        //NSNumber* yCoord = [[NSNumber alloc]initWithInt:y];
+        //[self saveCellwithXCoordinate:xCoord yCoordinate:yCoord andColor:0 andWantRemoved:false];
     }
     return self;
 }
@@ -128,7 +129,9 @@
     }
     
     NSPersistentStoreCoordinator *coordinator = [self persistentStoreCoordinator];
+    NSLog(@"here");
     if (coordinator != nil) {
+        NSLog(@"what");
         __managedObjectContext = [[NSManagedObjectContext alloc] init];
         [__managedObjectContext setPersistentStoreCoordinator:coordinator];
     }
