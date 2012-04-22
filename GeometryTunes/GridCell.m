@@ -37,7 +37,7 @@
     return self;
 }
 */
-- (id)initWithFrame:(CGRect)frame andXCoord:(int)x andYCoord:(int)y
+- (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self)

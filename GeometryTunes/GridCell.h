@@ -24,7 +24,6 @@
 
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator; // "Bridge" or connection between your application and physical files
 
-- (id)initWithFrame:(CGRect)frame andXCoord:(int)x andYCoord:(int)y;
 //- (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 - (bool)saveCellwithXCoordinate:(NSNumber *)xCoord yCoordinate:(NSNumber *)yCoord andColor:(NSNumber *)color andWantRemoved:(bool)wantRemoved;
