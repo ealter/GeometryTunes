@@ -83,9 +83,16 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     assert(pathView);
-    [pathView setCurrentPathName:[pathView nthPathName:indexPath.row]];
-    if(mainViewController)
-        [mainViewController pathHasBeenSelected];
+    if([tableView isEditing]) {
+        [pathEditorPopover dismissPopoverAnimated:FALSE];
+        [self setSelectedPath:indexPath.row];
+        [self showPathEditor];
+    }
+    else {
+        [pathView setCurrentPathName:[pathView nthPathName:indexPath.row]];
+        if(mainViewController)
+            [mainViewController pathHasBeenSelected];
+    }
 }
 
 - (IBAction)newPath
@@ -104,15 +111,9 @@
     return [[[pathPicker cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] textLabel] text];
 }
 
-- (IBAction)editPath
+- (void)showPathEditor
 {
-    [pathPicker setEditing:![pathPicker isEditing]];
-    if(![pathPicker isEditing])
-    {
-        [pathEditorPopover dismissPopoverAnimated:TRUE];
-        return;
-    }
-    selectedPath = 0;
+    [pathPicker setEditing:true];
     if(!pathEditor)
     {
         pathEditor = [[PathEditorController alloc]initWithNibName:@"PathEditorController" bundle:nil];
@@ -127,6 +128,18 @@
     
     CGSize popoverSize = CGSizeMake(300, 200);
     pathEditorPopover.popoverContentSize = popoverSize;
+}
+
+- (IBAction)editPath
+{
+    [pathPicker setEditing:![pathPicker isEditing]];
+    if(![pathPicker isEditing])
+    {
+        [pathEditorPopover dismissPopoverAnimated:TRUE];
+        return;
+    }
+    selectedPath = 0;
+    [self showPathEditor];
 }
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
