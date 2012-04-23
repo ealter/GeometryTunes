@@ -139,12 +139,7 @@
 				E227B2BB153537F5002D9B13 /* Paths */,
 				E25113EE1519230500BBE1F2 /* NotePlayer.h */,
 				E25113EF1519230500BBE1F2 /* NotePlayer.m */,
-				E288F44B15353855000B0DC8 /* PathListController.h */,
-				E288F44C15353855000B0DC8 /* PathListController.m */,
-				E288F44D15353855000B0DC8 /* PathListController.xib */,
 				CE5C7C6E151E7D3900B81396 /* noteTypes.h */,
-				E2687D8E151FA3A8005BB1F8 /* PathsView.h */,
-				E2687D8F151FA3A8005BB1F8 /* PathsView.m */,
 				E205F7B5152E6F6C001CAF14 /* Keyboard */,
 				8319430C150BD226003EF364 /* Products */,
 			);
@@ -210,6 +205,11 @@
 		E227B2BB153537F5002D9B13 /* Paths */ = {
 			isa = PBXGroup;
 			children = (
+				E288F44B15353855000B0DC8 /* PathListController.h */,
+				E288F44C15353855000B0DC8 /* PathListController.m */,
+				E288F44D15353855000B0DC8 /* PathListController.xib */,
+				E2687D8E151FA3A8005BB1F8 /* PathsView.h */,
+				E2687D8F151FA3A8005BB1F8 /* PathsView.m */,
 				83E3726B151D7069000DCF85 /* NotePath.h */,
 				83E3726C151D7069000DCF85 /* NotePath.m */,
 			);
