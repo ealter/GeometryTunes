@@ -8,7 +8,6 @@
 }
 
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsContoller;
-@property float cellID;
 
 - (NSMutableArray*)notes;
 - (void)setNotes:(NSMutableArray*)notes;

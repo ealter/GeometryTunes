@@ -13,30 +13,13 @@
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 
-@synthesize cellID = _cellID;
-
 
 - (void)sharedInit
 {
     notes = [[NSMutableArray alloc] init];
     [self setBackgroundColor:[UIColor clearColor]];
 }
-/*
-- (id)initWithFrame:(CGRect)frame
-{
-    self = [super initWithFrame:frame];
-    if (self)
-    {
-        [self sharedInit];
-        //add cell to data
-        //AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-        //NSNumber* xCoord = [[NSNumber alloc]initWithFloat:frame.origin.x];
-        //NSNumber* yCoord = [[NSNumber alloc]initWithFloat:frame.origin.y];
-        //[appDelegate saveCellwithXCoordinate:xCoord yCoordinate:yCoord andColor:0 andWantRemoved:false];
-    }
-    return self;
-}
-*/
+
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
