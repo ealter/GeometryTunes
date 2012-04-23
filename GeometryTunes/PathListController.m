@@ -108,7 +108,10 @@
 {
     [pathPicker setEditing:![pathPicker isEditing]];
     if(![pathPicker isEditing])
+    {
+        [pathEditorPopover dismissPopoverAnimated:TRUE];
         return;
+    }
     selectedPath = 0;
     if(!pathEditor)
     {
@@ -116,6 +119,7 @@
         [pathEditor setPathList:self];
         [pathEditor setPathsView:[[mainViewController grid] pathView]];
         pathEditorPopover = [[UIPopoverController alloc]initWithContentViewController:pathEditor];
+        [pathEditorPopover setDelegate:pathEditor];
     }
     [pathEditor setPathName:[self nameForNthCell:selectedPath]];
     [pathEditorPopover presentPopoverFromRect:[self.view frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];

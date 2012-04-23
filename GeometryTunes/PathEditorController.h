@@ -3,7 +3,7 @@
 @class PathsView;
 @class PathListController;
 
-@interface PathEditorController : UIViewController
+@interface PathEditorController : UIViewController <UIPopoverControllerDelegate>
 
 @property (nonatomic) IBOutlet UITextField *pathNameField;
 @property (nonatomic, copy) NSString *pathName;

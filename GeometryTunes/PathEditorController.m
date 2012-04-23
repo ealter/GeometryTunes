@@ -52,4 +52,9 @@
 	return YES;
 }
 
+- (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
+{
+    [[pathList pathPicker] setEditing:false];
+}
+
 @end
