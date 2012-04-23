@@ -120,7 +120,7 @@ static NSString *pauseBtnText = @"Pause";
 
 - (void)addWoodBackground
 {
-    UIColor *background = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"woodBackground.jpg"]];
+    UIColor *background = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"woodBackgroundRoyaltyFree.jpg"]];
     self.view.backgroundColor = background;
 }
 
