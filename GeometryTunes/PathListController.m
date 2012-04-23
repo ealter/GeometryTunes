@@ -80,6 +80,25 @@
     [pathPicker reloadData];
 }
 
+- (void)showPathEditor
+{
+    [pathPicker setEditing:true];
+    if(!pathEditor)
+    {
+        pathEditor = [[PathEditorController alloc]initWithNibName:@"PathEditorController" bundle:nil];
+        [pathEditor setPathList:self];
+        [pathEditor setPathsView:[[mainViewController grid] pathView]];
+        pathEditorPopover = [[UIPopoverController alloc]initWithContentViewController:pathEditor];
+        [pathEditorPopover setDelegate:pathEditor];
+    }
+    [pathEditor setPathName:[self nameForNthCell:selectedPath]];
+    [pathEditorPopover presentPopoverFromRect:[self.view frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
+    [pathEditor setPathName:[self nameForNthCell:selectedPath]];
+    
+    CGSize popoverSize = CGSizeMake(300, 200);
+    pathEditorPopover.popoverContentSize = popoverSize;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     assert(pathView);
@@ -109,25 +128,6 @@
 - (NSString *)nameForNthCell:(int)row
 {
     return [[[pathPicker cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] textLabel] text];
-}
-
-- (void)showPathEditor
-{
-    [pathPicker setEditing:true];
-    if(!pathEditor)
-    {
-        pathEditor = [[PathEditorController alloc]initWithNibName:@"PathEditorController" bundle:nil];
-        [pathEditor setPathList:self];
-        [pathEditor setPathsView:[[mainViewController grid] pathView]];
-        pathEditorPopover = [[UIPopoverController alloc]initWithContentViewController:pathEditor];
-        [pathEditorPopover setDelegate:pathEditor];
-    }
-    [pathEditor setPathName:[self nameForNthCell:selectedPath]];
-    [pathEditorPopover presentPopoverFromRect:[self.view frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
-    [pathEditor setPathName:[self nameForNthCell:selectedPath]];
-    
-    CGSize popoverSize = CGSizeMake(300, 200);
-    pathEditorPopover.popoverContentSize = popoverSize;
 }
 
 - (IBAction)editPath

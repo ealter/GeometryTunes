@@ -5,10 +5,10 @@
 
 @interface PathEditorController : UIViewController <UIPopoverControllerDelegate>
 
-@property (nonatomic) IBOutlet UITextField *pathNameField;
+@property (nonatomic, retain) IBOutlet UITextField *pathNameField;
 @property (nonatomic, copy) NSString *pathName;
-@property (nonatomic) PathsView *pathsView;
-@property (nonatomic) PathListController *pathList;
+@property (nonatomic, retain) PathsView *pathsView;
+@property (nonatomic, retain) PathListController *pathList;
 
 - (IBAction)renameEvent:(id)sender;
 
