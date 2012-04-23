@@ -19,6 +19,8 @@
 		83E3726D151D7069000DCF85 /* NotePath.m in Sources */ = {isa = PBXBuildFile; fileRef = 83E3726C151D7069000DCF85 /* NotePath.m */; };
 		83F88F9A15391C20007B0FA4 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 83F88F9915391C20007B0FA4 /* CoreData.framework */; };
 		83F88F9E15391CCE007B0FA4 /* GTData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 83F88F9C15391CCE007B0FA4 /* GTData.xcdatamodeld */; };
+		CE118320154600C400193B2E /* PathEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE11831E154600C400193B2E /* PathEditorController.m */; };
+		CE118321154600C400193B2E /* PathEditorController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE11831F154600C400193B2E /* PathEditorController.xib */; };
 		CE2446B91522D21300C2DB33 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2446B81522D21300C2DB33 /* QuartzCore.framework */; };
 		CE43316A15261456006EC577 /* scrollViewWithButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = CE43316915261456006EC577 /* scrollViewWithButtons.m */; };
 		E25113F01519230500BBE1F2 /* NotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E25113EF1519230500BBE1F2 /* NotePlayer.m */; };
@@ -62,6 +64,9 @@
 		83E3726C151D7069000DCF85 /* NotePath.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePath.m; sourceTree = "<group>"; };
 		83F88F9915391C20007B0FA4 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 		83F88F9D15391CCE007B0FA4 /* GTData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = GTData.xcdatamodel; sourceTree = "<group>"; };
+		CE11831D154600C400193B2E /* PathEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathEditorController.h; sourceTree = "<group>"; };
+		CE11831E154600C400193B2E /* PathEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathEditorController.m; sourceTree = "<group>"; };
+		CE11831F154600C400193B2E /* PathEditorController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PathEditorController.xib; sourceTree = "<group>"; };
 		CE2446B81522D21300C2DB33 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		CE43316815261456006EC577 /* scrollViewWithButtons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scrollViewWithButtons.h; sourceTree = "<group>"; };
 		CE43316915261456006EC577 /* scrollViewWithButtons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = scrollViewWithButtons.m; sourceTree = "<group>"; };
@@ -205,6 +210,9 @@
 		E227B2BB153537F5002D9B13 /* Paths */ = {
 			isa = PBXGroup;
 			children = (
+				CE11831D154600C400193B2E /* PathEditorController.h */,
+				CE11831E154600C400193B2E /* PathEditorController.m */,
+				CE11831F154600C400193B2E /* PathEditorController.xib */,
 				E288F44B15353855000B0DC8 /* PathListController.h */,
 				E288F44C15353855000B0DC8 /* PathListController.m */,
 				E288F44D15353855000B0DC8 /* PathListController.xib */,
@@ -305,6 +313,7 @@
 				E2D0ADA2153CD517009E474A /* iPadTutuorial.pdf in Resources */,
 				E2CD9FA71545079800D4348D /* woodBackgroundRoyaltyFree.jpg in Resources */,
 				E2CD9FAE1545103E00D4348D /* default.png in Resources */,
+				CE118321154600C400193B2E /* PathEditorController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -330,6 +339,7 @@
 				83F88F9E15391CCE007B0FA4 /* GTData.xcdatamodeld in Sources */,
 				E2C895641540B60500E5314F /* CoreDataAccess.m in Sources */,
 				E2C895681540B93900E5314F /* Cells.m in Sources */,
+				CE118320154600C400193B2E /* PathEditorController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

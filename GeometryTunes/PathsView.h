@@ -29,6 +29,7 @@
 - (void)pulseAt:(CGPoint)pos;
 
 - (NSString *)nthPathName:(NSInteger)index;
+- (void)renamePathFrom:(NSString *)oldName to:(NSString *)newName;
 
 - (UIImageView *)getPathFollowerAtPos:(CGPoint)pos;
 - (void)movePathFollower:(UIImageView *)follower pos:(CGPoint)pos delegate:(id)delegate;

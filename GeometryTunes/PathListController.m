@@ -1,19 +1,14 @@
-//
-//  PathListController.m
-//  GeometryTunes
-//
-//  Created by Music2 on 4/10/12.
-//  Copyright (c) 2012 Tufts University. All rights reserved.
-//
-
 #import "PathListController.h"
 #import "PathsView.h"
 #import "ViewController.h"
+#import "PathEditorController.h"
 
 @implementation PathListController
 
 @synthesize pathView, pathPicker, editPathBtn;
 @synthesize mainViewController;
+@synthesize pathEditor, pathEditorPopover;
+@synthesize selectedPath;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -104,10 +99,30 @@
         [mainViewController pathHasBeenSelected];
 }
 
+- (NSString *)nameForNthCell:(int)row
+{
+    return [[[pathPicker cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] textLabel] text];
+}
+
 - (IBAction)editPath
 {
     [pathPicker setEditing:![pathPicker isEditing]];
-    //TODO: change the button text
+    if(![pathPicker isEditing])
+        return;
+    selectedPath = 0;
+    if(!pathEditor)
+    {
+        pathEditor = [[PathEditorController alloc]initWithNibName:@"PathEditorController" bundle:nil];
+        [pathEditor setPathList:self];
+        [pathEditor setPathsView:[[mainViewController grid] pathView]];
+        pathEditorPopover = [[UIPopoverController alloc]initWithContentViewController:pathEditor];
+    }
+    [pathEditor setPathName:[self nameForNthCell:selectedPath]];
+    [pathEditorPopover presentPopoverFromRect:[self.view frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
+    [pathEditor setPathName:[self nameForNthCell:selectedPath]];
+    
+    CGSize popoverSize = CGSizeMake(300, 200);
+    pathEditorPopover.popoverContentSize = popoverSize;
 }
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
