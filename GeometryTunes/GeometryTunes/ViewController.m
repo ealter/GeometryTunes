@@ -1,4 +1,6 @@
 #import "ViewController.h"
+#import "PathsView.h"
+#import "PathListController.h"
 
 @implementation ViewController
 
@@ -75,6 +77,10 @@ static NSString *pauseBtnText = @"Pause";
             [pathList setMainViewController:self];
             pathListPopover = [[UIPopoverController alloc]initWithContentViewController:pathList];
             [pathListPopover setDelegate:pathList];
+        }
+        if(![[[pathList pathView] paths] count]) {
+            [pathList newPath];
+            return;
         }
         [pathListPopover presentPopoverFromRect:[sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
         

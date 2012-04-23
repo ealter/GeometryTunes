@@ -36,7 +36,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.contentSizeForViewInPopover = CGSizeMake(200, 300);
     assert(pathPicker);
 }
 
