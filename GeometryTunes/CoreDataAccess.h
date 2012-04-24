@@ -9,6 +9,7 @@
 
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator; // "Bridge" or connection between your application and physical files
 
+
 - (void)saveContext;
 - (NSURL *)applicationDocumentsDirectory;
 - (NSMutableArray *) core_data_Content;

@@ -230,6 +230,15 @@ static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
     return [sortedKeys objectAtIndex:index];
 }
 
+- (void)renamePathFrom:(NSString *)oldName to:(NSString *)newName
+{
+    id path = [paths objectForKey:oldName];
+    if(path && ![paths objectForKey:newName]) {
+        [paths removeObjectForKey:oldName];
+        [paths setObject:path forKey:newName];
+    }
+}
+
 - (void)setCurrentPathName:(NSString *)_currentPathName
 {
     currentPathName = _currentPathName;
@@ -248,7 +257,7 @@ static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
 
 - (UIImageView *)getPathFollowerAtPos:(CGPoint)pos
 {
-    const float width = 40;
+    const float width = 20;
     const float height = width;
     
     UIImageView *pulse = [[UIImageView alloc]initWithImage:pulseCircle];

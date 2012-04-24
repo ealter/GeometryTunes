@@ -1,4 +1,5 @@
 #import "CoreDataAccess.h"
+#import "Cells.h"
 
 @implementation CoreDataAccess
 @synthesize managedObjectContext = __managedObjectContext;
@@ -28,6 +29,17 @@
 
 - (void)saveContext
 {
+    //save cell
+    Cells *cell = (Cells *)[NSEntityDescription insertNewObjectForEntityForName:@"Cells" inManagedObjectContext:self.managedObjectContext]; 
+    [cell setCellId:[[NSNumber alloc]initWithInt:1]];
+    NSError *error;
+    if(![self.managedObjectContext save:&error]){
+        NSLog(@"Data was not saved");
+    }
+    else
+    {
+        NSLog(@"Data Saved!!!");
+    }
 }
 
 

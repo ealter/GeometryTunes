@@ -1,4 +1,6 @@
 #import "ViewController.h"
+#import "PathsView.h"
+#import "PathListController.h"
 
 @implementation ViewController
 
@@ -76,6 +78,10 @@ static NSString *pauseBtnText = @"Pause";
             pathListPopover = [[UIPopoverController alloc]initWithContentViewController:pathList];
             [pathListPopover setDelegate:pathList];
         }
+        if(![[[pathList pathView] paths] count]) {
+            [pathList newPath];
+            return;
+        }
         [pathListPopover presentPopoverFromRect:[sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
         
         CGSize popoverSize = CGSizeMake(200, 300);
@@ -120,7 +126,7 @@ static NSString *pauseBtnText = @"Pause";
 
 - (void)addWoodBackground
 {
-    UIColor *background = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"woodBackground.jpg"]];
+    UIColor *background = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"woodBackgroundRoyaltyFree.jpg"]];
     self.view.backgroundColor = background;
 }
 

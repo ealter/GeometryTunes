@@ -1,19 +1,14 @@
-//
-//  PathListController.m
-//  GeometryTunes
-//
-//  Created by Music2 on 4/10/12.
-//  Copyright (c) 2012 Tufts University. All rights reserved.
-//
-
 #import "PathListController.h"
 #import "PathsView.h"
 #import "ViewController.h"
+#import "PathEditorController.h"
 
 @implementation PathListController
 
 @synthesize pathView, pathPicker, editPathBtn;
 @synthesize mainViewController;
+@synthesize pathEditor, pathEditorPopover;
+@synthesize selectedPath;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -36,7 +31,6 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    self.contentSizeForViewInPopover = CGSizeMake(200, 300);
     assert(pathPicker);
 }
 
@@ -86,12 +80,38 @@
     [pathPicker reloadData];
 }
 
+- (void)showPathEditor
+{
+    [pathPicker setEditing:true];
+    if(!pathEditor)
+    {
+        pathEditor = [[PathEditorController alloc]initWithNibName:@"PathEditorController" bundle:nil];
+        [pathEditor setPathList:self];
+        [pathEditor setPathsView:[[mainViewController grid] pathView]];
+        pathEditorPopover = [[UIPopoverController alloc]initWithContentViewController:pathEditor];
+        [pathEditorPopover setDelegate:pathEditor];
+    }
+    [pathEditor setPathName:[self nameForNthCell:selectedPath]];
+    [pathEditorPopover presentPopoverFromRect:[self.view frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
+    [pathEditor setPathName:[self nameForNthCell:selectedPath]];
+    
+    CGSize popoverSize = CGSizeMake(300, 200);
+    pathEditorPopover.popoverContentSize = popoverSize;
+}
+
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     assert(pathView);
-    [pathView setCurrentPathName:[pathView nthPathName:indexPath.row]];
-    if(mainViewController)
-        [mainViewController pathHasBeenSelected];
+    if([tableView isEditing]) {
+        [pathEditorPopover dismissPopoverAnimated:FALSE];
+        [self setSelectedPath:indexPath.row];
+        [self showPathEditor];
+    }
+    else {
+        [pathView setCurrentPathName:[pathView nthPathName:indexPath.row]];
+        if(mainViewController)
+            [mainViewController pathHasBeenSelected];
+    }
 }
 
 - (IBAction)newPath
@@ -105,10 +125,21 @@
         [mainViewController pathHasBeenSelected];
 }
 
+- (NSString *)nameForNthCell:(int)row
+{
+    return [[[pathPicker cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] textLabel] text];
+}
+
 - (IBAction)editPath
 {
     [pathPicker setEditing:![pathPicker isEditing]];
-    //TODO: change the button text
+    if(![pathPicker isEditing])
+    {
+        [pathEditorPopover dismissPopoverAnimated:TRUE];
+        return;
+    }
+    selectedPath = 0;
+    [self showPathEditor];
 }
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
