@@ -81,6 +81,9 @@ const static NSTimeInterval playbackSpeed = 1;
 
 - (void)playNote:(NSTimer*)t
 {
+    assert(notes);
+    if(playbackPosition >= [notes count])
+        return;
     CGPoint pos = [[notes objectAtIndex:playbackPosition] CGPointValue];
     CellPos coords = [delegateGrid getBoxFromCoords:pos];
     [delegateGrid playNoteForCell:coords duration:[t timeInterval]];
@@ -180,11 +183,6 @@ const static NSTimeInterval playbackSpeed = 1;
         }
     }
     return minIndex;
-}
-
-- (void)setPlaybackPosition:(int)_playbackPosition
-{
-    playbackPosition = _playbackPosition;
 }
 
 - (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
