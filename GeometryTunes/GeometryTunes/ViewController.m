@@ -80,14 +80,9 @@ static NSString *pathEditBtnText = @"Done";
             pathListPopover = [[UIPopoverController alloc]initWithContentViewController:pathList];
             [pathListPopover setDelegate:pathList];
         }
-        if(![[[pathList pathView] paths] count]) {
-            [pathList newPath];
-            return;
-        }
-        [pathListPopover presentPopoverFromRect:[sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
-        
         CGSize popoverSize = CGSizeMake(200, 300);
         pathListPopover.popoverContentSize = popoverSize;
+        [pathListPopover presentPopoverFromRect:[sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
     }
 }
 
