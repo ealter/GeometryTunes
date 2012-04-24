@@ -10,7 +10,6 @@
 
 @implementation Cells
 
-@dynamic xCoord;
-@dynamic yCoord;
+@dynamic cellId;
 
 @end

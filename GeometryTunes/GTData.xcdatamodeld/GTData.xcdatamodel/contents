@@ -1,15 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="872" systemVersion="10K549" minimumToolsVersion="Xcode 4.1" macOSVersion="Automatic" iOSVersion="Automatic">
     <entity name="Cells" syncable="YES">
-        <attribute name="xCoordinate" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <attribute name="yCoordinate" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
-        <relationship name="CellColors" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="Colors" syncable="YES"/>
-    </entity>
-    <entity name="Colors" syncable="YES">
-        <attribute name="color" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="cellId" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
     </entity>
     <elements>
         <element name="Cells" positionX="153" positionY="144" width="128" height="90"/>
-        <element name="Colors" positionX="421" positionY="225" width="128" height="60"/>
     </elements>
 </model>
