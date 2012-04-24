@@ -16,13 +16,8 @@ Clearing a path
 Naming paths
 Syncing paths when clicking in the middle of one
 
+Late todos:
+Make the grid scrollable
+
 For Dylan:
 Undo/redo
-
-Path stuff (for Eliot):
-2 buttons in the popup: New and Edit
-When you click edit, it makes another popup for the edit menu.
-	Remove last note.
-	Renaming
-	Clearing
-The edit button changes to done.
