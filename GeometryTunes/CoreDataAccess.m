@@ -30,6 +30,7 @@
 - (void)saveCellWithXCoordinate:(int)xCoordinate andYCoordinate:(int)yCoordinate
 {
     //save cell
+    assert(self.managedObjectContext);
     Cells *cell = (Cells *)[NSEntityDescription insertNewObjectForEntityForName:@"Cells" inManagedObjectContext:self.managedObjectContext]; 
     [cell setXCoordinate:[[NSNumber alloc]initWithInt:xCoordinate]];
     [cell setYCoordinate:[[NSNumber alloc]initWithInt:yCoordinate]];

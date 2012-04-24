@@ -207,6 +207,7 @@
     theAnimation.fromValue=[NSNumber numberWithFloat:1.0];
     theAnimation.toValue=[NSNumber numberWithFloat:0.0];
     
+    [pulse.layer setOpacity:0];
     [pulse.layer addAnimation:theAnimation forKey:@"animateOpacity"];
     [pulse performSelector:@selector(removeFromSuperview) withObject:nil afterDelay:duration];
 }

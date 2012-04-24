@@ -32,8 +32,7 @@ typedef enum STATE
 - (IBAction)sliderValueChanged:(id)sender;
 
 //Path methods
-- (IBAction)editPathEvent:(id)sender;
-- (IBAction)clearPathEvent:(id)sender; 
+- (IBAction)editPathEvent:(id)sender; 
 
 - (void)changeStateToNormal:(bool)informGrid;
 

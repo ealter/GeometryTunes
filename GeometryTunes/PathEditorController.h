@@ -11,5 +11,6 @@
 @property (nonatomic, retain) PathListController *pathList;
 
 - (IBAction)renameEvent:(id)sender;
+- (IBAction)clearEvent;
 
 @end

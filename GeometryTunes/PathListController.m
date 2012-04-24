@@ -32,6 +32,7 @@
 {
     [super viewDidLoad];
     assert(pathPicker);
+    [pathPicker setAllowsSelectionDuringEditing:true];
 }
 
 - (void)viewDidUnload
@@ -78,6 +79,8 @@
     NSString *pathName = [pathView nthPathName:indexPath.row];
     [pathView deletePath:pathName];
     [pathPicker reloadData];
+    if([pathName isEqualToString:[pathEditor pathName]])
+        [pathEditorPopover dismissPopoverAnimated:TRUE];
 }
 
 - (void)showPathEditor
@@ -90,8 +93,8 @@
         [pathEditor setPathsView:[[mainViewController grid] pathView]];
         pathEditorPopover = [[UIPopoverController alloc]initWithContentViewController:pathEditor];
         [pathEditorPopover setDelegate:pathEditor];
+        [pathEditorPopover setPassthroughViews:[NSArray arrayWithObject:pathPicker]];
     }
-    [pathEditor setPathName:[self nameForNthCell:selectedPath]];
     [pathEditorPopover presentPopoverFromRect:[self.view frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
     [pathEditor setPathName:[self nameForNthCell:selectedPath]];
     
@@ -127,7 +130,7 @@
 
 - (NSString *)nameForNthCell:(int)row
 {
-    return [[[pathPicker cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] textLabel] text];
+    return [[[pathPicker cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]] textLabel] text];
 }
 
 - (IBAction)editPath

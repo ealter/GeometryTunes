@@ -189,8 +189,11 @@
 -  (void) handleSwipe:(UIGestureRecognizer *)sender
 {
     CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
-    if(!CGRectContainsPoint([piano frame], pos))
-        [self changeToNormalState];
+    if([self state] == PIANO_STATE)
+    {
+        if(!CGRectContainsPoint([piano frame], pos))
+            [self changeToNormalState];
+    }
 }
 
 - (void) resetPath 

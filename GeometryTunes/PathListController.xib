@@ -69,13 +69,13 @@
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<array class="NSMutableArray" key="IBUIItems">
 							<object class="IBUIBarButtonItem" id="188240599">
-								<string key="IBUITitle">New Path</string>
+								<string key="IBUITitle">New</string>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 								<int key="IBUIStyle">1</int>
 								<reference key="IBUIToolbar" ref="3490839"/>
 							</object>
 							<object class="IBUIBarButtonItem" id="994666708">
-								<string key="IBUITitle">Edit Paths</string>
+								<string key="IBUITitle">Edit</string>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 								<int key="IBUIStyle">1</int>
 								<reference key="IBUIToolbar" ref="3490839"/>
