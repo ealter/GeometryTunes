@@ -69,12 +69,6 @@
     return __managedObjectModel;
 }
 
-
-
-
-
-
-
 // Returns the persistent store coordinator for the application.
 // If the coordinator doesn't already exist, it is created and the application's store added to it.
 - (NSPersistentStoreCoordinator *)persistentStoreCoordinator
