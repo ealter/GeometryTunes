@@ -24,6 +24,7 @@
         //save cell
         CoreDataAccess *data = [[CoreDataAccess alloc]init];
         [data saveContext];
+        //frame.origin.x
     }
     return self;
 }

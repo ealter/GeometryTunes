@@ -34,11 +34,11 @@
     [cell setCellId:[[NSNumber alloc]initWithInt:1]];
     NSError *error;
     if(![self.managedObjectContext save:&error]){
-        NSLog(@"Data was not saved");
+        //NSLog(@"Data was not saved");
     }
     else
     {
-        NSLog(@"Data Saved!!!");
+        //NSLog(@"Data Saved!!!");
     }
 }
 
