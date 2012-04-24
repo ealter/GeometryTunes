@@ -16,6 +16,8 @@
 
 static NSString *playBtnText = @"Play";
 static NSString *pauseBtnText = @"Pause";
+static NSString *normalPathBtnText;
+static NSString *pathEditBtnText = @"Done";
 
 - (IBAction)playPauseEvent:(id)sender
 {
@@ -68,7 +70,7 @@ static NSString *pauseBtnText = @"Pause";
     else
     {
         [self changeStateToNormal:true];
-        [editPathBtn setTitle:@"Stop Path" forState:UIControlStateNormal];
+        [editPathBtn setTitle:pathEditBtnText forState:UIControlStateNormal];
         state = PATH_EDIT_STATE;
         if(!pathList)
         {
@@ -103,7 +105,7 @@ static NSString *pauseBtnText = @"Pause";
 - (void)changeStateToNormal:(bool)informGrid
 {
     if(state == PATH_EDIT_STATE)
-        [editPathBtn setTitle:@"Edit Path" forState:UIControlStateNormal];
+        [editPathBtn setTitle:normalPathBtnText forState:UIControlStateNormal];
     if(informGrid)
         [grid changeToNormalState];
     state = NORMAL_STATE;
@@ -145,7 +147,7 @@ static NSString *pauseBtnText = @"Pause";
     state = NORMAL_STATE;
     [grid setDelegate:self];
     [self addWoodBackground];
-    [editPathBtn setHidden:true];
+    normalPathBtnText = [[editPathBtn titleLabel] text];
 }
 
 - (void)viewDidUnload

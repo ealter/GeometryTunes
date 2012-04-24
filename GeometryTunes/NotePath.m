@@ -151,6 +151,7 @@ const static NSTimeInterval playbackSpeed = 1;
     shouldChangeSpeed = false;
     if(pathFollower)
     {
+        [pathFollower stopAnimating];
         [pathFollower removeFromSuperview];
         pathFollower = nil;
     }
