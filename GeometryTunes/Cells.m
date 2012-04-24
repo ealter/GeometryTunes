@@ -11,5 +11,6 @@
 @implementation Cells
 
 @dynamic cellId;
+@dynamic xCoordinate;
 
 @end

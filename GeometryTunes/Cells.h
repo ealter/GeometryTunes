@@ -12,5 +12,6 @@
 @interface Cells : NSManagedObject
 
 @property (nonatomic, retain) NSNumber *cellId;
+@property (nonatomic, retain) NSNumber *xCoordinate;
 
 @end
