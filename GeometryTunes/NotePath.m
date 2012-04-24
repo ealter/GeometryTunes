@@ -83,7 +83,10 @@ const static NSTimeInterval playbackSpeed = 1;
 {
     assert(notes);
     if(playbackPosition >= [notes count])
+    {
+        [self stop];
         return;
+    }
     CGPoint pos = [[notes objectAtIndex:playbackPosition] CGPointValue];
     CellPos coords = [delegateGrid getBoxFromCoords:pos];
     [delegateGrid playNoteForCell:coords duration:[t timeInterval]];
