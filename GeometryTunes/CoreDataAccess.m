@@ -30,6 +30,7 @@
 - (void)saveContext
 {
     //save cell
+    assert(self.managedObjectContext);
     Cells *cell = (Cells *)[NSEntityDescription insertNewObjectForEntityForName:@"Cells" inManagedObjectContext:self.managedObjectContext]; 
     [cell setCellId:[[NSNumber alloc]initWithInt:1]];
     NSError *error;
