@@ -8,6 +8,7 @@
 @implementation GridCell
 
 @synthesize fetchedResultsContoller;
+@synthesize data;
 
 - (void)sharedInit
 {
@@ -22,9 +23,8 @@
     {
         [self sharedInit];
         //save cell
-        CoreDataAccess *data = [[CoreDataAccess alloc]init];
-        [data saveContext];
-        //frame.origin.x
+        data = [[CoreDataAccess alloc]init];
+        [data saveCellWithXCoordinate:frame.origin.x andYCoordinate:frame.origin.y];
     }
     return self;
 }
@@ -65,6 +65,8 @@
     [notes addObject:[NSNumber numberWithUnsignedInt:note]];
     [self setNotes:notes];
     //Add midinote (unsigned int) to cell as color
+    NSLog(@"add");
+    [data saveColor:note toCellWithXCoordiante:self.frame.origin.x andYCoordinate:self.frame.origin.y];
 }
 
 - (NSNumber*)getNoteAtIndex:(int)i

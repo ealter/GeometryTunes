@@ -27,12 +27,13 @@
 }
 
 
-- (void)saveContext
+- (void)saveCellWithXCoordinate:(int)xCoordinate andYCoordinate:(int)yCoordinate
 {
     //save cell
     Cells *cell = (Cells *)[NSEntityDescription insertNewObjectForEntityForName:@"Cells" inManagedObjectContext:self.managedObjectContext]; 
-    [cell setCellId:[[NSNumber alloc]initWithInt:1]];
-    NSError *error;
+    [cell setXCoordinate:[[NSNumber alloc]initWithInt:xCoordinate]];
+    [cell setYCoordinate:[[NSNumber alloc]initWithInt:yCoordinate]];
+    NSError *error = nil;
     if(![self.managedObjectContext save:&error]){
         //NSLog(@"Data was not saved");
     }
@@ -42,6 +43,29 @@
     }
 }
 
+- (void)saveColor:(int)color toCellWithXCoordiante:(int)xCoordinate andYCoordinate:(int)yCoordinate
+{
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    NSEntityDescription *searchEntity = [NSEntityDescription entityForName:@"Cells" inManagedObjectContext:self.managedObjectContext];
+    [request setEntity:searchEntity];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"xCoordinate = %@ AND yCoordinate = %@", [[NSNumber alloc]initWithInt:xCoordinate], [[NSNumber alloc]initWithInt:yCoordinate]]; // Fix: returns row
+    [request setPredicate:predicate];
+    
+    NSError *error = nil;
+    NSMutableArray *results = [[self.managedObjectContext executeFetchRequest:request
+                                                                        error:&error]mutableCopy];
+
+    if ([results count] == 0) {
+        NSLog(@"No results");
+    }
+    else {
+        NSLog(@"%@", results);
+    }
+
+    //NSNumber *xcoord = [results objectAtIndex:1];
+    //NSLog(@"Result: %i", [xcoord intValue]);
+}
 
 - (NSManagedObjectContext *)managedObjectContext
 {

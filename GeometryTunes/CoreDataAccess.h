@@ -10,7 +10,8 @@
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator; // "Bridge" or connection between your application and physical files
 
 
-- (void)saveContext;
+- (void)saveCellWithXCoordinate: (int)xCoordinate andYCoordinate: (int)yCoordinate;
+- (void)saveColor:(int)color toCellWithXCoordiante:(int)xCoordinate andYCoordinate:(int)yCoordinate;
 - (NSURL *)applicationDocumentsDirectory;
 - (NSMutableArray *) core_data_Content;
 

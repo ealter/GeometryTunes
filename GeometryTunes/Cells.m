@@ -12,5 +12,6 @@
 
 @dynamic cellId;
 @dynamic xCoordinate;
+@dynamic yCoordinate;
 
 @end

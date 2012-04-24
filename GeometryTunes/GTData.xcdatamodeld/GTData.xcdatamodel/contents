@@ -11,7 +11,7 @@
         <relationship name="newRelationship" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="CellColor" inverseName="newRelationship" inverseEntity="CellColor" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Cells" positionX="153" positionY="144" width="128" height="105"/>
+        <element name="Cells" positionX="153" positionY="144" width="128" height="90"/>
         <element name="CellColor" positionX="414" positionY="165" width="128" height="75"/>
     </elements>
 </model>

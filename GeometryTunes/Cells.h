@@ -13,5 +13,6 @@
 
 @property (nonatomic, retain) NSNumber *cellId;
 @property (nonatomic, retain) NSNumber *xCoordinate;
+@property (nonatomic, retain) NSNumber *yCoordinate;
 
 @end
