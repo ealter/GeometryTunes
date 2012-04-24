@@ -79,6 +79,8 @@
     NSString *pathName = [pathView nthPathName:indexPath.row];
     [pathView deletePath:pathName];
     [pathPicker reloadData];
+    if([pathName isEqualToString:[pathEditor pathName]])
+        [pathEditorPopover dismissPopoverAnimated:TRUE];
 }
 
 - (void)showPathEditor
