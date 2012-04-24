@@ -92,11 +92,6 @@ static NSString *pathEditBtnText = @"Done";
         [pathListPopover dismissPopoverAnimated:true];
 }
 
-- (IBAction)clearPathEvent:(id)sender
-{
-    [grid resetPath];
-}
-
 - (void)changeStateToNormal:(bool)informGrid
 {
     if(state == PATH_EDIT_STATE)
