@@ -263,6 +263,20 @@ static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
     }
 }
 
+- (void)setLooping:(BOOL)doesLoop pathName:(NSString *)pathName
+{
+    NotePath *path = [paths objectForKey:pathName];
+    bool changed = (doesLoop != [path doesLoop]);
+    [[paths objectForKey:pathName] setDoesLoop:doesLoop];
+    if(changed)
+        [self setNeedsDisplay];
+}
+
+- (BOOL)pathDoesLoop:(NSString *)pathName
+{
+    return [[paths objectForKey:pathName] doesLoop];
+}
+
 - (void)setCurrentPathName:(NSString *)_currentPathName
 {
     currentPathName = _currentPathName;

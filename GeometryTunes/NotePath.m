@@ -11,6 +11,7 @@
 @synthesize speedFactor;
 @synthesize mostRecentAccess;
 @synthesize pathFollower;
+@synthesize doesLoop;
 
 const static NSTimeInterval playbackSpeed = 1;
 
@@ -29,6 +30,7 @@ const static NSTimeInterval playbackSpeed = 1;
         isPlaying = false;
         mostRecentAccess = 0;
         pathFollower = nil;
+        doesLoop = NO;
     }
     return self;
 }
@@ -65,6 +67,8 @@ const static NSTimeInterval playbackSpeed = 1;
         [path appendPath:circlePath];
         [path moveToPoint:point];
     }
+    if(doesLoop && count > 1)
+        [path addLineToPoint:[[notes objectAtIndex:0] CGPointValue]];
 }
 
 - (void)updateAndDisplayPath:(CGContextRef)context
@@ -84,8 +88,13 @@ const static NSTimeInterval playbackSpeed = 1;
     assert(notes);
     if(playbackPosition >= [notes count])
     {
-        [self stop];
-        return;
+        if(doesLoop) {
+            playbackPosition %= [notes count];
+        }
+        else {
+            [self stop];
+            return;
+        }
     }
     CGPoint pos = [[notes objectAtIndex:playbackPosition] CGPointValue];
     CellPos coords = [delegateGrid getBoxFromCoords:pos];
@@ -95,12 +104,11 @@ const static NSTimeInterval playbackSpeed = 1;
     {
         CGPoint pos = [[notes objectAtIndex:playbackPosition] CGPointValue];
         [[pathFollower layer] setPosition:pos];
-        if(playbackPosition + 1 < [notes count])
-            [pathView movePathFollower:pathFollower pos:[[notes objectAtIndex:playbackPosition + 1] CGPointValue] delegate:self];
+        if(playbackPosition + 1 < [notes count] || doesLoop)
+            [pathView movePathFollower:pathFollower pos:[[notes objectAtIndex:(playbackPosition + 1) % [notes count]] CGPointValue] delegate:self];
     }
     playbackPosition++;
-    if(playbackPosition >= [notes count])
-    {
+    if(playbackPosition >= [notes count] && !doesLoop) {
         [self performSelector:@selector(stop) withObject:nil afterDelay:[t timeInterval]];
         [t invalidate];
     }

@@ -31,6 +31,8 @@
 
 - (NSString *)nthPathName:(NSInteger)index;
 - (void)renamePathFrom:(NSString *)oldName to:(NSString *)newName;
+- (void)setLooping:(BOOL)doesLoop pathName:(NSString*)pathName;
+- (BOOL)pathDoesLoop:(NSString*)pathName;
 
 - (UIImageView *)getPathFollowerAtPos:(CGPoint)pos;
 - (void)movePathFollower:(UIImageView *)follower pos:(CGPoint)pos delegate:(id)delegate;
