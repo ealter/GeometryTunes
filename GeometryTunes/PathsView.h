@@ -17,6 +17,7 @@
 - (void)deletePath:(NSString *)pathName;
 
 - (void)addNoteWithPos:(CGPoint)pos;
+- (bool)removeNoteWithPos:(CGPoint)pos;
 - (void)removeAllNotes;
 - (void)playWithSpeedFactor:(float)factor;
 - (void)pause;

@@ -178,8 +178,10 @@
             break;
         case PATH_EDIT_STATE:
             //CGPoint point = CGPointMake((box.x + 0.5) * [self boxWidth], (box.y + 0.5) * [self boxHeight]); //Snap to center
-            [pathView addNoteWithPos:pos];
-            [pathView setNeedsDisplay];
+            if([delegate pathEditStateIsAdding])
+                [pathView addNoteWithPos:pos];
+            else
+                [pathView removeNoteWithPos:pos];
             break;
         default:
             assert(0); //Unknown state!

@@ -68,27 +68,37 @@
     [self setCurrentPathName:pathName];
 }
 
+- (float)closestNodeToPos:(CGPoint)pos pathName:(NSString**)pathName index:(int*)i
+{
+    NSString *closestPath = nil;
+    int minIndex = 0;
+    float minDistance = FLT_MAX;
+    for (NSString *pathName in paths) {
+        NotePath *path = [paths objectForKey:pathName];
+        if([[path notes] count] > 0) { //There is no closest node if there are no nodes
+            int i = [path closestNodeFrom:pos];
+            float dist = [path distanceFrom:pos noteIndex:i];
+            if(dist <= minDistance) {
+                minDistance = dist;
+                closestPath = pathName;
+                minIndex = i;
+            }
+        }
+    }
+    assert(i && pathName);
+    *i = minIndex;
+    *pathName = closestPath;
+    return minDistance;
+}
+
 - (void)handleTap:(UITapGestureRecognizer *)sender
 {
     CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
     if([paths count] < 1)
         return;
-    NSString *closestPath = nil;
-    int minIndex = 0;
-    float minDistance = FLT_MAX;
-    for (NSString *pathName in paths)
-    {
-        int i = [[paths objectForKey:pathName] closestNodeFrom:pos];
-        float dist = [[paths objectForKey:pathName] distanceFrom:pos noteIndex:i];
-        if(dist <= minDistance)
-        {
-            minDistance = dist;
-            closestPath = pathName;
-            minIndex = i;
-        }
-    }
-    if(minDistance <= tapDistanceTolerance && closestPath != nil)
-    {
+    NSString *closestPath;
+    int minIndex;
+    if([self closestNodeToPos:pos pathName:&closestPath index:&minIndex] <= tapDistanceTolerance && closestPath != nil) {
         [[paths objectForKey:closestPath] setPlaybackPosition:minIndex];
     }
 }
@@ -105,6 +115,19 @@
 - (void)addNoteWithPos:(CGPoint)pos
 {
     [[self currentPath] addNoteWithPos:pos];
+    [self setNeedsDisplay];
+}
+
+- (bool)removeNoteWithPos:(CGPoint)pos
+{
+    NSString *closestPath;
+    int minIndex;
+    if([self closestNodeToPos:pos pathName:&closestPath index:&minIndex] <= tapDistanceTolerance && closestPath != nil) {
+        [[paths objectForKey:closestPath] removeNoteAtIndex:minIndex];
+        [self setNeedsDisplay];
+        return true;
+    }
+    return false;
 }
 
 - (void)removeAllNotes

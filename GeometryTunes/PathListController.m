@@ -83,7 +83,7 @@
         [pathEditorPopover dismissPopoverAnimated:TRUE];
 }
 
-- (void)showPathEditor
+- (void)showPathEditor:(NSIndexPath *)location
 {
     [pathPicker setEditing:true];
     if(!pathEditor)
@@ -95,7 +95,7 @@
         [pathEditorPopover setDelegate:pathEditor];
         [pathEditorPopover setPassthroughViews:[NSArray arrayWithObject:pathPicker]];
     }
-    [pathEditorPopover presentPopoverFromRect:[self.view frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
+    [pathEditorPopover presentPopoverFromRect:[pathPicker convertRect:[pathPicker rectForRowAtIndexPath:location] toView:self.view] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft | UIPopoverArrowDirectionRight animated:TRUE];
     [pathEditor setPathName:[self nameForNthCell:selectedPath]];
     
     CGSize popoverSize = CGSizeMake(300, 200);
@@ -108,7 +108,7 @@
     if([tableView isEditing]) {
         [pathEditorPopover dismissPopoverAnimated:FALSE];
         [self setSelectedPath:indexPath.row];
-        [self showPathEditor];
+        [self showPathEditor:indexPath];
     }
     else {
         [pathView setCurrentPathName:[pathView nthPathName:indexPath.row]];
@@ -142,7 +142,7 @@
         return;
     }
     selectedPath = 0;
-    [self showPathEditor];
+    [self showPathEditor:[NSIndexPath indexPathForRow:selectedPath inSection:0]];
 }
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
