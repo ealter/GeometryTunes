@@ -10,7 +10,7 @@
 }
 
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsContoller;
-@property (nonatomic, retain) CoreDataAccess *data;
+@property (nonatomic, retain) DataAccess *data;
 @property (nonatomic, retain) Cells *cell;
 
 - (NSMutableArray*)notes;

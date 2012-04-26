@@ -6,6 +6,7 @@
 
 @synthesize pathName, pathNameField;
 @synthesize pathList, pathsView;
+@synthesize loopingSwitch;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -34,10 +35,16 @@
     [pathsView setNeedsDisplay];
 }
 
+- (IBAction)loopingChanged:(id)sender
+{
+    [pathsView setLooping:[sender isOn] pathName:pathName];
+}
+
 - (void)setPathName:(NSString *)_pathName
 {
     pathName = _pathName;
     [pathNameField setText:pathName];
+    [loopingSwitch setOn:[pathsView pathDoesLoop:pathName]];
 }
 
 - (void)viewDidLoad

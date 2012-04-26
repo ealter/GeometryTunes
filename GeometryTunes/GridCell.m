@@ -25,7 +25,7 @@
     {
         [self sharedInit];
         //save cell
-        data = [[CoreDataAccess alloc]init];
+        data = [[DataAccess alloc]init];
         //[data saveCellWithXCoordinate:frame.origin.x andYCoordinate:frame.origin.y];
         
         if(!cell) cell = [[Cells alloc]init];
@@ -76,8 +76,10 @@
     [notes addObject:[NSNumber numberWithUnsignedInt:note]];
     [self setNotes:notes];
     //Add midinote (unsigned int) to cell as color
-    NSLog(@"add");
     //[data saveColor:note toCellWithXCoordiante:self.frame.origin.x andYCoordinate:self.frame.origin.y];
+
+    //[data saveColor:note toCellWithXCoordiante:self.frame.origin.x andYCoordinate:self.frame.origin.y];
+
 }
 
 - (NSNumber*)getNoteAtIndex:(int)i

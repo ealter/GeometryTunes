@@ -21,3 +21,5 @@ Make the grid scrollable
 
 For Dylan:
 Undo/redo
+
+You should not be able to set a tempo of 0.

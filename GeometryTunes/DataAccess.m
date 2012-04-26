@@ -3,7 +3,7 @@
 #import "Cells.h"
 
 
-@implementation CoreDataAccess
+@implementation DataAccess
 
 -(void)saveCell: (Cells *)cell {
     NSLog(@"Saving cell at x:%i and y:%i", [cell.getXCoord intValue], [cell.getYCoord intValue]);

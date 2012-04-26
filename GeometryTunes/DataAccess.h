@@ -1,7 +1,7 @@
 #import <Foundation/Foundation.h>
 #import "Cells.h"
 
-@interface CoreDataAccess : NSObject
+@interface DataAccess : NSObject
 
 -(void)saveCell: (Cells *)cells;
 -(void)loadCells;

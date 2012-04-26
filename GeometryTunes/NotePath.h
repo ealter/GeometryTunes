@@ -17,6 +17,7 @@
 @property (retain) PathsView *pathView;
 @property (readonly) BOOL isPlaying;
 @property (nonatomic, retain) UIImageView *pathFollower;
+@property (nonatomic) BOOL doesLoop; //determines whether the path loops. Default is false
 @property uint64_t mostRecentAccess;
 
 @property (nonatomic) float speedFactor;
