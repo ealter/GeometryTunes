@@ -65,7 +65,6 @@
     [notes addObject:[NSNumber numberWithUnsignedInt:note]];
     [self setNotes:notes];
     //Add midinote (unsigned int) to cell as color
-    NSLog(@"add");
     [data saveColor:note toCellWithXCoordiante:self.frame.origin.x andYCoordinate:self.frame.origin.y];
 }
 
