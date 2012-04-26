@@ -3,7 +3,7 @@
 #import "Piano.h"
 #import <QuartzCore/QuartzCore.h>
 #import "AppDelegate.h"
-#import "CoreDataAccess.h"
+#import "DataAccess.h"
 #import "Cells.h"
 
 @implementation GridCell
@@ -29,8 +29,8 @@
         //[data saveCellWithXCoordinate:frame.origin.x andYCoordinate:frame.origin.y];
         
         if(!cell) cell = [[Cells alloc]init];
-        int xCoordinate = 10;
-        int yCoordinate = 10;
+        int xCoordinate = frame.origin.x;
+        int yCoordinate = frame.origin.y;
         [cell setXCoord:[[NSNumber alloc]initWithInt:xCoordinate]];
         [cell setYCoord:[[NSNumber alloc]initWithInt:yCoordinate]];
         [data saveCell:cell];

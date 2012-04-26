@@ -2,7 +2,6 @@
 
 #import "ViewController.h"
 #import <AudioToolBox/AudioServices.h>
-#import <CoreData/CoreData.h>
 #import "Cells.h"
 
 @implementation AppDelegate

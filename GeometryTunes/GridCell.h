@@ -1,7 +1,7 @@
 #import <UIKit/UIKit.h>
 #import "noteTypes.h"
 #import <CoreData/CoreData.h>
-#import "CoreDataAccess.h"
+#import "DataAccess.h"
 #import "Cells.h"
 
 @interface GridCell : UIView
