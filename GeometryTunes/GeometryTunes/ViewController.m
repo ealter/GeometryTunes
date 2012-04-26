@@ -6,10 +6,8 @@
 
 @synthesize state;
 @synthesize grid;
-@synthesize editPathBtn;
-@synthesize playPauseButton;
-@synthesize tempoTextField;
-@synthesize tempo;
+@synthesize editPathBtn, playPauseButton, pathModifyType;
+@synthesize tempoTextField, tempo;
 @synthesize pathList, pathListPopover;
 @synthesize helpMenu;
 //@synthesize document;
@@ -114,6 +112,11 @@ static NSString *pathEditBtnText = @"Done";
     if([playPauseButton.currentTitle compare:playBtnText]){ //If playing
         [grid setSpeedFactor:tempo];
     }
+}
+
+- (BOOL)pathEditStateIsAdding
+{
+    return [pathModifyType selectedSegmentIndex] == 0;
 }
 
 - (void)addWoodBackground
