@@ -6,6 +6,40 @@
 @synthesize managedObjectModel = __managedObjectModel;
 @synthesize persistentStoreCoordinator = __persistentStoreCoordinator;
 
+
+-(void)saveCell: (Cells *)cell {
+    NSData *dataRep;
+    NSString *errorString = nil;
+    NSDictionary *propertyList;
+    if(!cell) NSLog(@"Cell is nil!!!");
+    
+    propertyList = [NSDictionary dictionaryWithObjectsAndKeys:@"xCoord", [cell getXCoord], @"yCoord", [cell getYCoord], nil];
+    if(!propertyList) {
+        NSLog(@"ERROR: CoreDataAccess.m savecell()");
+    }
+    dataRep = [NSPropertyListSerialization dataFromPropertyList:propertyList format:NSPropertyListBinaryFormat_v1_0 errorDescription:&errorString];
+    
+    [dataRep writeToFile:@"UserData.plist" atomically:YES];
+    
+}
+
+-(void)loadCells {
+    /*
+    NSError *errorString = nil;
+    NSDictionary *propertyList;
+    NSPropertyListFormat format;
+    NSData *data = [[NSData alloc]initWithContentsOfFile:@"UserData.plist"];
+    
+    if(!data) NSLog(@"data is nil!!!");
+    //propertyList = [NSPropertyListSerialization propertyListWithData:data options:NSPropertyListImmutable format:&format error:&errorString];
+    if (!propertyList) {
+        // Handle error
+    }
+    
+    //NSLog(@"%@", propertyList);
+     */
+}
+
 -(NSMutableArray *) core_data_Content{
     
     NSError * error;
@@ -26,13 +60,12 @@
     
 }
 
-
 - (void)saveCellWithXCoordinate:(int)xCoordinate andYCoordinate:(int)yCoordinate
 {
     //save cell
     assert(self.managedObjectContext);
     Cells *cell = (Cells *)[NSEntityDescription insertNewObjectForEntityForName:@"Cells" inManagedObjectContext:self.managedObjectContext]; 
-    [cell setXCoordinate:[[NSNumber alloc]initWithInt:xCoordinate]];
+    //[cell setXCoordinate:[[NSNumber alloc]initWithInt:xCoordinate]];
     [cell setYCoordinate:[[NSNumber alloc]initWithInt:yCoordinate]];
     NSError *error = nil;
     if(![self.managedObjectContext save:&error]){

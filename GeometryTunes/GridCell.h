@@ -2,6 +2,7 @@
 #import "noteTypes.h"
 #import <CoreData/CoreData.h>
 #import "CoreDataAccess.h"
+#import "Cells.h"
 
 @interface GridCell : UIView
 {
@@ -10,6 +11,7 @@
 
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsContoller;
 @property (nonatomic, retain) CoreDataAccess *data;
+@property (nonatomic, retain) Cells *cell;
 
 - (NSMutableArray*)notes;
 - (void)setNotes:(NSMutableArray*)notes;

@@ -4,11 +4,13 @@
 #import <QuartzCore/QuartzCore.h>
 #import "AppDelegate.h"
 #import "CoreDataAccess.h"
+#import "Cells.h"
 
 @implementation GridCell
 
 @synthesize fetchedResultsContoller;
 @synthesize data;
+@synthesize cell;
 
 - (void)sharedInit
 {
@@ -24,7 +26,16 @@
         [self sharedInit];
         //save cell
         data = [[CoreDataAccess alloc]init];
-        [data saveCellWithXCoordinate:frame.origin.x andYCoordinate:frame.origin.y];
+        //[data saveCellWithXCoordinate:frame.origin.x andYCoordinate:frame.origin.y];
+        
+        if(!cell) cell = [[Cells alloc]init];
+        int xCoordinate = 10;
+        int yCoordinate = 10;
+        [cell setXCoord:[[NSNumber alloc]initWithInt:xCoordinate]];
+        [cell setYCoord:[[NSNumber alloc]initWithInt:yCoordinate]];
+        [data saveCell:cell];
+        
+        [data loadCells]; //for testing. Delete
     }
     return self;
 }
@@ -66,7 +77,7 @@
     [self setNotes:notes];
     //Add midinote (unsigned int) to cell as color
     NSLog(@"add");
-    [data saveColor:note toCellWithXCoordiante:self.frame.origin.x andYCoordinate:self.frame.origin.y];
+    //[data saveColor:note toCellWithXCoordiante:self.frame.origin.x andYCoordinate:self.frame.origin.y];
 }
 
 - (NSNumber*)getNoteAtIndex:(int)i

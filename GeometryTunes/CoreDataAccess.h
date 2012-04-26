@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import "CoreData/CoreData.h"
+#import "Cells.h"
 
 @interface CoreDataAccess : NSObject
 
@@ -9,6 +10,9 @@
 
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator; // "Bridge" or connection between your application and physical files
 
+
+-(void)saveCell: (Cells *)cells;
+-(void)loadCells;
 
 - (void)saveCellWithXCoordinate: (int)xCoordinate andYCoordinate: (int)yCoordinate;
 - (void)saveColor:(int)color toCellWithXCoordiante:(int)xCoordinate andYCoordinate:(int)yCoordinate;
