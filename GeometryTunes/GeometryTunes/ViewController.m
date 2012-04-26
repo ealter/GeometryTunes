@@ -171,7 +171,7 @@ static NSString *pathEditBtnText = @"Done";
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    if(interfaceOrientation == UIInterfaceOrientationPortrait) return YES;
+    if(interfaceOrientation == UIInterfaceOrientationPortrait || interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) return YES;
     return NO;
 }
 
