@@ -1,6 +1,5 @@
 #import "NotePath.h"
 #import "GridView.h"
-#import "NotePlayer.h"
 #import "PathsView.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -90,7 +89,7 @@ const static NSTimeInterval playbackSpeed = 1;
     }
     CGPoint pos = [[notes objectAtIndex:playbackPosition] CGPointValue];
     CellPos coords = [delegateGrid getBoxFromCoords:pos];
-    [delegateGrid playNoteForCell:coords duration:[t timeInterval]];
+    [delegateGrid playNoteForCell:coords duration:[t timeInterval]*.99];
     [pathView pulseAt:pos];
     if(playbackPosition < [notes count])
     {
