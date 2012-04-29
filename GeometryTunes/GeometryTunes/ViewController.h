@@ -27,8 +27,6 @@ typedef enum STATE
 //Playback methods
 - (IBAction)playPauseEvent:(id)sender;
 - (IBAction)stopEvent:(id)sender;
-- (IBAction)rewindEvent:(id)sender;
-- (IBAction)fastForwardEvent:(id)sender;
 - (void)setPlayStateToStopped;
 - (IBAction)sliderValueChanged:(id)sender;
 

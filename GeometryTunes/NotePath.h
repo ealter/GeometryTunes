@@ -7,7 +7,6 @@
     UIBezierPath* path;
     UIBezierPath* pulse;
     NSTimer *playbackTimer;
-    bool shouldChangeSpeed;
 }
 
  //Contains NSValue representations of CGPoints of path vertices
@@ -19,15 +18,14 @@
 @property (nonatomic, retain) UIImageView *pathFollower;
 @property (nonatomic) BOOL doesLoop; //determines whether the path loops. Default is false
 @property uint64_t mostRecentAccess;
-
-@property (nonatomic) float speedFactor;
+@property (nonatomic) bool shouldChangeSpeed;
 
 - (id)init;
 - (void)addNoteWithPos:(CGPoint)pos;
 - (void)removeNoteAtIndex:(unsigned)index;
 - (void)removeAllNotes;
 - (void)updateAndDisplayPath:(CGContextRef)context;
-- (void)playWithSpeedFactor:(float)factor;
+- (void)play;
 - (void)pause;
 - (void)stop;
 

@@ -8,12 +8,10 @@
 @synthesize notes;
 @synthesize playbackPosition, isPlaying;
 @synthesize delegateGrid, pathView;
-@synthesize speedFactor;
+@synthesize shouldChangeSpeed;
 @synthesize mostRecentAccess;
 @synthesize pathFollower;
 @synthesize doesLoop;
-
-const static NSTimeInterval playbackSpeed = 1;
 
 - (id)init 
 {
@@ -33,6 +31,11 @@ const static NSTimeInterval playbackSpeed = 1;
         doesLoop = NO;
     }
     return self;
+}
+
+- (NSTimeInterval)speed
+{
+    return [pathView speed];
 }
 
 - (void)addNoteWithPos:(CGPoint)pos 
@@ -116,11 +119,11 @@ const static NSTimeInterval playbackSpeed = 1;
     {
         shouldChangeSpeed = false;
         [t invalidate];
-        playbackTimer = [NSTimer scheduledTimerWithTimeInterval:speedFactor * playbackSpeed target:self selector:@selector(playNote:) userInfo:nil repeats:YES];
+        playbackTimer = [NSTimer scheduledTimerWithTimeInterval:[self speed] target:self selector:@selector(playNote:) userInfo:nil repeats:YES];
     }
 }
 
-- (void)playWithSpeedFactor:(float)factor
+- (void)play
 {
     isPlaying = true;
     if([notes count] < 1)
@@ -135,12 +138,9 @@ const static NSTimeInterval playbackSpeed = 1;
     
     shouldChangeSpeed = false;
     
-    //NSTimeInterval speed = playbackSpeed * factor;
-    speedFactor = factor;
-    
     if(playbackTimer)
         [playbackTimer invalidate];
-    playbackTimer = [NSTimer scheduledTimerWithTimeInterval:speedFactor * playbackSpeed target:self selector:@selector(playNote:) userInfo:nil repeats:YES];
+    playbackTimer = [NSTimer scheduledTimerWithTimeInterval:[self speed] target:self selector:@selector(playNote:) userInfo:nil repeats:YES];
     [playbackTimer fire];
 }
 
@@ -164,12 +164,6 @@ const static NSTimeInterval playbackSpeed = 1;
         pathFollower = nil;
     }
     [pathView playHasStopped:self];
-}
-
-- (void)setSpeedFactor:(float)_speedFactor
-{
-    speedFactor = _speedFactor;
-    shouldChangeSpeed = true;
 }
 
 - (float)distanceFrom:(CGPoint)pos noteIndex:(int)i

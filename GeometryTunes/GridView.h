@@ -32,7 +32,7 @@ typedef struct CellPos {
 
 - (void)sharedInit;
 
-- (void) resetPath; 
+- (void)resetPath;
 
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave appendNote:(bool)appendNote; //Uses the currentCell
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave cellPos:(CellPos)cellPos appendNote:(bool)appendNote;
@@ -56,8 +56,8 @@ typedef struct CellPos {
 
 - (CellPos)getBoxFromCoords:(CGPoint)pos;
 
-- (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse;
-- (void)setSpeedFactor:(float)factor;
+- (void)play;
+- (void)setSpeed:(NSTimeInterval)speed;
 - (void)pausePlayback;
 - (void)stopPlayback;
 

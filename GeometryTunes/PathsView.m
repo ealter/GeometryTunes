@@ -12,7 +12,7 @@
 @synthesize paths, currentPathName;
 @synthesize tapGestureRecognizer;
 @synthesize tapDistanceTolerance;
-@synthesize speedFactor;
+@synthesize speed;
 
 - (NotePath*)currentPath
 {
@@ -49,7 +49,7 @@
         [tapGestureRecognizer setEnabled:FALSE];
         [self addGestureRecognizer:tapGestureRecognizer];
         tapDistanceTolerance = 90 * 90;
-        speedFactor = 1;
+        speed = 1;
     }
     return self;
 }
@@ -106,9 +106,9 @@
 - (void)drawRect:(CGRect)rect
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
-    for (NSString *pathName in paths)
-    {
-        [[paths objectForKey:pathName] updateAndDisplayPath:context];
+    for (NSString *pathName in paths) {
+        NotePath *path = [paths objectForKey:pathName];
+        [path updateAndDisplayPath:context];
     }
 }
 
@@ -136,13 +136,12 @@
     [self setNeedsDisplay];
 }
 
-- (void)playWithSpeedFactor:(float)factor
+- (void)play
 {
     [tapGestureRecognizer setEnabled:TRUE];
-    speedFactor = factor;
-    for (NSString *pathName in paths)
-    {
-        [[paths objectForKey:pathName] playWithSpeedFactor:factor];
+    for (NSString *pathName in paths) {
+        NotePath *path = [paths objectForKey:pathName];
+        [path play];
     }
 }
 
@@ -151,7 +150,8 @@
     [tapGestureRecognizer setEnabled:FALSE];
     for (NSString *pathName in paths)
     {
-        [[paths objectForKey:pathName] pause];
+        NotePath *path = [paths objectForKey:pathName];
+        [path pause];
     }
     [NotePlayer stopAllNotes];
 }
@@ -161,7 +161,8 @@
     [tapGestureRecognizer setEnabled:FALSE];
     for (NSString *pathName in paths)
     {
-        [[paths objectForKey:pathName] stop];
+        NotePath *path = [paths objectForKey:pathName];
+        [path stop];
     }
     [NotePlayer stopAllNotes];
 }
@@ -182,21 +183,20 @@
     }
 }
 
-- (void)setSpeedFactor:(float)factor
+- (void)setSpeed:(NSTimeInterval)_speed
 {
-    for (NSString *pathName in paths)
-    {
-        [[paths objectForKey:pathName] setSpeedFactor:factor];
+    speed = _speed;
+    for (NSString *pathName in paths) {
+        [[paths objectForKey:pathName] setShouldChangeSpeed:TRUE];
     }
-    speedFactor = factor;
 }
 
 - (void)setGrid:(GridView *)grid
 {
     [self setDelegateGrid:grid];
-    for (NSString *pathName in paths)
-    {
-        [[paths objectForKey:pathName] setDelegateGrid:grid];
+    for (NSString *pathName in paths) {
+        NotePath *path = [paths objectForKey:pathName];
+        [path setDelegateGrid:grid];
     }
     tapDistanceTolerance = [grid boxWidth] * [grid boxHeight];
 }
@@ -212,7 +212,7 @@
     //Pulse the grid cell
     GridCell *cell = [delegateGrid cellAtPos:[delegateGrid getBoxFromCoords:pos]];
     [delegateGrid changeCell:cell isBold:TRUE];
-    [self performSelector:@selector(deemphasizeCell:) withObject:cell afterDelay:speedFactor];
+    [self performSelector:@selector(deemphasizeCell:) withObject:cell afterDelay:speed];
     
     const float width = 40;
     const float height = width;
@@ -310,7 +310,7 @@ static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
     CABasicAnimation *theAnimation;
     
     theAnimation=[CABasicAnimation animationWithKeyPath:@"position"];
-    theAnimation.duration=speedFactor;
+    theAnimation.duration=speed;
     theAnimation.fromValue=[NSValue valueWithCGPoint:follower.center];
     theAnimation.toValue=[NSValue valueWithCGPoint:pos];
     [theAnimation setDelegate:delegate];

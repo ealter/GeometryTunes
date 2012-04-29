@@ -11,7 +11,7 @@
 @property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic) float tapDistanceTolerance; //Units are pixels^2. This is the maximum distance a touch can be from a node for it to register that the touch was meant for that node
 @property (nonatomic, retain) NSString *currentPathName;
-@property (nonatomic) float speedFactor;
+@property (nonatomic) NSTimeInterval speed;
 
 - (void)addPath:(NSString *)pathName; //Adds the new path and sets the current path to it. If a path with that name already exists, this just sets the current path to it.
 - (void)deletePath:(NSString *)pathName;
@@ -19,7 +19,7 @@
 - (void)addNoteWithPos:(CGPoint)pos;
 - (bool)removeNoteWithPos:(CGPoint)pos;
 - (void)removeAllNotes;
-- (void)playWithSpeedFactor:(float)factor;
+- (void)play;
 - (void)pause;
 - (void)stop;
 

@@ -271,12 +271,6 @@
     }
 }
 
--(void) playButtonEvent:(id)sender;
-{
-    [self changeToNormalState];
-    [self playPathWithSpeedFactor:1 reversed:FALSE];
-}
-
 -(void) pausePlayback
 {
     [pathView pause];
@@ -307,11 +301,11 @@
     return box;
 }
 
-- (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse
+- (void)play
 {
     [pathView setGrid:self];
     if(piano) //Note: This assumes that the grid is blank if the piano doesn't exist
-        [pathView playWithSpeedFactor:factor];
+        [pathView play];
     else
         [delegate performSelector:@selector(setPlayStateToStopped) withObject:nil afterDelay:0];
 }
@@ -326,9 +320,9 @@
     return [self notesAtCell:currentCell];
 }
 
-- (void)setSpeedFactor:(float)factor
+- (void)setSpeed:(NSTimeInterval)speed
 {
-    [pathView setSpeedFactor:factor];
+    [pathView setSpeed:speed];
 }
 
 + (CellPos)cellPosMakeX:(unsigned int)x y:(unsigned int)y

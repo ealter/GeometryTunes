@@ -29,7 +29,7 @@ static NSString *pathEditBtnText = @"Done";
     else{
         if(state != NORMAL_STATE)
             [self changeStateToNormal:true];
-        [grid playPathWithSpeedFactor:tempo reversed:false];
+        [grid play];
         
         [playPauseButton setTitle:pauseBtnText forState:UIControlStateNormal];
     }
@@ -43,22 +43,6 @@ static NSString *pathEditBtnText = @"Done";
     }
     else
         [self changeStateToNormal:true];
-}
-
-- (IBAction)rewindEvent:(id)sender
-{
-    if(state != NORMAL_STATE)
-        [self changeStateToNormal:true];
-    [grid pausePlayback];
-    [grid playPathWithSpeedFactor:0.5 reversed:true];
-}
-
-- (IBAction)fastForwardEvent:(id)sender
-{
-    if(state != NORMAL_STATE)
-        [self changeStateToNormal:true];
-    [grid pausePlayback];
-    [grid playPathWithSpeedFactor:0.5 reversed:false];
 }
 
 - (IBAction)editPathEvent:(id)sender
@@ -109,7 +93,7 @@ static NSString *pathEditBtnText = @"Done";
     tempo = 60/[sender value];
     
     if([playPauseButton.currentTitle compare:playBtnText]){ //If playing
-        [grid setSpeedFactor:tempo];
+        [grid setSpeed:tempo];
     }
 }
 
