@@ -11,15 +11,18 @@
 
 #define DEFAULT_DURATION 1
 
+@interface GridView ()
+
+- (void)sharedInit;
+- (void)drawGrid;
+
+@end
+
 @implementation GridView
 
 @synthesize numBoxes;
-
 @synthesize currentCell;
-
-@synthesize tapGestureRecognizer;
-@synthesize swipeGestureRecognizer;
-
+@synthesize tapGestureRecognizer, swipeGestureRecognizer;
 @synthesize delegate, pathView;
 
 #define CELL_BORDER_COLOR [[UIColor grayColor] CGColor]
@@ -196,11 +199,6 @@
         if(!CGRectContainsPoint([piano frame], pos))
             [self changeToNormalState];
     }
-}
-
-- (void) resetPath 
-{
-    [pathView removeAllNotes];
 }
 
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave cellPos:(CellPos)cellPos appendNote:(bool)appendNote

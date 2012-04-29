@@ -22,17 +22,13 @@ typedef struct CellPos {
 
 @property (nonatomic) CellPos numBoxes;
 
-@property (retain) ViewController *delegate;
+@property (nonatomic, retain) ViewController *delegate;
 @property (nonatomic, retain) PathsView *pathView;
 
-@property (nonatomic) CellPos currentCell; //Used when editing a square
+@property (nonatomic, readonly) CellPos currentCell; //Used when editing a square
 
 @property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic, retain) UISwipeGestureRecognizer *swipeGestureRecognizer;
-
-- (void)sharedInit;
-
-- (void)resetPath;
 
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave appendNote:(bool)appendNote; //Uses the currentCell
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave cellPos:(CellPos)cellPos appendNote:(bool)appendNote;
@@ -51,8 +47,6 @@ typedef struct CellPos {
 
 - (float)boxWidth;
 - (float)boxHeight;
-
-- (void)drawGrid;
 
 - (CellPos)getBoxFromCoords:(CGPoint)pos;
 
