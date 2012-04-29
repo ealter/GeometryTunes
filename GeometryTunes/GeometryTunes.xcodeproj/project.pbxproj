@@ -22,7 +22,6 @@
 		CE2446B91522D21300C2DB33 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2446B81522D21300C2DB33 /* QuartzCore.framework */; };
 		CE43316A15261456006EC577 /* scrollViewWithButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = CE43316915261456006EC577 /* scrollViewWithButtons.m */; };
 		E25113F01519230500BBE1F2 /* NotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E25113EF1519230500BBE1F2 /* NotePlayer.m */; };
-		E25C1F2715463F7800F0BE81 /* CellColor.m in Sources */ = {isa = PBXBuildFile; fileRef = E25C1F2615463F7800F0BE81 /* CellColor.m */; };
 		E2687D90151FA3A8005BB1F8 /* PathsView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2687D8F151FA3A8005BB1F8 /* PathsView.m */; };
 		E28150FD150C513500C8A036 /* Piano.m in Sources */ = {isa = PBXBuildFile; fileRef = E28150FC150C513500C8A036 /* Piano.m */; };
 		E288F44E15353855000B0DC8 /* PathListController.m in Sources */ = {isa = PBXBuildFile; fileRef = E288F44C15353855000B0DC8 /* PathListController.m */; };
@@ -32,8 +31,6 @@
 		E2BD6FEA152E4E5300868501 /* Release-iphonesimulator in Resources */ = {isa = PBXBuildFile; fileRef = E2BD6FE3152E4E5300868501 /* Release-iphonesimulator */; };
 		E2C5D77D15291FF40008BA08 /* woodBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2C5D77C15291FF40008BA08 /* woodBackground.jpg */; };
 		E2C768FB152CD28600998B48 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E2C768FA152CD28600998B48 /* Icon.png */; };
-		E2C895641540B60500E5314F /* DataAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = E2C895631540B60500E5314F /* DataAccess.m */; };
-		E2C895681540B93900E5314F /* Cells.m in Sources */ = {isa = PBXBuildFile; fileRef = E2C895671540B93900E5314F /* Cells.m */; };
 		E2CD9FA71545079800D4348D /* woodBackgroundRoyaltyFree.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2CD9FA61545079800D4348D /* woodBackgroundRoyaltyFree.jpg */; };
 		E2CD9FAE1545103E00D4348D /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = E2CD9FAD1545103E00D4348D /* default.png */; };
 		E2D0ADA2153CD517009E474A /* iPadTutuorial.pdf in Resources */ = {isa = PBXBuildFile; fileRef = E2D0ADA1153CD517009E474A /* iPadTutuorial.pdf */; };
@@ -72,8 +69,6 @@
 		CE5C7C6E151E7D3900B81396 /* noteTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = noteTypes.h; sourceTree = "<group>"; };
 		E25113EE1519230500BBE1F2 /* NotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotePlayer.h; sourceTree = "<group>"; };
 		E25113EF1519230500BBE1F2 /* NotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePlayer.m; sourceTree = "<group>"; };
-		E25C1F2515463F7800F0BE81 /* CellColor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CellColor.h; sourceTree = "<group>"; };
-		E25C1F2615463F7800F0BE81 /* CellColor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CellColor.m; sourceTree = "<group>"; };
 		E2687D8E151FA3A8005BB1F8 /* PathsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathsView.h; sourceTree = "<group>"; };
 		E2687D8F151FA3A8005BB1F8 /* PathsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathsView.m; sourceTree = "<group>"; };
 		E28150FB150C513500C8A036 /* Piano.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = Piano.h; path = GeometryTunes/Piano.h; sourceTree = "<group>"; };
@@ -92,10 +87,6 @@
 		E2BD6FE5152E4E5300868501 /* libcrse.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrse.a; path = "crsynth/Release-iphonesimulator/libcrse.a"; sourceTree = "<group>"; };
 		E2C5D77C15291FF40008BA08 /* woodBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = woodBackground.jpg; path = images/woodBackground.jpg; sourceTree = "<group>"; };
 		E2C768FA152CD28600998B48 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
-		E2C895621540B60500E5314F /* DataAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; path = DataAccess.h; sourceTree = "<group>"; };
-		E2C895631540B60500E5314F /* DataAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataAccess.m; sourceTree = "<group>"; };
-		E2C895661540B93900E5314F /* Cells.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Cells.h; sourceTree = "<group>"; };
-		E2C895671540B93900E5314F /* Cells.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Cells.m; sourceTree = "<group>"; };
 		E2CD9FA61545079800D4348D /* woodBackgroundRoyaltyFree.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = woodBackgroundRoyaltyFree.jpg; sourceTree = "<group>"; };
 		E2CD9FAD1545103E00D4348D /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		E2D0ADA1153CD517009E474A /* iPadTutuorial.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = iPadTutuorial.pdf; sourceTree = "<group>"; };
@@ -126,18 +117,12 @@
 		83194300150BD226003EF364 = {
 			isa = PBXGroup;
 			children = (
-				E2C895621540B60500E5314F /* DataAccess.h */,
-				E2C895631540B60500E5314F /* DataAccess.m */,
 				E2F1D33015475D150096679C /* UserData.plist */,
 				E2CD9FAD1545103E00D4348D /* default.png */,
 				8319430E150BD226003EF364 /* Frameworks */,
 				83194315150BD226003EF364 /* GeometryTunes */,
 				E2E4AF57151ABE5300E033E4 /* GridCell.h */,
 				E2E4AF58151ABE5300E033E4 /* GridCell.m */,
-				E2C895661540B93900E5314F /* Cells.h */,
-				E2C895671540B93900E5314F /* Cells.m */,
-				E25C1F2515463F7800F0BE81 /* CellColor.h */,
-				E25C1F2615463F7800F0BE81 /* CellColor.m */,
 				8319432C150BD32B003EF364 /* GridView.h */,
 				E2D5ECF2152004F700C417C8 /* GridView.m */,
 				E2C5D77A15291FA00008BA08 /* images */,
@@ -340,10 +325,7 @@
 				E2D5ECF3152004F700C417C8 /* GridView.m in Sources */,
 				CE43316A15261456006EC577 /* scrollViewWithButtons.m in Sources */,
 				E288F44E15353855000B0DC8 /* PathListController.m in Sources */,
-				E2C895641540B60500E5314F /* DataAccess.m in Sources */,
-				E2C895681540B93900E5314F /* Cells.m in Sources */,
 				CE118320154600C400193B2E /* PathEditorController.m in Sources */,
-				E25C1F2715463F7800F0BE81 /* CellColor.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

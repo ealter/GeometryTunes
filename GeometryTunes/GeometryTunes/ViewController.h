@@ -33,9 +33,12 @@ typedef enum STATE
 //Path methods
 - (IBAction)editPathEvent:(id)sender; 
 - (BOOL)pathEditStateIsAdding;
+- (void)pathHasBeenSelected;
 
 - (void)changeStateToNormal:(bool)informGrid;
 
-- (void)pathHasBeenSelected;
+//Save & Load methods
+- (void)loadGridFromFile:(NSString *)fileName;
+- (void)saveGridToFile:  (NSString *)fileName;
 
 @end

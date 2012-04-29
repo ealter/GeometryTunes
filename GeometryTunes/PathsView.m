@@ -6,6 +6,13 @@
 #import <QuartzCore/QuartzCore.h>
 #import <mach/mach_time.h>
 
+@interface PathsView ()
+
+- (void)sharedInit;
+- (void)initPulseCircle;
+
+@end
+
 @implementation PathsView
 
 @synthesize delegateGrid, pulseCircle;
@@ -17,6 +24,21 @@
 - (NotePath*)currentPath
 {
     return [paths objectForKey:currentPathName]; //TODO: what happens if currentPath=nil?
+}
+
+- (void)sharedInit
+{
+    paths = [[NSMutableDictionary alloc]init];
+    currentPathName = nil;
+    [self setBackgroundColor:[UIColor clearColor]];
+    
+    [self initPulseCircle];
+    
+    tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
+    [tapGestureRecognizer setEnabled:FALSE];
+    [self addGestureRecognizer:tapGestureRecognizer];
+    tapDistanceTolerance = 90 * 90;
+    speed = 1;
 }
 
 - (void)initPulseCircle
@@ -39,19 +61,29 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        paths = [[NSMutableDictionary alloc]init];
-        currentPathName = nil;
-        [self setBackgroundColor:[UIColor clearColor]];
-        
-        [self initPulseCircle];
-        
-        tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
-        [tapGestureRecognizer setEnabled:FALSE];
-        [self addGestureRecognizer:tapGestureRecognizer];
-        tapDistanceTolerance = 90 * 90;
-        speed = 1;
+        [self sharedInit];
     }
     return self;
+}
+
+#define PATHS_ENCODE_KEY @"paths"
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    if (self) {
+        [self sharedInit];
+        NSMutableDictionary *_paths = [aDecoder decodeObjectForKey:PATHS_ENCODE_KEY];
+        if(_paths)
+            paths = _paths;
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [super encodeWithCoder:aCoder];
+    [aCoder encodeObject:paths forKey:PATHS_ENCODE_KEY];
 }
 
 - (void)addPath:(NSString *)pathName

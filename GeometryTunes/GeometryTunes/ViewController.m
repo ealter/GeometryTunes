@@ -2,6 +2,13 @@
 #import "PathsView.h"
 #import "PathListController.h"
 
+@interface ViewController ()
+
++ (NSString *)getSavedGridsDirectory;
++ (NSString *)getFilePath:(NSString *)filename;
+
+@end
+
 @implementation ViewController
 
 @synthesize state;
@@ -10,12 +17,62 @@
 @synthesize tempoTextField, tempo;
 @synthesize pathList, pathListPopover;
 @synthesize helpMenu;
-//@synthesize document;
 
 static NSString *playBtnText = @"Play";
 static NSString *pauseBtnText = @"Pause";
 static NSString *normalPathBtnText;
 static NSString *pathEditBtnText = @"Done";
+
++ (NSString *)getSavedGridsDirectory {
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    documentsDirectory = [documentsDirectory stringByAppendingPathComponent:@"Grids"];
+    
+    NSError *error;
+    [[NSFileManager defaultManager] createDirectoryAtPath:documentsDirectory withIntermediateDirectories:YES attributes:nil error:&error];   
+    
+    return documentsDirectory;
+}
+
+#define FILE_EXTENSION @"geotunes"
+#define GRID_NAME_KEY  @"filename"
+#define GRID_KEY       @"grid"
+
++ (NSString *)getFilePath:(NSString *)filename
+{
+    return [[[ViewController getSavedGridsDirectory] stringByAppendingPathComponent:filename] stringByAppendingPathExtension:FILE_EXTENSION];
+}
+
+- (void)loadGridFromFile:(NSString *)fileName
+{
+    NSString *dataPath = [ViewController getFilePath:fileName];
+    NSData *codedData = [[NSData alloc] initWithContentsOfFile:dataPath];
+    if (codedData == nil) return;
+    
+    NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:codedData];
+    NSString *gridName = [unarchiver decodeObjectForKey:GRID_NAME_KEY];
+    if(gridName == nil) return;
+    GridView *_grid = [unarchiver decodeObjectForKey:GRID_KEY];
+    if(_grid) {
+        [grid removeFromSuperview];
+        [self.view addSubview:_grid];
+        grid = _grid;
+    }
+    [unarchiver finishDecoding];
+    [grid setDelegate:self];
+}
+
+- (void)saveGridToFile:(NSString *)fileName
+{
+    NSString *dataPath = [ViewController getFilePath:fileName];
+    NSMutableData *data = [[NSMutableData alloc] init];
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];          
+    [archiver encodeObject:fileName forKey:GRID_NAME_KEY];
+    [archiver encodeObject:grid forKey:GRID_KEY];
+    [archiver finishEncoding];
+    [data writeToFile:dataPath atomically:YES];
+}
 
 - (IBAction)playPauseEvent:(id)sender
 {
@@ -124,6 +181,7 @@ static NSString *pathEditBtnText = @"Done";
     [grid setDelegate:self];
     [self addWoodBackground];
     normalPathBtnText = [[editPathBtn titleLabel] text];
+    //[self loadGridFromFile:@"goodGrid"]; //TODO: delete this
 }
 
 - (void)viewDidUnload

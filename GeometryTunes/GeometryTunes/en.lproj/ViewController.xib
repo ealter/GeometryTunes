@@ -44,7 +44,6 @@
 						<string key="NSFrame">{{0, 89}, {768, 935}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 					</object>
 					<object class="IBUIButton" id="125709341">
@@ -172,7 +171,7 @@
 					<object class="IBUISegmentedControl" id="312483026">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{427, 20}, {195, 44}}</string>
+						<string key="NSFrame">{{481, 20}, {146, 44}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="914146132"/>
@@ -394,7 +393,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">80</int>
+			<int key="maxID">81</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -411,9 +410,7 @@
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="editPathEvent:">id</string>
-						<string key="fastForwardEvent:">id</string>
 						<string key="playPauseEvent:">id</string>
-						<string key="rewindEvent:">id</string>
 						<string key="sliderValueChanged:">id</string>
 						<string key="stopEvent:">id</string>
 					</dictionary>
@@ -422,16 +419,8 @@
 							<string key="name">editPathEvent:</string>
 							<string key="candidateClassName">id</string>
 						</object>
-						<object class="IBActionInfo" key="fastForwardEvent:">
-							<string key="name">fastForwardEvent:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="playPauseEvent:">
 							<string key="name">playPauseEvent:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-						<object class="IBActionInfo" key="rewindEvent:">
-							<string key="name">rewindEvent:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="sliderValueChanged:">

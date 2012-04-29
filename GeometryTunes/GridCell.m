@@ -3,14 +3,8 @@
 #import "Piano.h"
 #import <QuartzCore/QuartzCore.h>
 #import "AppDelegate.h"
-#import "DataAccess.h"
-#import "Cells.h"
 
 @implementation GridCell
-
-@synthesize fetchedResultsContoller;
-@synthesize data;
-@synthesize cell;
 
 - (void)sharedInit
 {
@@ -24,29 +18,28 @@
     if (self)
     {
         [self sharedInit];
-        //save cell
-        data = [[DataAccess alloc]init];
-        //[data saveCellWithXCoordinate:frame.origin.x andYCoordinate:frame.origin.y];
-        
-        if(!cell) cell = [[Cells alloc]init];
-        int xCoordinate = frame.origin.x;
-        int yCoordinate = frame.origin.y;
-        [cell setXCoord:[[NSNumber alloc]initWithInt:xCoordinate]];
-        [cell setYCoord:[[NSNumber alloc]initWithInt:yCoordinate]];
-        [data saveCell:cell];
-        
-        [data loadCells]; //for testing. Delete
     }
     return self;
 }
+
+#define NOTES_ENCODE_KEY @"notes"
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
         [self sharedInit];
+        NSMutableArray *_notes = [aDecoder decodeObjectForKey:NOTES_ENCODE_KEY];
+        if(_notes)
+            notes = _notes;
     }
     return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [super encodeWithCoder:aCoder];
+    [aCoder encodeObject:notes forKey:NOTES_ENCODE_KEY];
 }
 
 - (void)setNotes:(NSMutableArray *)n
@@ -74,12 +67,7 @@
 - (void)addNote:(midinote)note
 {
     [notes addObject:[NSNumber numberWithUnsignedInt:note]];
-    [self setNotes:notes];
-    //Add midinote (unsigned int) to cell as color
-    //[data saveColor:note toCellWithXCoordiante:self.frame.origin.x andYCoordinate:self.frame.origin.y];
-
-    //[data saveColor:note toCellWithXCoordiante:self.frame.origin.x andYCoordinate:self.frame.origin.y];
-
+    [self setNeedsDisplay];
 }
 
 - (NSNumber*)getNoteAtIndex:(int)i

@@ -2,7 +2,12 @@
 
 #import "ViewController.h"
 #import <AudioToolBox/AudioServices.h>
-#import "Cells.h"
+
+@interface AppDelegate ()
+
+- (void)initMidiPlayer;
+
+@end
 
 @implementation AppDelegate
 
@@ -89,6 +94,7 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
+    //[[self viewController] saveGridToFile:@"goodGrid"]; //TODO: delete this
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

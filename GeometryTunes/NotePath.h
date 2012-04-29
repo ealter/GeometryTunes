@@ -2,7 +2,7 @@
 @class GridView;
 @class PathsView;
 
-@interface NotePath : NSObject
+@interface NotePath : NSObject <NSCoding>
 {
     UIBezierPath* path;
     UIBezierPath* pulse;

@@ -3,7 +3,7 @@
 @class NotePath;
 @class GridView;
 
-@interface PathsView : UIView
+@interface PathsView : UIView <NSCoding>
 
 @property (retain) NSMutableDictionary *paths;
 @property (retain) GridView *delegateGrid;

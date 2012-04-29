@@ -5,7 +5,7 @@
 @class ViewController;
 @class GridCell;
 
-@interface GridView : UIView
+@interface GridView : UIView <NSCoding>
 {
     Piano *piano;
     NSMutableArray *cells; //2D array: 1st index is row

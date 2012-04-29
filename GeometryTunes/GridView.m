@@ -14,6 +14,8 @@
 @interface GridView ()
 
 - (void)sharedInit;
+- (void)initCells;
+- (void)allocateCells;
 - (void)drawGrid;
 
 @end
@@ -80,17 +82,71 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self sharedInit];
+        [self allocateCells];
+        [self initCells];
+        pathView = [[PathsView alloc]initWithFrame:[self bounds]];
+        [self draw];
     }
     return self;
 }
+
+#define PATHVIEW_ENCODE_KEY @"pathView"
+#define CELLS_ENCODE_KEY @"cells"
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
         [self sharedInit];
+        cells = [aDecoder decodeObjectForKey:CELLS_ENCODE_KEY];
+        if(!cells)
+            [self allocateCells];
+        [self initCells];
+        pathView = [aDecoder decodeObjectForKey:PATHVIEW_ENCODE_KEY];
+        if(!pathView)
+            pathView = [[PathsView alloc]initWithFrame:[self bounds]];
+        [self draw];
     }
     return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [super encodeWithCoder:aCoder];
+    [aCoder encodeObject:pathView forKey:PATHVIEW_ENCODE_KEY];
+    [aCoder encodeObject:cells forKey:CELLS_ENCODE_KEY];
+}
+
+- (void)allocateCells
+{
+    cells = [[NSMutableArray alloc] initWithCapacity:numBoxes.y];
+    NSMutableArray *row;
+    
+    float boxWidth = [self boxWidth];
+    float boxHeight = [self boxHeight];
+    for(int i=0; i<numBoxes.x; i++)
+    {
+        row = [[NSMutableArray alloc] initWithCapacity:numBoxes.x];
+        for(int j=0; j<numBoxes.y; j++) {
+            CGRect cellBounds = CGRectMake(i * boxWidth, j * boxHeight, boxWidth, boxHeight);
+            GridCell *cell = [[GridCell alloc]initWithFrame:cellBounds];
+            [row addObject:cell];
+        }
+        [cells addObject:row];
+    }
+}
+
+- (void)initCells
+{
+    for(NSMutableArray *row in cells) {
+        for(int j=0; j<numBoxes.y; j++) {
+            GridCell *cell = [row objectAtIndex:j];
+            [[cell layer] setBorderColor:CELL_BORDER_COLOR];
+            [self changeCell:cell isBold:false];
+            [cell.layer setCornerRadius:6.0f];
+            [row addObject:cell];
+        }
+    }
 }
 
 -(void)sharedInit
@@ -102,30 +158,6 @@
     [self setState:NORMAL_STATE];
     piano = NULL;
     
-    cells = [[NSMutableArray alloc] initWithCapacity:numBoxes.y];
-    NSMutableArray *row;
-    
-    float boxWidth = [self boxWidth];
-    float boxHeight = [self boxHeight];
-    for(int i=0; i<numBoxes.x; i++)
-    {
-        row = [[NSMutableArray alloc] initWithCapacity:numBoxes.x];
-        for(int j=0; j<numBoxes.y; j++)
-        {
-            CGRect cellBounds = CGRectMake(i * boxWidth, j * boxHeight, boxWidth, boxHeight);
-
-            GridCell *cell = [[GridCell alloc]initWithFrame:cellBounds];
-            [[cell layer] setBorderColor:CELL_BORDER_COLOR];
-
-            [self changeCell:cell isBold:false];
-            [cell.layer setCornerRadius:6.0f];
-            [row addObject:cell];
-        }
-        [cells addObject:row];
-    }
-    
-    pathView = [[PathsView alloc]initWithFrame:[self bounds]];
-    
     tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
     tapGestureRecognizer.numberOfTapsRequired = 1;
     [tapGestureRecognizer setCancelsTouchesInView:false];
@@ -136,7 +168,6 @@
     
     [self addGestureRecognizer:tapGestureRecognizer];
     [self addGestureRecognizer:swipeGestureRecognizer];
-    [self draw];
 }
 
 -(void) handleTap:(UITapGestureRecognizer *)sender

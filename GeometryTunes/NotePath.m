@@ -33,6 +33,20 @@
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [self init];
+    NSMutableArray *_notes = [aDecoder decodeObject];
+    if(_notes)
+        notes = _notes;
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:notes];
+}
+
 - (NSTimeInterval)speed
 {
     return [pathView speed];
