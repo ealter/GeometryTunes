@@ -168,12 +168,6 @@ const static NSTimeInterval playbackSpeed = 1;
 
 - (void)setSpeedFactor:(float)_speedFactor
 {
-    if([playbackTimer isValid]) {
-        NSTimeInterval nextFireTime = [[playbackTimer fireDate] timeIntervalSinceNow];
-        float percentLeft = nextFireTime/speedFactor;
-        [playbackTimer setFireDate:[NSDate dateWithTimeIntervalSinceNow:percentLeft * _speedFactor]];
-        //TODO: Fix note on/off with this
-    }
     speedFactor = _speedFactor;
     shouldChangeSpeed = true;
 }
@@ -201,11 +195,6 @@ const static NSTimeInterval playbackSpeed = 1;
         }
     }
     return minIndex;
-}
-
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
-{
-    
 }
 
 @end
