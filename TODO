@@ -11,15 +11,8 @@ half, quarter notes
 
 Make the song stop if you start editing a note
 
-Bugs involving multiple paths:
-Clearing a path
-Naming paths
-Syncing paths when clicking in the middle of one
-
 Late todos:
 Make the grid scrollable
 
 For Dylan:
 Undo/redo
-
-You should not be able to set a tempo of 0.
