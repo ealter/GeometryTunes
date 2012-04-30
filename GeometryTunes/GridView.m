@@ -27,7 +27,7 @@
 @synthesize tapGestureRecognizer, swipeGestureRecognizer;
 @synthesize delegate, pathView;
 
-#define CELL_BORDER_COLOR [[UIColor blackColor] CGColor]
+#define CELL_BORDER_COLOR [[UIColor grayColor] CGColor]
 
 - (GridCell*)cellAtPos:(CellPos)cellPos
 {
@@ -300,15 +300,29 @@
     }
 }
 
+-(void)convertCellBorderColors:(UIColor *)color;
+{
+    NSLog(@"convert border colors");
+    for(NSMutableArray *row in cells) {
+        for(int j=0; j<numBoxes.y; j++) {
+            GridCell *cell = [row objectAtIndex:j];
+            [[cell layer] setBorderColor:[color CGColor]];
+            [cell.layer setCornerRadius:6.0f];
+        }
+    }
+}
+
 -(void) pausePlayback
 {
     [pathView pause];
+    [self convertCellBorderColors:[UIColor grayColor]];
 }
 
 -(void) stopPlayback
 {
     [pathView stop];
     [delegate setPlayStateToStopped];
+    [self convertCellBorderColors:[UIColor grayColor]];
 }
 
 -(void) editButtonEvent:(id)sender;
@@ -330,25 +344,11 @@
     return box;
 }
 
--(void)convertCellBorderColors
-{
-    NSLog(@"convert border colors");
-    for(NSMutableArray *row in cells) {
-        for(int j=0; j<numBoxes.y; j++) {
-            GridCell *cell = [row objectAtIndex:j];
-            [[cell layer] setBorderColor:[[UIColor whiteColor]CGColor]];
-            [self changeCell:cell isBold:false];
-            [cell.layer setCornerRadius:6.0f];
-            [row addObject:cell];
-        }
-    }
-}
-
 - (void)play
 {
     [pathView setGrid:self];
 
-    [self convertCellBorderColors];
+    [self convertCellBorderColors:[UIColor blackColor]];
     if(piano) //Note: This assumes that the grid is blank if the piano doesn't exist
         [pathView play];
     else
