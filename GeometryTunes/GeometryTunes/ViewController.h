@@ -34,6 +34,7 @@ typedef enum STATE
 //Path methods
 - (IBAction)editPathEvent:(id)sender; 
 - (BOOL)pathEditStateIsAdding;
+- (void)setPathEditState:(BOOL)isAdding;
 - (void)pathHasBeenSelected;
 
 - (void)changeStateToNormal:(bool)informGrid;

@@ -199,6 +199,11 @@ static NSString *pathEditBtnText = @"Done";
     return [pathModifyType selectedSegmentIndex] == 0;
 }
 
+- (void)setPathEditState:(BOOL)isAdding
+{
+    [pathModifyType setSelectedSegmentIndex:(isAdding ? 0 : 1)];
+}
+
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
