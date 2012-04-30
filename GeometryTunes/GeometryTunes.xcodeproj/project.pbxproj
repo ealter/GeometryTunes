@@ -26,6 +26,8 @@
 		E28150FD150C513500C8A036 /* Piano.m in Sources */ = {isa = PBXBuildFile; fileRef = E28150FC150C513500C8A036 /* Piano.m */; };
 		E288F44E15353855000B0DC8 /* PathListController.m in Sources */ = {isa = PBXBuildFile; fileRef = E288F44C15353855000B0DC8 /* PathListController.m */; };
 		E288F44F15353855000B0DC8 /* PathListController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E288F44D15353855000B0DC8 /* PathListController.xib */; };
+		E29FF403154E15F5001ECDBC /* ProjectList.m in Sources */ = {isa = PBXBuildFile; fileRef = E29FF401154E15F5001ECDBC /* ProjectList.m */; };
+		E29FF404154E15F5001ECDBC /* ProjectList.xib in Resources */ = {isa = PBXBuildFile; fileRef = E29FF402154E15F5001ECDBC /* ProjectList.xib */; };
 		E2BD6FE6152E4E5300868501 /* crsynth.dlsc in Resources */ = {isa = PBXBuildFile; fileRef = E2BD6FDF152E4E5300868501 /* crsynth.dlsc */; };
 		E2BD6FE7152E4E5300868501 /* Release-iphoneos in Resources */ = {isa = PBXBuildFile; fileRef = E2BD6FE0152E4E5300868501 /* Release-iphoneos */; };
 		E2BD6FEA152E4E5300868501 /* Release-iphonesimulator in Resources */ = {isa = PBXBuildFile; fileRef = E2BD6FE3152E4E5300868501 /* Release-iphonesimulator */; };
@@ -74,6 +76,9 @@
 		E288F44B15353855000B0DC8 /* PathListController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathListController.h; sourceTree = "<group>"; };
 		E288F44C15353855000B0DC8 /* PathListController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PathListController.m; sourceTree = "<group>"; };
 		E288F44D15353855000B0DC8 /* PathListController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PathListController.xib; sourceTree = "<group>"; };
+		E29FF400154E15F5001ECDBC /* ProjectList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectList.h; sourceTree = "<group>"; };
+		E29FF401154E15F5001ECDBC /* ProjectList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectList.m; sourceTree = "<group>"; };
+		E29FF402154E15F5001ECDBC /* ProjectList.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectList.xib; sourceTree = "<group>"; };
 		E2BD6FDB152E4DF700868501 /* crmd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = crmd.h; path = crsynth/crmd.h; sourceTree = "<group>"; };
 		E2BD6FDC152E4DF700868501 /* crmp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = crmp.h; path = crsynth/crmp.h; sourceTree = "<group>"; };
 		E2BD6FDF152E4E5300868501 /* crsynth.dlsc */ = {isa = PBXFileReference; lastKnownFileType = file; name = crsynth.dlsc; path = crsynth/crsynth.dlsc; sourceTree = "<group>"; };
@@ -114,6 +119,7 @@
 		83194300150BD226003EF364 = {
 			isa = PBXGroup;
 			children = (
+				E29FF3FE154E15D7001ECDBC /* UserProjects */,
 				E2CD9FAD1545103E00D4348D /* default.png */,
 				8319430E150BD226003EF364 /* Frameworks */,
 				83194315150BD226003EF364 /* GeometryTunes */,
@@ -207,9 +213,12 @@
 			name = Paths;
 			sourceTree = "<group>";
 		};
-		E29FF3F8154E1481001ECDBC /* UserProjects */ = {
+		E29FF3FE154E15D7001ECDBC /* UserProjects */ = {
 			isa = PBXGroup;
 			children = (
+				E29FF400154E15F5001ECDBC /* ProjectList.h */,
+				E29FF401154E15F5001ECDBC /* ProjectList.m */,
+				E29FF402154E15F5001ECDBC /* ProjectList.xib */,
 			);
 			name = UserProjects;
 			sourceTree = "<group>";
@@ -304,6 +313,7 @@
 				E2CD9FA71545079800D4348D /* woodBackgroundRoyaltyFree.jpg in Resources */,
 				E2CD9FAE1545103E00D4348D /* default.png in Resources */,
 				CE118321154600C400193B2E /* PathEditorController.xib in Resources */,
+				E29FF404154E15F5001ECDBC /* ProjectList.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,6 +337,7 @@
 				CE43316A15261456006EC577 /* scrollViewWithButtons.m in Sources */,
 				E288F44E15353855000B0DC8 /* PathListController.m in Sources */,
 				CE118320154600C400193B2E /* PathEditorController.m in Sources */,
+				E29FF403154E15F5001ECDBC /* ProjectList.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
