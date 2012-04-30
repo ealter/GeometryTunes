@@ -17,6 +17,7 @@
 - (void)initCells;
 - (void)allocateCells;
 - (void)drawGrid;
+- (void)convertCellBorderColors:(CGColorRef)color;
 
 @end
 
@@ -300,13 +301,12 @@
     }
 }
 
--(void)convertCellBorderColors:(UIColor *)color;
+-(void)convertCellBorderColors:(CGColorRef)color
 {
-    NSLog(@"convert border colors");
     for(NSMutableArray *row in cells) {
         for(int j=0; j<numBoxes.y; j++) {
             GridCell *cell = [row objectAtIndex:j];
-            [[cell layer] setBorderColor:[color CGColor]];
+            [[cell layer] setBorderColor:color];
             [cell.layer setCornerRadius:6.0f];
         }
     }
@@ -315,14 +315,14 @@
 -(void) pausePlayback
 {
     [pathView pause];
-    [self convertCellBorderColors:[UIColor grayColor]];
+    [self convertCellBorderColors:CELL_BORDER_COLOR];
 }
 
 -(void) stopPlayback
 {
     [pathView stop];
     [delegate setPlayStateToStopped];
-    [self convertCellBorderColors:[UIColor grayColor]];
+    [self convertCellBorderColors:CELL_BORDER_COLOR];
 }
 
 -(void) editButtonEvent:(id)sender;
@@ -347,13 +347,7 @@
 - (void)play
 {
     [pathView setGrid:self];
-
-    [self convertCellBorderColors:[UIColor blackColor]];
-    if(piano) //Note: This assumes that the grid is blank if the piano doesn't exist
-        [pathView play];
-    else
-        [delegate performSelector:@selector(setPlayStateToStopped) withObject:nil afterDelay:0];
-
+    [self convertCellBorderColors:[[UIColor clearColor] CGColor]];
     [pathView play];
 
 }
