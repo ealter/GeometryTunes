@@ -174,7 +174,7 @@
 {
     isPlaying = TRUE;
     if([paths count] == 0) {
-        [self playHasStopped];
+        [self performSelector:@selector(playHasStopped) withObject:nil afterDelay:0];
         return;
     }
     [tapGestureRecognizer setEnabled:TRUE];
