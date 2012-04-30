@@ -347,11 +347,15 @@
 - (void)play
 {
     [pathView setGrid:self];
+
     [self convertCellBorderColors];
     if(piano) //Note: This assumes that the grid is blank if the piano doesn't exist
         [pathView play];
     else
         [delegate performSelector:@selector(setPlayStateToStopped) withObject:nil afterDelay:0];
+
+    [pathView play];
+
 }
 
 - (NSMutableArray*)notesAtCell:(CellPos)cellPos

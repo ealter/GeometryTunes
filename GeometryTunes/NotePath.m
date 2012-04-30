@@ -169,7 +169,6 @@
 - (void)stop
 {
     [self pause];
-    playbackPosition = 0;
     shouldChangeSpeed = false;
     if(pathFollower)
     {
