@@ -24,7 +24,7 @@
 //static NSString *playBtnText = @"Play";
 //static NSString *pauseBtnText = @"Pause";
 static NSString *normalPathBtnText;
-static NSString *pathEditBtnText = @"Done";
+static NSString *pathEditBtnText = @"               Done";
 
 + (NSString *)getSavedGridsDirectory {
     
