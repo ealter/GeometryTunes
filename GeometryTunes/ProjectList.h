@@ -8,6 +8,8 @@
 
 #import <UIKit/UIKit.h>
 
+@class ViewController;
+
 @interface ProjectList : UIViewController
 
 @end

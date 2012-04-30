@@ -38,6 +38,19 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<array class="NSMutableArray" key="NSSubviews">
+					<object class="IBUIView" id="567384998">
+						<reference key="NSNextResponder" ref="766721923"/>
+						<int key="NSvFlags">292</int>
+						<string key="NSFrame">{{0, -209}, {768, 502}}</string>
+						<reference key="NSSuperview" ref="766721923"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="125709341"/>
+						<object class="NSColor" key="IBUIBackgroundColor">
+							<int key="NSColorSpace">3</int>
+							<bytes key="NSWhite">MAA</bytes>
+						</object>
+						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
+					</object>
 					<object class="IBUIView" id="646428076">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">274</int>
@@ -50,16 +63,16 @@
 					<object class="IBUIButton" id="125709341">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{20, 20}, {72, 44}}</string>
+						<string key="NSFrame">{{16, 14}, {81, 56}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="864116444"/>
 						<bool key="IBUIOpaque">NO</bool>
+						<int key="IBUITag">1</int>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<int key="IBUIButtonType">1</int>
-						<string key="IBUINormalTitle">Play</string>
 						<object class="NSColor" key="IBUIHighlightedTitleColor" id="1044549773">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MQA</bytes>
@@ -71,6 +84,10 @@
 						<object class="NSColor" key="IBUINormalTitleShadowColor" id="329999541">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MC41AA</bytes>
+						</object>
+						<object class="NSCustomResource" key="IBUINormalBackgroundImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">playButton.png</string>
 						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription" id="155530480">
 							<int key="type">2</int>
@@ -227,7 +244,7 @@
 				<string key="NSFrame">{{0, 20}, {768, 1004}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="125709341"/>
+				<reference key="NSNextKeyView" ref="567384998"/>
 				<reference key="IBUIBackgroundColor" ref="1044549773"/>
 				<bool key="IBUIOpaque">NO</bool>
 				<object class="IBUISimulatedStatusBarMetrics" key="IBUISimulatedStatusBarMetrics">
@@ -347,13 +364,14 @@
 						<reference key="object" ref="766721923"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="646428076"/>
-							<reference ref="125709341"/>
 							<reference ref="864116444"/>
 							<reference ref="28868202"/>
 							<reference ref="914146132"/>
 							<reference ref="36369109"/>
 							<reference ref="312483026"/>
 							<reference ref="842279610"/>
+							<reference ref="125709341"/>
+							<reference ref="567384998"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -400,6 +418,11 @@
 						<reference key="object" ref="842279610"/>
 						<reference key="parent" ref="766721923"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">86</int>
+						<reference key="object" ref="567384998"/>
+						<reference key="parent" ref="766721923"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -418,12 +441,13 @@
 				<string key="79.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<integer value="0" key="79.IUISegmentedControlInspectorSelectedSegmentMetadataKey"/>
 				<string key="83.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="86.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">84</int>
+			<int key="maxID">86</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -465,7 +489,6 @@
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="editPathBtn">UIButton</string>
 						<string key="grid">GridView</string>
-						<string key="helpMenu">UIScrollView</string>
 						<string key="pathModifyType">UISegmentedControl</string>
 						<string key="playPauseButton">UIButton</string>
 						<string key="tempoTextField">UILabel</string>
@@ -478,10 +501,6 @@
 						<object class="IBToOneOutletInfo" key="grid">
 							<string key="name">grid</string>
 							<string key="candidateClassName">GridView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="helpMenu">
-							<string key="name">helpMenu</string>
-							<string key="candidateClassName">UIScrollView</string>
 						</object>
 						<object class="IBToOneOutletInfo" key="pathModifyType">
 							<string key="name">pathModifyType</string>
@@ -507,6 +526,10 @@
 		<string key="IBDocument.TargetRuntimeIdentifier">IBIPadFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
+		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="NS.key.0">playButton.png</string>
+			<string key="NS.object.0">{57, 40}</string>
+		</object>
 		<string key="IBCocoaTouchPluginVersion">933</string>
 	</data>
 </archive>

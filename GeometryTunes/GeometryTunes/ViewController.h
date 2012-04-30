@@ -1,6 +1,7 @@
 #import <UIKit/UIKit.h>
 #import "GridView.h"
 #import "PathListController.h"
+#import "ProjectList.h"
 
 @interface ViewController : UIViewController
 
@@ -22,6 +23,7 @@ typedef enum STATE
 
 @property (strong, nonatomic) PathListController *pathList;
 @property (strong, nonatomic) UIPopoverController *pathListPopover;
+@property (strong, nonatomic) ProjectList *projectList;
 
 //Playback methods
 - (IBAction)playPauseEvent:(id)sender;
@@ -37,6 +39,7 @@ typedef enum STATE
 - (void)changeStateToNormal:(bool)informGrid;
 
 //Save & Load methods
+- (void)saveLoadEvent:(id)sender;
 - (void)loadGridFromFile:(NSString *)fileName;
 - (void)saveGridToFile:  (NSString *)fileName;
 + (NSMutableArray *)gridNameList;

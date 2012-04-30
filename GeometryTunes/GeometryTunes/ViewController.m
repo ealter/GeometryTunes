@@ -2,6 +2,9 @@
 #import "PathsView.h"
 #import "PathListController.h"
 
+#define PLAY 0
+#define PAUSE 1
+
 @interface ViewController ()
 
 + (NSString *)getSavedGridsDirectory;
@@ -16,9 +19,10 @@
 @synthesize editPathBtn, playPauseButton, pathModifyType;
 @synthesize tempoTextField, tempo;
 @synthesize pathList, pathListPopover;
+@synthesize projectList;
 
-static NSString *playBtnText = @"Play";
-static NSString *pauseBtnText = @"Pause";
+//static NSString *playBtnText = @"Play";
+//static NSString *pauseBtnText = @"Pause";
 static NSString *normalPathBtnText;
 static NSString *pathEditBtnText = @"Done";
 
@@ -96,19 +100,25 @@ static NSString *pathEditBtnText = @"Done";
 
 - (IBAction)playPauseEvent:(id)sender
 {
-    if([playPauseButton.currentTitle compare:playBtnText]){
+    if(playPauseButton.tag == PLAY){ //]compare:playBtnText]){
         if(state == NORMAL_STATE)
             [grid pausePlayback];
         else
             [self changeStateToNormal:true];
         [self setPlayStateToStopped];
+        NSString *playImageFile = [[NSBundle mainBundle]pathForResource:@"playButton" ofType:@"png"];
+        UIImage *playImage = [[UIImage alloc]initWithContentsOfFile:playImageFile];
+        [playPauseButton setBackgroundImage:playImage forState:UIControlStateNormal];
+        [playPauseButton setTag:PAUSE];
     }
     else{
         if(state != NORMAL_STATE)
             [self changeStateToNormal:true];
         [grid play];
-        
-        [playPauseButton setTitle:pauseBtnText forState:UIControlStateNormal];
+        NSString *pauseImageFile = [[NSBundle mainBundle]pathForResource:@"pauseButton" ofType:@"png"];
+        UIImage *pauseImage = [[UIImage alloc]initWithContentsOfFile:pauseImageFile];
+        [playPauseButton setBackgroundImage:pauseImage forState:UIControlStateNormal];
+        [playPauseButton setTag:PLAY];
     }
 }
 
@@ -160,16 +170,26 @@ static NSString *pathEditBtnText = @"Done";
     state = NORMAL_STATE;
 }
 
+- (void)saveLoadEvent:(id)sender
+{
+    if(!projectList)
+    {
+        projectList = [[ProjectList alloc]initWithNibName:@"ProjectList" bundle:nil];
+    }
+}
+
 - (void)setPlayStateToStopped
 {
-    [playPauseButton setTitle:playBtnText forState:UIControlStateNormal];
+    NSString *playImageFile = [[NSBundle mainBundle]pathForResource:@"playButton" ofType:@"png"];
+    UIImage *playImage = [[UIImage alloc]initWithContentsOfFile:playImageFile];
+    [playPauseButton setBackgroundImage:playImage forState:UIControlStateNormal];
 }
 
 - (IBAction) sliderValueChanged:(UISlider *)sender {
     tempoTextField.text = [NSString stringWithFormat:@"%.1f BPM", [sender value]]; 
     tempo = 60/[sender value];
     
-    if([playPauseButton.currentTitle compare:playBtnText]){ //If playing
+    if(playPauseButton.tag == PLAY){ //If playing
         [grid setSpeed:tempo];
     }
 }
@@ -177,12 +197,6 @@ static NSString *pathEditBtnText = @"Done";
 - (BOOL)pathEditStateIsAdding
 {
     return [pathModifyType selectedSegmentIndex] == 0;
-}
-
-- (void)addWoodBackground
-{
-    UIColor *background = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"woodBackgroundRoyaltyFree.jpg"]];
-    self.view.backgroundColor = background;
 }
 
 - (void)didReceiveMemoryWarning
@@ -199,7 +213,6 @@ static NSString *pathEditBtnText = @"Done";
     tempo = 1;
     state = NORMAL_STATE;
     [grid setDelegate:self];
-    [self addWoodBackground];
     normalPathBtnText = [[editPathBtn titleLabel] text];
     //[self loadGridFromFile:@"goodGrid"]; //TODO: delete this
 }
