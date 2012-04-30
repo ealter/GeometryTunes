@@ -73,6 +73,27 @@ static NSString *pathEditBtnText = @"Done";
     [data writeToFile:dataPath atomically:YES];
 }
 
++ (NSMutableArray *)gridNameList
+{
+    NSString *documentsDirectory = [self getSavedGridsDirectory];
+    
+    NSError *error;
+    NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory error:&error];
+    if (files == nil) {
+        NSLog(@"Error reading contents of documents directory: %@", [error localizedDescription]);
+        return nil;
+    }
+    
+    NSMutableArray *gridNames = [NSMutableArray arrayWithCapacity:files.count];
+    for (NSString *file in files) {
+        if ([file.pathExtension compare:FILE_EXTENSION options:NSCaseInsensitiveSearch] == NSOrderedSame) {
+            [gridNames addObject:[file stringByDeletingPathExtension]];
+        }
+    }
+    
+    return gridNames;
+}
+
 - (IBAction)playPauseEvent:(id)sender
 {
     if([playPauseButton.currentTitle compare:playBtnText]){

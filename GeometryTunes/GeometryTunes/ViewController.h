@@ -39,5 +39,6 @@ typedef enum STATE
 //Save & Load methods
 - (void)loadGridFromFile:(NSString *)fileName;
 - (void)saveGridToFile:  (NSString *)fileName;
++ (NSMutableArray *)gridNameList;
 
 @end
