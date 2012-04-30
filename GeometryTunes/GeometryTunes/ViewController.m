@@ -24,7 +24,7 @@
 //static NSString *playBtnText = @"Play";
 //static NSString *pauseBtnText = @"Pause";
 static NSString *normalPathBtnText;
-static NSString *pathEditBtnText = @"               Done";
+static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS HACKY CODE
 
 + (NSString *)getSavedGridsDirectory {
     
@@ -150,6 +150,7 @@ static NSString *pathEditBtnText = @"               Done";
             [pathListPopover setDelegate:pathList];
         }
         CGSize popoverSize = CGSizeMake(200, 300);
+        [pathList.pathPicker reloadData];
         pathListPopover.popoverContentSize = popoverSize;
         [pathListPopover presentPopoverFromRect:[sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
     }
