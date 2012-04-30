@@ -10,6 +10,7 @@
 @property (retain) UIImage *pulseCircle;
 @property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic) float tapDistanceTolerance; //Units are pixels^2. This is the maximum distance a touch can be from a node for it to register that the touch was meant for that node
+@property (nonatomic) float removeDistanceTolerance;
 @property (nonatomic, retain) NSString *currentPathName;
 @property (nonatomic) NSTimeInterval speed;
 
