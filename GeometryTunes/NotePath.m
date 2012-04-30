@@ -177,7 +177,7 @@
         [pathFollower removeFromSuperview];
         pathFollower = nil;
     }
-    [pathView playHasStopped:self];
+    [pathView playHasStopped];
 }
 
 - (float)distanceFrom:(CGPoint)pos noteIndex:(int)i

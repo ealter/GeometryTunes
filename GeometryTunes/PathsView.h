@@ -26,7 +26,7 @@
 
 - (void)setGrid:(GridView*)grid;
 
-- (void)playHasStopped:(NotePath *)path;
+- (void)playHasStopped;
 
 - (void)pulseAt:(CGPoint)pos;
 

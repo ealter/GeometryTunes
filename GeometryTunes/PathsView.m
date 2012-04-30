@@ -171,6 +171,10 @@
 
 - (void)play
 {
+    if([paths count] == 0) {
+        [self playHasStopped];
+        return;
+    }
     [tapGestureRecognizer setEnabled:TRUE];
     for (NSString *pathName in paths) {
         NotePath *path = [paths objectForKey:pathName];
@@ -200,13 +204,14 @@
     [NotePlayer stopAllNotes];
 }
 
-- (void)playHasStopped:(NotePath *)path
+- (void)playHasStopped
 {
     //Check if the play has stopped for all paths
     bool stillPlaying = false;
     for (NSString *pathName in paths)
     {
-        stillPlaying = stillPlaying || [[paths objectForKey:pathName] isPlaying];
+        NotePath *path = [paths objectForKey:pathName];
+        stillPlaying = stillPlaying || [path isPlaying];
     }
     if(!stillPlaying)
     {

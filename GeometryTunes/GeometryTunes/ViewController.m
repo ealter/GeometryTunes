@@ -2,11 +2,14 @@
 #import "PathsView.h"
 #import "PathListController.h"
 
+//What the playpause button should do
 #define PLAY 0
 #define PAUSE 1
 
 @interface ViewController ()
 
+@property (nonatomic, copy) NSString *playImageFile;
+@property (nonatomic, copy) NSString *pauseImageFile;
 + (NSString *)getSavedGridsDirectory;
 + (NSString *)getFilePath:(NSString *)filename;
 
@@ -20,6 +23,7 @@
 @synthesize tempoTextField, tempo;
 @synthesize pathList, pathListPopover;
 @synthesize projectList, projectListPopover;
+@synthesize playImageFile, pauseImageFile;
 
 //static NSString *playBtnText = @"Play";
 //static NSString *pauseBtnText = @"Pause";
@@ -106,7 +110,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
         else
             [self changeStateToNormal:true];
         [self setPlayStateToStopped];
-        NSString *playImageFile = [[NSBundle mainBundle]pathForResource:@"playButton" ofType:@"png"];
+        
         UIImage *playImage = [[UIImage alloc]initWithContentsOfFile:playImageFile];
         [playPauseButton setBackgroundImage:playImage forState:UIControlStateNormal];
         [playPauseButton setTag:PAUSE];
@@ -115,7 +119,6 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
         if(state != NORMAL_STATE)
             [self changeStateToNormal:true];
         [grid play];
-        NSString *pauseImageFile = [[NSBundle mainBundle]pathForResource:@"pauseButton" ofType:@"png"];
         UIImage *pauseImage = [[UIImage alloc]initWithContentsOfFile:pauseImageFile];
         [playPauseButton setBackgroundImage:pauseImage forState:UIControlStateNormal];
         [playPauseButton setTag:PLAY];
@@ -188,7 +191,6 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
 
 - (void)setPlayStateToStopped
 {
-    NSString *playImageFile = [[NSBundle mainBundle]pathForResource:@"playButton" ofType:@"png"];
     UIImage *playImage = [[UIImage alloc]initWithContentsOfFile:playImageFile];
     [playPauseButton setBackgroundImage:playImage forState:UIControlStateNormal];
     [playPauseButton setTag:PAUSE];
@@ -199,9 +201,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     tempoTextField.text = [NSString stringWithFormat:@"%d BPM", (int)[sender value]]; 
     tempo = 60/[sender value];
     
-    if(playPauseButton.tag == PLAY){ //If playing
-        [grid setSpeed:tempo];
-    }
+    [grid setSpeed:tempo];
 }
 
 - (BOOL)pathEditStateIsAdding
@@ -229,6 +229,9 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     state = NORMAL_STATE;
     [grid setDelegate:self];
     normalPathBtnText = [[editPathBtn titleLabel] text];
+    pauseImageFile = [[NSBundle mainBundle]pathForResource:@"pauseButton" ofType:@"png"];
+    playImageFile = [[NSBundle mainBundle]pathForResource:@"playButton" ofType:@"png"];
+    playPauseButton.tag = PLAY;
     //[self loadGridFromFile:@"goodGrid"]; //TODO: delete this
 }
 
