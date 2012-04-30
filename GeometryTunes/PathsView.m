@@ -322,6 +322,8 @@ static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
 {
     if([currentPathName isEqualToString:pathName])
         currentPathName = nil;
+    NotePath *path = [paths objectForKey:pathName];
+    [path stop];
     [paths removeObjectForKey:pathName];
     [self setNeedsDisplay];
 }
