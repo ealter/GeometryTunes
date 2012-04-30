@@ -117,6 +117,7 @@
 		83194300150BD226003EF364 = {
 			isa = PBXGroup;
 			children = (
+				E29FF3F8154E1481001ECDBC /* UserProjects */,
 				E2F1D33015475D150096679C /* UserData.plist */,
 				E2CD9FAD1545103E00D4348D /* default.png */,
 				8319430E150BD226003EF364 /* Frameworks */,
@@ -210,6 +211,13 @@
 				83E3726C151D7069000DCF85 /* NotePath.m */,
 			);
 			name = Paths;
+			sourceTree = "<group>";
+		};
+		E29FF3F8154E1481001ECDBC /* UserProjects */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = UserProjects;
 			sourceTree = "<group>";
 		};
 		E2BD6FDE152E4E2F00868501 /* midi */ = {

@@ -16,7 +16,6 @@
 @synthesize editPathBtn, playPauseButton, pathModifyType;
 @synthesize tempoTextField, tempo;
 @synthesize pathList, pathListPopover;
-@synthesize helpMenu;
 
 static NSString *playBtnText = @"Play";
 static NSString *pauseBtnText = @"Pause";
