@@ -2,10 +2,6 @@
 #import "PathsView.h"
 #import "PathListController.h"
 
-//What the playpause button should do
-#define PLAY 0
-#define PAUSE 1
-
 @interface ViewController ()
 
 @property (nonatomic, copy) NSString *playImageFile;
@@ -104,7 +100,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
 
 - (IBAction)playPauseEvent:(id)sender
 {
-    if(playPauseButton.tag == PLAY){ //]compare:playBtnText]){
+    if([grid.pathView isPlaying]){ //]compare:playBtnText]){
         if(state == NORMAL_STATE)
             [grid pausePlayback];
         else
@@ -113,7 +109,6 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
         
         UIImage *playImage = [[UIImage alloc]initWithContentsOfFile:playImageFile];
         [playPauseButton setBackgroundImage:playImage forState:UIControlStateNormal];
-        [playPauseButton setTag:PAUSE];
     }
     else{
         if(state != NORMAL_STATE)
@@ -121,7 +116,6 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
         [grid play];
         UIImage *pauseImage = [[UIImage alloc]initWithContentsOfFile:pauseImageFile];
         [playPauseButton setBackgroundImage:pauseImage forState:UIControlStateNormal];
-        [playPauseButton setTag:PLAY];
     }
 }
 
@@ -193,7 +187,6 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
 {
     UIImage *playImage = [[UIImage alloc]initWithContentsOfFile:playImageFile];
     [playPauseButton setBackgroundImage:playImage forState:UIControlStateNormal];
-    [playPauseButton setTag:PAUSE];
     [grid playbackHasStopped];
 }
 
@@ -231,7 +224,6 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     normalPathBtnText = [[editPathBtn titleLabel] text];
     pauseImageFile = [[NSBundle mainBundle]pathForResource:@"pauseButton" ofType:@"png"];
     playImageFile = [[NSBundle mainBundle]pathForResource:@"playButton" ofType:@"png"];
-    playPauseButton.tag = PLAY;
     //[self loadGridFromFile:@"goodGrid"]; //TODO: delete this
 }
 
