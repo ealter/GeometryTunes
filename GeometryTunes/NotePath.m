@@ -66,6 +66,7 @@
 {
     [notes removeAllObjects];
     [path removeAllPoints];
+    [self stop];
 }
 
 - (void)buildPath

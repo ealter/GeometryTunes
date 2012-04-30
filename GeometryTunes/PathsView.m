@@ -18,7 +18,7 @@
 @synthesize delegateGrid, pulseCircle;
 @synthesize paths, currentPathName;
 @synthesize tapGestureRecognizer;
-@synthesize tapDistanceTolerance;
+@synthesize tapDistanceTolerance, removeDistanceTolerance;
 @synthesize speed;
 
 - (NotePath*)currentPath
@@ -38,6 +38,7 @@
     [tapGestureRecognizer setEnabled:FALSE];
     [self addGestureRecognizer:tapGestureRecognizer];
     tapDistanceTolerance = 90 * 90;
+    removeDistanceTolerance = 30 * 30;
     speed = 1;
 }
 
@@ -154,7 +155,7 @@
 {
     NSString *closestPath;
     int minIndex;
-    if([self closestNodeToPos:pos pathName:&closestPath index:&minIndex] <= tapDistanceTolerance && closestPath != nil) {
+    if([self closestNodeToPos:pos pathName:&closestPath index:&minIndex] <= removeDistanceTolerance && closestPath != nil) {
         [[paths objectForKey:closestPath] removeNoteAtIndex:minIndex];
         [self setNeedsDisplay];
         return true;
