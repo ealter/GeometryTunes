@@ -137,6 +137,8 @@
 
 - (IBAction)editPath
 {
+    if([[pathView paths] count] == 0)
+        return;
     [pathPicker setEditing:![pathPicker isEditing]];
     if(![pathPicker isEditing])
     {
