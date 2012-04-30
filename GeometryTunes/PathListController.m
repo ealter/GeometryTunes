@@ -124,8 +124,10 @@
     for(; [[pathView paths] objectForKey:pathName] != nil; pathNum++, pathName = [[NSString alloc]initWithFormat:@"path%d", pathNum]);
     [pathView addPath:pathName];
     [pathPicker reloadData];
-    if(mainViewController)
+    if(mainViewController) {
         [mainViewController pathHasBeenSelected];
+        [mainViewController setPathEditState:TRUE];
+    }
 }
 
 - (NSString *)nameForNthCell:(int)row
@@ -135,6 +137,8 @@
 
 - (IBAction)editPath
 {
+    if([[pathView paths] count] == 0)
+        return;
     [pathPicker setEditing:![pathPicker isEditing]];
     if(![pathPicker isEditing])
     {

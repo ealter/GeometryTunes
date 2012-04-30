@@ -306,7 +306,8 @@ static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
 
 - (BOOL)pathDoesLoop:(NSString *)pathName
 {
-    return [[paths objectForKey:pathName] doesLoop];
+    NotePath *path = [paths objectForKey:pathName];
+    return [path doesLoop];
 }
 
 - (void)setCurrentPathName:(NSString *)_currentPathName
@@ -321,6 +322,8 @@ static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
 {
     if([currentPathName isEqualToString:pathName])
         currentPathName = nil;
+    NotePath *path = [paths objectForKey:pathName];
+    [path stop];
     [paths removeObjectForKey:pathName];
     [self setNeedsDisplay];
 }

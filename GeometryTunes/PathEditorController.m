@@ -44,7 +44,7 @@
 {
     pathName = _pathName;
     [pathNameField setText:pathName];
-    [loopingSwitch setOn:[pathsView pathDoesLoop:pathName]];
+    [loopingSwitch setOn:[pathsView pathDoesLoop:pathName] animated:FALSE];
 }
 
 - (void)viewDidLoad
