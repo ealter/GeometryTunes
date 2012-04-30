@@ -210,6 +210,10 @@
     if(!stillPlaying)
     {
         [NotePlayer stopAllNotes];
+        for(NSString *pathName in paths) {
+            NotePath *path = [paths objectForKey:pathName];
+            [path setPlaybackPosition:0];
+        }
         [tapGestureRecognizer setEnabled:FALSE];
         [[delegateGrid delegate] setPlayStateToStopped];
     }
