@@ -19,7 +19,7 @@
 @synthesize paths, currentPathName;
 @synthesize tapGestureRecognizer;
 @synthesize tapDistanceTolerance, removeDistanceTolerance;
-@synthesize speed;
+@synthesize speed, isPlaying;
 
 - (NotePath*)currentPath
 {
@@ -40,6 +40,7 @@
     tapDistanceTolerance = 90 * 90;
     removeDistanceTolerance = 30 * 30;
     speed = 1;
+    isPlaying = FALSE;
 }
 
 - (void)initPulseCircle
@@ -171,6 +172,7 @@
 
 - (void)play
 {
+    isPlaying = TRUE;
     if([paths count] == 0) {
         [self playHasStopped];
         return;
@@ -184,6 +186,7 @@
 
 - (void)pause
 {
+    isPlaying = FALSE;
     [tapGestureRecognizer setEnabled:FALSE];
     for (NSString *pathName in paths)
     {
@@ -195,6 +198,7 @@
 
 - (void)stop
 {
+    isPlaying = FALSE;
     [tapGestureRecognizer setEnabled:FALSE];
     for (NSString *pathName in paths)
     {
@@ -213,8 +217,8 @@
         NotePath *path = [paths objectForKey:pathName];
         stillPlaying = stillPlaying || [path isPlaying];
     }
-    if(!stillPlaying)
-    {
+    if(!stillPlaying) {
+        isPlaying = FALSE;
         [NotePlayer stopAllNotes];
         for(NSString *pathName in paths) {
             NotePath *path = [paths objectForKey:pathName];

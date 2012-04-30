@@ -29,6 +29,7 @@
 @synthesize delegate, pathView;
 
 #define CELL_BORDER_COLOR [[UIColor grayColor] CGColor]
+#define CELL_BORDER_COLOR_WHILE_PLAYING [[UIColor clearColor] CGColor]
 
 - (GridCell*)cellAtPos:(CellPos)cellPos
 {
@@ -65,7 +66,10 @@
     else
     {
         [cell.layer setBorderWidth:2];
-        [cell.layer setBorderColor:CELL_BORDER_COLOR];
+        if([pathView isPlaying])
+            [cell.layer setBorderColor:CELL_BORDER_COLOR_WHILE_PLAYING];
+        else
+            [cell.layer setBorderColor:CELL_BORDER_COLOR];
     }
 }
 
@@ -347,7 +351,7 @@
 - (void)play
 {
     [pathView setGrid:self];
-    [self convertCellBorderColors:[[UIColor clearColor] CGColor]];
+    [self convertCellBorderColors:CELL_BORDER_COLOR_WHILE_PLAYING];
     [pathView play];
 
 }

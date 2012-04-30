@@ -13,6 +13,7 @@
 @property (nonatomic) float removeDistanceTolerance;
 @property (nonatomic, retain) NSString *currentPathName;
 @property (nonatomic) NSTimeInterval speed;
+@property (nonatomic, readonly) BOOL isPlaying;
 
 - (void)addPath:(NSString *)pathName; //Adds the new path and sets the current path to it. If a path with that name already exists, this just sets the current path to it.
 - (void)deletePath:(NSString *)pathName;
