@@ -352,6 +352,11 @@
 
 }
 
+- (void)playbackHasStopped
+{
+    [self convertCellBorderColors:CELL_BORDER_COLOR];
+}
+
 - (NSMutableArray*)notesAtCell:(CellPos)cellPos
 {
     return [[self cellAtPos:cellPos] notes];
