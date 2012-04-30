@@ -41,7 +41,7 @@ typedef enum STATE
 - (void)changeStateToNormal:(bool)informGrid;
 
 //Save & Load methods
-- (void)saveLoadEvent:(id)sender;
+- (IBAction)saveLoadEvent:(id)sender;
 - (void)loadGridFromFile:(NSString *)fileName;
 - (void)saveGridToFile:  (NSString *)fileName;
 + (NSMutableArray *)gridNameList;

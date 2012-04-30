@@ -174,7 +174,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     state = NORMAL_STATE;
 }
 
-- (void)saveLoadEvent:(id)sender
+- (IBAction)saveLoadEvent:(id)sender
 {
     if(!projectList)
     {
