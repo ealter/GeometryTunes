@@ -24,6 +24,7 @@ typedef enum STATE
 @property (strong, nonatomic) PathListController *pathList;
 @property (strong, nonatomic) UIPopoverController *pathListPopover;
 @property (strong, nonatomic) ProjectList *projectList;
+@property (strong, nonatomic) UIPopoverController *projectListPopover;
 
 //Playback methods
 - (IBAction)playPauseEvent:(id)sender;
