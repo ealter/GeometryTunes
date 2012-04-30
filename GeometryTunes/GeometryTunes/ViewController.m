@@ -186,7 +186,7 @@ static NSString *pathEditBtnText = @"Done";
 }
 
 - (IBAction) sliderValueChanged:(UISlider *)sender {
-    tempoTextField.text = [NSString stringWithFormat:@"%.1f BPM", [sender value]]; 
+    tempoTextField.text = [NSString stringWithFormat:@"%d BPM", (int)[sender value]]; 
     tempo = 60/[sender value];
     
     if(playPauseButton.tag == PLAY){ //If playing
