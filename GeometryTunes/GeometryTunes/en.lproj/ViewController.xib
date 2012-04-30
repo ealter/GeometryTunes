@@ -356,6 +356,15 @@
 					</object>
 					<int key="connectionID">77</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">saveLoadEvent:</string>
+						<reference key="source" ref="842279610"/>
+						<reference key="destination" ref="606714003"/>
+						<int key="IBEventType">7</int>
+					</object>
+					<int key="connectionID">89</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -472,7 +481,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">87</int>
+			<int key="maxID">89</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -490,6 +499,7 @@
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="editPathEvent:">id</string>
 						<string key="playPauseEvent:">id</string>
+						<string key="saveLoadEvent:">id</string>
 						<string key="sliderValueChanged:">id</string>
 						<string key="stopEvent:">id</string>
 					</dictionary>
@@ -500,6 +510,10 @@
 						</object>
 						<object class="IBActionInfo" key="playPauseEvent:">
 							<string key="name">playPauseEvent:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="saveLoadEvent:">
+							<string key="name">saveLoadEvent:</string>
 							<string key="candidateClassName">id</string>
 						</object>
 						<object class="IBActionInfo" key="sliderValueChanged:">

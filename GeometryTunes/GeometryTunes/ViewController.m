@@ -170,7 +170,7 @@ static NSString *pathEditBtnText = @"               Done";
     state = NORMAL_STATE;
 }
 
-- (void)saveLoadEvent:(id)sender
+- (IBAction)saveLoadEvent:(id)sender
 {
     if(!projectList)
     {
