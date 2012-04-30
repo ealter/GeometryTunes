@@ -19,7 +19,7 @@
 @synthesize editPathBtn, playPauseButton, pathModifyType;
 @synthesize tempoTextField, tempo;
 @synthesize pathList, pathListPopover;
-@synthesize projectList;
+@synthesize projectList, projectListPopover;
 
 //static NSString *playBtnText = @"Play";
 //static NSString *pauseBtnText = @"Pause";
@@ -175,7 +175,14 @@ static NSString *pathEditBtnText = @"Done";
     if(!projectList)
     {
         projectList = [[ProjectList alloc]initWithNibName:@"ProjectList" bundle:nil];
+        projectListPopover = [[UIPopoverController alloc]initWithContentViewController:projectList];
+        //[projectListPopover setDelegate:projectList];
+        
     }
+    CGSize popoverSize = CGSizeMake(200, 300);
+    projectListPopover.popoverContentSize = popoverSize;
+    [projectListPopover presentPopoverFromRect:[sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
+    
 }
 
 - (void)setPlayStateToStopped
@@ -183,6 +190,7 @@ static NSString *pathEditBtnText = @"Done";
     NSString *playImageFile = [[NSBundle mainBundle]pathForResource:@"playButton" ofType:@"png"];
     UIImage *playImage = [[UIImage alloc]initWithContentsOfFile:playImageFile];
     [playPauseButton setBackgroundImage:playImage forState:UIControlStateNormal];
+    [playPauseButton setTag:PAUSE];
 }
 
 - (IBAction) sliderValueChanged:(UISlider *)sender {
