@@ -191,6 +191,7 @@ static NSString *pathEditBtnText = @"               Done";
     UIImage *playImage = [[UIImage alloc]initWithContentsOfFile:playImageFile];
     [playPauseButton setBackgroundImage:playImage forState:UIControlStateNormal];
     [playPauseButton setTag:PAUSE];
+    [grid playbackHasStopped];
 }
 
 - (IBAction) sliderValueChanged:(UISlider *)sender {
