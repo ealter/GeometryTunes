@@ -367,4 +367,10 @@ static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
     [follower.layer addAnimation:theAnimation forKey:@"animatePosition"];
 }
 
+- (void)reset
+{
+    [paths removeAllObjects];
+    [self setNeedsDisplay];
+}
+
 @end

@@ -13,6 +13,7 @@ typedef enum STATE
 } STATE;
 
 @property STATE state;
+@property (nonatomic, copy, readonly) NSString *currentFileName;
 @property (nonatomic, retain) IBOutlet GridView *grid; 
 @property (nonatomic, retain) IBOutlet UIButton *editPathBtn;
 @property (nonatomic, retain) IBOutlet UIButton *playPauseButton;
@@ -44,6 +45,8 @@ typedef enum STATE
 - (IBAction)saveLoadEvent:(id)sender;
 - (void)loadGridFromFile:(NSString *)fileName;
 - (void)saveGridToFile:  (NSString *)fileName;
+- (void)newGrid;
 + (NSMutableArray *)gridNameList;
++ (NSString *)nthFileName:(NSInteger)i;
 
 @end

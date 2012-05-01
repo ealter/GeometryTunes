@@ -14,7 +14,7 @@
 @implementation ViewController
 
 @synthesize state;
-@synthesize grid;
+@synthesize grid, currentFileName;
 @synthesize editPathBtn, playPauseButton, pathModifyType;
 @synthesize tempoTextField, tempo;
 @synthesize pathList, pathListPopover;
@@ -64,6 +64,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     }
     [unarchiver finishDecoding];
     [grid setDelegate:self];
+    currentFileName = fileName;
 }
 
 - (void)saveGridToFile:(NSString *)fileName
@@ -72,9 +73,12 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     NSMutableData *data = [[NSMutableData alloc] init];
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];          
     [archiver encodeObject:fileName forKey:GRID_NAME_KEY];
+    [grid changeToNormalState];
+    [grid stopPlayback];
     [archiver encodeObject:grid forKey:GRID_KEY];
     [archiver finishEncoding];
     [data writeToFile:dataPath atomically:YES];
+    currentFileName = fileName;
 }
 
 + (NSMutableArray *)gridNameList
@@ -96,6 +100,11 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     }
     
     return gridNames;
+}
+
++ (NSString *)nthFileName:(NSInteger)i
+{
+    return [[self gridNameList] objectAtIndex:i]; //TODO: sort alphabetically
 }
 
 - (IBAction)playPauseEvent:(id)sender
@@ -173,14 +182,20 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     if(!projectList)
     {
         projectList = [[ProjectList alloc]initWithNibName:@"ProjectList" bundle:nil];
+        [projectList setViewController:self];
         projectListPopover = [[UIPopoverController alloc]initWithContentViewController:projectList];
+        [projectList setPopover:projectListPopover];
         //[projectListPopover setDelegate:projectList];
-        
     }
     CGSize popoverSize = CGSizeMake(200, 300);
     projectListPopover.popoverContentSize = popoverSize;
     [projectListPopover presentPopoverFromRect:[sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
-    
+}
+
+- (void)newGrid
+{
+    currentFileName = nil;
+    [grid reset];
 }
 
 - (void)setPlayStateToStopped
@@ -224,6 +239,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     normalPathBtnText = [[editPathBtn titleLabel] text];
     pauseImageFile = [[NSBundle mainBundle]pathForResource:@"pauseButton" ofType:@"png"];
     playImageFile = [[NSBundle mainBundle]pathForResource:@"playButton" ofType:@"png"];
+    currentFileName = nil;
     //[self loadGridFromFile:@"goodGrid"]; //TODO: delete this
 }
 

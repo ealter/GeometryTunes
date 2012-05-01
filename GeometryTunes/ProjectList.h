@@ -1,15 +1,13 @@
-//
-//  ProjectList.h
-//  GeometryTunes
-//
-//  Created by Music2 on 4/29/12.
-//  Copyright (c) 2012 Tufts University. All rights reserved.
-//
-
 #import <UIKit/UIKit.h>
 
 @class ViewController;
 
-@interface ProjectList : UIViewController
+@interface ProjectList : UIViewController <UITableViewDelegate, UITableViewDataSource>
+
+@property (nonatomic, retain) ViewController *viewController;
+@property (nonatomic, retain) UIPopoverController *popover;
+
+-(IBAction)newProject;
+-(IBAction)saveProject;
 
 @end

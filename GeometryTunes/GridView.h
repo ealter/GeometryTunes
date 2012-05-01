@@ -61,4 +61,6 @@ typedef struct CellPos {
 - (void)changeCell:(GridCell *)cell isBold:(bool)isBold;
 - (GridCell*)cellAtPos:(CellPos)cellPos;
 
+- (void)reset;
+
 @end

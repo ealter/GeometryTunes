@@ -39,4 +39,6 @@
 - (UIImageView *)getPathFollowerAtPos:(CGPoint)pos;
 - (void)movePathFollower:(UIImageView *)follower pos:(CGPoint)pos delegate:(id)delegate;
 
+- (void)reset;
+
 @end

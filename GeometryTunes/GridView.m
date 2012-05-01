@@ -175,6 +175,18 @@
     [self addGestureRecognizer:swipeGestureRecognizer];
 }
 
+- (void)reset
+{
+    for(NSMutableArray *row in cells) {
+        for(int j=0; j<numBoxes.y; j++) {
+            GridCell *cell = [row objectAtIndex:j];
+            [cell clearNotes];
+        }
+    }
+    [pathView reset];
+    [self setNeedsDisplay];
+}
+
 -(void) handleTap:(UITapGestureRecognizer *)sender
 {
     CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
