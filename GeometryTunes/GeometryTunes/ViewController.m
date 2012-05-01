@@ -30,7 +30,6 @@ static NSString *pauseBtnText = @"Pause";
         if(state != NORMAL_STATE)
             [self changeStateToNormal:true];
         [grid playPathWithSpeedFactor:tempo reversed:false];
-        
         [playPauseButton setTitle:pauseBtnText forState:UIControlStateNormal];
     }
 }
