@@ -43,6 +43,7 @@
 		E2C4F99E154E42DC00D409DD /* ProjectsEditorController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2C4F99C154E42DC00D409DD /* ProjectsEditorController.xib */; };
 		E2C5D77D15291FF40008BA08 /* woodBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2C5D77C15291FF40008BA08 /* woodBackground.jpg */; };
 		E2C768FB152CD28600998B48 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E2C768FA152CD28600998B48 /* Icon.png */; };
+		E2C7A3311551F2B000BD25D7 /* GridProjects.m in Sources */ = {isa = PBXBuildFile; fileRef = E2C7A3301551F2B000BD25D7 /* GridProjects.m */; };
 		E2CD9FAE1545103E00D4348D /* default.png in Resources */ = {isa = PBXBuildFile; fileRef = E2CD9FAD1545103E00D4348D /* default.png */; };
 		E2D5ECF3152004F700C417C8 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2D5ECF2152004F700C417C8 /* GridView.m */; };
 		E2D80E35152E487B00B2E1C7 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2D80E34152E487B00B2E1C7 /* AudioToolbox.framework */; };
@@ -112,6 +113,8 @@
 		E2C4F99C154E42DC00D409DD /* ProjectsEditorController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectsEditorController.xib; sourceTree = "<group>"; };
 		E2C5D77C15291FF40008BA08 /* woodBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = woodBackground.jpg; path = images/woodBackground.jpg; sourceTree = "<group>"; };
 		E2C768FA152CD28600998B48 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		E2C7A32F1551F2B000BD25D7 /* GridProjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridProjects.h; sourceTree = SOURCE_ROOT; };
+		E2C7A3301551F2B000BD25D7 /* GridProjects.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridProjects.m; sourceTree = SOURCE_ROOT; };
 		E2CD9FAD1545103E00D4348D /* default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = default.png; sourceTree = "<group>"; };
 		E2D5ECF2152004F700C417C8 /* GridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridView.m; sourceTree = "<group>"; };
 		E2D80E34152E487B00B2E1C7 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
@@ -239,6 +242,8 @@
 		E29FF3FE154E15D7001ECDBC /* UserProjects */ = {
 			isa = PBXGroup;
 			children = (
+				E2C7A32F1551F2B000BD25D7 /* GridProjects.h */,
+				E2C7A3301551F2B000BD25D7 /* GridProjects.m */,
 				E29FF400154E15F5001ECDBC /* ProjectList.h */,
 				E29FF401154E15F5001ECDBC /* ProjectList.m */,
 				E29FF402154E15F5001ECDBC /* ProjectList.xib */,
@@ -384,6 +389,7 @@
 				CE118320154600C400193B2E /* PathEditorController.m in Sources */,
 				E29FF403154E15F5001ECDBC /* ProjectList.m in Sources */,
 				E2C4F99D154E42DC00D409DD /* ProjectsEditorController.m in Sources */,
+				E2C7A3311551F2B000BD25D7 /* GridProjects.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

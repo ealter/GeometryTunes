@@ -1,5 +1,6 @@
 #import "ProjectList.h"
 #import "ViewController.h"
+#import "GridProjects.h"
 
 @implementation ProjectList
 
@@ -32,7 +33,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
-    return [[ViewController gridNameList] count];
+    return [[GridProjects gridNameList] count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -42,7 +43,7 @@
     if(!cell)
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     
-    cell.textLabel.text = [ViewController nthFileName:indexPath.row];
+    cell.textLabel.text = [GridProjects nthFileName:indexPath.row];
     if([cell.textLabel.text compare:[viewController currentFileName]] == NSOrderedSame) //TODO: this doesn't work yet
     {
         [cell.backgroundView setBackgroundColor:[UIColor yellowColor]];
@@ -52,7 +53,7 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [viewController loadGridFromFile:[ViewController nthFileName:indexPath.row]];
+    [viewController loadGridFromFile:[GridProjects nthFileName:indexPath.row]];
     [popover dismissPopoverAnimated:YES];
 }
 

@@ -1,6 +1,7 @@
 #import "ViewController.h"
 #import "PathsView.h"
 #import "PathListController.h"
+#import "GridProjects.h"
 
 @interface ViewController ()
 
@@ -8,15 +9,13 @@
 @property (nonatomic, copy) NSString *pauseImageFile;
 @property (nonatomic, copy) NSString *pathsImageFile;
 @property (nonatomic, copy) NSString *doneImageFile;
-+ (NSString *)getSavedGridsDirectory;
-+ (NSString *)getFilePath:(NSString *)filename;
 
 @end
 
 @implementation ViewController
 
 @synthesize state;
-@synthesize grid, currentFileName;
+@synthesize grid, gridProjects;
 @synthesize editPathBtn, playPauseButton;
 @synthesize tempoTextField, tempo;
 @synthesize pathList, pathListPopover;
@@ -28,98 +27,26 @@
 static NSString *normalPathBtnText;
 static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS HACKY CODE
 
-+ (NSString *)getSavedGridsDirectory {
-    
-    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *documentsDirectory = [paths objectAtIndex:0];
-    documentsDirectory = [documentsDirectory stringByAppendingPathComponent:@"Grids"];
-    
-    NSError *error;
-    [[NSFileManager defaultManager] createDirectoryAtPath:documentsDirectory withIntermediateDirectories:YES attributes:nil error:&error];   
-    
-    return documentsDirectory;
-}
-
-#define FILE_EXTENSION @"geotunes"
-#define GRID_NAME_KEY  @"filename"
-#define GRID_KEY       @"grid"
-
-+ (NSString *)getFilePath:(NSString *)filename
+- (NSString *)currentFileName
 {
-    return [[[ViewController getSavedGridsDirectory] stringByAppendingPathComponent:[self sanitizeProjectName:filename]] stringByAppendingPathExtension:FILE_EXTENSION];
+    return [gridProjects currentFileName];
 }
 
 - (void)loadGridFromFile:(NSString *)fileName
 {
-    NSString *dataPath = [ViewController getFilePath:fileName];
-    NSData *codedData = [[NSData alloc] initWithContentsOfFile:dataPath];
-    if (codedData == nil) return;
-    
-    NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:codedData];
-    NSString *gridName = [unarchiver decodeObjectForKey:GRID_NAME_KEY];
-    if(gridName == nil) return;
-    GridView *_grid = [unarchiver decodeObjectForKey:GRID_KEY];
+    GridView *_grid = [gridProjects loadGridFromFile:fileName];
     if(_grid) {
         [grid removeFromSuperview];
         [self.view addSubview:_grid];
         grid = _grid;
     }
-    [unarchiver finishDecoding];
     [grid setDelegate:self];
     [pathList setPathView:[grid pathView]];
-    currentFileName = fileName;
 }
 
 - (void)saveGridToFile:(NSString *)fileName
 {
-    NSString *dataPath = [ViewController getFilePath:fileName];
-    NSMutableData *data = [[NSMutableData alloc] init];
-    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];          
-    [archiver encodeObject:fileName forKey:GRID_NAME_KEY];
-    [grid changeToNormalState];
-    [grid stopPlayback];
-    [archiver encodeObject:grid forKey:GRID_KEY];
-    [archiver finishEncoding];
-    [data writeToFile:dataPath atomically:YES];
-    currentFileName = fileName;
-}
-
-+ (NSString *)sanitizeProjectName:(NSString *)projectName
-{
-    //TODO: should we allow names to start with a period?
-    NSString *invalidCharacters[] = {@":", @"/"};
-    for(int i=0; i < sizeof(invalidCharacters)/sizeof(invalidCharacters[0]); i++) {
-        projectName = [projectName stringByReplacingOccurrencesOfString:invalidCharacters[i] withString:@"_"];
-    }
-    if([projectName length] + [FILE_EXTENSION length] > NAME_MAX)
-        projectName = [projectName substringToIndex:NAME_MAX - [FILE_EXTENSION length]];
-    return projectName;
-}
-
-+ (NSMutableArray *)gridNameList
-{
-    NSString *documentsDirectory = [self getSavedGridsDirectory];
-    
-    NSError *error;
-    NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory error:&error];
-    if (files == nil) {
-        NSLog(@"Error reading contents of documents directory: %@", [error localizedDescription]);
-        return nil;
-    }
-    
-    NSMutableArray *gridNames = [NSMutableArray arrayWithCapacity:files.count];
-    for (NSString *file in files) {
-        if ([file.pathExtension compare:FILE_EXTENSION options:NSCaseInsensitiveSearch] == NSOrderedSame) {
-            [gridNames addObject:[file stringByDeletingPathExtension]];
-        }
-    }
-    
-    return gridNames;
-}
-
-+ (NSString *)nthFileName:(NSInteger)i
-{
-    return [[self gridNameList] objectAtIndex:i]; //TODO: sort alphabetically
+    [gridProjects saveToFile:fileName grid:grid];
 }
 
 - (IBAction)playPauseEvent:(id)sender
@@ -214,7 +141,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
 
 - (void)newGrid
 {
-    currentFileName = nil;
+    [gridProjects newGrid];
     [grid reset];
 }
 
@@ -251,7 +178,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     playImageFile = [[NSBundle mainBundle]pathForResource:@"playButton2" ofType:@"png"];
     doneImageFile = [[NSBundle mainBundle]pathForResource:@"doneButton" ofType:@"png"];
     pathsImageFile = [[NSBundle mainBundle]pathForResource:@"pathsButton" ofType:@"png"];
-    currentFileName = nil;
+    gridProjects = [[GridProjects alloc]init];
     //[self loadGridFromFile:@"goodGrid"]; //TODO: delete this
 }
 

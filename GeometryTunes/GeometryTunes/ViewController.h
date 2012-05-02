@@ -3,6 +3,8 @@
 #import "PathListController.h"
 #import "ProjectList.h"
 
+@class GridProjects;
+
 @interface ViewController : UIViewController
 
 typedef enum STATE
@@ -13,7 +15,7 @@ typedef enum STATE
 } STATE;
 
 @property STATE state;
-@property (nonatomic, copy, readonly) NSString *currentFileName;
+@property (nonatomic, retain, readonly) GridProjects *gridProjects;
 @property (nonatomic, retain) IBOutlet GridView *grid; 
 @property (nonatomic, retain) IBOutlet UIButton *editPathBtn;
 @property (nonatomic, retain) IBOutlet UIButton *playPauseButton;
@@ -38,13 +40,11 @@ typedef enum STATE
 
 - (void)changeStateToNormal:(bool)informGrid;
 
-//Save & Load methods //TODO: put this stuff in its own module
+//Save & Load methods
 - (IBAction)saveLoadEvent:(id)sender;
+- (void)saveGridToFile:(NSString *)fileName;
 - (void)loadGridFromFile:(NSString *)fileName;
-- (void)saveGridToFile:  (NSString *)fileName;
+- (NSString*)currentFileName;
 - (void)newGrid;
-+ (NSString *)sanitizeProjectName:(NSString *)projectName; //Returns a new project name that can be used as part of a filename
-+ (NSMutableArray *)gridNameList;
-+ (NSString *)nthFileName:(NSInteger)i;
 
 @end
