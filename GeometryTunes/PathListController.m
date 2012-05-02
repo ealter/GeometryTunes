@@ -2,6 +2,7 @@
 #import "PathsView.h"
 #import "ViewController.h"
 #import "PathEditorController.h"
+#import "GridView.h"
 
 @implementation PathListController
 

@@ -4,6 +4,8 @@
 #import "ViewController.h"
 #import "NotePlayer.h"
 #import "PathsView.h"
+#import "Piano.h"
+#import "PathListController.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define NUM_BOXES_X_INITIAL 8

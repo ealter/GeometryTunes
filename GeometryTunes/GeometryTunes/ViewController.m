@@ -1,7 +1,9 @@
 #import "ViewController.h"
 #import "PathsView.h"
+#import "GridView.h"
 #import "PathListController.h"
 #import "GridProjects.h"
+#import "ProjectList.h"
 
 @interface ViewController ()
 

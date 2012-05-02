@@ -1,9 +1,9 @@
 #import <UIKit/UIKit.h>
-#import "Piano.h"
 
 @class PathsView;
 @class ViewController;
 @class GridCell;
+@class Piano;
 
 @interface GridView : UIView <NSCoding>
 {
