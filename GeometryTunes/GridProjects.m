@@ -77,6 +77,7 @@
 + (NSString *)sanitizeProjectName:(NSString *)projectName
 {
     NSString *invalidCharacters[] = {@":", @"/"};
+    projectName = [projectName stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     for(int i=0; i < sizeof(invalidCharacters)/sizeof(invalidCharacters[0]); i++) {
         projectName = [projectName stringByReplacingOccurrencesOfString:invalidCharacters[i] withString:@"_"];
     }
