@@ -39,8 +39,6 @@
 		E2BD6FE7152E4E5300868501 /* Release-iphoneos in Resources */ = {isa = PBXBuildFile; fileRef = E2BD6FE0152E4E5300868501 /* Release-iphoneos */; };
 		E2BD6FEA152E4E5300868501 /* Release-iphonesimulator in Resources */ = {isa = PBXBuildFile; fileRef = E2BD6FE3152E4E5300868501 /* Release-iphonesimulator */; };
 		E2C4F994154E2E5900D409DD /* pathsMenuButton.png in Resources */ = {isa = PBXBuildFile; fileRef = E2C4F993154E2E5900D409DD /* pathsMenuButton.png */; };
-		E2C4F99D154E42DC00D409DD /* ProjectsEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = E2C4F99B154E42DC00D409DD /* ProjectsEditorController.m */; };
-		E2C4F99E154E42DC00D409DD /* ProjectsEditorController.xib in Resources */ = {isa = PBXBuildFile; fileRef = E2C4F99C154E42DC00D409DD /* ProjectsEditorController.xib */; };
 		E2C5D77D15291FF40008BA08 /* woodBackground.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E2C5D77C15291FF40008BA08 /* woodBackground.jpg */; };
 		E2C768FB152CD28600998B48 /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = E2C768FA152CD28600998B48 /* Icon.png */; };
 		E2C7A3311551F2B000BD25D7 /* GridProjects.m in Sources */ = {isa = PBXBuildFile; fileRef = E2C7A3301551F2B000BD25D7 /* GridProjects.m */; };
@@ -108,9 +106,6 @@
 		E2BD6FE4152E4E5300868501 /* libcrmpd.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrmpd.a; path = "crsynth/Release-iphonesimulator/libcrmpd.a"; sourceTree = "<group>"; };
 		E2BD6FE5152E4E5300868501 /* libcrse.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libcrse.a; path = "crsynth/Release-iphonesimulator/libcrse.a"; sourceTree = "<group>"; };
 		E2C4F993154E2E5900D409DD /* pathsMenuButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pathsMenuButton.png; sourceTree = "<group>"; };
-		E2C4F99A154E42DC00D409DD /* ProjectsEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ProjectsEditorController.h; sourceTree = "<group>"; };
-		E2C4F99B154E42DC00D409DD /* ProjectsEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ProjectsEditorController.m; sourceTree = "<group>"; };
-		E2C4F99C154E42DC00D409DD /* ProjectsEditorController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ProjectsEditorController.xib; sourceTree = "<group>"; };
 		E2C5D77C15291FF40008BA08 /* woodBackground.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = woodBackground.jpg; path = images/woodBackground.jpg; sourceTree = "<group>"; };
 		E2C768FA152CD28600998B48 /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
 		E2C7A32F1551F2B000BD25D7 /* GridProjects.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridProjects.h; sourceTree = SOURCE_ROOT; };
@@ -247,9 +242,6 @@
 				E29FF400154E15F5001ECDBC /* ProjectList.h */,
 				E29FF401154E15F5001ECDBC /* ProjectList.m */,
 				E29FF402154E15F5001ECDBC /* ProjectList.xib */,
-				E2C4F99A154E42DC00D409DD /* ProjectsEditorController.h */,
-				E2C4F99B154E42DC00D409DD /* ProjectsEditorController.m */,
-				E2C4F99C154E42DC00D409DD /* ProjectsEditorController.xib */,
 			);
 			name = UserProjects;
 			sourceTree = "<group>";
@@ -356,7 +348,6 @@
 				E2EEB822154E1EB0002C3541 /* playButton.png in Resources */,
 				E2EEB826154E2892002C3541 /* stopButton.png in Resources */,
 				E2C4F994154E2E5900D409DD /* pathsMenuButton.png in Resources */,
-				E2C4F99E154E42DC00D409DD /* ProjectsEditorController.xib in Resources */,
 				E2126E421550F2FB006DA58A /* pathsButton.png in Resources */,
 				E2126E431550F2FB006DA58A /* doneButton.png in Resources */,
 				E2126E441550F2FB006DA58A /* projectsButton.png in Resources */,
@@ -388,7 +379,6 @@
 				E288F44E15353855000B0DC8 /* PathListController.m in Sources */,
 				CE118320154600C400193B2E /* PathEditorController.m in Sources */,
 				E29FF403154E15F5001ECDBC /* ProjectList.m in Sources */,
-				E2C4F99D154E42DC00D409DD /* ProjectsEditorController.m in Sources */,
 				E2C7A3311551F2B000BD25D7 /* GridProjects.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
