@@ -34,6 +34,12 @@
     return [[[self getSavedGridsDirectory] stringByAppendingPathComponent:[self sanitizeProjectName:filename]] stringByAppendingPathExtension:FILE_EXTENSION];
 }
 
++ (void)deleteProject:(NSString *)projectName
+{
+    NSString *path = [self getFilePath:projectName];
+    [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
+}
+
 - (void)newGrid
 {
     currentFileName = nil;

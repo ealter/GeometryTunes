@@ -31,6 +31,19 @@
     [self refresh];
 }
 
+- (IBAction)editProjects
+{
+    [fileList setEditing:![fileList isEditing]];
+}
+
+- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    if(editingStyle != UITableViewCellEditingStyleDelete)
+        return;
+    [GridProjects deleteProject:[tableView cellForRowAtIndexPath:indexPath].textLabel.text];
+    [tableView reloadData];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     return [[GridProjects gridNameList] count];
