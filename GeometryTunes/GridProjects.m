@@ -76,11 +76,12 @@
 
 + (NSString *)sanitizeProjectName:(NSString *)projectName
 {
-    //TODO: should we allow names to start with a period?
     NSString *invalidCharacters[] = {@":", @"/"};
     for(int i=0; i < sizeof(invalidCharacters)/sizeof(invalidCharacters[0]); i++) {
         projectName = [projectName stringByReplacingOccurrencesOfString:invalidCharacters[i] withString:@"_"];
     }
+    if([projectName length] > 0 && [projectName characterAtIndex:0] == '.')
+        projectName = [projectName substringFromIndex:1];
     if([projectName length] + [FILE_EXTENSION length] > NAME_MAX)
         projectName = [projectName substringToIndex:NAME_MAX - [FILE_EXTENSION length]];
     return projectName;
