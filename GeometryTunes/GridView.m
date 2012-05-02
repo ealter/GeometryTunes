@@ -107,6 +107,7 @@
         if(!cells)
             [self allocateCells];
         [self initCells];
+        [pathView removeFromSuperview];
         pathView = [aDecoder decodeObjectForKey:PATHVIEW_ENCODE_KEY];
         if(!pathView)
             pathView = [[PathsView alloc]initWithFrame:[self bounds]];
@@ -229,6 +230,7 @@
             break;
         case PATH_EDIT_STATE:
             //CGPoint point = CGPointMake((box.x + 0.5) * [self boxWidth], (box.y + 0.5) * [self boxHeight]); //Snap to center
+            assert(pathView);
             if([delegate pathEditStateIsAdding])
                 [pathView addNoteWithPos:pos];
             else

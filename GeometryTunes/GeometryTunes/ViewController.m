@@ -64,6 +64,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     }
     [unarchiver finishDecoding];
     [grid setDelegate:self];
+    [pathList setPathView:[grid pathView]];
     currentFileName = fileName;
 }
 

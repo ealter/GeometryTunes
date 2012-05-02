@@ -117,6 +117,12 @@
     }
 }
 
+- (void)setPathView:(PathsView *)_pathView
+{
+    pathView = _pathView;
+    [pathEditor setPathsView:pathView];
+}
+
 - (IBAction)newPath
 {
     int pathNum = [[pathView paths] count];

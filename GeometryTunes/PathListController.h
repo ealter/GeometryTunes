@@ -14,7 +14,7 @@
 
 @interface PathListController : UIViewController <UITableViewDelegate, UITableViewDataSource, UIPopoverControllerDelegate>
 
-@property (strong) PathsView *pathView;
+@property (nonatomic, strong) PathsView *pathView;
 @property (nonatomic, strong) ViewController *mainViewController;
 @property (nonatomic, retain) IBOutlet UITableView *pathPicker;
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *editPathBtn;

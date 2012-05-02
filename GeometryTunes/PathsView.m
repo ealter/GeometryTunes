@@ -148,6 +148,7 @@
 
 - (void)addNoteWithPos:(CGPoint)pos
 {
+    assert([self currentPath]);
     [[self currentPath] addNoteWithPos:pos];
     [self setNeedsDisplay];
 }

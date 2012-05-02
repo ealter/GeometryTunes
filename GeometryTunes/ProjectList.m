@@ -44,7 +44,9 @@
     
     cell.textLabel.text = [ViewController nthFileName:indexPath.row];
     if([cell.textLabel.text compare:[viewController currentFileName]] == NSOrderedSame) //TODO: this doesn't work yet
-        [cell setBackgroundColor:[UIColor yellowColor]];
+    {
+        [cell.backgroundView setBackgroundColor:[UIColor yellowColor]];
+    }
     return cell;
 }
 
