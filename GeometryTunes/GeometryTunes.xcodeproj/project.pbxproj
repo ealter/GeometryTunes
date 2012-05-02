@@ -21,6 +21,13 @@
 		CE118321154600C400193B2E /* PathEditorController.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE11831F154600C400193B2E /* PathEditorController.xib */; };
 		CE2446B91522D21300C2DB33 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE2446B81522D21300C2DB33 /* QuartzCore.framework */; };
 		CE43316A15261456006EC577 /* scrollViewWithButtons.m in Sources */ = {isa = PBXBuildFile; fileRef = CE43316915261456006EC577 /* scrollViewWithButtons.m */; };
+		E2126E421550F2FB006DA58A /* pathsButton.png in Resources */ = {isa = PBXBuildFile; fileRef = E2126E3B1550F2FB006DA58A /* pathsButton.png */; };
+		E2126E431550F2FB006DA58A /* doneButton.png in Resources */ = {isa = PBXBuildFile; fileRef = E2126E3C1550F2FB006DA58A /* doneButton.png */; };
+		E2126E441550F2FB006DA58A /* projectsButton.png in Resources */ = {isa = PBXBuildFile; fileRef = E2126E3D1550F2FB006DA58A /* projectsButton.png */; };
+		E2126E451550F2FB006DA58A /* addRemoveButton.png in Resources */ = {isa = PBXBuildFile; fileRef = E2126E3E1550F2FB006DA58A /* addRemoveButton.png */; };
+		E2126E461550F2FB006DA58A /* pauseButton2.png in Resources */ = {isa = PBXBuildFile; fileRef = E2126E3F1550F2FB006DA58A /* pauseButton2.png */; };
+		E2126E471550F2FB006DA58A /* stopButton2.png in Resources */ = {isa = PBXBuildFile; fileRef = E2126E401550F2FB006DA58A /* stopButton2.png */; };
+		E2126E481550F2FB006DA58A /* playButton2.png in Resources */ = {isa = PBXBuildFile; fileRef = E2126E411550F2FB006DA58A /* playButton2.png */; };
 		E25113F01519230500BBE1F2 /* NotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E25113EF1519230500BBE1F2 /* NotePlayer.m */; };
 		E2687D90151FA3A8005BB1F8 /* PathsView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2687D8F151FA3A8005BB1F8 /* PathsView.m */; };
 		E28150FD150C513500C8A036 /* Piano.m in Sources */ = {isa = PBXBuildFile; fileRef = E28150FC150C513500C8A036 /* Piano.m */; };
@@ -71,6 +78,13 @@
 		CE43316815261456006EC577 /* scrollViewWithButtons.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = scrollViewWithButtons.h; sourceTree = "<group>"; };
 		CE43316915261456006EC577 /* scrollViewWithButtons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = scrollViewWithButtons.m; sourceTree = "<group>"; };
 		CE5C7C6E151E7D3900B81396 /* noteTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = noteTypes.h; sourceTree = "<group>"; };
+		E2126E3B1550F2FB006DA58A /* pathsButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pathsButton.png; sourceTree = "<group>"; };
+		E2126E3C1550F2FB006DA58A /* doneButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doneButton.png; sourceTree = "<group>"; };
+		E2126E3D1550F2FB006DA58A /* projectsButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = projectsButton.png; sourceTree = "<group>"; };
+		E2126E3E1550F2FB006DA58A /* addRemoveButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addRemoveButton.png; sourceTree = "<group>"; };
+		E2126E3F1550F2FB006DA58A /* pauseButton2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pauseButton2.png; sourceTree = "<group>"; };
+		E2126E401550F2FB006DA58A /* stopButton2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stopButton2.png; sourceTree = "<group>"; };
+		E2126E411550F2FB006DA58A /* playButton2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = playButton2.png; sourceTree = "<group>"; };
 		E25113EE1519230500BBE1F2 /* NotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotePlayer.h; sourceTree = "<group>"; };
 		E25113EF1519230500BBE1F2 /* NotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePlayer.m; sourceTree = "<group>"; };
 		E2687D8E151FA3A8005BB1F8 /* PathsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathsView.h; sourceTree = "<group>"; };
@@ -254,6 +268,13 @@
 		E2C5D77A15291FA00008BA08 /* images */ = {
 			isa = PBXGroup;
 			children = (
+				E2126E3B1550F2FB006DA58A /* pathsButton.png */,
+				E2126E3C1550F2FB006DA58A /* doneButton.png */,
+				E2126E3D1550F2FB006DA58A /* projectsButton.png */,
+				E2126E3E1550F2FB006DA58A /* addRemoveButton.png */,
+				E2126E3F1550F2FB006DA58A /* pauseButton2.png */,
+				E2126E401550F2FB006DA58A /* stopButton2.png */,
+				E2126E411550F2FB006DA58A /* playButton2.png */,
 				E2C4F993154E2E5900D409DD /* pathsMenuButton.png */,
 				E2EEB825154E2892002C3541 /* stopButton.png */,
 				E2EEB821154E1EB0002C3541 /* playButton.png */,
@@ -331,6 +352,13 @@
 				E2EEB826154E2892002C3541 /* stopButton.png in Resources */,
 				E2C4F994154E2E5900D409DD /* pathsMenuButton.png in Resources */,
 				E2C4F99E154E42DC00D409DD /* ProjectsEditorController.xib in Resources */,
+				E2126E421550F2FB006DA58A /* pathsButton.png in Resources */,
+				E2126E431550F2FB006DA58A /* doneButton.png in Resources */,
+				E2126E441550F2FB006DA58A /* projectsButton.png in Resources */,
+				E2126E451550F2FB006DA58A /* addRemoveButton.png in Resources */,
+				E2126E461550F2FB006DA58A /* pauseButton2.png in Resources */,
+				E2126E471550F2FB006DA58A /* stopButton2.png in Resources */,
+				E2126E481550F2FB006DA58A /* playButton2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

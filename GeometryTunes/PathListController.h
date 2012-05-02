@@ -18,6 +18,7 @@
 @property (nonatomic, strong) ViewController *mainViewController;
 @property (nonatomic, retain) IBOutlet UITableView *pathPicker;
 @property (nonatomic, retain) IBOutlet UIBarButtonItem *editPathBtn;
+@property (nonatomic, retain) IBOutlet UISegmentedControl *pathModifyType;
 
 @property (strong, nonatomic) PathEditorController *pathEditor;
 @property (strong, nonatomic) UIPopoverController *pathEditorPopover;
@@ -25,6 +26,8 @@
 
 - (IBAction)newPath;
 - (IBAction)editPath;
+- (BOOL)pathEditStateIsAdding;
+- (void)setPathEditState:(BOOL)isAdding;
 - (NSString *)nameForNthCell:(int)row;
 
 @end

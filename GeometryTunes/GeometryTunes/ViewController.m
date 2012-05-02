@@ -6,6 +6,8 @@
 
 @property (nonatomic, copy) NSString *playImageFile;
 @property (nonatomic, copy) NSString *pauseImageFile;
+@property (nonatomic, copy) NSString *pathsImageFile;
+@property (nonatomic, copy) NSString *doneImageFile;
 + (NSString *)getSavedGridsDirectory;
 + (NSString *)getFilePath:(NSString *)filename;
 
@@ -19,7 +21,7 @@
 @synthesize tempoTextField, tempo;
 @synthesize pathList, pathListPopover;
 @synthesize projectList, projectListPopover;
-@synthesize playImageFile, pauseImageFile;
+@synthesize playImageFile, pauseImageFile, doneImageFile, pathsImageFile;
 
 //static NSString *playBtnText = @"Play";
 //static NSString *pauseBtnText = @"Pause";
@@ -158,7 +160,9 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     else
     {
         [self changeStateToNormal:true];
-        [editPathBtn setTitle:pathEditBtnText forState:UIControlStateNormal];
+        UIImage *doneImage = [[UIImage alloc]initWithContentsOfFile:doneImageFile];
+        [editPathBtn setBackgroundImage:doneImage forState:UIControlStateNormal];
+        //[editPathBtn setTitle:pathEditBtnText forState:UIControlStateNormal];
         state = PATH_EDIT_STATE;
         if(!pathList)
         {
@@ -183,8 +187,11 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
 
 - (void)changeStateToNormal:(bool)informGrid
 {
-    if(state == PATH_EDIT_STATE)
-        [editPathBtn setTitle:normalPathBtnText forState:UIControlStateNormal];
+    if(state == PATH_EDIT_STATE){
+        //[editPathBtn setTitle:normalPathBtnText forState:UIControlStateNormal];
+        UIImage *pathsImage = [[UIImage alloc]initWithContentsOfFile:pathsImageFile];
+        [editPathBtn setBackgroundImage:pathsImage forState:UIControlStateNormal];
+    }
     if(informGrid)
         [grid changeToNormalState];
     state = NORMAL_STATE;
@@ -225,6 +232,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     [grid setSpeed:tempo];
 }
 
+/*
 - (BOOL)pathEditStateIsAdding
 {
     return [pathModifyType selectedSegmentIndex] == 0;
@@ -234,6 +242,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
 {
     [pathModifyType setSelectedSegmentIndex:(isAdding ? 0 : 1)];
 }
+*/
 
 - (void)didReceiveMemoryWarning
 {
@@ -250,8 +259,10 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     state = NORMAL_STATE;
     [grid setDelegate:self];
     normalPathBtnText = [[editPathBtn titleLabel] text];
-    pauseImageFile = [[NSBundle mainBundle]pathForResource:@"pauseButton" ofType:@"png"];
-    playImageFile = [[NSBundle mainBundle]pathForResource:@"playButton" ofType:@"png"];
+    pauseImageFile = [[NSBundle mainBundle]pathForResource:@"pauseButton2" ofType:@"png"];
+    playImageFile = [[NSBundle mainBundle]pathForResource:@"playButton2" ofType:@"png"];
+    doneImageFile = [[NSBundle mainBundle]pathForResource:@"doneButton" ofType:@"png"];
+    pathsImageFile = [[NSBundle mainBundle]pathForResource:@"pathsButton" ofType:@"png"];
     currentFileName = nil;
     //[self loadGridFromFile:@"goodGrid"]; //TODO: delete this
 }

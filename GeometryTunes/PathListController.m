@@ -6,6 +6,7 @@
 @implementation PathListController
 
 @synthesize pathView, pathPicker, editPathBtn;
+@synthesize pathModifyType;
 @synthesize mainViewController;
 @synthesize pathEditor, pathEditorPopover;
 @synthesize selectedPath;
@@ -132,7 +133,7 @@
     [pathPicker reloadData];
     if(mainViewController) {
         [mainViewController pathHasBeenSelected];
-        [mainViewController setPathEditState:TRUE];
+        [self setPathEditState:TRUE];
     }
 }
 
@@ -153,6 +154,16 @@
     }
     selectedPath = 0;
     [self showPathEditor:[NSIndexPath indexPathForRow:selectedPath inSection:0]];
+}
+
+- (BOOL)pathEditStateIsAdding
+{
+    return [pathModifyType selectedSegmentIndex] == 0;
+}
+
+- (void)setPathEditState:(BOOL)isAdding
+{
+    [pathModifyType setSelectedSegmentIndex:(isAdding ? 0 : 1)];
 }
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
