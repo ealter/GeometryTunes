@@ -27,6 +27,7 @@
     //TODO: prevent empty names
     [viewController saveGridToFile:[fileNameField text]];
     [popover dismissPopoverAnimated:YES];
+    [self refresh];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -53,6 +54,11 @@
     [popover dismissPopoverAnimated:YES];
 }
 
+- (void)refresh
+{
+    [fileList reloadData];
+}
+
 - (void)didReceiveMemoryWarning
 {
     // Releases the view if it doesn't have a superview.
@@ -68,7 +74,6 @@
     [super viewDidLoad];
     if([viewController currentFileName])
         [fileNameField setText:[viewController currentFileName]];
-    [fileList reloadData];
 }
 
 - (void)viewDidUnload

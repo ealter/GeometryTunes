@@ -44,7 +44,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
 
 + (NSString *)getFilePath:(NSString *)filename
 {
-    return [[[ViewController getSavedGridsDirectory] stringByAppendingPathComponent:filename] stringByAppendingPathExtension:FILE_EXTENSION];
+    return [[[ViewController getSavedGridsDirectory] stringByAppendingPathComponent:[self sanitizeProjectName:filename]] stringByAppendingPathExtension:FILE_EXTENSION];
 }
 
 - (void)loadGridFromFile:(NSString *)fileName
@@ -81,7 +81,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     currentFileName = fileName;
 }
 
-- (NSString *)sanitizeProjectName:(NSString *)projectName
++ (NSString *)sanitizeProjectName:(NSString *)projectName
 {
     //TODO: should we allow names to start with a period?
     NSString *invalidCharacters[] = {@":", @"/"};

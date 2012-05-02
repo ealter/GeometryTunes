@@ -46,7 +46,7 @@ typedef enum STATE
 - (void)loadGridFromFile:(NSString *)fileName;
 - (void)saveGridToFile:  (NSString *)fileName;
 - (void)newGrid;
-- (NSString *)sanitizeProjectName:(NSString *)projectName; //Returns a new project name that can be used as part of a filename
++ (NSString *)sanitizeProjectName:(NSString *)projectName; //Returns a new project name that can be used as part of a filename
 + (NSMutableArray *)gridNameList;
 + (NSString *)nthFileName:(NSInteger)i;
 

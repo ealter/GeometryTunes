@@ -11,5 +11,6 @@
 
 -(IBAction)newProject;
 -(IBAction)saveProject;
+-(void)refresh;
 
 @end
