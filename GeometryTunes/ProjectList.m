@@ -4,6 +4,7 @@
 @implementation ProjectList
 
 @synthesize viewController, popover;
+@synthesize fileNameField, fileList;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -23,12 +24,9 @@
 
 - (IBAction)saveProject
 {
-    if([viewController currentFileName])
-        [viewController saveGridToFile:[viewController currentFileName]];
-    else
-        [viewController saveGridToFile:@"Test me bro"];
+    //TODO: prevent empty names
+    [viewController saveGridToFile:[fileNameField text]];
     [popover dismissPopoverAnimated:YES];
-    //TODO: Ask for a name if there is none
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
@@ -68,7 +66,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    if([viewController currentFileName])
+        [fileNameField setText:[viewController currentFileName]];
+    [fileList reloadData];
 }
 
 - (void)viewDidUnload

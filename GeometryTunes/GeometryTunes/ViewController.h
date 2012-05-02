@@ -41,11 +41,12 @@ typedef enum STATE
 
 - (void)changeStateToNormal:(bool)informGrid;
 
-//Save & Load methods
+//Save & Load methods //TODO: put this stuff in its own module
 - (IBAction)saveLoadEvent:(id)sender;
 - (void)loadGridFromFile:(NSString *)fileName;
 - (void)saveGridToFile:  (NSString *)fileName;
 - (void)newGrid;
+- (NSString *)sanitizeProjectName:(NSString *)projectName; //Returns a new project name that can be used as part of a filename
 + (NSMutableArray *)gridNameList;
 + (NSString *)nthFileName:(NSInteger)i;
 

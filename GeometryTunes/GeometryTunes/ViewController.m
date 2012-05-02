@@ -81,6 +81,18 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     currentFileName = fileName;
 }
 
+- (NSString *)sanitizeProjectName:(NSString *)projectName
+{
+    //TODO: should we allow names to start with a period?
+    NSString *invalidCharacters[] = {@":", @"/"};
+    for(int i=0; i < sizeof(invalidCharacters)/sizeof(invalidCharacters[0]); i++) {
+        projectName = [projectName stringByReplacingOccurrencesOfString:invalidCharacters[i] withString:@"_"];
+    }
+    if([projectName length] + [FILE_EXTENSION length] > NAME_MAX)
+        projectName = [projectName substringToIndex:NAME_MAX - [FILE_EXTENSION length]];
+    return projectName;
+}
+
 + (NSMutableArray *)gridNameList
 {
     NSString *documentsDirectory = [self getSavedGridsDirectory];
@@ -187,7 +199,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
         [projectList setPopover:projectListPopover];
         //[projectListPopover setDelegate:projectList];
     }
-    CGSize popoverSize = CGSizeMake(200, 300);
+    CGSize popoverSize = CGSizeMake(220, 300);
     projectListPopover.popoverContentSize = popoverSize;
     [projectListPopover presentPopoverFromRect:[sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
 }
