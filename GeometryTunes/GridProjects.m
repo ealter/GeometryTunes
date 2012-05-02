@@ -109,7 +109,9 @@
 
 + (NSString *)nthFileName:(NSInteger)i
 {
-    return [[self gridNameList] objectAtIndex:i]; //TODO: sort alphabetically
+    NSMutableArray *files = [self gridNameList];
+    [files sortUsingSelector:@selector(caseInsensitiveCompare:)];
+    return [files objectAtIndex:i];
 }
 
 @end
