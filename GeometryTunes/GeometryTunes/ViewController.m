@@ -17,7 +17,7 @@
 
 @synthesize state;
 @synthesize grid, currentFileName;
-@synthesize editPathBtn, playPauseButton, pathModifyType;
+@synthesize editPathBtn, playPauseButton;
 @synthesize tempoTextField, tempo;
 @synthesize pathList, pathListPopover;
 @synthesize projectList, projectListPopover;
@@ -231,18 +231,6 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     
     [grid setSpeed:tempo];
 }
-
-/*
-- (BOOL)pathEditStateIsAdding
-{
-    return [pathModifyType selectedSegmentIndex] == 0;
-}
-
-- (void)setPathEditState:(BOOL)isAdding
-{
-    [pathModifyType setSelectedSegmentIndex:(isAdding ? 0 : 1)];
-}
-*/
 
 - (void)didReceiveMemoryWarning
 {
