@@ -9,9 +9,9 @@
 
 typedef enum STATE
 {
-    NORMAL_STATE,
-    PIANO_STATE,
-    PATH_EDIT_STATE
+    NORMAL_STATE,   /* The default state of the application. This includes playback. */
+    PIANO_STATE,    /* When the piano is visible and a cell is being edited */
+    PATH_EDIT_STATE /* When the paths are being edited (i.e. adding or removing nodes) */
 } STATE;
 
 @property STATE state;
@@ -20,8 +20,7 @@ typedef enum STATE
 @property (nonatomic, retain) IBOutlet UIButton *editPathBtn;
 @property (nonatomic, retain) IBOutlet UIButton *playPauseButton;
 @property (nonatomic, retain) IBOutlet UILabel *tempoTextField;
-@property float tempo;
-//@property CGPDFDocumentRef document;
+@property NSTimeInterval tempo; /* The amount of time in between notes */
 
 @property (strong, nonatomic) PathListController *pathList;
 @property (strong, nonatomic) UIPopoverController *pathListPopover;
@@ -30,15 +29,15 @@ typedef enum STATE
 
 //Playback methods
 - (IBAction)playPauseEvent:(id)sender;
-- (IBAction)stopEvent:(id)sender;
-- (void)setPlayStateToStopped;
+- (IBAction)stopEvent:(id)sender; /* Fired by the view when the user clicks the stop button */
+- (void)setPlayStateToStopped;    /* Call this method when the playback was stopped by the program, rather than the user */
 - (IBAction)sliderValueChanged:(id)sender;
 
 //Path methods
-- (IBAction)editPathEvent:(id)sender; 
-- (void)pathHasBeenSelected;
+- (IBAction)editPathEvent:(id)sender;
+- (void)pathHasBeenSelected; /* A callback method indicating that the PathListController has selected a path */
 
-- (void)changeStateToNormal:(bool)informGrid;
+- (void)changeStateToNormal:(bool)informGrid; /* Changes the STATE to NORMAL_STATE. If informGrid is true, this calls the changeStateToNormal method fot the GridView (yes, this is a hacky way of doing it). */
 
 //Save & Load methods
 - (IBAction)saveLoadEvent:(id)sender;

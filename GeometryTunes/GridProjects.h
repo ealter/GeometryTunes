@@ -1,5 +1,7 @@
 #import <Foundation/Foundation.h>
 
+/* This module handles the save and load capabilities for grids */
+
 @class GridView;
 
 @interface GridProjects : NSObject
@@ -7,12 +9,12 @@
 @property (nonatomic, copy, readonly) NSString *currentFileName;
 
 + (NSString *)sanitizeProjectName:(NSString *)projectName; //Returns a new project name that can be used as part of a filename
-+ (NSMutableArray *)gridNameList;
-+ (NSString *)nthFileName:(NSInteger)i;
++ (NSMutableArray *)gridNameList; //Returns a list of saved grid names
++ (NSString *)nthFileName:(NSInteger)n; //Returns the nth saved grid name (alphabetical order)
 + (void)deleteProject:(NSString *)projectName;
 
-- (GridView*)loadGridFromFile:(NSString *)fileName;
-- (BOOL)saveToFile:(NSString *)fileName grid:(GridView *)grid;
-- (void)newGrid;
+- (GridView*)loadGridFromFile:(NSString *)fileName; //Returns a grid from the saved file. nil on error
+- (BOOL)saveToFile:(NSString *)fileName grid:(GridView *)grid; //Save the file to the grid. Returns TRUE on success
+- (void)newGrid; //Resets the current file name
 
 @end

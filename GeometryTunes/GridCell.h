@@ -1,6 +1,8 @@
 #import <UIKit/UIKit.h>
 #import "noteTypes.h"
 
+/* Represents a cell on the grid */
+
 @interface GridCell : UIView <NSCoding>
 {
     NSMutableArray *notes; //An array of NSNumber*'s that each represent a midinote
