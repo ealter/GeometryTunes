@@ -27,12 +27,13 @@
 + (CellPos)cellPosMakeX:(unsigned)x y:(unsigned) y;
 
 - (void)sharedInit;
-- (void)initCells;
-- (void)allocateCells;
+- (void)allocateCells; /* Allocates the 2D array of cells */
+- (void)initCells;     /* Resets the content and initializes the 2D array of cells */
 - (void)drawGrid;
-- (void)draw;
+- (void)draw; /* The equivalent of drawRect (except it only adds subviews, instead of actually drawing) */
 - (void)convertCellBorderColors:(CGColorRef)color;
 
+/* Note: The variable for the state is stored in the ViewController */
 - (STATE)state;
 - (void)setState:(STATE)state;
 
@@ -145,8 +146,7 @@
     
     float boxWidth = [self boxWidth];
     float boxHeight = [self boxHeight];
-    for(int i=0; i<numBoxes.x; i++)
-    {
+    for(int i=0; i<numBoxes.x; i++) {
         row = [[NSMutableArray alloc] initWithCapacity:numBoxes.x];
         for(int j=0; j<numBoxes.y; j++) {
             CGRect cellBounds = CGRectMake(i * boxWidth, j * boxHeight, boxWidth, boxHeight);
@@ -185,7 +185,7 @@
     
     swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipe:)];
     swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp | UISwipeGestureRecognizerDirectionDown;
-    swipeGestureRecognizer.numberOfTouchesRequired = 1; //TODO: maybe change to 2?
+    swipeGestureRecognizer.numberOfTouchesRequired = 1;
     
     [self addGestureRecognizer:tapGestureRecognizer];
     [self addGestureRecognizer:swipeGestureRecognizer];
@@ -209,8 +209,7 @@
     CellPos box = [self getBoxFromCoords:pos];
     assert(box.x >= 0 && box.x < numBoxes.x);
     assert(box.y >= 0 && box.y < numBoxes.y);
-    switch([self state])
-    {
+    switch([self state]) {
         case NORMAL_STATE:
             [self setState:PIANO_STATE];
              box = [self getBoxFromCoords:pos];
@@ -255,7 +254,7 @@
     }
 }
 
--  (void) handleSwipe:(UIGestureRecognizer *)sender
+- (void)handleSwipe:(UIGestureRecognizer *)sender
 {
     CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
     if([self state] == PIANO_STATE)
@@ -296,8 +295,7 @@
 - (void)playCell:(CellPos)cellPos duration:(NSTimeInterval)duration
 {
     NSMutableArray *notes = [[self cellAtPos:cellPos] notes];
-    for(NSNumber *n in notes)
-    {
+    for(NSNumber *n in notes) {
         midinote note = [n unsignedIntValue];
         [NotePlayer playNoteWithPitch: note % NOTES_IN_OCTAVE octave:note / NOTES_IN_OCTAVE duration:duration];
     }
@@ -351,8 +349,7 @@
 {
     if([self state] == PATH_EDIT_STATE)
         [self changeToNormalState];
-    else
-    {
+    else {
         if([self state] == PIANO_STATE)
             [piano removeFromSuperview];
         [self setState:PATH_EDIT_STATE];
