@@ -30,7 +30,11 @@
 - (void)initCells;
 - (void)allocateCells;
 - (void)drawGrid;
+- (void)draw;
 - (void)convertCellBorderColors:(CGColorRef)color;
+
+- (STATE)state;
+- (void)setState:(STATE)state;
 
 @end
 
@@ -68,16 +72,14 @@
     [self bringSubviewToFront:pathView];
 }
 
-- (void)changeCell:(GridCell *)cell isBold:(bool)isBold
+- (void)setIsBold:(BOOL)isBold cell:(GridCell *)cell
 {
     assert(cell);
-    if(isBold)
-    {
+    if(isBold) {
         [cell.layer setBorderWidth:8];
         [cell.layer setBorderColor:[[UIColor whiteColor] CGColor]];
     }
-    else
-    {
+    else {
         [cell.layer setBorderWidth:2];
         if([pathView isPlaying])
             [cell.layer setBorderColor:CELL_BORDER_COLOR_WHILE_PLAYING];
@@ -91,7 +93,7 @@
     if([self state] == PIANO_STATE)
         [piano removeFromSuperview];
     [self setState:NORMAL_STATE];
-    [self changeCell:[self cellAtPos:currentCell] isBold:false];
+    [self setIsBold:FALSE cell:[self cellAtPos:currentCell]];
     [viewController changeStateToNormal:false];
 }
 
@@ -161,7 +163,7 @@
         for(int j=0; j<numBoxes.y; j++) {
             GridCell *cell = [row objectAtIndex:j];
             [[cell layer] setBorderColor:CELL_BORDER_COLOR];
-            [self changeCell:cell isBold:false];
+            [self setIsBold:FALSE cell:cell];
             [cell.layer setCornerRadius:6.0f];
             [row addObject:cell];
         }
@@ -215,7 +217,7 @@
             
             currentCell = box;
             
-            [self changeCell:[self cellAtPos:currentCell] isBold:true];
+            [self setIsBold:TRUE cell:[self cellAtPos:currentCell]];
             int pianoHeight = 200; //TODO change to const
             int pianoY = [self bounds].size.height - pianoHeight;
             if((box.y+1) * [self boxHeight] > pianoY) {
@@ -231,11 +233,10 @@
             break;
             
         case PIANO_STATE:
-            if(!CGRectContainsPoint([piano frame], pos))
-            {
-                [self changeCell:[self cellAtPos:currentCell] isBold:false];
+            if(!CGRectContainsPoint([piano frame], pos)) {
+                [self setIsBold:FALSE cell:[self cellAtPos:currentCell]];
                 currentCell = box;
-                [self changeCell:[self cellAtPos:currentCell] isBold:true];
+                [self setIsBold:TRUE cell:[self cellAtPos:currentCell]];
                 [self playCurrentCellForDuration:DEFAULT_DURATION];
                 [piano gridCellHasChanged];
             }

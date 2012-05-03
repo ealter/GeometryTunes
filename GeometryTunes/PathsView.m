@@ -250,7 +250,7 @@
 
 - (void)deemphasizeCell:(GridCell *)cell
 {
-    [delegateGrid changeCell:cell isBold:FALSE];
+    [delegateGrid setIsBold:FALSE cell:cell];
 }
 
 - (void)pulseAt:(CGPoint)pos
@@ -258,7 +258,7 @@
     assert(pulseCircle);
     //Pulse the grid cell
     GridCell *cell = [delegateGrid cellAtPos:[delegateGrid getBoxFromCoords:pos]];
-    [delegateGrid changeCell:cell isBold:TRUE];
+    [delegateGrid setIsBold:TRUE cell:cell];
     [self performSelector:@selector(deemphasizeCell:) withObject:cell afterDelay:speed];
     
     const float width = 40;

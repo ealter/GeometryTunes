@@ -41,7 +41,7 @@ typedef struct CellPos {
 
 - (void)changeToNormalState;
 
-- (void)changeCell:(GridCell *)cell isBold:(bool)isBold;
+- (void)setIsBold:(BOOL)isBold cell:(GridCell *)cell;
 - (GridCell*)cellAtPos:(CellPos)cellPos;
 
 - (void)reset;
