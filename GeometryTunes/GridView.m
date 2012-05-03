@@ -225,9 +225,10 @@
             
             CGRect pianoRect = CGRectMake(0, pianoY, [self bounds].size.width, pianoHeight);
             if (piano)
-                piano = [piano initWithFrame:pianoRect delegate:self];
+                piano = [piano initWithFrame:pianoRect];
             else
-                piano = [[Piano alloc] initWithFrame:pianoRect delegate:self];
+                piano = [[Piano alloc] initWithFrame:pianoRect];
+            [piano setGrid:self];
             [self addSubview:piano];
             break;
             

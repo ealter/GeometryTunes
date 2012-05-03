@@ -37,7 +37,7 @@ typedef struct CellPos {
 - (void)setSpeed:(NSTimeInterval)speed;
 - (void)pausePlayback;
 - (void)stopPlayback;
-- (void)playbackHasStopped;
+- (void)playbackHasStopped; /* Call this method if you stop the playback without calling stopPlayback */
 
 - (void)changeToNormalState;
 

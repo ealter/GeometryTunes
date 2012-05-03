@@ -7,7 +7,7 @@
 #define SAT 1
 #define BRIGHT 2
 #define ALPHA 3
-#define BRIGHTNESS_FACTOR 0.1
+#define BRIGHTNESS_FACTOR 0.1 /* TODO: Make this depend on the number of octaves */
 
 static const float HSBAPitchMap[12][4] =
 {
