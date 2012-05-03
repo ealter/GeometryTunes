@@ -1,6 +1,6 @@
 #import <UIKit/UIKit.h>
 
-/* Provides a view for the paths. Do not access the paths directly. You should call these methods for that */
+/* Provides a view for the NotePaths. Also provides an abstraction for interacting with the NotePaths */
 @class NotePath;
 @class GridView;
 

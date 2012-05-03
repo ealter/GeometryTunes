@@ -2,6 +2,17 @@
 #import "ViewController.h"
 #import "GridProjects.h"
 
+@interface ProjectList ()
+
+@property (nonatomic, retain) IBOutlet UITextField *fileNameField;
+@property (nonatomic, retain) IBOutlet UITableView *fileList;
+
+- (IBAction)newProject:(id)sender;
+- (IBAction)saveProject:(id)sender;
+- (IBAction)editProjects;
+
+@end
+
 @implementation ProjectList
 
 @synthesize viewController, popover;
