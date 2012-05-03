@@ -15,7 +15,7 @@
 
 @implementation PathsView
 
-@synthesize delegateGrid, pulseCircle;
+@synthesize grid, pulseCircle;
 @synthesize paths, currentPathName;
 @synthesize tapGestureRecognizer;
 @synthesize tapDistanceTolerance, removeDistanceTolerance;
@@ -226,7 +226,7 @@
             [path setPlaybackPosition:0];
         }
         [tapGestureRecognizer setEnabled:FALSE];
-        [[delegateGrid viewController] setPlayStateToStopped];
+        [[grid viewController] setPlayStateToStopped];
     }
 }
 
@@ -238,9 +238,9 @@
     }
 }
 
-- (void)setGrid:(GridView *)grid
+- (void)setGrid:(GridView *)_grid
 {
-    [self setDelegateGrid:grid];
+    grid = _grid;
     for (NSString *pathName in paths) {
         NotePath *path = [paths objectForKey:pathName];
         [path setDelegateGrid:grid];
@@ -250,15 +250,15 @@
 
 - (void)deemphasizeCell:(GridCell *)cell
 {
-    [delegateGrid setIsBold:FALSE cell:cell];
+    [grid setIsBold:FALSE cell:cell];
 }
 
 - (void)pulseAt:(CGPoint)pos
 {
     assert(pulseCircle);
     //Pulse the grid cell
-    GridCell *cell = [delegateGrid cellAtPos:[delegateGrid getBoxFromCoords:pos]];
-    [delegateGrid setIsBold:TRUE cell:cell];
+    GridCell *cell = [grid cellAtPos:[grid getBoxFromCoords:pos]];
+    [grid setIsBold:TRUE cell:cell];
     [self performSelector:@selector(deemphasizeCell:) withObject:cell afterDelay:speed];
     
     const float width = 40;
