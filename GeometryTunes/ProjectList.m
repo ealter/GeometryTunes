@@ -18,9 +18,16 @@
 
 - (IBAction)newProject:(id)sender
 {
-    //TODO: Add warning about saving
-    [viewController newGrid];
-    [popover dismissPopoverAnimated:YES];
+    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Are you sure?" message:@"Any unsaved changes will be lost" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"New Project", nil];
+    [alert show];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if(buttonIndex == [alertView firstOtherButtonIndex]) { //new project
+        [viewController newGrid];
+        [popover dismissPopoverAnimated:YES];
+    }
 }
 
 - (IBAction)saveProject:(id)sender

@@ -2,7 +2,7 @@
 
 @class ViewController;
 
-@interface ProjectList : UIViewController <UITableViewDelegate, UITableViewDataSource>
+@interface ProjectList : UIViewController <UITableViewDelegate, UITableViewDataSource, UIAlertViewDelegate>
 
 @property (nonatomic, retain) ViewController *viewController;
 @property (nonatomic, retain) UIPopoverController *popover;
