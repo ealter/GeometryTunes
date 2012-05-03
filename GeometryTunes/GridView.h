@@ -30,9 +30,8 @@ typedef struct CellPos {
 @property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic, retain) UISwipeGestureRecognizer *swipeGestureRecognizer;
 
-- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave appendNote:(bool)appendNote; //Uses the currentCell
-- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave cellPos:(CellPos)cellPos appendNote:(bool)appendNote;
-//These set the last note
+- (void)addNoteWithPitch:   (unsigned)pitch octave:(unsigned)octave;
+- (void)removeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave;
 
 - (NSMutableArray*)notes;
 - (NSMutableArray*)notesAtCell:(CellPos)cellPos;

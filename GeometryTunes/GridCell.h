@@ -4,14 +4,11 @@
 /* Represents a cell on the grid */
 
 @interface GridCell : UIView <NSCoding>
-{
-    NSMutableArray *notes; //An array of NSNumber*'s that each represent a midinote
-}
 
-- (NSMutableArray*)notes;
-- (void)setNotes:(NSMutableArray*)notes;
-- (void)setLastNote:(midinote)note; //Changes the last note. If there are no notes, it adds one
-- (void)addNote:(midinote)note; //Adds a note to the end of the array
+@property (nonatomic, retain) NSMutableArray *notes; //An array of NSNumber*'s that each represent a midinote
+
+- (void)addNote:(midinote)note;
+- (void)removeNote:(midinote)note;
 - (NSNumber*)getNoteAtIndex:(int)i; //returns midinote type
 - (void)clearNotes;
 

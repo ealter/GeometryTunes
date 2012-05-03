@@ -6,6 +6,8 @@
 
 @implementation GridCell
 
+@synthesize notes;
+
 - (void)sharedInit
 {
     notes = [[NSMutableArray alloc] init];
@@ -48,25 +50,15 @@
     [self setNeedsDisplay];
 }
 
-- (NSMutableArray*)notes
-{
-    return notes;
-}
-
-- (void)setLastNote:(midinote)note
-{
-    int numNotes = [notes count];
-    NSNumber *n = [NSNumber numberWithUnsignedInt:note];
-    if(numNotes == 0)
-        [notes addObject:n];
-    else
-        [notes replaceObjectAtIndex:numNotes - 1 withObject:n];
-    [self setNotes:notes];
-}
-
 - (void)addNote:(midinote)note
 {
     [notes addObject:[NSNumber numberWithUnsignedInt:note]];
+    [self setNeedsDisplay];
+}
+
+- (void)removeNote:(midinote)note
+{
+    [notes removeObject:[NSNumber numberWithUnsignedInt:note]];
     [self setNeedsDisplay];
 }
 

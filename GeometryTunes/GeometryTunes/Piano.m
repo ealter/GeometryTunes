@@ -163,12 +163,9 @@
     int oct   = note.tag / NOTES_IN_OCTAVE + MIN_OCTAVE;
     midinote n = pitch + oct * NOTES_IN_OCTAVE;
     if([self containsNote:n])
-    {
-        [[delegate notes] removeObject:[NSNumber numberWithUnsignedInt:n]];
-        [delegate updateDisplayAtCurrentCell];
-    }
+        [delegate removeNoteWithPitch:pitch octave:oct];
     else
-        [delegate changeNoteWithPitch:pitch octave:oct appendNote:TRUE];
+        [delegate addNoteWithPitch:pitch octave:oct];
     [delegate playNoteForDuration:NOTE_DURATION];
     [self boldNotes:[delegate notes]];
 }

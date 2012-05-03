@@ -253,22 +253,22 @@
     }
 }
 
-- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave cellPos:(CellPos)cellPos appendNote:(bool)appendNote
+- (void)addNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave
 {
     assert(pitch < NOTES_IN_OCTAVE);
     assert(octave <= MAX_OCTAVE && octave >= MIN_OCTAVE);
-    assert(cellPos.x < numBoxes.x && cellPos.y < numBoxes.y);
-    GridCell *cell = [self cellAtPos:cellPos];
+    GridCell *cell = [self cellAtPos:currentCell];
     midinote note = pitch + octave * NOTES_IN_OCTAVE;
-    if(appendNote)
-        [cell addNote:note];
-    else
-        [cell setLastNote:note];
+    [cell addNote:note];
 }
 
-- (void)changeNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave appendNote:(bool)appendNote
+- (void)removeNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave
 {
-    [self changeNoteWithPitch:pitch octave:octave cellPos:currentCell appendNote:appendNote];
+    assert(pitch < NOTES_IN_OCTAVE);
+    assert(octave <= MAX_OCTAVE && octave >= MIN_OCTAVE);
+    midinote note = pitch + octave * NOTES_IN_OCTAVE;
+    GridCell *cell = [self cellAtPos:currentCell];
+    [cell removeNote:note];
 }
 
 - (void)updateDisplayAtCurrentCell
