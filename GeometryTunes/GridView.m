@@ -13,9 +13,18 @@
 
 #define DEFAULT_DURATION 1
 
-@interface GridView ()
+@interface GridView () {
+    @private
+    Piano *piano;
+    NSMutableArray *cells; //2D array: 1st index is row (also an NSMutableArray)
+                           //          2nd index is col
+}
 
 @property (nonatomic) CellPos numBoxes; /* The number of cells on the grid */
+@property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
+@property (nonatomic, retain) UISwipeGestureRecognizer *swipeGestureRecognizer;
+
++ (CellPos)cellPosMakeX:(unsigned)x y:(unsigned) y;
 
 - (void)sharedInit;
 - (void)initCells;
@@ -278,14 +287,9 @@
     [[self cellAtPos:currentCell] setNeedsDisplay];
 }
 
-- (void)clearNoteForCell:(CellPos)cellPos
-{
-    [[self cellAtPos:cellPos] clearNotes];
-}
-
 - (void)clearNote
 {
-    [self clearNoteForCell:currentCell];
+    [[self cellAtPos:currentCell] clearNotes];
 }
 
 - (void)playNoteForDuration:(NSTimeInterval)duration
@@ -359,7 +363,7 @@
     }
 }
 
-- (CellPos) getBoxFromCoords:(CGPoint)pos 
+- (CellPos)getBoxFromCoords:(CGPoint)pos
 {
     CellPos box = [GridView cellPosMakeX:(pos.x / [self boxWidth]) y:(pos.y / [self boxHeight])];
     assert(box.x <= numBoxes.x || box.y <= numBoxes.y);
@@ -379,14 +383,9 @@
     [self convertCellBorderColors:CELL_BORDER_COLOR];
 }
 
-- (NSMutableArray*)notesAtCell:(CellPos)cellPos
-{
-    return [[self cellAtPos:cellPos] notes];
-}
-
 - (NSMutableArray*)notes
 {
-    return [self notesAtCell:currentCell];
+    return [[self cellAtPos:currentCell] notes];
 }
 
 - (void)setSpeed:(NSTimeInterval)speed
