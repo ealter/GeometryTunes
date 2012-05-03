@@ -4,6 +4,22 @@
 #import "PathEditorController.h"
 #import "GridView.h"
 
+@interface PathListController ()
+
+@property (nonatomic, retain) IBOutlet UITableView *pathPicker;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *editPathBtn;
+@property (nonatomic, retain) IBOutlet UISegmentedControl *pathModifyType;
+
+@property (nonatomic) int selectedPath; //The row of the path being edited
+
+- (IBAction)newPath;
+- (IBAction)editPath;
+
+- (void)setPathEditState:(BOOL)isAdding;
+- (NSString *)nameForNthCell:(int)row;
+
+@end
+
 @implementation PathListController
 
 @synthesize pathView, pathPicker, editPathBtn;
@@ -20,14 +36,6 @@
     return self;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -37,16 +45,19 @@
     [pathPicker setAllowsSelectionDuringEditing:true];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
 	return YES;
+}
+
+- (void)refresh
+{
+    [pathPicker reloadData];
+}
+
+- (void)setIsEditingPaths:(BOOL)isEditing
+{
+    [pathPicker setEditing:isEditing];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section

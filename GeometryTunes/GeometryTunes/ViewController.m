@@ -117,7 +117,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
             [pathListPopover setDelegate:pathList];
         }
         CGSize popoverSize = CGSizeMake(240, 300);
-        [pathList.pathPicker reloadData];
+        [pathList refresh];
         pathListPopover.popoverContentSize = popoverSize;
         [pathListPopover presentPopoverFromRect:[sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
     }
