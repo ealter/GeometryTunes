@@ -12,6 +12,23 @@
 @property (nonatomic, copy) NSString *pathsImageFile;
 @property (nonatomic, copy) NSString *doneImageFile;
 
+@property (nonatomic, retain) IBOutlet UIButton *editPathBtn;
+@property (nonatomic, retain) IBOutlet UIButton *playPauseButton;
+@property (nonatomic, retain) IBOutlet UILabel *tempoTextField;
+
+@property (strong, nonatomic) PathListController *pathList;
+@property (strong, nonatomic) UIPopoverController *pathListPopover;
+@property (strong, nonatomic) ProjectList *projectList;
+@property (strong, nonatomic) UIPopoverController *projectListPopover;
+
+@property (nonatomic, retain, readonly) GridProjects *gridProjects;
+
+/* Event handlers */
+- (IBAction)playPauseEvent:(id)sender;
+- (IBAction)stopEvent:(id)sender; /* Fired by the view when the user clicks the stop button */
+- (IBAction)tempoChanged:(id)sender;
+- (IBAction)editPathEvent:(id)sender;
+
 @end
 
 @implementation ViewController
@@ -86,15 +103,13 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
 {
     if(state == PATH_EDIT_STATE)
         [self changeStateToNormal:true];
-    else
-    {
+    else {
         [self changeStateToNormal:true];
         UIImage *doneImage = [[UIImage alloc]initWithContentsOfFile:doneImageFile];
         [editPathBtn setBackgroundImage:doneImage forState:UIControlStateNormal];
         //[editPathBtn setTitle:pathEditBtnText forState:UIControlStateNormal];
         state = PATH_EDIT_STATE;
-        if(!pathList)
-        {
+        if(!pathList) {
             pathList = [[PathListController alloc]initWithNibName:@"PathListController" bundle:nil];
             [pathList setPathView:[grid pathView]];
             [pathList setMainViewController:self];
@@ -114,6 +129,11 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
         [pathListPopover dismissPopoverAnimated:true];
 }
 
+- (BOOL)pathEditStateIsAdding
+{
+    return [pathList pathEditStateIsAdding];
+}
+
 - (void)changeStateToNormal:(bool)informGrid
 {
     if(state == PATH_EDIT_STATE){
@@ -128,13 +148,11 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
 
 - (IBAction)saveLoadEvent:(id)sender
 {
-    if(!projectList)
-    {
+    if(!projectList) {
         projectList = [[ProjectList alloc]initWithNibName:@"ProjectList" bundle:nil];
         [projectList setViewController:self];
         projectListPopover = [[UIPopoverController alloc]initWithContentViewController:projectList];
         [projectList setPopover:projectListPopover];
-        //[projectListPopover setDelegate:projectList];
     }
     CGSize popoverSize = CGSizeMake(220, 300);
     projectListPopover.popoverContentSize = popoverSize;
@@ -154,17 +172,11 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     [grid playbackHasStopped];
 }
 
-- (IBAction) sliderValueChanged:(UISlider *)sender {
+- (IBAction)tempoChanged:(UISlider *)sender {
     tempoTextField.text = [NSString stringWithFormat:@"%d BPM", (int)[sender value]]; 
     tempo = 60/[sender value];
     
     [grid setSpeed:tempo];
-}
-
-- (void)didReceiveMemoryWarning
-{
-    [super didReceiveMemoryWarning];
-    // Release any cached data, images, etc that aren't in use.
 }
 
 #pragma mark - View lifecycle
@@ -181,35 +193,6 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     doneImageFile = [[NSBundle mainBundle]pathForResource:@"doneButton" ofType:@"png"];
     pathsImageFile = [[NSBundle mainBundle]pathForResource:@"pathsButton" ofType:@"png"];
     gridProjects = [[GridProjects alloc]init];
-    //[self loadGridFromFile:@"goodGrid"]; //TODO: delete this
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
-
-- (void)viewWillAppear:(BOOL)animated
-{
-    [super viewWillAppear:animated];
-}
-
-- (void)viewDidAppear:(BOOL)animated
-{
-    [super viewDidAppear:animated];
-}
-
-- (void)viewWillDisappear:(BOOL)animated
-{
-	[super viewWillDisappear:animated];
-}
-
-- (void)viewDidDisappear:(BOOL)animated
-{
-	[super viewDidDisappear:animated];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

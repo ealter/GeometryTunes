@@ -245,7 +245,7 @@
         case PATH_EDIT_STATE:
             //CGPoint point = CGPointMake((box.x + 0.5) * [self boxWidth], (box.y + 0.5) * [self boxHeight]); //Snap to center
             assert(pathView);
-            if([[viewController pathList] pathEditStateIsAdding])
+            if([viewController pathEditStateIsAdding])
                 [pathView addNoteWithPos:pos];
             else
                 [pathView removeNoteWithPos:pos];

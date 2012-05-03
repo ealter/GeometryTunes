@@ -15,27 +15,15 @@ typedef enum STATE
 } STATE;
 
 @property STATE state;
-@property (nonatomic, retain, readonly) GridProjects *gridProjects;
-@property (nonatomic, retain) IBOutlet GridView *grid; 
-@property (nonatomic, retain) IBOutlet UIButton *editPathBtn;
-@property (nonatomic, retain) IBOutlet UIButton *playPauseButton;
-@property (nonatomic, retain) IBOutlet UILabel *tempoTextField;
+@property (nonatomic, retain) IBOutlet GridView *grid;
 @property NSTimeInterval tempo; /* The amount of time in between notes */
 
-@property (strong, nonatomic) PathListController *pathList;
-@property (strong, nonatomic) UIPopoverController *pathListPopover;
-@property (strong, nonatomic) ProjectList *projectList;
-@property (strong, nonatomic) UIPopoverController *projectListPopover;
-
 //Playback methods
-- (IBAction)playPauseEvent:(id)sender;
-- (IBAction)stopEvent:(id)sender; /* Fired by the view when the user clicks the stop button */
 - (void)setPlayStateToStopped;    /* Call this method when the playback was stopped by the program, rather than the user */
-- (IBAction)sliderValueChanged:(id)sender;
 
 //Path methods
-- (IBAction)editPathEvent:(id)sender;
 - (void)pathHasBeenSelected; /* A callback method indicating that the PathListController has selected a path */
+- (BOOL)pathEditStateIsAdding;
 
 - (void)changeStateToNormal:(bool)informGrid; /* Changes the STATE to NORMAL_STATE. If informGrid is true, this calls the changeStateToNormal method fot the GridView (yes, this is a hacky way of doing it). */
 
