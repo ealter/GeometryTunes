@@ -16,22 +16,23 @@
     return self;
 }
 
-- (IBAction)newProject
+- (IBAction)newProject:(id)sender
 {
     //TODO: Add warning about saving
     [viewController newGrid];
     [popover dismissPopoverAnimated:YES];
 }
 
-- (IBAction)saveProject
+- (IBAction)saveProject:(id)sender
 {
-    //TODO: prevent empty names
     if([viewController saveGridToFile:[fileNameField text]]) {
         [popover dismissPopoverAnimated:YES];
         [self refresh];
     }
     else {
-        //TODO: add some kind of alert
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Bad project name" message:nil delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        alert.frame = [sender frame];
+        [alert show];
     }
 }
 

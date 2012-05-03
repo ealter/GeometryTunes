@@ -9,8 +9,8 @@
 @property (nonatomic, retain) IBOutlet UITextField *fileNameField;
 @property (nonatomic, retain) IBOutlet UITableView *fileList;
 
-- (IBAction)newProject;
-- (IBAction)saveProject;
+- (IBAction)newProject:(id)sender;
+- (IBAction)saveProject:(id)sender;
 - (IBAction)editProjects;
 - (void)refresh;
 
