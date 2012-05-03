@@ -3,17 +3,11 @@
 @class PathsView;
 
 @interface NotePath : NSObject <NSCoding>
-{
-    UIBezierPath* path;
-    UIBezierPath* pulse;
-    NSTimer *playbackTimer;
-}
 
  //Contains NSValue representations of CGPoints of path vertices
 @property (readonly, retain) NSMutableArray *notes;
 @property (nonatomic) int playbackPosition; //The index in the NSMutableArray. 0 means that we are at the beginning of the path
-@property (retain) GridView* delegateGrid;
-@property (retain) PathsView *pathView;
+@property (nonatomic, retain) PathsView *pathView;
 @property (readonly) BOOL isPlaying;
 @property (nonatomic, retain) UIImageView *pathFollower;
 @property (nonatomic) BOOL doesLoop; //determines whether the path loops. Default is false

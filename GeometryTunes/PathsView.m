@@ -257,10 +257,6 @@
 - (void)setGrid:(GridView *)_grid
 {
     grid = _grid;
-    for (NSString *pathName in paths) {
-        NotePath *path = [paths objectForKey:pathName];
-        [path setDelegateGrid:grid];
-    }
     tapDistanceTolerance = [grid boxWidth] * [grid boxHeight];
 }
 

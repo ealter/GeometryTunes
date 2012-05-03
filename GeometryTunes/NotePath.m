@@ -3,11 +3,21 @@
 #import "PathsView.h"
 #import <QuartzCore/QuartzCore.h>
 
+@interface NotePath () {
+    @private
+    UIBezierPath* path;
+    NSTimer *playbackTimer;
+}
+
+- (GridView *)grid;
+
+@end
+
 @implementation NotePath
 
 @synthesize notes;
 @synthesize playbackPosition, isPlaying;
-@synthesize delegateGrid, pathView;
+@synthesize pathView;
 @synthesize shouldChangeSpeed;
 @synthesize mostRecentAccess;
 @synthesize pathFollower;
@@ -19,12 +29,10 @@
     if (self) {
         notes = [[NSMutableArray alloc] init];
         path = nil;
-        pulse = nil;
         playbackPosition = 0;
         playbackTimer = nil;
-        delegateGrid = nil;
-        shouldChangeSpeed = false;
         pathView = nil;
+        shouldChangeSpeed = false;
         isPlaying = false;
         mostRecentAccess = 0;
         pathFollower = nil;
@@ -45,6 +53,11 @@
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
     [aCoder encodeObject:notes];
+}
+
+- (GridView *)grid
+{
+    return [pathView grid];
 }
 
 - (NSTimeInterval)speed
@@ -104,8 +117,7 @@
 - (void)playNote:(NSTimer*)t
 {
     assert(notes);
-    if(playbackPosition >= [notes count])
-    {
+    if(playbackPosition >= [notes count]) {
         if(doesLoop) {
             playbackPosition %= [notes count];
         }
@@ -115,8 +127,8 @@
         }
     }
     CGPoint pos = [[notes objectAtIndex:playbackPosition] CGPointValue];
-    CellPos coords = [delegateGrid getBoxFromCoords:pos];
-    [delegateGrid playCell:coords duration:[t timeInterval]*.99];
+    CellPos coords = [[self grid] getBoxFromCoords:pos];
+    [[self grid] playCell:coords duration:[t timeInterval]*.99];
     [pathView pulseAt:pos];
     if(playbackPosition < [notes count])
     {
@@ -149,7 +161,7 @@
     if(pathFollower)
         [pathFollower removeFromSuperview];
     pathFollower = [pathView getPathFollowerAtPos:[[notes objectAtIndex:0] CGPointValue]];
-    assert(delegateGrid);
+    assert([self grid]);
     
     shouldChangeSpeed = false;
     
@@ -171,8 +183,7 @@
 {
     [self pause];
     shouldChangeSpeed = false;
-    if(pathFollower)
-    {
+    if(pathFollower) {
         [pathFollower stopAnimating];
         [pathFollower removeFromSuperview];
         pathFollower = nil;
@@ -193,11 +204,9 @@
     int numNotes = [notes count];
     int minIndex = 0;
     float minDistance = FLT_MAX;
-    for(int i = 0; i<numNotes; i++)
-    {
+    for(int i = 0; i<numNotes; i++) {
         float dist = [self distanceFrom:pos noteIndex:i];
-        if(dist < minDistance)
-        {
+        if(dist < minDistance) {
             minDistance = dist;
             minIndex = i;
         }
