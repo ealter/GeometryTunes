@@ -267,19 +267,15 @@
 
 - (void)addNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave
 {
-    assert(pitch < NOTES_IN_OCTAVE);
-    assert(octave <= MAX_OCTAVE && octave >= MIN_OCTAVE);
     GridCell *cell = [self cellAtPos:currentCell];
-    midinote note = pitch + octave * NOTES_IN_OCTAVE;
+    midinote note = [noteTypes midinoteOfPitch:pitch octave:octave];
     [cell addNote:note];
 }
 
 - (void)removeNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave
 {
-    assert(pitch < NOTES_IN_OCTAVE);
-    assert(octave <= MAX_OCTAVE && octave >= MIN_OCTAVE);
-    midinote note = pitch + octave * NOTES_IN_OCTAVE;
     GridCell *cell = [self cellAtPos:currentCell];
+    midinote note = [noteTypes midinoteOfPitch:pitch octave:octave];
     [cell removeNote:note];
 }
 

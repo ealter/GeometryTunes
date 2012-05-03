@@ -222,8 +222,8 @@
 
 - (int)indexOfPitch:(unsigned int)pitch octave:(unsigned int)octave
 {
-    assert(pitch < NOTES_IN_OCTAVE);
-    return octave * NOTES_IN_OCTAVE + pitch;
+    assert([noteTypes isValidPitch:pitch octave:octave]);
+    return (octave - MIN_OCTAVE) * NOTES_IN_OCTAVE + pitch;
 }
 
 - (void)boldNotes
@@ -235,7 +235,7 @@
     NSMutableArray *boldNotes = [grid notes];
     for(NSNumber *note in boldNotes) {
         midinote p = [note unsignedIntValue];
-        int index = [self indexOfPitch:p % NOTES_IN_OCTAVE octave:p / NOTES_IN_OCTAVE - MIN_OCTAVE];
+        int index = [self indexOfPitch:p % NOTES_IN_OCTAVE octave:p / NOTES_IN_OCTAVE];
         if(index != -1)
             [[notes[index] layer] setBorderWidth:4];
     }

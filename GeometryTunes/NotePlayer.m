@@ -7,32 +7,22 @@
 
 static int getPlayerIndex(unsigned pitch, unsigned octave)
 {
-    assert(pitch <= NOTES_IN_OCTAVE);
-    assert(octave >= MIN_OCTAVE && octave <= MAX_OCTAVE);
+    assert([noteTypes isValidPitch:pitch octave:octave]);
     return (octave - MIN_OCTAVE) * NOTES_IN_OCTAVE + pitch;
-}
-
-static unsigned midiNote(unsigned pitch, unsigned octave)
-{
-    return octave * NOTES_IN_OCTAVE + pitch;
 }
 
 + (void)playNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave duration:(NSTimeInterval)duration
 {
-    assert(octave >= MIN_OCTAVE && octave <= MAX_OCTAVE);
-    assert(pitch < NOTES_IN_OCTAVE);
-    NSNumber *note = [NSNumber numberWithInt:midiNote(pitch, octave)];
+    NSNumber *note = [NSNumber numberWithInt:[noteTypes midinoteOfPitch:pitch octave:octave]];
     [self noteOn:note];
     [self performSelector:@selector(noteOff:) withObject:note afterDelay:duration];
 }
 
 + (void)stopAllNotes
 {
-    for(int octave = MIN_OCTAVE; octave <= MAX_OCTAVE; octave++)
-    {
-        for(int pitch = 0; pitch < NOTES_IN_OCTAVE; pitch++)
-        {
-            [self noteOff:[NSNumber numberWithInt:midiNote(pitch, octave)]];
+    for(int octave = MIN_OCTAVE; octave <= MAX_OCTAVE; octave++) {
+        for(int pitch = 0; pitch < NOTES_IN_OCTAVE; pitch++) {
+            [self noteOff:[NSNumber numberWithInt:[noteTypes midinoteOfPitch:pitch octave:octave]]];
         }
     }
 }

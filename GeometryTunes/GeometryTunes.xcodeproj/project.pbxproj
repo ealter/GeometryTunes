@@ -32,6 +32,7 @@
 		CEEBF74415531AF900342E34 /* projectsButton.png in Resources */ = {isa = PBXBuildFile; fileRef = CEEBF73915531AF900342E34 /* projectsButton.png */; };
 		CEEBF74515531AF900342E34 /* stopButton.png in Resources */ = {isa = PBXBuildFile; fileRef = CEEBF73A15531AF900342E34 /* stopButton.png */; };
 		CEEBF74615531AF900342E34 /* stopButton2.png in Resources */ = {isa = PBXBuildFile; fileRef = CEEBF73B15531AF900342E34 /* stopButton2.png */; };
+		CEEBF7481553370100342E34 /* noteTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEBF7471553370000342E34 /* noteTypes.m */; };
 		E25113F01519230500BBE1F2 /* NotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E25113EF1519230500BBE1F2 /* NotePlayer.m */; };
 		E2687D90151FA3A8005BB1F8 /* PathsView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2687D8F151FA3A8005BB1F8 /* PathsView.m */; };
 		E28150FD150C513500C8A036 /* Piano.m in Sources */ = {isa = PBXBuildFile; fileRef = E28150FC150C513500C8A036 /* Piano.m */; };
@@ -88,6 +89,7 @@
 		CEEBF73915531AF900342E34 /* projectsButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = projectsButton.png; path = images/projectsButton.png; sourceTree = "<group>"; };
 		CEEBF73A15531AF900342E34 /* stopButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stopButton.png; path = images/stopButton.png; sourceTree = "<group>"; };
 		CEEBF73B15531AF900342E34 /* stopButton2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stopButton2.png; path = images/stopButton2.png; sourceTree = "<group>"; };
+		CEEBF7471553370000342E34 /* noteTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = noteTypes.m; sourceTree = "<group>"; };
 		E25113EE1519230500BBE1F2 /* NotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotePlayer.h; sourceTree = "<group>"; };
 		E25113EF1519230500BBE1F2 /* NotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePlayer.m; sourceTree = "<group>"; };
 		E2687D8E151FA3A8005BB1F8 /* PathsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathsView.h; sourceTree = "<group>"; };
@@ -156,6 +158,7 @@
 				E25113EE1519230500BBE1F2 /* NotePlayer.h */,
 				E25113EF1519230500BBE1F2 /* NotePlayer.m */,
 				CE5C7C6E151E7D3900B81396 /* noteTypes.h */,
+				CEEBF7471553370000342E34 /* noteTypes.m */,
 				E205F7B5152E6F6C001CAF14 /* Keyboard */,
 				8319430C150BD226003EF364 /* Products */,
 			);
@@ -380,6 +383,7 @@
 				CE118320154600C400193B2E /* PathEditorController.m in Sources */,
 				E29FF403154E15F5001ECDBC /* ProjectList.m in Sources */,
 				E2C7A3311551F2B000BD25D7 /* GridProjects.m in Sources */,
+				CEEBF7481553370100342E34 /* noteTypes.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -8,4 +8,7 @@
 
 typedef unsigned midinote;
 
++ (BOOL)isValidPitch:(unsigned)pitch octave:(unsigned)octave;
++ (midinote)midinoteOfPitch:(unsigned)pitch octave:(unsigned)octave;
+
 @end
