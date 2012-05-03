@@ -31,12 +31,12 @@
 
 + (NSString *)getFilePath:(NSString *)filename
 {
-    return [[[self getSavedGridsDirectory] stringByAppendingPathComponent:[self sanitizeProjectName:filename]] stringByAppendingPathExtension:FILE_EXTENSION];
+    return [[[self getSavedGridsDirectory] stringByAppendingPathComponent:filename] stringByAppendingPathExtension:FILE_EXTENSION];
 }
 
 + (void)deleteProject:(NSString *)projectName
 {
-    NSString *path = [self getFilePath:projectName];
+    NSString *path = [self getFilePath:[self sanitizeProjectName:projectName]];
     [[NSFileManager defaultManager] removeItemAtPath:path error:nil];
 }
 
@@ -47,7 +47,7 @@
 
 - (GridView *)loadGridFromFile:(NSString *)fileName
 {
-    NSString *dataPath = [GridProjects getFilePath:fileName];
+    NSString *dataPath = [GridProjects getFilePath:[GridProjects sanitizeProjectName:fileName]];
     NSData *codedData = [[NSData alloc] initWithContentsOfFile:dataPath];
     if (codedData == nil) return nil;
     
@@ -60,8 +60,11 @@
     return grid;
 }
 
-- (void)saveToFile:(NSString *)fileName grid:(GridView *)grid
+- (BOOL)saveToFile:(NSString *)fileName grid:(GridView *)grid
 {
+    fileName = [GridProjects sanitizeProjectName:fileName];
+    if([fileName length] == 0)
+        return FALSE; //failure
     NSString *dataPath = [GridProjects getFilePath:fileName];
     NSMutableData *data = [[NSMutableData alloc] init];
     NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];          
@@ -72,6 +75,7 @@
     [archiver finishEncoding];
     [data writeToFile:dataPath atomically:YES];
     currentFileName = fileName;
+    return TRUE; //success
 }
 
 + (NSString *)sanitizeProjectName:(NSString *)projectName

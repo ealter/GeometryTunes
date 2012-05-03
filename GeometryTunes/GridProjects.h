@@ -12,7 +12,7 @@
 + (void)deleteProject:(NSString *)projectName;
 
 - (GridView*)loadGridFromFile:(NSString *)fileName;
-- (void)saveToFile:(NSString *)fileName grid:(GridView *)grid;
+- (BOOL)saveToFile:(NSString *)fileName grid:(GridView *)grid;
 - (void)newGrid;
 
 @end

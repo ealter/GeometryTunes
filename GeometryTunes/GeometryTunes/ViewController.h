@@ -42,7 +42,7 @@ typedef enum STATE
 
 //Save & Load methods
 - (IBAction)saveLoadEvent:(id)sender;
-- (void)saveGridToFile:(NSString *)fileName;
+- (BOOL)saveGridToFile:(NSString *)fileName; //returns true on success
 - (void)loadGridFromFile:(NSString *)fileName;
 - (NSString*)currentFileName;
 - (void)newGrid;

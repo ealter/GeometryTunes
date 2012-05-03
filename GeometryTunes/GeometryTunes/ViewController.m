@@ -46,14 +46,14 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     [pathList setPathView:[grid pathView]];
 }
 
-- (void)saveGridToFile:(NSString *)fileName
+- (BOOL)saveGridToFile:(NSString *)fileName
 {
-    [gridProjects saveToFile:fileName grid:grid];
+    return [gridProjects saveToFile:fileName grid:grid];
 }
 
 - (IBAction)playPauseEvent:(id)sender
 {
-    if([grid.pathView isPlaying]){ //]compare:playBtnText]){
+    if([grid.pathView isPlaying]) {
         if(state == NORMAL_STATE)
             [grid pausePlayback];
         else

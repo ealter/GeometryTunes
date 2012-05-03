@@ -26,9 +26,13 @@
 - (IBAction)saveProject
 {
     //TODO: prevent empty names
-    [viewController saveGridToFile:[fileNameField text]];
-    [popover dismissPopoverAnimated:YES];
-    [self refresh];
+    if([viewController saveGridToFile:[fileNameField text]]) {
+        [popover dismissPopoverAnimated:YES];
+        [self refresh];
+    }
+    else {
+        //TODO: add some kind of alert
+    }
 }
 
 - (IBAction)editProjects
