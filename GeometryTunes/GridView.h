@@ -23,11 +23,10 @@ typedef struct CellPos {
 - (void)addNoteWithPitch:   (unsigned)pitch octave:(unsigned)octave;
 - (void)removeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave;
 - (NSMutableArray*)notes;
-- (void)updateDisplayAtCurrentCell;
 - (void)clearNote;
 
-- (void)playNoteForDuration:(NSTimeInterval)duration;
-- (void)playNoteForCell:(CellPos)cellPos duration:(NSTimeInterval)duration;
+- (void)playCurrentCellForDuration:(NSTimeInterval)duration;
+- (void)playCell:(CellPos)cellPos duration:(NSTimeInterval)duration;
 
 - (float)boxWidth;
 - (float)boxHeight;

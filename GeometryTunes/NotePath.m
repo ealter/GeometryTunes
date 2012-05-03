@@ -116,7 +116,7 @@
     }
     CGPoint pos = [[notes objectAtIndex:playbackPosition] CGPointValue];
     CellPos coords = [delegateGrid getBoxFromCoords:pos];
-    [delegateGrid playNoteForCell:coords duration:[t timeInterval]*.99];
+    [delegateGrid playCell:coords duration:[t timeInterval]*.99];
     [pathView pulseAt:pos];
     if(playbackPosition < [notes count])
     {

@@ -236,7 +236,7 @@
                 [self changeCell:[self cellAtPos:currentCell] isBold:false];
                 currentCell = box;
                 [self changeCell:[self cellAtPos:currentCell] isBold:true];
-                [self playNoteForDuration:DEFAULT_DURATION];
+                [self playCurrentCellForDuration:DEFAULT_DURATION];
                 [piano gridCellHasChanged];
             }
             
@@ -282,22 +282,17 @@
     [cell removeNote:note];
 }
 
-- (void)updateDisplayAtCurrentCell
-{
-    [[self cellAtPos:currentCell] setNeedsDisplay];
-}
-
 - (void)clearNote
 {
     [[self cellAtPos:currentCell] clearNotes];
 }
 
-- (void)playNoteForDuration:(NSTimeInterval)duration
+- (void)playCurrentCellForDuration:(NSTimeInterval)duration
 {
-    [self playNoteForCell:currentCell duration:duration];
+    [self playCell:currentCell duration:duration];
 }
 
-- (void)playNoteForCell:(CellPos)cellPos duration:(NSTimeInterval)duration
+- (void)playCell:(CellPos)cellPos duration:(NSTimeInterval)duration
 {
     NSMutableArray *notes = [[self cellAtPos:cellPos] notes];
     for(NSNumber *n in notes)

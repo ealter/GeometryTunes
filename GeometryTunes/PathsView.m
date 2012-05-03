@@ -37,7 +37,7 @@
     tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
     [tapGestureRecognizer setEnabled:FALSE];
     [self addGestureRecognizer:tapGestureRecognizer];
-    tapDistanceTolerance = 90 * 90;
+    tapDistanceTolerance = 0; /* Gets set in setGrid */
     removeDistanceTolerance = 30 * 30;
     speed = 1;
     isPlaying = FALSE;

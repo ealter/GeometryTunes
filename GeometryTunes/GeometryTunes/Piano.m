@@ -166,7 +166,7 @@
         [delegate removeNoteWithPitch:pitch octave:oct];
     else
         [delegate addNoteWithPitch:pitch octave:oct];
-    [delegate playNoteForDuration:NOTE_DURATION];
+    [delegate playCurrentCellForDuration:NOTE_DURATION];
     [self boldNotes:[delegate notes]];
 }
 
