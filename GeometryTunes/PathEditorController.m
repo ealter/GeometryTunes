@@ -31,8 +31,7 @@
 
 - (IBAction)clearEvent
 {
-    [[[pathsView paths] objectForKey:pathName]removeAllNotes];
-    [pathsView setNeedsDisplay];
+    [pathsView removeAllNotes];
 }
 
 - (IBAction)loopingChanged:(id)sender

@@ -52,7 +52,7 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     assert(pathView);
-    return [[pathView paths] count];
+    return [pathView numPaths];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -127,9 +127,9 @@
 
 - (IBAction)newPath
 {
-    int pathNum = [[pathView paths] count];
+    int pathNum = [pathView numPaths];
     NSString *pathName = [[NSString alloc]initWithFormat:@"path%d", pathNum];
-    for(; [[pathView paths] objectForKey:pathName] != nil; pathNum++, pathName = [[NSString alloc]initWithFormat:@"path%d", pathNum]);
+    for(; [pathView pathExists:pathName]; pathNum++, pathName = [[NSString alloc]initWithFormat:@"path%d", pathNum]);
     [pathView addPath:pathName];
     [pathPicker reloadData];
     if(mainViewController) {
@@ -145,7 +145,7 @@
 
 - (IBAction)editPath
 {
-    if([[pathView paths] count] == 0)
+    if([pathView numPaths] == 0)
         return;
     [pathPicker setEditing:![pathPicker isEditing]];
     if(![pathPicker isEditing])

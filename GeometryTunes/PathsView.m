@@ -8,6 +8,12 @@
 
 @interface PathsView ()
 
+@property (retain) NSMutableDictionary *paths;
+@property (retain) UIImage *pulseCircle;
+@property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
+@property (nonatomic) float tapDistanceTolerance; //Units are pixels^2. This is the maximum distance a touch can be from a node for it to register that the touch was meant for that node
+@property (nonatomic) float removeDistanceTolerance;
+
 - (void)sharedInit;
 - (void)initPulseCircle;
 
@@ -100,6 +106,16 @@
         [paths setValue:path forKey:pathName];
     }
     [self setCurrentPathName:pathName];
+}
+
+- (int)numPaths
+{
+    return [paths count];
+}
+
+- (BOOL)pathExists:(NSString *)pathName
+{
+    return [paths objectForKey:pathName] != nil;
 }
 
 - (float)closestNodeToPos:(CGPoint)pos pathName:(NSString**)pathName index:(int*)i
