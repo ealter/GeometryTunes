@@ -1,8 +1,6 @@
 #import <UIKit/UIKit.h>
-#import "noteTypes.h"
 
 @class GridView;
-@class scrollViewWithButtons;
 
 #define TOTAL_NUM_KEYS ((MAX_OCTAVE - MIN_OCTAVE + 1) * NOTES_IN_OCTAVE)
 
