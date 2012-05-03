@@ -15,6 +15,8 @@
 
 @interface GridView ()
 
+@property (nonatomic) CellPos numBoxes; /* The number of cells on the grid */
+
 - (void)sharedInit;
 - (void)initCells;
 - (void)allocateCells;
@@ -28,7 +30,7 @@
 @synthesize numBoxes;
 @synthesize currentCell;
 @synthesize tapGestureRecognizer, swipeGestureRecognizer;
-@synthesize delegate, pathView;
+@synthesize viewController, pathView;
 
 #define CELL_BORDER_COLOR [[UIColor grayColor] CGColor]
 #define CELL_BORDER_COLOR_WHILE_PLAYING [[UIColor clearColor] CGColor]
@@ -40,14 +42,14 @@
 
 - (STATE)state
 {
-    assert(delegate);
-    return [delegate state];
+    assert(viewController);
+    return [viewController state];
 }
 
 - (void)setState:(STATE)state
 {
-    if(delegate)
-        [delegate setState:state];
+    if(viewController)
+        [viewController setState:state];
 }
 
 - (void)draw
@@ -81,7 +83,7 @@
         [piano removeFromSuperview];
     [self setState:NORMAL_STATE];
     [self changeCell:[self cellAtPos:currentCell] isBold:false];
-    [delegate changeStateToNormal:false];
+    [viewController changeStateToNormal:false];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -233,7 +235,7 @@
         case PATH_EDIT_STATE:
             //CGPoint point = CGPointMake((box.x + 0.5) * [self boxWidth], (box.y + 0.5) * [self boxHeight]); //Snap to center
             assert(pathView);
-            if([[delegate pathList] pathEditStateIsAdding])
+            if([[viewController pathList] pathEditStateIsAdding])
                 [pathView addNoteWithPos:pos];
             else
                 [pathView removeNoteWithPos:pos];
@@ -341,7 +343,7 @@
 -(void) stopPlayback
 {
     [pathView stop];
-    [delegate setPlayStateToStopped];
+    [viewController setPlayStateToStopped];
     [self convertCellBorderColors:CELL_BORDER_COLOR];
 }
 

@@ -1,5 +1,7 @@
 #import <UIKit/UIKit.h>
 
+/* Represents a grid of GridCells. Provides functionality to modify the cells and delegates out various other tasks. Rather than being a module, this class acts as a singular class that moderates the interactions between other classes. */
+
 @class PathsView;
 @class ViewController;
 @class GridCell;
@@ -8,11 +10,11 @@
 @interface GridView : UIView <NSCoding>
 {
     Piano *piano;
-    NSMutableArray *cells; //2D array: 1st index is row
+    NSMutableArray *cells; //2D array: 1st index is row (also an NSMutableArray)
                            //          2nd index is col
 }
 
-//typedef CGPoint CellPos; //Represents a coordinate system for the grid (0,0) is top left. (1,0) is one to the right of that
+//Represents a coordinate system for the grid (0,0) is top left. (1,0) is one to the right of that
 typedef struct CellPos {
     unsigned x;
     unsigned y;
@@ -20,10 +22,8 @@ typedef struct CellPos {
 
 + (CellPos)cellPosMakeX:(unsigned)x y:(unsigned) y;
 
-@property (nonatomic) CellPos numBoxes;
-
-@property (nonatomic, retain) ViewController *delegate;
-@property (nonatomic, retain) PathsView *pathView;
+@property (nonatomic, retain) ViewController *viewController;
+@property (nonatomic, retain, readonly) PathsView *pathView;
 
 @property (nonatomic, readonly) CellPos currentCell; //Used when editing a square
 

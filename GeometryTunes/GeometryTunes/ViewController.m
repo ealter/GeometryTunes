@@ -42,7 +42,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
         [self.view addSubview:_grid];
         grid = _grid;
     }
-    [grid setDelegate:self];
+    [grid setViewController:self];
     [pathList setPathView:[grid pathView]];
 }
 
@@ -174,7 +174,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     [super viewDidLoad];
     tempo = 1;
     state = NORMAL_STATE;
-    [grid setDelegate:self];
+    [grid setViewController:self];
     normalPathBtnText = [[editPathBtn titleLabel] text];
     pauseImageFile = [[NSBundle mainBundle]pathForResource:@"pauseButton2" ofType:@"png"];
     playImageFile = [[NSBundle mainBundle]pathForResource:@"playButton2" ofType:@"png"];

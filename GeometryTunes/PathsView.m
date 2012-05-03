@@ -226,7 +226,7 @@
             [path setPlaybackPosition:0];
         }
         [tapGestureRecognizer setEnabled:FALSE];
-        [[delegateGrid delegate] setPlayStateToStopped];
+        [[delegateGrid viewController] setPlayStateToStopped];
     }
 }
 
