@@ -30,6 +30,8 @@
 {
     UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Are you sure?" message:@"Any unsaved changes will be lost" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"New Project", nil];
     [alert show];
+    if([viewController currentFileName])
+        [fileNameField setText:@""];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
