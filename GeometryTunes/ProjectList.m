@@ -9,7 +9,6 @@
 
 - (IBAction)newProject:(id)sender;
 - (IBAction)saveProject:(id)sender;
-- (IBAction)editProjects;
 
 @end
 
@@ -52,11 +51,6 @@
         alert.frame = [sender frame];
         [alert show];
     }
-}
-
-- (IBAction)editProjects
-{
-    [fileList setEditing:![fileList isEditing]];
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
