@@ -72,7 +72,8 @@
     int width = rect.size.width;
     int height = rect.size.height;
     
-    const float whiteKeyWidth = ((float)width) / ([Piano whiteNotesFromPitch:0 numNotes:NOTES_IN_KEYBOARD] + BUTTON_RELATIVE_SIZE);
+    const float percentHanging = 0.3; //The percentage that the last note leans over the edge of the piano
+    const float whiteKeyWidth = ((float)width) / ([Piano whiteNotesFromPitch:0 numNotes:NOTES_IN_KEYBOARD] + BUTTON_RELATIVE_SIZE + percentHanging);
     
     float buttonWidth = whiteKeyWidth*BUTTON_RELATIVE_SIZE;
     float blackKeyWidth = whiteKeyWidth/2;
