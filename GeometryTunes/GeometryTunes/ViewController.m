@@ -63,6 +63,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
         grid = _grid;
     }
     [grid setViewController:self];
+    [grid setSpeed:tempo];
     [pathList setPathView:[grid pathView]];
 }
 
@@ -130,7 +131,6 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
 {
     pathLabel.text = pathName;
 }
-
 
 
 - (void)pathHasBeenSelected
