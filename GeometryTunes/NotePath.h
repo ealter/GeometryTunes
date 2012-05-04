@@ -18,7 +18,7 @@
 - (void)addNoteWithPos:(CGPoint)pos;
 - (void)removeNoteAtIndex:(unsigned)index;
 - (void)removeAllNotes;
-- (void)updateAndDisplayPath:(CGContextRef)context;
+- (void)updateAndDisplayPath:(CGContextRef)context dashed:(BOOL)isDashed;
 - (void)play;
 - (void)pause;
 - (void)stop;

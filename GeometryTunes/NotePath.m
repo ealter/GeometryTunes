@@ -102,12 +102,19 @@
         [path addLineToPoint:[[notes objectAtIndex:0] CGPointValue]];
 }
 
-- (void)updateAndDisplayPath:(CGContextRef)context
+- (void)updateAndDisplayPath:(CGContextRef)context dashed:(BOOL)isDashed
 {
     [self buildPath];
     CGContextSaveGState(context);
     
     path.lineWidth = 5;
+    if(isDashed) {
+        const CGFloat lineDash[] = {15, 6};
+        [path setLineDash:lineDash count:sizeof(lineDash)/sizeof(lineDash[0]) phase:0];
+    }
+    else {
+        [path setLineDash:nil count:1 phase:0];
+    }
     [[UIColor whiteColor] setStroke];
     [path stroke];
     

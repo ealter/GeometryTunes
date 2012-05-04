@@ -1,7 +1,6 @@
 #import "GridView.h"
 #import "GridCell.h"
 #import "noteTypes.h"
-#import "ViewController.h"
 #import "NotePlayer.h"
 #import "PathsView.h"
 #import "Piano.h"
@@ -34,7 +33,6 @@
 - (void)convertCellBorderColors:(CGColorRef)color;
 
 /* Note: The variable for the state is stored in the ViewController */
-- (STATE)state;
 - (void)setState:(STATE)state;
 
 @end
@@ -62,6 +60,8 @@
 
 - (void)setState:(STATE)state
 {
+    if([viewController state] == PATH_EDIT_STATE)
+        [pathView setNeedsDisplay]; //Since the current path is dotted
     if(viewController)
         [viewController setState:state];
 }
@@ -106,6 +106,7 @@
         [self allocateCells];
         [self initCells];
         pathView = [[PathsView alloc]initWithFrame:[self bounds]];
+        [pathView setGrid:self];
         [self draw];
     }
     return self;
@@ -127,6 +128,7 @@
         pathView = [aDecoder decodeObjectForKey:PATHVIEW_ENCODE_KEY];
         if(!pathView)
             pathView = [[PathsView alloc]initWithFrame:[self bounds]];
+        [pathView setGrid:self];
         [self draw];
     }
     return self;

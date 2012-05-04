@@ -158,7 +158,8 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     for (NSString *pathName in paths) {
         NotePath *path = [paths objectForKey:pathName];
-        [path updateAndDisplayPath:context];
+        BOOL isCurrentPath = ([grid state] == PATH_EDIT_STATE) && ([pathName compare:currentPathName] == NSOrderedSame);
+        [path updateAndDisplayPath:context dashed:isCurrentPath];
     }
 }
 

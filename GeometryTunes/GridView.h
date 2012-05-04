@@ -1,9 +1,9 @@
 #import <UIKit/UIKit.h>
+#import "ViewController.h"
 
 /* Represents a grid of GridCells. Provides functionality to modify the cells and delegates out various other tasks. Rather than being a module, this class acts as a singular class that moderates the interactions between other classes. */
 
 @class PathsView;
-@class ViewController;
 @class GridCell;
 @class Piano;
 
@@ -18,6 +18,8 @@ typedef struct CellPos {
 @property (nonatomic, retain) ViewController *viewController;
 @property (nonatomic, retain, readonly) PathsView *pathView;
 @property (nonatomic, readonly) CellPos currentCell; //Used when editing a square
+
+- (STATE)state;
 
 //The following methods use the currentCell
 - (void)addNoteWithPitch:   (unsigned)pitch octave:(unsigned)octave;
