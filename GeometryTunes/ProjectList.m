@@ -91,6 +91,8 @@
 {
     [viewController loadGridFromFile:[GridProjects nthFileName:indexPath.row]];
     [popover dismissPopoverAnimated:YES];
+    if([viewController currentFileName])
+        [fileNameField setText:[viewController currentFileName]];
 }
 
 - (void)refresh
