@@ -57,6 +57,7 @@
 
 - (GridView *)grid
 {
+    assert(pathView);
     return [pathView grid];
 }
 

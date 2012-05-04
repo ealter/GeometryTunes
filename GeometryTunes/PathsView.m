@@ -84,6 +84,10 @@
         NSMutableDictionary *_paths = [aDecoder decodeObjectForKey:PATHS_ENCODE_KEY];
         if(_paths)
             paths = _paths;
+        for(NSString *pathName in paths) {
+            NotePath *path = [paths objectForKey:pathName];
+            [path setPathView:self];
+        }
     }
     return self;
 }
