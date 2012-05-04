@@ -41,10 +41,14 @@
     return self;
 }
 
+#define NOTES_KEY     @"notes"
+#define DOES_LOOP_KEY @"doesLoop"
+
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [self init];
-    NSMutableArray *_notes = [aDecoder decodeObject];
+    NSMutableArray *_notes = [aDecoder decodeObjectForKey:NOTES_KEY];
+    doesLoop = [aDecoder decodeBoolForKey:DOES_LOOP_KEY];
     if(_notes)
         notes = _notes;
     return self;
@@ -52,7 +56,8 @@
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeObject:notes];
+    [aCoder encodeObject:notes forKey:NOTES_KEY];
+    [aCoder encodeBool:doesLoop forKey:DOES_LOOP_KEY];
 }
 
 - (GridView *)grid
