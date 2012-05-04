@@ -197,6 +197,8 @@
     isPlaying = TRUE;
     if([paths count] == 0) {
         [self performSelector:@selector(playHasStopped) withObject:nil afterDelay:0];
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"There are no paths to play!" message:@"To make a path, click the \"Paths\" button at the top right of the screen." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
+        [alert show];
         return;
     }
     [tapGestureRecognizer setEnabled:TRUE];
