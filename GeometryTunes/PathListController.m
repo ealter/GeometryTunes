@@ -159,13 +159,14 @@
     if([pathView numPaths] == 0)
         return;
     [pathPicker setEditing:![pathPicker isEditing]];
-    if(![pathPicker isEditing])
-    {
+    if(![pathPicker isEditing]) {
         [pathEditorPopover dismissPopoverAnimated:TRUE];
         return;
     }
     selectedPath = 0;
-    [self showPathEditor:[NSIndexPath indexPathForRow:selectedPath inSection:0]];
+    NSIndexPath *index = [NSIndexPath indexPathForRow:selectedPath inSection:0];
+    [pathPicker selectRowAtIndexPath:index animated:TRUE scrollPosition:UITableViewScrollPositionNone];
+    [self showPathEditor:index];
 }
 
 - (BOOL)pathEditStateIsAdding
