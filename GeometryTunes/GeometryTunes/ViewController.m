@@ -54,6 +54,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
 
 - (void)loadGridFromFile:(NSString *)fileName
 {
+    [grid stopPlayback];
     GridView *_grid = [gridProjects loadGridFromFile:fileName];
     if(_grid) {
         [grid removeFromSuperview];
