@@ -15,6 +15,7 @@
 @property (nonatomic, retain) IBOutlet UIButton *editPathBtn;
 @property (nonatomic, retain) IBOutlet UIButton *playPauseButton;
 @property (nonatomic, retain) IBOutlet UILabel *tempoTextField;
+@property (nonatomic, retain) IBOutlet UILabel *pathLabel;
 
 @property (strong, nonatomic) PathListController *pathList;
 @property (strong, nonatomic) UIPopoverController *pathListPopover;
@@ -36,7 +37,7 @@
 @synthesize state;
 @synthesize grid, gridProjects;
 @synthesize editPathBtn, playPauseButton;
-@synthesize tempoTextField, tempo;
+@synthesize tempoTextField, tempo, pathLabel;
 @synthesize pathList, pathListPopover;
 @synthesize projectList, projectListPopover;
 @synthesize playImageFile, pauseImageFile, doneImageFile, pathsImageFile;
@@ -121,6 +122,11 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
         pathListPopover.popoverContentSize = popoverSize;
         [pathListPopover presentPopoverFromRect:[sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
     }
+}
+
+- (void)changePathLabel:(NSString *)pathName
+{
+    pathLabel.text = pathName;
 }
 
 - (void)pathHasBeenSelected

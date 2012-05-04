@@ -24,6 +24,7 @@ typedef enum STATE
 //Path methods
 - (void)pathHasBeenSelected; /* A callback method indicating that the PathListController has selected a path */
 - (BOOL)pathEditStateIsAdding;
+- (void)changePathLabel:(NSString *)pathName;
 
 - (void)changeStateToNormal:(bool)informGrid; /* Changes the STATE to NORMAL_STATE. If informGrid is true, this calls the changeStateToNormal method fot the GridView (yes, this is a hacky way of doing it). */
 

@@ -128,6 +128,8 @@
         if(mainViewController)
             [mainViewController pathHasBeenSelected];
     }
+    NSString *pathName = [[NSString alloc]initWithString:[self nameForNthCell:indexPath.row]];
+    [mainViewController changePathLabel:pathName];
 }
 
 - (void)setPathView:(PathsView *)_pathView
