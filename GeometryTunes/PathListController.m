@@ -53,6 +53,7 @@
 - (void)refresh
 {
     [pathPicker reloadData];
+    [pathPicker selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
 }
 
 - (void)setIsEditingPaths:(BOOL)isEditing
