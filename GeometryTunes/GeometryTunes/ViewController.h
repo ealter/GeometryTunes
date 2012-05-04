@@ -17,6 +17,7 @@ typedef enum STATE
 @property STATE state;
 @property (nonatomic, retain) IBOutlet GridView *grid;
 @property (nonatomic) NSTimeInterval tempo; /* The amount of time in between notes */
+@property (nonatomic, retain) IBOutlet UILabel *pathLabel;
 
 //Playback methods
 - (void)setPlayStateToStopped;    /* Call this method when the playback was stopped by the program, rather than the user */
@@ -24,6 +25,7 @@ typedef enum STATE
 //Path methods
 - (void)pathHasBeenSelected; /* A callback method indicating that the PathListController has selected a path */
 - (BOOL)pathEditStateIsAdding;
+- (void)changePathLabel:(NSString *)pathName;
 
 - (void)changeStateToNormal:(bool)informGrid; /* Changes the STATE to NORMAL_STATE. If informGrid is true, this calls the changeStateToNormal method fot the GridView (yes, this is a hacky way of doing it). */
 
