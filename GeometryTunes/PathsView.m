@@ -348,6 +348,8 @@ static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
     NotePath *path = [paths objectForKey:currentPathName];
     if(path)
         [path setMostRecentAccess:mach_absolute_time()];
+    if([grid state] == PATH_EDIT_STATE)
+        [self setNeedsDisplay];
 }
 
 - (void)deletePath:(NSString *)pathName
