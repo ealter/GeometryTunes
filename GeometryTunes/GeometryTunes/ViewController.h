@@ -16,6 +16,7 @@ typedef enum STATE
 
 @property STATE state;
 @property (nonatomic, retain) IBOutlet GridView *grid;
+@property (nonatomic, retain) IBOutlet UILabel *pathLabel;
 @property NSTimeInterval tempo; /* The amount of time in between notes */
 
 //Playback methods

@@ -15,7 +15,6 @@
 @property (nonatomic, retain) IBOutlet UIButton *editPathBtn;
 @property (nonatomic, retain) IBOutlet UIButton *playPauseButton;
 @property (nonatomic, retain) IBOutlet UILabel *tempoTextField;
-@property (nonatomic, retain) IBOutlet UILabel *pathLabel;
 
 @property (strong, nonatomic) PathListController *pathList;
 @property (strong, nonatomic) UIPopoverController *pathListPopover;
@@ -129,6 +128,8 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
 {
     pathLabel.text = pathName;
 }
+
+
 
 - (void)pathHasBeenSelected
 {

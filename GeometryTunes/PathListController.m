@@ -94,6 +94,9 @@
     [pathPicker reloadData];
     if([pathName isEqualToString:[pathEditor pathName]])
         [pathEditorPopover dismissPopoverAnimated:TRUE];
+    if([mainViewController pathLabel].text == pathName){
+        [mainViewController pathLabel].text = @"";
+    }
 }
 
 - (void)showPathEditor:(NSIndexPath *)location

@@ -58,11 +58,11 @@
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">1</int>
 						<float key="IBUIMinimumFontSize">10</float>
-						<object class="IBUIFontDescription" key="IBUIFontDescription" id="672577169">
+						<object class="IBUIFontDescription" key="IBUIFontDescription">
 							<int key="type">1</int>
 							<double key="pointSize">17</double>
 						</object>
-						<object class="NSFont" key="IBUIFont" id="171743571">
+						<object class="NSFont" key="IBUIFont">
 							<string key="NSName">Helvetica</string>
 							<double key="NSSize">17</double>
 							<int key="NSfFlags">16</int>
@@ -160,7 +160,7 @@
 						<string key="NSFrame">{{365, 17}, {113, 50}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView" ref="186888808"/>
+						<reference key="NSNextKeyView" ref="915184740"/>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
 						<int key="IBUIContentHorizontalAlignment">0</int>
@@ -205,10 +205,10 @@
 						<reference key="IBUIFontDescription" ref="155530480"/>
 						<reference key="IBUIFont" ref="102120406"/>
 					</object>
-					<object class="IBUILabel" id="186888808">
+					<object class="IBUILabel" id="915184740">
 						<reference key="NSNextResponder" ref="766721923"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{514, 17}, {127, 50}}</string>
+						<string key="NSFrame">{{500, 17}, {127, 50}}</string>
 						<reference key="NSSuperview" ref="766721923"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="914146132"/>
@@ -217,7 +217,7 @@
 						<int key="IBUIContentMode">7</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBIPadFramework</string>
-						<string key="IBUIText"/>
+						<string key="IBUIText">Path Name</string>
 						<object class="NSColor" key="IBUITextColor">
 							<int key="NSColorSpace">1</int>
 							<bytes key="NSRGB">MSAxIDEAA</bytes>
@@ -228,8 +228,17 @@
 						<nil key="IBUIHighlightedColor"/>
 						<int key="IBUIBaselineAdjustment">1</int>
 						<float key="IBUIMinimumFontSize">10</float>
-						<reference key="IBUIFontDescription" ref="672577169"/>
-						<reference key="IBUIFont" ref="171743571"/>
+						<object class="IBUIFontDescription" key="IBUIFontDescription">
+							<string key="name">ArialRoundedMTBold</string>
+							<string key="family">Arial Rounded MT Bold</string>
+							<int key="traits">2</int>
+							<double key="pointSize">22</double>
+						</object>
+						<object class="NSFont" key="IBUIFont">
+							<string key="NSName">ArialRoundedMTBold</string>
+							<double key="NSSize">22</double>
+							<int key="NSfFlags">16</int>
+						</object>
 					</object>
 				</array>
 				<string key="NSFrame">{{0, 20}, {768, 1004}}</string>
@@ -307,7 +316,7 @@
 					<object class="IBCocoaTouchOutletConnection" key="connection">
 						<string key="label">pathLabel</string>
 						<reference key="source" ref="841351856"/>
-						<reference key="destination" ref="186888808"/>
+						<reference key="destination" ref="915184740"/>
 					</object>
 					<int key="connectionID">94</int>
 				</object>
@@ -387,7 +396,7 @@
 							<reference ref="36369109"/>
 							<reference ref="864116444"/>
 							<reference ref="28868202"/>
-							<reference ref="186888808"/>
+							<reference ref="915184740"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -434,7 +443,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">93</int>
-						<reference key="object" ref="186888808"/>
+						<reference key="object" ref="915184740"/>
 						<reference key="parent" ref="766721923"/>
 					</object>
 				</array>
