@@ -185,14 +185,14 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
 - (void)setTempo:(NSTimeInterval)_tempo
 {
     tempo = _tempo;
-    float bpm = tempo * 60;
+    float bpm = 60/tempo;
     tempoTextField.text = [NSString stringWithFormat:@"%d BPM", (int)bpm];
     [tempoSlider setValue:bpm];
     [grid setSpeed:tempo];
 }
 
 - (IBAction)tempoChanged:(UISlider *)sender {
-    [self setTempo:[sender value]/60];
+    [self setTempo:60/[sender value]];
 }
 
 #pragma mark - View lifecycle
