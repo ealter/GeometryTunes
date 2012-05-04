@@ -14,8 +14,9 @@
 
 @property (nonatomic, retain) IBOutlet UIButton *editPathBtn;
 @property (nonatomic, retain) IBOutlet UIButton *playPauseButton;
-@property (nonatomic, retain) IBOutlet UILabel *tempoTextField;
+@property (nonatomic, retain) IBOutlet UILabel  *tempoTextField;
 @property (nonatomic, retain) IBOutlet UISlider *tempoSlider;
+@property (nonatomic, retain) IBOutlet UILabel  *fileNameLabel;
 
 @property (strong, nonatomic) PathListController *pathList;
 @property (strong, nonatomic) UIPopoverController *pathListPopover;
@@ -38,7 +39,7 @@
 @synthesize grid, gridProjects;
 @synthesize editPathBtn, playPauseButton;
 @synthesize tempoTextField, tempo, tempoSlider;
-@synthesize pathLabel;
+@synthesize pathLabel, fileNameLabel;
 @synthesize pathList, pathListPopover;
 @synthesize projectList, projectListPopover;
 @synthesize playImageFile, pauseImageFile, doneImageFile, pathsImageFile;
@@ -53,6 +54,16 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     return [gridProjects currentFileName];
 }
 
+- (void)refreshFileName
+{
+    NSString *filename = [self currentFileName];
+    const NSString *prefix = @"Editing ";
+    if(filename)
+        fileNameLabel.text = [prefix stringByAppendingString:filename];
+    else
+        fileNameLabel.text = [prefix stringByAppendingString:@"Untitled Project"];
+}
+
 - (void)loadGridFromFile:(NSString *)fileName
 {
     [grid stopPlayback];
@@ -65,11 +76,14 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     [grid setViewController:self];
     [grid setSpeed:tempo];
     [pathList setPathView:[grid pathView]];
+    [self refreshFileName];
 }
 
 - (BOOL)saveGridToFile:(NSString *)fileName
 {
-    return [gridProjects saveToFile:fileName grid:grid tempo:tempo];
+    BOOL success = [gridProjects saveToFile:fileName grid:grid tempo:tempo];
+    [self refreshFileName];
+    return success;
 }
 
 - (IBAction)playPauseEvent:(id)sender
@@ -173,6 +187,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
 {
     [gridProjects newGrid];
     [grid reset];
+    [self refreshFileName];
 }
 
 - (void)setPlayStateToStopped
@@ -205,10 +220,11 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     [grid setViewController:self];
     normalPathBtnText = [[editPathBtn titleLabel] text];
     pauseImageFile = [[NSBundle mainBundle]pathForResource:@"pauseButton2" ofType:@"png"];
-    playImageFile = [[NSBundle mainBundle]pathForResource:@"playButton2" ofType:@"png"];
-    doneImageFile = [[NSBundle mainBundle]pathForResource:@"doneButton" ofType:@"png"];
-    pathsImageFile = [[NSBundle mainBundle]pathForResource:@"pathsButton" ofType:@"png"];
+    playImageFile =  [[NSBundle mainBundle]pathForResource:@"playButton2"  ofType:@"png"];
+    doneImageFile =  [[NSBundle mainBundle]pathForResource:@"doneButton"   ofType:@"png"];
+    pathsImageFile = [[NSBundle mainBundle]pathForResource:@"pathsButton"  ofType:@"png"];
     gridProjects = [[GridProjects alloc]init];
+    [self refreshFileName];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

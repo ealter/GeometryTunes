@@ -35,5 +35,6 @@ typedef enum STATE
 - (void)loadGridFromFile:(NSString *)fileName;
 - (NSString*)currentFileName;
 - (void)newGrid;
+- (void)refreshFileName;
 
 @end
