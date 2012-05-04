@@ -16,6 +16,7 @@
 #define FILE_EXTENSION @"geotunes"
 #define GRID_NAME_KEY  @"filename"
 #define GRID_KEY       @"grid"
+#define TEMPO_KEY      @"tempo"
 
 + (NSString *)getSavedGridsDirectory {
     
@@ -45,7 +46,7 @@
     currentFileName = nil;
 }
 
-- (GridView *)loadGridFromFile:(NSString *)fileName
+- (GridView *)loadGridFromFile:(NSString *)fileName viewController:(ViewController *)viewController
 {
     NSString *dataPath = [GridProjects getFilePath:[GridProjects sanitizeProjectName:fileName]];
     NSData *codedData = [[NSData alloc] initWithContentsOfFile:dataPath];
@@ -55,12 +56,17 @@
     NSString *gridName = [unarchiver decodeObjectForKey:GRID_NAME_KEY];
     if(gridName == nil) return nil;
     GridView *grid = [unarchiver decodeObjectForKey:GRID_KEY];
+    assert([unarchiver containsValueForKey:GRID_KEY]);
+    if([unarchiver containsValueForKey:TEMPO_KEY]) {
+        NSTimeInterval tempo = [unarchiver decodeDoubleForKey:TEMPO_KEY];
+        [viewController setTempo:tempo];
+    }
     [unarchiver finishDecoding];
     currentFileName = fileName;
     return grid;
 }
 
-- (BOOL)saveToFile:(NSString *)fileName grid:(GridView *)grid
+- (BOOL)saveToFile:(NSString *)fileName grid:(GridView *)grid tempo:(NSTimeInterval)tempo
 {
     fileName = [GridProjects sanitizeProjectName:fileName];
     if([fileName length] == 0)
@@ -72,6 +78,7 @@
     [grid changeToNormalState];
     [grid stopPlayback];
     [archiver encodeObject:grid forKey:GRID_KEY];
+    [archiver encodeDouble:tempo forKey:TEMPO_KEY];
     [archiver finishEncoding];
     [data writeToFile:dataPath atomically:YES];
     currentFileName = fileName;

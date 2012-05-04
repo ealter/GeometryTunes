@@ -3,6 +3,7 @@
 /* This module handles the save and load capabilities for grids */
 
 @class GridView;
+@class ViewController;
 
 @interface GridProjects : NSObject
 
@@ -13,8 +14,8 @@
 + (NSString *)nthFileName:(NSInteger)n; //Returns the nth saved grid name (alphabetical order)
 + (void)deleteProject:(NSString *)projectName;
 
-- (GridView*)loadGridFromFile:(NSString *)fileName; //Returns a grid from the saved file. nil on error
-- (BOOL)saveToFile:(NSString *)fileName grid:(GridView *)grid; //Save the file to the grid. Returns TRUE on success
+- (GridView*)loadGridFromFile:(NSString *)fileName viewController:(ViewController *)viewController; //Returns a grid from the saved file. nil on error
+- (BOOL)saveToFile:(NSString *)fileName grid:(GridView *)grid tempo:(NSTimeInterval)tempo; //Save the file to the grid. Returns TRUE on success
 - (void)newGrid; //Resets the current file name
 
 @end

@@ -15,6 +15,7 @@
 @property (nonatomic, retain) IBOutlet UIButton *editPathBtn;
 @property (nonatomic, retain) IBOutlet UIButton *playPauseButton;
 @property (nonatomic, retain) IBOutlet UILabel *tempoTextField;
+@property (nonatomic, retain) IBOutlet UISlider *tempoSlider;
 
 @property (strong, nonatomic) PathListController *pathList;
 @property (strong, nonatomic) UIPopoverController *pathListPopover;
@@ -36,7 +37,7 @@
 @synthesize state;
 @synthesize grid, gridProjects;
 @synthesize editPathBtn, playPauseButton;
-@synthesize tempoTextField, tempo;
+@synthesize tempoTextField, tempo, tempoSlider;
 @synthesize pathList, pathListPopover;
 @synthesize projectList, projectListPopover;
 @synthesize playImageFile, pauseImageFile, doneImageFile, pathsImageFile;
@@ -54,7 +55,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
 - (void)loadGridFromFile:(NSString *)fileName
 {
     [grid stopPlayback];
-    GridView *_grid = [gridProjects loadGridFromFile:fileName];
+    GridView *_grid = [gridProjects loadGridFromFile:fileName viewController:self];
     if(_grid) {
         [grid removeFromSuperview];
         [self.view addSubview:_grid];
@@ -66,7 +67,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
 
 - (BOOL)saveGridToFile:(NSString *)fileName
 {
-    return [gridProjects saveToFile:fileName grid:grid];
+    return [gridProjects saveToFile:fileName grid:grid tempo:tempo];
 }
 
 - (IBAction)playPauseEvent:(id)sender
@@ -173,11 +174,17 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     [grid playbackHasStopped];
 }
 
-- (IBAction)tempoChanged:(UISlider *)sender {
-    tempoTextField.text = [NSString stringWithFormat:@"%d BPM", (int)[sender value]]; 
-    tempo = 60/[sender value];
-    
+- (void)setTempo:(NSTimeInterval)_tempo
+{
+    tempo = _tempo;
+    float bpm = tempo * 60;
+    tempoTextField.text = [NSString stringWithFormat:@"%d BPM", (int)bpm];
+    [tempoSlider setValue:bpm];
     [grid setSpeed:tempo];
+}
+
+- (IBAction)tempoChanged:(UISlider *)sender {
+    [self setTempo:[sender value]/60];
 }
 
 #pragma mark - View lifecycle
