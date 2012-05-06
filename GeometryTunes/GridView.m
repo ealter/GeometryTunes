@@ -227,10 +227,9 @@
             }
             
             CGRect pianoRect = CGRectMake(0, pianoY, [self bounds].size.width, pianoHeight);
-            if (piano)
-                piano = [piano initWithFrame:pianoRect];
-            else
-                piano = [[Piano alloc] initWithFrame:pianoRect];
+            if(!piano)
+                piano = [Piano alloc];
+            piano = [piano initWithFrame:pianoRect];
             [piano setGrid:self];
             [self addSubview:piano];
             break;
@@ -239,11 +238,10 @@
             if(!CGRectContainsPoint([piano frame], pos)) {
                 [self setIsBold:FALSE cell:[self cellAtPos:currentCell]];
                 currentCell = box;
-                [self setIsBold:TRUE cell:[self cellAtPos:currentCell]];
+                [self setIsBold:TRUE  cell:[self cellAtPos:currentCell]];
                 [self playCurrentCellForDuration:DEFAULT_DURATION];
                 [piano gridCellHasChanged];
             }
-            
             break;
         case PATH_EDIT_STATE:
             //CGPoint point = CGPointMake((box.x + 0.5) * [self boxWidth], (box.y + 0.5) * [self boxHeight]); //Snap to center
@@ -262,8 +260,7 @@
 - (void)handleSwipe:(UIGestureRecognizer *)sender
 {
     CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
-    if([self state] == PIANO_STATE)
-    {
+    if([self state] == PIANO_STATE) {
         if(!CGRectContainsPoint([piano frame], pos))
             [self changeToNormalState];
     }
@@ -372,7 +369,6 @@
     [pathView setGrid:self];
     [self convertCellBorderColors:CELL_BORDER_COLOR_WHILE_PLAYING];
     [pathView play];
-
 }
 
 - (void)playbackHasStopped
