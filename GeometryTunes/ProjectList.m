@@ -59,8 +59,7 @@ typedef enum AlertType {
 {
     [viewController newGrid];
     [popover dismissPopoverAnimated:YES];
-    if([viewController currentFileName])
-        [fileNameField setText:@""];
+    [self refresh];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
@@ -132,6 +131,10 @@ typedef enum AlertType {
         int row = [self rowForProjectName:currentFileName];
         [fileList selectRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] animated:FALSE scrollPosition:UITableViewScrollPositionNone];
         [fileNameField setText:currentFileName];
+    }
+    else {
+        [fileNameField setText:@""];
+        [fileList deselectRowAtIndexPath:[fileList indexPathForSelectedRow] animated:FALSE];
     }
 }
 

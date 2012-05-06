@@ -195,6 +195,7 @@
 
 - (void)reset
 {
+    [self stopPlayback];
     for(NSMutableArray *row in cells) {
         for(int j=0; j<numBoxes.y; j++) {
             GridCell *cell = [row objectAtIndex:j];
