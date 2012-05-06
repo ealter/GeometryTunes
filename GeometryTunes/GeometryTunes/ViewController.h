@@ -17,6 +17,7 @@ typedef enum STATE
 @property STATE state;
 @property (nonatomic, retain) IBOutlet GridView *grid;
 @property (nonatomic) NSTimeInterval tempo; /* The amount of time in between notes */
+@property (nonatomic, readonly) BOOL hasUnsavedChanges;
 
 //Playback methods
 - (void)setPlayStateToStopped;    /* Call this method when the playback was stopped by the program, rather than the user */
@@ -34,5 +35,6 @@ typedef enum STATE
 - (NSString*)currentFileName;
 - (void)newGrid;
 - (void)refreshFileName;
+- (void)projectHasChanged;
 
 @end

@@ -247,6 +247,7 @@
         case PATH_EDIT_STATE:
             //CGPoint point = CGPointMake((box.x + 0.5) * [self boxWidth], (box.y + 0.5) * [self boxHeight]); //Snap to center
             assert(pathView);
+            [viewController projectHasChanged];
             if([viewController pathEditStateIsAdding])
                 [pathView addNoteWithPos:pos];
             else
@@ -272,6 +273,7 @@
     GridCell *cell = [self cellAtPos:currentCell];
     midinote note = [noteTypes midinoteOfPitch:pitch octave:octave];
     [cell addNote:note];
+    [viewController projectHasChanged];
 }
 
 - (void)removeNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave
@@ -279,11 +281,13 @@
     GridCell *cell = [self cellAtPos:currentCell];
     midinote note = [noteTypes midinoteOfPitch:pitch octave:octave];
     [cell removeNote:note];
+    [viewController projectHasChanged];
 }
 
 - (void)clearNote
 {
     [[self cellAtPos:currentCell] clearNotes];
+    [viewController projectHasChanged];
 }
 
 - (void)playCurrentCellForDuration:(NSTimeInterval)duration
@@ -382,6 +386,8 @@
 
 - (void)setSpeed:(NSTimeInterval)speed
 {
+    if(speed != [pathView speed])
+        [viewController projectHasChanged];
     [pathView setSpeed:speed];
 }
 

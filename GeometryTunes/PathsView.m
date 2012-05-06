@@ -16,6 +16,7 @@
 
 - (void)sharedInit;
 - (void)initPulseCircle;
+- (void)projectHasChanged;
 
 @end
 
@@ -30,6 +31,11 @@
 - (NotePath*)currentPath
 {
     return [paths objectForKey:currentPathName]; //TODO: what happens if currentPath=nil?
+}
+
+- (void)projectHasChanged
+{
+    [grid.viewController projectHasChanged];
 }
 
 - (void)sharedInit
@@ -101,13 +107,12 @@
 - (void)addPath:(NSString *)pathName
 {
     assert(pathName);
-    NotePath *path = [paths objectForKey:pathName];
-    if(path == NULL)
-    {
-        path = [[NotePath alloc]init];
+    if([self pathExists:pathName]) {
+        NotePath *path = [[NotePath alloc]init];
         [path setPathView:self];
         assert(paths);
         [paths setValue:path forKey:pathName];
+        [self projectHasChanged];
     }
     [self setCurrentPathName:pathName];
 }
@@ -172,6 +177,7 @@
     assert([self currentPath]);
     [[self currentPath] addNoteWithPos:pos];
     [self setNeedsDisplay];
+    [self projectHasChanged];
 }
 
 - (bool)removeNoteWithPos:(CGPoint)pos
@@ -181,6 +187,7 @@
     if([self closestNodeToPos:pos pathName:&closestPath index:&minIndex] <= removeDistanceTolerance && closestPath != nil) {
         [[paths objectForKey:closestPath] removeNoteAtIndex:minIndex];
         [self setNeedsDisplay];
+        [self projectHasChanged];
         return true;
     }
     return false;
@@ -190,6 +197,7 @@
 {
     [[self currentPath] removeAllNotes];
     [self setNeedsDisplay];
+    [self projectHasChanged];
 }
 
 - (void)play
@@ -326,6 +334,7 @@ static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
     if(path && ![paths objectForKey:newName]) {
         [paths removeObjectForKey:oldName];
         [paths setObject:path forKey:newName];
+        [self projectHasChanged];
     }
 }
 
@@ -333,9 +342,11 @@ static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
 {
     NotePath *path = [paths objectForKey:pathName];
     bool changed = (doesLoop != [path doesLoop]);
-    [[paths objectForKey:pathName] setDoesLoop:doesLoop];
-    if(changed)
+    if(changed) {
+        [path setDoesLoop:doesLoop];
         [self setNeedsDisplay];
+        [self projectHasChanged];
+    }
 }
 
 - (BOOL)pathDoesLoop:(NSString *)pathName
@@ -362,6 +373,7 @@ static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
     [path stop];
     [paths removeObjectForKey:pathName];
     [self setNeedsDisplay];
+    [self projectHasChanged];
 }
 
 - (UIImageView *)getPathFollowerAtPos:(CGPoint)pos

@@ -36,7 +36,7 @@
 @implementation ViewController
 
 @synthesize state;
-@synthesize grid, gridProjects;
+@synthesize grid, gridProjects, hasUnsavedChanges;
 @synthesize editPathBtn, playPauseButton;
 @synthesize tempoTextField, tempo, tempoSlider;
 @synthesize fileNameLabel;
@@ -77,12 +77,15 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     [grid setSpeed:tempo];
     [pathList setPathView:[grid pathView]];
     [self refreshFileName];
+    hasUnsavedChanges = FALSE;
 }
 
 - (BOOL)saveGridToFile:(NSString *)fileName
 {
     BOOL success = [gridProjects saveToFile:fileName grid:grid tempo:tempo];
     [self refreshFileName];
+    if(success)
+        hasUnsavedChanges = FALSE;
     return success;
 }
 
@@ -182,6 +185,12 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     [gridProjects newGrid];
     [grid reset];
     [self refreshFileName];
+    hasUnsavedChanges = FALSE;
+}
+
+- (void)projectHasChanged
+{
+    hasUnsavedChanges = TRUE;
 }
 
 - (void)setPlayStateToStopped
@@ -219,6 +228,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     pathsImageFile = [[NSBundle mainBundle]pathForResource:@"pathsButton"  ofType:@"png"];
     gridProjects = [[GridProjects alloc]init];
     [self refreshFileName];
+    hasUnsavedChanges = FALSE;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

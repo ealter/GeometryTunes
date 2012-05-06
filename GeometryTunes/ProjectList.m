@@ -4,11 +4,18 @@
 
 @interface ProjectList ()
 
+typedef enum AlertType {
+    ALERT_NEW_PROJECT,
+    ALERT_LOAD_PROJECT
+} AlertType;
+
 @property (nonatomic, retain) IBOutlet UITextField *fileNameField;
 @property (nonatomic, retain) IBOutlet UITableView *fileList;
 
 - (IBAction)newProject:(id)sender;
 - (IBAction)saveProject:(id)sender;
+- (void)newProject;
+- (void)loadProject;
 - (int)rowForProjectName:(NSString *)name;
 
 @end
@@ -29,17 +36,43 @@
 
 - (IBAction)newProject:(id)sender
 {
-    UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Are you sure?" message:@"Any unsaved changes will be lost" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"New Project", nil];
-    [alert show];
+    if([viewController hasUnsavedChanges]) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Are you sure?" message:@"Any unsaved changes will be lost" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"New Project", nil];
+        alert.tag = ALERT_NEW_PROJECT;
+        [alert show];
+    }
+    else {
+        [self newProject];
+    }
+}
+
+- (void)loadProject
+{
+    NSString * projectName = [fileList cellForRowAtIndexPath:[fileList indexPathForSelectedRow]].textLabel.text;
+    [viewController loadGridFromFile:projectName];
+    [popover dismissPopoverAnimated:YES];
+    if([viewController currentFileName])
+        [fileNameField setText:[viewController currentFileName]];
+}
+
+- (void)newProject
+{
+    [viewController newGrid];
+    [popover dismissPopoverAnimated:YES];
     if([viewController currentFileName])
         [fileNameField setText:@""];
 }
 
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
-    if(buttonIndex == [alertView firstOtherButtonIndex]) { //new project
-        [viewController newGrid];
-        [popover dismissPopoverAnimated:YES];
+    AlertType type = alertView.tag;
+    if(buttonIndex == [alertView firstOtherButtonIndex]) {
+        if(type == ALERT_NEW_PROJECT) {
+            [self newProject];
+        }
+        else if(type == ALERT_LOAD_PROJECT) {
+            [self loadProject];
+        }
     }
 }
 
@@ -51,7 +84,6 @@
     }
     else {
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Bad project name" message:nil delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
-        alert.frame = [sender frame];
         [alert show];
     }
 }
@@ -82,10 +114,14 @@
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    [viewController loadGridFromFile:[GridProjects nthFileName:indexPath.row]];
-    [popover dismissPopoverAnimated:YES];
-    if([viewController currentFileName])
-        [fileNameField setText:[viewController currentFileName]];
+    if([viewController hasUnsavedChanges]) {
+        UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"Are you sure?" message:@"Any unsaved changes will be lost" delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Load Project", nil];
+        alert.tag = ALERT_LOAD_PROJECT;
+        [alert show];
+    }
+    else {
+        [self loadProject];
+    }
 }
 
 - (void)refresh
@@ -95,6 +131,7 @@
     if(currentFileName) {
         int row = [self rowForProjectName:currentFileName];
         [fileList selectRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] animated:FALSE scrollPosition:UITableViewScrollPositionNone];
+        [fileNameField setText:currentFileName];
     }
 }
 
