@@ -45,14 +45,16 @@
     return self;
 }
 
-#define NOTES_KEY     @"notes"
-#define DOES_LOOP_KEY @"doesLoop"
+#define NOTES_KEY       @"notes"
+#define DOES_LOOP_KEY   @"doesLoop"
+#define LAST_ACCESS_KEY @"lastAccess"
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [self init];
     NSMutableArray *_notes = [aDecoder decodeObjectForKey:NOTES_KEY];
     doesLoop = [aDecoder decodeBoolForKey:DOES_LOOP_KEY];
+    mostRecentAccess = [aDecoder decodeInt64ForKey:LAST_ACCESS_KEY];
     if(_notes)
         notes = _notes;
     return self;
@@ -62,6 +64,7 @@
 {
     [aCoder encodeObject:notes forKey:NOTES_KEY];
     [aCoder encodeBool:doesLoop forKey:DOES_LOOP_KEY];
+    [aCoder encodeInt64:mostRecentAccess forKey:LAST_ACCESS_KEY];
 }
 
 - (GridView *)grid

@@ -101,6 +101,10 @@
         for(NSString *pathName in paths) {
             [[self path:pathName] setPathView:self];
         }
+        if([paths count] == 0)
+            currentPathName = nil;
+        else
+            currentPathName = [self nthPathName:0];
     }
     return self;
 }
