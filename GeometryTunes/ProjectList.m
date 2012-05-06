@@ -9,6 +9,7 @@
 
 - (IBAction)newProject:(id)sender;
 - (IBAction)saveProject:(id)sender;
+- (int)rowForProjectName:(NSString *)name;
 
 @end
 
@@ -76,10 +77,6 @@
         cell = [[UITableViewCell alloc]initWithStyle:UITableViewCellStyleDefault reuseIdentifier:cellIdentifier];
     
     cell.textLabel.text = [GridProjects nthFileName:indexPath.row];
-    if([cell.textLabel.text compare:[viewController currentFileName]] == NSOrderedSame) //TODO: this doesn't work yet
-    {
-        [cell.backgroundView setBackgroundColor:[UIColor yellowColor]];
-    }
     return cell;
 }
 
@@ -94,6 +91,17 @@
 - (void)refresh
 {
     [fileList reloadData];
+    NSString *currentFileName = [viewController currentFileName];
+    if(currentFileName) {
+        int row = [self rowForProjectName:currentFileName];
+        [fileList selectRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0] animated:FALSE scrollPosition:UITableViewScrollPositionNone];
+    }
+}
+
+- (int)rowForProjectName:(NSString *)name
+{
+    NSMutableArray *names = [GridProjects gridNameList];
+    return [names indexOfObject:name];
 }
 
 #pragma mark - View lifecycle

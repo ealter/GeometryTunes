@@ -116,15 +116,14 @@
             [gridNames addObject:[file stringByDeletingPathExtension]];
         }
     }
+    [gridNames sortUsingSelector:@selector(caseInsensitiveCompare:)];
     
     return gridNames;
 }
 
 + (NSString *)nthFileName:(NSInteger)i
 {
-    NSMutableArray *files = [self gridNameList];
-    [files sortUsingSelector:@selector(caseInsensitiveCompare:)];
-    return [files objectAtIndex:i];
+    return [[self gridNameList] objectAtIndex:i];
 }
 
 @end
