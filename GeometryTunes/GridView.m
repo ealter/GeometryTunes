@@ -91,11 +91,14 @@
 
 - (void)changeToNormalState
 {
-    if([self state] == PIANO_STATE)
+    STATE oldState = [self state];
+    if(oldState == PIANO_STATE)
         [piano removeFromSuperview];
     [viewController changeStateToNormal:false];
     [self setState:NORMAL_STATE];
     [self setIsBold:FALSE cell:[self cellAtPos:currentCell]];
+    if(oldState == PATH_EDIT_STATE)
+        [pathView setNeedsDisplay];
 }
 
 - (id)initWithFrame:(CGRect)frame
