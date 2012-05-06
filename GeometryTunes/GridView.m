@@ -169,7 +169,6 @@
             GridCell *cell = [row objectAtIndex:j];
             [[cell layer] setBorderColor:CELL_BORDER_COLOR];
             [self setIsBold:FALSE cell:cell];
-            [cell.layer setCornerRadius:6.0f];
             [row addObject:cell];
         }
     }
