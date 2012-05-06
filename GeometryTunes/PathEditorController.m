@@ -32,7 +32,10 @@
 {
     //TODO: Make sure that there is at least 1 nonspace character
     NSString *oldName = pathName;
-    [self setPathName:[sender text]];
+    NSString *newName = [[sender text] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if([newName length] == 0)
+        return;
+    [self setPathName:newName];
     if(oldName) {
         [pathsView renamePathFrom:oldName to:pathName];
         [pathList refresh];
