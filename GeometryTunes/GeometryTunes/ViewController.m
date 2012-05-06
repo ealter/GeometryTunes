@@ -92,10 +92,9 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
 - (IBAction)playPauseEvent:(id)sender
 {
     if([grid.pathView isPlaying]) {
-        if(state == NORMAL_STATE)
-            [grid pausePlayback];
-        else
+        if(state != NORMAL_STATE)
             [self changeStateToNormal:true];
+        [grid pausePlayback];
         [self setPlayStateToStopped];
         
         UIImage *playImage = [[UIImage alloc]initWithContentsOfFile:playImageFile];
