@@ -9,6 +9,10 @@
     NSTimer *playbackTimer;
 }
 
+//Contains NSValue representations of CGPoints of path vertices
+@property (nonatomic, readonly, retain) NSMutableArray *notes;
+@property (nonatomic, retain) UIImageView *pathFollower;
+
 - (GridView *)grid;
 
 @end
@@ -69,6 +73,11 @@
 - (NSTimeInterval)speed
 {
     return [pathView speed];
+}
+
+- (int)numNotes
+{
+    return [notes count];
 }
 
 - (void)addNoteWithPos:(CGPoint)pos 

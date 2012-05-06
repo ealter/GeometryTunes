@@ -141,7 +141,7 @@
     float minDistance = FLT_MAX;
     for (NSString *pathName in paths) {
         NotePath *path = [self path:pathName];
-        if([[path notes] count] > 0) { //There is no closest node if there are no nodes
+        if([path numNotes] > 0) { //There is no closest node if there are no nodes
             int i = [path closestNodeFrom:pos];
             float dist = [path distanceFrom:pos noteIndex:i];
             if(dist <= minDistance) {
