@@ -17,6 +17,7 @@
 - (void)sharedInit;
 - (void)initPulseCircle;
 - (void)projectHasChanged;
+- (NotePath *)path:(NSString *)pathName;
 
 @end
 
@@ -28,9 +29,16 @@
 @synthesize tapDistanceTolerance, removeDistanceTolerance;
 @synthesize speed, isPlaying;
 
-- (NotePath*)currentPath
+- (NotePath *)currentPath
 {
-    return [paths objectForKey:currentPathName]; //TODO: what happens if currentPath=nil?
+    return [self path:currentPathName]; //TODO: what happens if currentPath=nil?
+}
+
+- (NotePath *)path:(NSString *)pathName
+{
+    if(pathName)
+        return [paths objectForKey:pathName];
+    return nil;
 }
 
 - (void)projectHasChanged
@@ -91,8 +99,7 @@
         if(_paths)
             paths = _paths;
         for(NSString *pathName in paths) {
-            NotePath *path = [paths objectForKey:pathName];
-            [path setPathView:self];
+            [[self path:pathName] setPathView:self];
         }
     }
     return self;
@@ -124,7 +131,7 @@
 
 - (BOOL)pathExists:(NSString *)pathName
 {
-    return [paths objectForKey:pathName] != nil;
+    return [self path:pathName] != nil;
 }
 
 - (float)closestNodeToPos:(CGPoint)pos pathName:(NSString**)pathName index:(int*)i
@@ -133,7 +140,7 @@
     int minIndex = 0;
     float minDistance = FLT_MAX;
     for (NSString *pathName in paths) {
-        NotePath *path = [paths objectForKey:pathName];
+        NotePath *path = [self path:pathName];
         if([[path notes] count] > 0) { //There is no closest node if there are no nodes
             int i = [path closestNodeFrom:pos];
             float dist = [path distanceFrom:pos noteIndex:i];
@@ -158,7 +165,7 @@
     NSString *closestPath;
     int minIndex;
     if([self closestNodeToPos:pos pathName:&closestPath index:&minIndex] <= tapDistanceTolerance && closestPath != nil) {
-        [[paths objectForKey:closestPath] setPlaybackPosition:minIndex];
+        [[self path:closestPath] setPlaybackPosition:minIndex];
     }
 }
 
@@ -166,9 +173,8 @@
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
     for (NSString *pathName in paths) {
-        NotePath *path = [paths objectForKey:pathName];
         BOOL isCurrentPath = ([grid state] == PATH_EDIT_STATE) && ([pathName compare:currentPathName] == NSOrderedSame);
-        [path updateAndDisplayPath:context dashed:isCurrentPath];
+        [[self path:pathName] updateAndDisplayPath:context dashed:isCurrentPath];
     }
 }
 
@@ -185,7 +191,7 @@
     NSString *closestPath;
     int minIndex;
     if([self closestNodeToPos:pos pathName:&closestPath index:&minIndex] <= removeDistanceTolerance && closestPath != nil) {
-        [[paths objectForKey:closestPath] removeNoteAtIndex:minIndex];
+        [[self path:closestPath] removeNoteAtIndex:minIndex];
         [self setNeedsDisplay];
         [self projectHasChanged];
         return true;
@@ -211,8 +217,7 @@
     }
     [tapGestureRecognizer setEnabled:TRUE];
     for (NSString *pathName in paths) {
-        NotePath *path = [paths objectForKey:pathName];
-        [path play];
+        [[self path:pathName] play];
     }
 }
 
@@ -222,8 +227,7 @@
     [tapGestureRecognizer setEnabled:FALSE];
     for (NSString *pathName in paths)
     {
-        NotePath *path = [paths objectForKey:pathName];
-        [path pause];
+        [[self path:pathName] pause];
     }
     [NotePlayer stopAllNotes];
 }
@@ -234,8 +238,7 @@
     [tapGestureRecognizer setEnabled:FALSE];
     for (NSString *pathName in paths)
     {
-        NotePath *path = [paths objectForKey:pathName];
-        [path stop];
+        [[self path:pathName] stop];
     }
     [NotePlayer stopAllNotes];
 }
@@ -246,15 +249,13 @@
     bool stillPlaying = false;
     for (NSString *pathName in paths)
     {
-        NotePath *path = [paths objectForKey:pathName];
-        stillPlaying = stillPlaying || [path isPlaying];
+        stillPlaying = stillPlaying || [[self path:pathName] isPlaying];
     }
     if(!stillPlaying) {
         isPlaying = FALSE;
         [NotePlayer stopAllNotes];
         for(NSString *pathName in paths) {
-            NotePath *path = [paths objectForKey:pathName];
-            [path setPlaybackPosition:0];
+            [[self path:pathName] setPlaybackPosition:0];
         }
         [tapGestureRecognizer setEnabled:FALSE];
         [[grid viewController] setPlayStateToStopped];
@@ -265,7 +266,7 @@
 {
     speed = _speed;
     for (NSString *pathName in paths) {
-        [[paths objectForKey:pathName] setShouldChangeSpeed:TRUE];
+        [[self path:pathName] setShouldChangeSpeed:TRUE];
     }
 }
 
@@ -312,8 +313,8 @@
 static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
 {
     NSMutableDictionary *dict = (__bridge NSMutableDictionary*)context;
-    uint64_t date1 = [[dict objectForKey:path1] mostRecentAccess];
-    uint64_t date2 = [[dict objectForKey:path2] mostRecentAccess];
+    uint64_t date1 = [(NotePath*)[dict objectForKey:path1] mostRecentAccess];
+    uint64_t date2 = [(NotePath*)[dict objectForKey:path2] mostRecentAccess];
     if (date1 > date2)
         return NSOrderedAscending;
     else if(date1 < date2)
@@ -330,8 +331,8 @@ static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
 
 - (void)renamePathFrom:(NSString *)oldName to:(NSString *)newName
 {
-    id path = [paths objectForKey:oldName];
-    if(path && ![paths objectForKey:newName]) {
+    NotePath *path = [self path:oldName];
+    if(path && ![self pathExists:newName]) {
         [paths removeObjectForKey:oldName];
         [paths setObject:path forKey:newName];
         [self projectHasChanged];
@@ -340,7 +341,7 @@ static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
 
 - (void)setLooping:(BOOL)doesLoop pathName:(NSString *)pathName
 {
-    NotePath *path = [paths objectForKey:pathName];
+    NotePath *path = [self path:pathName];
     bool changed = (doesLoop != [path doesLoop]);
     if(changed) {
         [path setDoesLoop:doesLoop];
@@ -351,14 +352,13 @@ static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
 
 - (BOOL)pathDoesLoop:(NSString *)pathName
 {
-    NotePath *path = [paths objectForKey:pathName];
-    return [path doesLoop];
+    return [[self path:pathName] doesLoop];
 }
 
 - (void)setCurrentPathName:(NSString *)_currentPathName
 {
     currentPathName = _currentPathName;
-    NotePath *path = [paths objectForKey:currentPathName];
+    NotePath *path = [self path:currentPathName];
     if(path)
         [path setMostRecentAccess:mach_absolute_time()];
     if([grid state] == PATH_EDIT_STATE)
@@ -369,8 +369,7 @@ static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
 {
     if([currentPathName isEqualToString:pathName])
         currentPathName = nil;
-    NotePath *path = [paths objectForKey:pathName];
-    [path stop];
+    [[self path:pathName] stop];
     [paths removeObjectForKey:pathName];
     [self setNeedsDisplay];
     [self projectHasChanged];
