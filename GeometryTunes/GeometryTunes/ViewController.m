@@ -39,7 +39,7 @@
 @synthesize grid, gridProjects;
 @synthesize editPathBtn, playPauseButton;
 @synthesize tempoTextField, tempo, tempoSlider;
-@synthesize pathLabel, fileNameLabel;
+@synthesize fileNameLabel;
 @synthesize pathList, pathListPopover;
 @synthesize projectList, projectListPopover;
 @synthesize playImageFile, pauseImageFile, doneImageFile, pathsImageFile;
@@ -140,12 +140,6 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
         [pathListPopover presentPopoverFromRect:[sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
     }
 }
-
-- (void)changePathLabel:(NSString *)pathName
-{
-    pathLabel.text = pathName;
-}
-
 
 - (void)pathHasBeenSelected
 {

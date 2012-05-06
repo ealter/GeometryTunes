@@ -95,9 +95,6 @@
     [pathPicker reloadData];
     if([pathName isEqualToString:[pathEditor pathName]])
         [pathEditorPopover dismissPopoverAnimated:TRUE];
-    if([mainViewController pathLabel].text == pathName){
-        [mainViewController pathLabel].text = @"";
-    }
 }
 
 - (void)showPathEditor:(NSIndexPath *)location
@@ -132,8 +129,6 @@
         if(mainViewController)
             [mainViewController pathHasBeenSelected];
     }
-    NSString *pathName = [[NSString alloc]initWithString:[self nameForNthCell:indexPath.row]];
-    [mainViewController changePathLabel:pathName];
 }
 
 - (void)setPathView:(PathsView *)_pathView
