@@ -93,9 +93,9 @@
 {
     if([self state] == PIANO_STATE)
         [piano removeFromSuperview];
+    [viewController changeStateToNormal:false];
     [self setState:NORMAL_STATE];
     [self setIsBold:FALSE cell:[self cellAtPos:currentCell]];
-    [viewController changeStateToNormal:false];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -203,6 +203,7 @@
         }
     }
     [pathView reset];
+    [self changeToNormalState];
     [self setNeedsDisplay];
 }
 
