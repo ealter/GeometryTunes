@@ -202,17 +202,17 @@
     if(playbackTimer) {
         [playbackTimer invalidate];
     }
+    if(pathFollower) {
+        [pathFollower stopAnimating];
+        [pathFollower removeFromSuperview];
+        pathFollower = nil;
+    }
 }
 
 - (void)stop
 {
     [self pause];
     shouldChangeSpeed = false;
-    if(pathFollower) {
-        [pathFollower stopAnimating];
-        [pathFollower removeFromSuperview];
-        pathFollower = nil;
-    }
     [pathView playHasStopped];
 }
 
