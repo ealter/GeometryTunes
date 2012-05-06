@@ -107,7 +107,7 @@
 - (void)addPath:(NSString *)pathName
 {
     assert(pathName);
-    if([self pathExists:pathName]) {
+    if(![self pathExists:pathName]) {
         NotePath *path = [[NotePath alloc]init];
         [path setPathView:self];
         assert(paths);
