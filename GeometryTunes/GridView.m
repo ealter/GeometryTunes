@@ -381,7 +381,7 @@
 
 - (NSArray*)notes
 {
-    return [[[self cellAtPos:currentCell] notes] copy];
+    return [[self cellAtPos:currentCell] notes];
 }
 
 - (void)setSpeed:(NSTimeInterval)speed
