@@ -43,12 +43,6 @@
     [aCoder encodeObject:notes forKey:NOTES_ENCODE_KEY];
 }
 
-- (void)setNotes:(NSMutableArray *)n
-{
-    notes = n;
-    [self setNeedsDisplay];
-}
-
 - (void)addNote:(midinote)note
 {
     [notes addObject:[NSNumber numberWithUnsignedInt:note]];
@@ -61,14 +55,10 @@
     [self setNeedsDisplay];
 }
 
-- (NSNumber*)getNoteAtIndex:(int)i
-{
-    return [notes objectAtIndex:i];
-}
-
 - (void)clearNotes
 {
-    [self setNotes:[[NSMutableArray alloc]init]];
+    notes = [[NSMutableArray alloc]init];
+    [self setNeedsDisplay];
 }
 
 // Creates a colored rect for each note played from cell
