@@ -379,9 +379,9 @@
     [self convertCellBorderColors:CELL_BORDER_COLOR];
 }
 
-- (NSMutableArray*)notes
+- (NSArray*)notes
 {
-    return [[self cellAtPos:currentCell] notes];
+    return [[[self cellAtPos:currentCell] notes] copy];
 }
 
 - (void)setSpeed:(NSTimeInterval)speed

@@ -24,7 +24,7 @@ typedef struct CellPos {
 //The following methods use the currentCell
 - (void)addNoteWithPitch:   (unsigned)pitch octave:(unsigned)octave;
 - (void)removeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave;
-- (NSMutableArray*)notes;
+- (NSArray*)notes;
 - (void)clearNote;
 
 - (void)playCurrentCellForDuration:(NSTimeInterval)duration;

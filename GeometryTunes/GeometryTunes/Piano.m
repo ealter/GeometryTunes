@@ -165,7 +165,7 @@
 //Determines whether the cell being edited already contains the note
 - (BOOL)containsNote:(midinote)note
 {
-    NSMutableArray *cellNotes = [grid notes];
+    NSArray *cellNotes = [grid notes];
     for(NSNumber *n in cellNotes)
     {
         if([n unsignedIntValue] == note)
@@ -233,7 +233,7 @@
     for(int i=0; i<TOTAL_NUM_KEYS; i++) {
         [notes[i].layer setBorderWidth:1];
     }
-    NSMutableArray *boldNotes = [grid notes];
+    NSArray *boldNotes = [grid notes];
     for(NSNumber *note in boldNotes) {
         midinote p = [note unsignedIntValue];
         int index = [self indexOfPitch:p % NOTES_IN_OCTAVE octave:p / NOTES_IN_OCTAVE];
