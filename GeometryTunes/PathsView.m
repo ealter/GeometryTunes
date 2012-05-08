@@ -183,7 +183,6 @@
     if([self closestNodeToPos:pos pathName:&closestPath index:&minIndex] <= tapDistanceTolerance && closestPath != nil) {
         NotePath *path = [self path:closestPath];
         [path setPlaybackPosition:minIndex];
-        NSLog(@"The time until next note is %f", [self timeUntilNextNote]);
         if(![path isPlaying])
             [path performSelector:@selector(play) withObject:nil afterDelay:[self timeUntilNextNote]];
     }
@@ -313,7 +312,7 @@
     //Pulse the grid cell
     GridCell *cell = [grid cellAtPos:[grid getBoxFromCoords:pos]];
     [grid setIsBold:TRUE cell:cell];
-    [self performSelector:@selector(deemphasizeCell:) withObject:cell afterDelay:speed];
+    [self performSelector:@selector(deemphasizeCell:) withObject:cell afterDelay:speed * .99];
     
     const float width = 40;
     const float height = width;
