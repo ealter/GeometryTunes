@@ -184,7 +184,13 @@
 
 - (void)addNoteWithPos:(CGPoint)pos
 {
-    assert([self currentPath]);
+    if(![self currentPath]) {
+        if([paths count] != 0) {
+            assert(0);
+        }
+        NSLog(@"There are no paths to be added to");
+        return;
+    }
     [[self currentPath] addNoteWithPos:pos];
     [self setNeedsDisplay];
     [self projectHasChanged];
