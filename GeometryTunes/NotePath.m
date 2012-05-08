@@ -216,6 +216,12 @@
     [pathView playHasStopped];
 }
 
+- (NSTimeInterval)timeUntilNextNote
+{
+    assert([playbackTimer isValid]);
+    return [[playbackTimer fireDate] timeIntervalSinceNow];
+}
+
 - (float)distanceFrom:(CGPoint)pos noteIndex:(int)i
 {
     CGPoint notePos = [[notes objectAtIndex:i] CGPointValue];

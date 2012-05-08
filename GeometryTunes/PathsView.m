@@ -18,6 +18,7 @@
 - (void)initPulseCircle;
 - (void)projectHasChanged;
 - (NotePath *)path:(NSString *)pathName;
+- (NSTimeInterval)timeUntilNextNote;
 
 @end
 
@@ -161,6 +162,17 @@
     return minDistance;
 }
 
+- (NSTimeInterval)timeUntilNextNote
+{
+    for(NSString *pathName in paths) {
+        NotePath *path = [self path:pathName];
+        if([path isPlaying]) {
+            return [path timeUntilNextNote];
+        }
+    }
+    return 0;
+}
+
 - (void)handleTap:(UITapGestureRecognizer *)sender
 {
     CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
@@ -169,7 +181,11 @@
     NSString *closestPath;
     int minIndex;
     if([self closestNodeToPos:pos pathName:&closestPath index:&minIndex] <= tapDistanceTolerance && closestPath != nil) {
-        [[self path:closestPath] setPlaybackPosition:minIndex];
+        NotePath *path = [self path:closestPath];
+        [path setPlaybackPosition:minIndex];
+        NSLog(@"The time until next note is %f", [self timeUntilNextNote]);
+        if(![path isPlaying])
+            [path performSelector:@selector(play) withObject:nil afterDelay:[self timeUntilNextNote]];
     }
 }
 
