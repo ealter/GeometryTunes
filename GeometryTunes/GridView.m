@@ -331,7 +331,6 @@
         for(int j=0; j<numBoxes.y; j++) {
             GridCell *cell = [row objectAtIndex:j];
             [[cell layer] setBorderColor:color];
-            [cell.layer setCornerRadius:6.0f];
         }
     }
 }
