@@ -110,7 +110,9 @@
         [pathEditorPopover setPassthroughViews:[NSArray arrayWithObject:pathPicker]];
     }
     [pathEditorPopover presentPopoverFromRect:[pathPicker convertRect:[pathPicker rectForRowAtIndexPath:location] toView:self.view] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft | UIPopoverArrowDirectionRight animated:TRUE];
-    [pathEditor setPathName:[self nameForNthCell:selectedPath]];
+    NSString *pathname = [self nameForNthCell:selectedPath];
+    [pathEditor setPathName:pathname];
+    [pathView setCurrentPathName:pathname updateAccessTime:FALSE];
     
     CGSize popoverSize = CGSizeMake(300, 200);
     pathEditorPopover.popoverContentSize = popoverSize;
