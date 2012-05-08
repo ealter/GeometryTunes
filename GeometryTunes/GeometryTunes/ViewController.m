@@ -217,6 +217,21 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
 
 #pragma mark - View lifecycle
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName: nibNameOrNil bundle: nibBundleOrNil];
+    
+    // If object initialization fails, return immediately.
+    if (!self) {
+        return nil;
+    }
+    
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    appDelegate.midi = [appDelegate.midi init];
+    
+    return self;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];

@@ -74,11 +74,11 @@
 {   
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    midi = [MidiController alloc];
     self.viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     //[self initMidiPlayer];
-    midi = [[MidiController alloc]init];
     return YES;
 }
 

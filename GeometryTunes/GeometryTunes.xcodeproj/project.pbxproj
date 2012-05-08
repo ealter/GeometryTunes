@@ -24,11 +24,7 @@
 		CE4987021559907600C2435D /* MidiController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4987011559907600C2435D /* MidiController.m */; };
 		CEDBF8191559975E000C47F6 /* Trombone.aupreset in Resources */ = {isa = PBXBuildFile; fileRef = CEDBF8181559975E000C47F6 /* Trombone.aupreset */; };
 		CEDBF81C155997F4000C47F6 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEDBF81B155997F4000C47F6 /* AVFoundation.framework */; };
-		CEDBF82415599B50000C47F6 /* 1a#.caf in Resources */ = {isa = PBXBuildFile; fileRef = CEDBF81F15599B50000C47F6 /* 1a#.caf */; };
-		CEDBF82515599B50000C47F6 /* 2a#.caf in Resources */ = {isa = PBXBuildFile; fileRef = CEDBF82015599B50000C47F6 /* 2a#.caf */; };
-		CEDBF82615599B50000C47F6 /* 3a#.caf in Resources */ = {isa = PBXBuildFile; fileRef = CEDBF82115599B50000C47F6 /* 3a#.caf */; };
-		CEDBF82715599B50000C47F6 /* 4g.caf in Resources */ = {isa = PBXBuildFile; fileRef = CEDBF82215599B50000C47F6 /* 4g.caf */; };
-		CEDBF82815599B50000C47F6 /* 5e.caf in Resources */ = {isa = PBXBuildFile; fileRef = CEDBF82315599B50000C47F6 /* 5e.caf */; };
+		CEDBF82E1559A848000C47F6 /* Sounds in Resources */ = {isa = PBXBuildFile; fileRef = CEDBF82D1559A848000C47F6 /* Sounds */; };
 		CEEBF73C15531AF900342E34 /* addRemoveButton.png in Resources */ = {isa = PBXBuildFile; fileRef = CEEBF73115531AF900342E34 /* addRemoveButton.png */; };
 		CEEBF73D15531AF900342E34 /* doneButton.png in Resources */ = {isa = PBXBuildFile; fileRef = CEEBF73215531AF900342E34 /* doneButton.png */; };
 		CEEBF73E15531AF900342E34 /* pathsButton.png in Resources */ = {isa = PBXBuildFile; fileRef = CEEBF73315531AF900342E34 /* pathsButton.png */; };
@@ -91,11 +87,7 @@
 		CE5C7C6E151E7D3900B81396 /* noteTypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = noteTypes.h; sourceTree = "<group>"; };
 		CEDBF8181559975E000C47F6 /* Trombone.aupreset */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = Trombone.aupreset; sourceTree = "<group>"; };
 		CEDBF81B155997F4000C47F6 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		CEDBF81F15599B50000C47F6 /* 1a#.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "1a#.caf"; sourceTree = "<group>"; };
-		CEDBF82015599B50000C47F6 /* 2a#.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "2a#.caf"; sourceTree = "<group>"; };
-		CEDBF82115599B50000C47F6 /* 3a#.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "3a#.caf"; sourceTree = "<group>"; };
-		CEDBF82215599B50000C47F6 /* 4g.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 4g.caf; sourceTree = "<group>"; };
-		CEDBF82315599B50000C47F6 /* 5e.caf */ = {isa = PBXFileReference; lastKnownFileType = file; path = 5e.caf; sourceTree = "<group>"; };
+		CEDBF82D1559A848000C47F6 /* Sounds */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Sounds; sourceTree = "<group>"; };
 		CEEBF73115531AF900342E34 /* addRemoveButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = addRemoveButton.png; path = images/addRemoveButton.png; sourceTree = "<group>"; };
 		CEEBF73215531AF900342E34 /* doneButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = doneButton.png; path = images/doneButton.png; sourceTree = "<group>"; };
 		CEEBF73315531AF900342E34 /* pathsButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = pathsButton.png; path = images/pathsButton.png; sourceTree = "<group>"; };
@@ -235,32 +227,12 @@
 		CE4987061559949300C2435D /* Other midi */ = {
 			isa = PBXGroup;
 			children = (
-				CEDBF81D15599B50000C47F6 /* Sounds */,
+				CEDBF82D1559A848000C47F6 /* Sounds */,
 				CEDBF8181559975E000C47F6 /* Trombone.aupreset */,
 				CE4987001559907600C2435D /* MidiController.h */,
 				CE4987011559907600C2435D /* MidiController.m */,
 			);
 			name = "Other midi";
-			sourceTree = "<group>";
-		};
-		CEDBF81D15599B50000C47F6 /* Sounds */ = {
-			isa = PBXGroup;
-			children = (
-				CEDBF81E15599B50000C47F6 /* Tbone */,
-			);
-			path = Sounds;
-			sourceTree = "<group>";
-		};
-		CEDBF81E15599B50000C47F6 /* Tbone */ = {
-			isa = PBXGroup;
-			children = (
-				CEDBF81F15599B50000C47F6 /* 1a#.caf */,
-				CEDBF82015599B50000C47F6 /* 2a#.caf */,
-				CEDBF82115599B50000C47F6 /* 3a#.caf */,
-				CEDBF82215599B50000C47F6 /* 4g.caf */,
-				CEDBF82315599B50000C47F6 /* 5e.caf */,
-			);
-			path = Tbone;
 			sourceTree = "<group>";
 		};
 		E205F7B5152E6F6C001CAF14 /* Keyboard */ = {
@@ -414,11 +386,7 @@
 				CEEBF74615531AF900342E34 /* stopButton2.png in Resources */,
 				E235E7A11558A35C0044E237 /* Default-Portrait~ipad.png in Resources */,
 				CEDBF8191559975E000C47F6 /* Trombone.aupreset in Resources */,
-				CEDBF82415599B50000C47F6 /* 1a#.caf in Resources */,
-				CEDBF82515599B50000C47F6 /* 2a#.caf in Resources */,
-				CEDBF82615599B50000C47F6 /* 3a#.caf in Resources */,
-				CEDBF82715599B50000C47F6 /* 4g.caf in Resources */,
-				CEDBF82815599B50000C47F6 /* 5e.caf in Resources */,
+				CEDBF82E1559A848000C47F6 /* Sounds in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -32,6 +32,7 @@ static int getPlayerIndex(unsigned pitch, unsigned octave)
 {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     [appDelegate.midi noteOn:[note unsignedIntValue]];
+    NSLog(@"The note is %d", [note unsignedIntValue]);
     //appDelegate.api->setChannelMessage (appDelegate.handle, 0x00, 0x90, [note intValue], 0x7F);
 }
 
