@@ -1,6 +1,7 @@
 #import "AppDelegate.h"
 #import "ViewController.h"
 #import "GridView.h"
+#import "MidiController.h"
 #import <AudioToolBox/AudioServices.h>
 
 @interface AppDelegate ()
@@ -14,7 +15,7 @@
 @synthesize window = _window;
 @synthesize viewController = _viewController;
 @synthesize api, handle;
-
+@synthesize midi;
 
 - (void)initMidiPlayer
 {
@@ -76,7 +77,8 @@
     self.viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
-    [self initMidiPlayer];
+    //[self initMidiPlayer];
+    midi = [[MidiController alloc]init];
     return YES;
 }
 
