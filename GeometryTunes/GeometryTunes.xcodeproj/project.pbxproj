@@ -33,6 +33,7 @@
 		CEEBF74515531AF900342E34 /* stopButton.png in Resources */ = {isa = PBXBuildFile; fileRef = CEEBF73A15531AF900342E34 /* stopButton.png */; };
 		CEEBF74615531AF900342E34 /* stopButton2.png in Resources */ = {isa = PBXBuildFile; fileRef = CEEBF73B15531AF900342E34 /* stopButton2.png */; };
 		CEEBF7481553370100342E34 /* noteTypes.m in Sources */ = {isa = PBXBuildFile; fileRef = CEEBF7471553370000342E34 /* noteTypes.m */; };
+		E235E7A11558A35C0044E237 /* Default-Portrait~ipad.png in Resources */ = {isa = PBXBuildFile; fileRef = E235E7A01558A35C0044E237 /* Default-Portrait~ipad.png */; };
 		E25113F01519230500BBE1F2 /* NotePlayer.m in Sources */ = {isa = PBXBuildFile; fileRef = E25113EF1519230500BBE1F2 /* NotePlayer.m */; };
 		E2687D90151FA3A8005BB1F8 /* PathsView.m in Sources */ = {isa = PBXBuildFile; fileRef = E2687D8F151FA3A8005BB1F8 /* PathsView.m */; };
 		E28150FD150C513500C8A036 /* Piano.m in Sources */ = {isa = PBXBuildFile; fileRef = E28150FC150C513500C8A036 /* Piano.m */; };
@@ -90,6 +91,7 @@
 		CEEBF73A15531AF900342E34 /* stopButton.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stopButton.png; path = images/stopButton.png; sourceTree = "<group>"; };
 		CEEBF73B15531AF900342E34 /* stopButton2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = stopButton2.png; path = images/stopButton2.png; sourceTree = "<group>"; };
 		CEEBF7471553370000342E34 /* noteTypes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = noteTypes.m; sourceTree = "<group>"; };
+		E235E7A01558A35C0044E237 /* Default-Portrait~ipad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-Portrait~ipad.png"; sourceTree = "<group>"; };
 		E25113EE1519230500BBE1F2 /* NotePlayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NotePlayer.h; sourceTree = "<group>"; };
 		E25113EF1519230500BBE1F2 /* NotePlayer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NotePlayer.m; sourceTree = "<group>"; };
 		E2687D8E151FA3A8005BB1F8 /* PathsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PathsView.h; sourceTree = "<group>"; };
@@ -142,6 +144,7 @@
 		83194300150BD226003EF364 = {
 			isa = PBXGroup;
 			children = (
+				E235E7A01558A35C0044E237 /* Default-Portrait~ipad.png */,
 				E29FF3FE154E15D7001ECDBC /* UserProjects */,
 				E2CD9FAD1545103E00D4348D /* Default.png */,
 				8319430E150BD226003EF364 /* Frameworks */,
@@ -358,6 +361,7 @@
 				CEEBF74415531AF900342E34 /* projectsButton.png in Resources */,
 				CEEBF74515531AF900342E34 /* stopButton.png in Resources */,
 				CEEBF74615531AF900342E34 /* stopButton2.png in Resources */,
+				E235E7A11558A35C0044E237 /* Default-Portrait~ipad.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
