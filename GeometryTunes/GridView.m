@@ -221,6 +221,7 @@
              box = [self getBoxFromCoords:pos];
             
             currentCell = box;
+            [self playCurrentCellForDuration:DEFAULT_DURATION];
             
             [self setIsBold:TRUE cell:[self cellAtPos:currentCell]];
             int pianoHeight = 200; //TODO change to const

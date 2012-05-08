@@ -30,7 +30,6 @@
 
 - (IBAction)renameEvent:(id)sender
 {
-    //TODO: Make sure that there is at least 1 nonspace character
     NSString *oldName = pathName;
     NSString *newName = [[sender text] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     if([newName length] == 0)
