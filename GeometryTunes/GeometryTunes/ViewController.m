@@ -69,6 +69,7 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     [grid stopPlayback];
     GridView *_grid = [gridProjects loadGridFromFile:fileName viewController:self];
     if(_grid) {
+        [grid changeToNormalState];
         [grid removeFromSuperview];
         [self.view addSubview:_grid];
         grid = _grid;
