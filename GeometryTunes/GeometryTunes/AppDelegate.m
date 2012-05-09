@@ -98,6 +98,7 @@
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
     [[[self viewController] grid] stopPlayback];
+    [[self viewController] changeStateToNormal:TRUE];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
