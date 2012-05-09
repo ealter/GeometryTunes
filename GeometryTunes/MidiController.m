@@ -63,6 +63,7 @@ enum {
 @property (readwrite) AudioUnit ioUnit;
 
 - (OSStatus)    loadSynthFromPresetURL:(NSURL *) presetURL;
+- (OSStatus)    loadFromDLSOrSoundFont: (NSURL *)bankURL withPatch: (int)presetNumber;
 - (void)        loadPianoPreset;
 - (void)        registerForUIApplicationNotifications;
 - (BOOL)        createAUGraph;
@@ -158,7 +159,7 @@ enum {
                   sampleRatePropertySize
                 );
     
-    NSAssert (result == noErr, @"AudioUnitSetProperty (set Sampler unit output stream sample rate). Error code: %d '%.4s'", (int) result, (const char *)&result);
+    //NSAssert (result == noErr, @"AudioUnitSetProperty (set Sampler unit output stream sample rate). Error code: %d '%.4s'", (int) result, (const char *)&result);
 
     // Obtain the value of the maximum-frames-per-slice from the I/O unit.
     result =    AudioUnitGetProperty (
@@ -215,9 +216,37 @@ enum {
 
 // Load the Trombone preset
 - (void)loadPianoPreset {
-	NSURL *presetURL = [[NSURL alloc] initFileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Trombone" ofType:@"aupreset"]]; //TODO: make piano
+	NSURL *presetURL = [[NSURL alloc] initFileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Grand Piano 1" ofType:@"aupreset"]]; //TODO: make piano
 	assert(presetURL);
 	[self loadSynthFromPresetURL: presetURL];
+}
+
+-(OSStatus) loadFromDLSOrSoundFont: (NSURL *)bankURL withPatch: (int)presetNumber {
+    OSStatus result = noErr;
+    
+    // fill out a bank preset data structure
+    AUSamplerBankPresetData bpdata;
+    bpdata.bankURL  = (__bridge CFURLRef) bankURL;
+    bpdata.bankMSB  = kAUSampler_DefaultMelodicBankMSB;
+    bpdata.bankLSB  = kAUSampler_DefaultBankLSB;
+    bpdata.presetID = (UInt8) presetNumber;
+
+    // set the kAUSamplerProperty_LoadPresetFromBank property
+    result = AudioUnitSetProperty(self.samplerUnit,
+                                  kAUSamplerProperty_LoadPresetFromBank,
+                                  kAudioUnitScope_Global,
+                                  0,
+                                  &bpdata,
+                                  sizeof(bpdata));
+
+    // check for errors
+    NSLog(@"Result: %lu", result);
+    NSCAssert (result == noErr,
+               @"Unable to set the preset property on the Sampler. Error code:%d '%.4s'",
+               (int) result,
+               (const char *)&result);
+
+    return result;
 }
 
 // Load a synthesizer preset file and apply it to the Sampler unit
