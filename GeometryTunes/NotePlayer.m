@@ -31,15 +31,23 @@ static int getPlayerIndex(unsigned pitch, unsigned octave)
 + (void)noteOn:(NSNumber *)note
 {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-    //[appDelegate.midi noteOn:[note unsignedIntValue]];
+#ifdef MIDI_TROMBONE
+    [appDelegate.midi noteOn:[note unsignedIntValue]];
+#endif
+#ifdef MIDI_PIANO
     appDelegate.api->setChannelMessage (appDelegate.handle, 0x00, 0x90, [note intValue], 0x7F);
+#endif
 }
 
 + (void)noteOff:(NSNumber *)note
 {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-    //[appDelegate.midi noteOff:[note unsignedIntValue]];
+#ifdef MIDI_TROMBONE
+    [appDelegate.midi noteOff:[note unsignedIntValue]];
+#endif
+#ifdef MIDI_PIANO
     appDelegate.api->setChannelMessage (appDelegate.handle, 0x00, 0x90, [note intValue], 0x00);
+#endif
 }
 
 @end

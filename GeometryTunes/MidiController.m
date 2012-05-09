@@ -197,7 +197,6 @@ enum {
     
     NSAssert( result == noErr, @"AudioUnitSetProperty (set Sampler unit maximum frames per slice). Error code: %d '%.4s'", (int) result, (const char *)&result);
     
-    
     if (graph) {
         
         // Initialize the audio processing graph.
@@ -216,7 +215,7 @@ enum {
 
 // Load the Trombone preset
 - (void)loadPianoPreset {
-	NSURL *presetURL = [[NSURL alloc] initFileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Grand Piano 1" ofType:@"aupreset"]]; //TODO: make piano
+	NSURL *presetURL = [[NSURL alloc] initFileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Trombone" ofType:@"aupreset"]]; //TODO: make piano
 	assert(presetURL);
 	[self loadSynthFromPresetURL: presetURL];
 }

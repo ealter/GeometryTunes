@@ -226,8 +226,10 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
         return nil;
     }
     
-    //AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-    //appDelegate.midi = [appDelegate.midi init];
+#ifdef MIDI_TROMBONE
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    appDelegate.midi = [appDelegate.midi init];
+#endif
     
     return self;
 }
@@ -246,8 +248,10 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     gridProjects = [[GridProjects alloc]init];
     [self refreshFileName];
     hasUnsavedChanges = FALSE;
-    //AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-    //[appDelegate.midi initAfterViewLoad];
+#ifdef MIDI_TROMBONE
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    [appDelegate.midi initAfterViewLoad];
+#endif
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

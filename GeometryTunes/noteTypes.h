@@ -6,6 +6,10 @@
 #define MAX_OCTAVE 7
 #define NOTES_IN_OCTAVE 12
 
+//Only one of the following should be active
+#define MIDI_PIANO
+//#define MIDI_TROMBONE
+
 typedef UInt32 midinote;
 
 + (BOOL)isValidPitch:(unsigned)pitch octave:(unsigned)octave;
