@@ -68,7 +68,8 @@
     
     int numNotes = [notes count];
     float rectHeight = rect.size.height / numNotes;
-    for(int i = 0, offset = 0; i < numNotes; i++, offset += rectHeight) {
+    float offset = 0;
+    for(int i = 0; i < numNotes; i++, offset += rectHeight) {
         midinote note = [[notes objectAtIndex:i] unsignedIntValue];
         UIColor *color = [noteColor colorFromNoteWithPitch:note % NOTES_IN_OCTAVE octave:note / NOTES_IN_OCTAVE];
         CGContextSetFillColorWithColor(context, [color CGColor]);
