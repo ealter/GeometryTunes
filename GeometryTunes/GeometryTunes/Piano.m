@@ -93,14 +93,13 @@
     bool isBlack;
 
     CGRect pianoSize = CGRectMake(0, 0, width - buttonWidth, height);
-    if(!piano)
-    {
+    if(!piano) {
         piano = [[scrollViewWithButtons alloc]initWithFrame:pianoSize];
         [piano setBackgroundColor:[UIColor blackColor]];
         [piano setContentOffset:CGPointMake(whiteKeyWidth * [Piano whiteNotesFromPitch:0 numNotes:(INITIAL_OCTAVE - MIN_OCTAVE) * NOTES_IN_OCTAVE + INITIAL_PITCH], 0)];
+        piano.decelerationRate = UIScrollViewDecelerationRateFast;
     }
-    else
-    {
+    else {
         piano = [piano initWithFrame:pianoSize];
         [piano setContentOffset:contentOffset];
     }
@@ -110,16 +109,13 @@
     [self addSubview:piano];
     
     float x = 0;
-    for(int i=0; i<TOTAL_NUM_KEYS; i++)
-    {
-        if([Piano isBlackNote:i])
-        {
+    for(int i=0; i<TOTAL_NUM_KEYS; i++) {
+        if([Piano isBlackNote:i]) {
             isBlack = true;
             //The note is a black note                      
             note = [[UIButton alloc]initWithFrame:CGRectMake(x-blackKeyWidth/2, 0, blackKeyWidth, blackKeyHeight)];
         }
-        else
-        {
+        else {
             isBlack = false;
             //This note is a white note
             whiteKeyNum++;
@@ -128,8 +124,7 @@
         }
         
         [note setBackgroundColor:[noteColor colorFromNoteWithPitch:i % NOTES_IN_OCTAVE octave:i/NOTES_IN_OCTAVE + MIN_OCTAVE]];
-        if([Piano isBlackNote:i])
-        {
+        if([Piano isBlackNote:i]) {
             note.layer.shadowColor = [UIColor blackColor].CGColor;
             note.layer.shadowOpacity = 0.8;
             note.layer.shadowRadius = 7;
@@ -176,8 +171,7 @@
 - (BOOL)containsNote:(midinote)note
 {
     NSArray *cellNotes = [grid notes];
-    for(NSNumber *n in cellNotes)
-    {
+    for(NSNumber *n in cellNotes) {
         if([n unsignedIntValue] == note)
             return TRUE;
     }
