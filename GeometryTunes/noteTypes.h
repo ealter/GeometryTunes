@@ -6,9 +6,8 @@
 #define MAX_OCTAVE 7
 #define NOTES_IN_OCTAVE 12
 
-//Only one of the following should be active
-#define MIDI_PIANO
-//#define MIDI_TROMBONE
+/* True means to use the proprietary midi library that expires at the end of May */
+#define MIDI_PIANO true
 
 typedef UInt32 midinote;
 

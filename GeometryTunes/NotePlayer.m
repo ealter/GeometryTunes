@@ -6,12 +6,6 @@
 
 @implementation NotePlayer
 
-static int getPlayerIndex(unsigned pitch, unsigned octave)
-{
-    assert([noteTypes isValidPitch:pitch octave:octave]);
-    return (octave - MIN_OCTAVE) * NOTES_IN_OCTAVE + pitch;
-}
-
 + (void)playNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave duration:(NSTimeInterval)duration
 {
     NSNumber *note = [NSNumber numberWithInt:[noteTypes midinoteOfPitch:pitch octave:octave]];
@@ -31,23 +25,13 @@ static int getPlayerIndex(unsigned pitch, unsigned octave)
 + (void)noteOn:(NSNumber *)note
 {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-#ifdef MIDI_TROMBONE
-    [appDelegate.midi noteOn:[note unsignedIntValue]];
-#endif
-#ifdef MIDI_PIANO
-    appDelegate.api->setChannelMessage (appDelegate.handle, 0x00, 0x90, [note intValue], 0x7F);
-#endif
+    [appDelegate noteOn:[note unsignedIntValue]];
 }
 
 + (void)noteOff:(NSNumber *)note
 {
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-#ifdef MIDI_TROMBONE
-    [appDelegate.midi noteOff:[note unsignedIntValue]];
-#endif
-#ifdef MIDI_PIANO
-    appDelegate.api->setChannelMessage (appDelegate.handle, 0x00, 0x90, [note intValue], 0x00);
-#endif
+    [appDelegate noteOff:[note unsignedIntValue]];
 }
 
 @end
