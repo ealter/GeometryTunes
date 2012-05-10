@@ -86,11 +86,8 @@
     const float whiteKeyWidth = ((float)width) / ([Piano whiteNotesFromPitch:0 numNotes:NOTES_IN_KEYBOARD] + BUTTON_RELATIVE_SIZE + percentHanging);
     
     float buttonWidth = whiteKeyWidth*BUTTON_RELATIVE_SIZE;
-    float blackKeyWidth = whiteKeyWidth/2;
+    float blackKeyWidth = whiteKeyWidth*(13.7/23.5); //Based on the wikipedia article on piano key sizes
     float blackKeyHeight = height*2/3;
-    UIButton *note;
-    int whiteKeyNum = 0;
-    bool isBlack;
 
     CGRect pianoSize = CGRectMake(0, 0, width - buttonWidth, height);
     if(!piano) {
@@ -108,16 +105,17 @@
     [piano setDelaysContentTouches:NO];
     [self addSubview:piano];
     
+    UIButton *note;
+    int whiteKeyNum = 0;
+    bool isBlack;
     float x = 0;
     for(int i=0; i<TOTAL_NUM_KEYS; i++) {
         if([Piano isBlackNote:i]) {
-            isBlack = true;
-            //The note is a black note                      
+            isBlack = true;                 
             note = [[UIButton alloc]initWithFrame:CGRectMake(x-blackKeyWidth/2, 0, blackKeyWidth, blackKeyHeight)];
         }
         else {
             isBlack = false;
-            //This note is a white note
             whiteKeyNum++;
             note = [[UIButton alloc]initWithFrame:CGRectMake(x, 0, whiteKeyWidth, height)];
             x += whiteKeyWidth;
@@ -183,7 +181,7 @@
     UIButton *note = sender;
     int pitch = note.tag % NOTES_IN_OCTAVE;
     int oct   = note.tag / NOTES_IN_OCTAVE + MIN_OCTAVE;
-    midinote n = pitch + oct * NOTES_IN_OCTAVE;
+    midinote n = [noteTypes midinoteOfPitch:pitch octave:oct];
     if([self containsNote:n])
         [grid removeNoteWithPitch:pitch octave:oct];
     else
@@ -244,7 +242,6 @@
         if(index != -1)
             [[notes[index] layer] setBorderWidth:4];
     }
-
 }
 
 @end
