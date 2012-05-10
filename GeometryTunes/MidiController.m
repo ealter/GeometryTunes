@@ -454,7 +454,7 @@ logTheError:
     [self restartAudioProcessingGraph];
 }
 
-- (id)init {
+- (MidiController *)init {
     self = [super init];
         
     // If object initialization fails, return immediately.
@@ -472,13 +472,10 @@ logTheError:
     [self createAUGraph];
     [self configureAndStartAudioProcessingGraph: self.processingGraph];
     
-    return self;
-}
-
-- (void)initAfterViewLoad
-{
     [self loadPianoPreset];
     [self registerForUIApplicationNotifications];
+    
+    return self;
 }
 
 @end

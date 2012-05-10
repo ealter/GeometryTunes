@@ -6,6 +6,4 @@
 - (void)noteOn: (midinote)note;
 - (void)noteOff:(midinote)note;
 
-- (void)initAfterViewLoad;
-
 @end

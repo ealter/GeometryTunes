@@ -2,7 +2,6 @@
 #import "noteTypes.h"
 #import <AudioToolBox/AudioServices.h>
 #import "AppDelegate.h"
-#import "MidiController.h"
 
 @implementation NotePlayer
 

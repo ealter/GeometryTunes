@@ -4,8 +4,6 @@
 #import "PathListController.h"
 #import "GridProjects.h"
 #import "ProjectList.h"
-#import "AppDelegate.h" //TODO: delete this
-#import "MidiController.h" //TODO delete this
 
 @interface ViewController ()
 
@@ -243,10 +241,6 @@ static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS H
     gridProjects = [[GridProjects alloc]init];
     [self refreshFileName];
     hasUnsavedChanges = FALSE;
-    if(!MIDI_PIANO) {
-        AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
-        [appDelegate.midi initAfterViewLoad];
-    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
