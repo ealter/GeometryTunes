@@ -1,9 +1,6 @@
 #import <UIKit/UIKit.h>
 
-@class GridProjects;
 @class GridView;
-@class ProjectList;
-@class PathListController;
 
 @interface ViewController : UIViewController
 
