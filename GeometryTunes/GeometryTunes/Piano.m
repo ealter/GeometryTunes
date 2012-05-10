@@ -6,9 +6,19 @@
 #import "GridView.h"
 
 #define NOTES_IN_KEYBOARD NOTES_IN_OCTAVE
+#define TOTAL_NUM_KEYS ((MAX_OCTAVE - MIN_OCTAVE + 1) * NOTES_IN_OCTAVE)
+
 #define INITIAL_PITCH 0
 #define INITIAL_OCTAVE 5
 #define BUTTON_RELATIVE_SIZE 0.8
+
+#if INITIAL_PITCH < 0 || INITIAL_PITCH >= NOTES_IN_OCTAVE
+    #warning "The initial pitch of the piano is invalid"
+#endif
+
+#if INITIAL_OCTAVE < MIN_OCTAVE || INITIAL_OCTAVE > MAX_OCTAVE
+    #warning "The initial piano octave is invalid"
+#endif
 
 //How long a note is played when it is clicked on the piano
 #define NOTE_DURATION 1
