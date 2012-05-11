@@ -7,11 +7,13 @@
 @implementation GridCell
 
 @synthesize notes;
+@synthesize duration; //.25 = quarter note, .5 = half note, 1 = whole note
 
 - (void)sharedInit
 {
     notes = [[NSMutableArray alloc] init];
     [self setBackgroundColor:[UIColor clearColor]];
+    [self setDuration:1];
 }
 
 - (id)initWithFrame:(CGRect)frame

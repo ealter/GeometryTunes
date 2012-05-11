@@ -301,7 +301,7 @@
     NSMutableArray *notes = [[self cellAtPos:cellPos] notes];
     for(NSNumber *n in notes) {
         midinote note = [n unsignedIntValue];
-        [NotePlayer playNoteWithPitch: note % NOTES_IN_OCTAVE octave:note / NOTES_IN_OCTAVE duration:duration];
+        [NotePlayer playNoteWithPitch: note % NOTES_IN_OCTAVE octave:note / NOTES_IN_OCTAVE duration:duration]; // Get duration from cell at cellPos
     }
 }
 

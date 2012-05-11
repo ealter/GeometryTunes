@@ -1,6 +1,7 @@
 #import "NotePath.h"
 #import "GridView.h"
 #import "PathsView.h"
+#import "GridCell.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface NotePath () {
@@ -153,7 +154,10 @@
     }
     CGPoint pos = [[notes objectAtIndex:playbackPosition] CGPointValue];
     CellPos coords = [[self grid] getBoxFromCoords:pos];
-    [[self grid] playCell:coords duration:[t timeInterval]*.99];
+    GridCell* cell = [[GridCell alloc]init];
+    cell = [[self grid] cellAtPos:coords];
+    NSTimeInterval cellDuration = [cell duration];
+    [[self grid] playCell:coords duration:cellDuration*.99];
     [pathView pulseAt:pos];
     if(playbackPosition < [notes count])
     {
@@ -164,14 +168,14 @@
     }
     playbackPosition++;
     if(playbackPosition >= [notes count] && !doesLoop) {
-        [self performSelector:@selector(stop) withObject:nil afterDelay:[t timeInterval]];
+        [self performSelector:@selector(stop) withObject:nil afterDelay:cellDuration];
         [t invalidate];
     }
     else if(shouldChangeSpeed)
     {
         shouldChangeSpeed = false;
         [t invalidate];
-        playbackTimer = [NSTimer scheduledTimerWithTimeInterval:[self speed] target:self selector:@selector(playNote:) userInfo:nil repeats:YES];
+        playbackTimer = [NSTimer scheduledTimerWithTimeInterval:([self speed]*cellDuration) target:self selector:@selector(playNote:) userInfo:nil repeats:YES];
     }
 }
 
@@ -216,7 +220,7 @@
     [pathView playHasStopped];
 }
 
-- (NSTimeInterval)timeUntilNextNote
+- (NSTimeInterval)timeUntilNextNote //Is this used???
 {
     assert([playbackTimer isValid]);
     return [[playbackTimer fireDate] timeIntervalSinceNow];

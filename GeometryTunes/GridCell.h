@@ -6,6 +6,7 @@
 @interface GridCell : UIView <NSCoding>
 
 @property (nonatomic, readonly, copy) NSMutableArray *notes; //An array of NSNumber*'s that each represent a midinote
+@property NSTimeInterval duration;
 
 - (void)addNote:(midinote)note;
 - (void)removeNote:(midinote)note;
