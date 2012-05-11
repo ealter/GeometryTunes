@@ -360,6 +360,8 @@ static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
     if(path && ![self pathExists:newName]) {
         [paths removeObjectForKey:oldName];
         [paths setObject:path forKey:newName];
+        if([currentPathName compare:oldName] == NSOrderedSame)
+            currentPathName = [newName copy];
         [self projectHasChanged];
     }
 }
