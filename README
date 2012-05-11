@@ -4,17 +4,15 @@ Eliot Alter
 Trevor Rothaus
 Dylan Portelance
 
-Description:
+GroovyPaths is the first of its kind. Load it up and fill the squares on the grid with notes and chords using the colorful keyboard. Draw paths over these squares to create melodies and musical lines with ease.
 
-Our team will develop a composition and performance tool that allows users to
-create and edit a loops or sequences of notes by manipulating boxes on a large
-rectangular grid. Many musical properties will be represented visually--colors
-for pitches (and white for silence), and box size for note duration. Each of the
-rectangles on the grid will have a center point that the path will snap to.
-Users will draw paths from point to point and playback will follow the path
-through the colored boxes it touches and play the sounds that the user assigns
-to each box. Playback will initially treat each point on the path as a beat
-but this can be changed at the user’s whim. The primary goal of this
-application will be to offer a new and innovative way to create musical loops
-and sequences, represent this music with an expressive visual paradigm, and do
-so with as little learning curve as possible.
+Features:
+
+* 6 octave multitouch scrollable keyboard with a color for every note
+* Grid that can contain 80 different notes or chords
+* Easy to use path editor with add, remove, loop, clear and rename
+* Save and load projects
+* Playback mode with dynamic tempo change
+* Tap points on the path during playback to begin playig the path from that point (improvise with ease!)
+
+Find out more about GroovyPaths on the webpage and send your feedback. Enjoy!
