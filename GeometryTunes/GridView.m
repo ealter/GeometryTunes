@@ -1,9 +1,9 @@
 #import "GridView.h"
 #import "GridCell.h"
 #import "noteTypes.h"
-#import "ViewController.h"
 #import "NotePlayer.h"
 #import "PathsView.h"
+#import "Piano.h"
 #import <QuartzCore/QuartzCore.h>
 
 #define NUM_BOXES_X_INITIAL 8
@@ -11,13 +11,28 @@
 
 #define DEFAULT_DURATION 1
 
-@interface GridView ()
+@interface GridView () {
+    @private
+    Piano *piano;
+    NSMutableArray *cells; //2D array: 1st index is row (also an NSMutableArray)
+                           //          2nd index is col
+}
+
+@property (nonatomic) CellPos numBoxes; /* The number of cells on the grid */
+@property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
+@property (nonatomic, retain) UISwipeGestureRecognizer *swipeGestureRecognizer;
+
++ (CellPos)cellPosMakeX:(unsigned)x y:(unsigned) y;
 
 - (void)sharedInit;
-- (void)initCells;
-- (void)allocateCells;
+- (void)allocateCells; /* Allocates the 2D array of cells */
+- (void)initCells;     /* Resets the content and initializes the 2D array of cells */
 - (void)drawGrid;
+- (void)draw; /* The equivalent of drawRect (except it only adds subviews, instead of actually drawing) */
 - (void)convertCellBorderColors:(CGColorRef)color;
+
+/* Note: The variable for the state is stored in the ViewController */
+- (void)setState:(STATE)state;
 
 @end
 
@@ -26,7 +41,7 @@
 @synthesize numBoxes;
 @synthesize currentCell;
 @synthesize tapGestureRecognizer, swipeGestureRecognizer;
-@synthesize delegate, pathView;
+@synthesize viewController, pathView;
 
 #define CELL_BORDER_COLOR [[UIColor grayColor] CGColor]
 #define CELL_BORDER_COLOR_WHILE_PLAYING [[UIColor clearColor] CGColor]
@@ -38,14 +53,16 @@
 
 - (STATE)state
 {
-    assert(delegate);
-    return [delegate state];
+    assert(viewController);
+    return [viewController state];
 }
 
 - (void)setState:(STATE)state
 {
-    if(delegate)
-        [delegate setState:state];
+    if([viewController state] == PATH_EDIT_STATE)
+        [pathView setNeedsDisplay]; //Since the current path is dotted
+    if(viewController)
+        [viewController setState:state];
 }
 
 - (void)draw
@@ -55,16 +72,14 @@
     [self bringSubviewToFront:pathView];
 }
 
-- (void)changeCell:(GridCell *)cell isBold:(bool)isBold
+- (void)setIsBold:(BOOL)isBold cell:(GridCell *)cell
 {
     assert(cell);
-    if(isBold)
-    {
+    if(isBold) {
         [cell.layer setBorderWidth:8];
         [cell.layer setBorderColor:[[UIColor whiteColor] CGColor]];
     }
-    else
-    {
+    else {
         [cell.layer setBorderWidth:2];
         if([pathView isPlaying])
             [cell.layer setBorderColor:CELL_BORDER_COLOR_WHILE_PLAYING];
@@ -75,11 +90,14 @@
 
 - (void)changeToNormalState
 {
-    if([self state] == PIANO_STATE)
+    STATE oldState = [self state];
+    if(oldState == PIANO_STATE)
         [piano removeFromSuperview];
+    [viewController changeStateToNormal:false];
     [self setState:NORMAL_STATE];
-    [self changeCell:[self cellAtPos:currentCell] isBold:false];
-    [delegate changeStateToNormal:false];
+    [self setIsBold:FALSE cell:[self cellAtPos:currentCell]];
+    if(oldState == PATH_EDIT_STATE)
+        [pathView setNeedsDisplay];
 }
 
 - (id)initWithFrame:(CGRect)frame
@@ -90,6 +108,7 @@
         [self allocateCells];
         [self initCells];
         pathView = [[PathsView alloc]initWithFrame:[self bounds]];
+        [pathView setGrid:self];
         [self draw];
     }
     return self;
@@ -107,9 +126,11 @@
         if(!cells)
             [self allocateCells];
         [self initCells];
+        [pathView removeFromSuperview];
         pathView = [aDecoder decodeObjectForKey:PATHVIEW_ENCODE_KEY];
         if(!pathView)
             pathView = [[PathsView alloc]initWithFrame:[self bounds]];
+        [pathView setGrid:self];
         [self draw];
     }
     return self;
@@ -129,8 +150,7 @@
     
     float boxWidth = [self boxWidth];
     float boxHeight = [self boxHeight];
-    for(int i=0; i<numBoxes.x; i++)
-    {
+    for(int i=0; i<numBoxes.x; i++) {
         row = [[NSMutableArray alloc] initWithCapacity:numBoxes.x];
         for(int j=0; j<numBoxes.y; j++) {
             CGRect cellBounds = CGRectMake(i * boxWidth, j * boxHeight, boxWidth, boxHeight);
@@ -147,8 +167,7 @@
         for(int j=0; j<numBoxes.y; j++) {
             GridCell *cell = [row objectAtIndex:j];
             [[cell layer] setBorderColor:CELL_BORDER_COLOR];
-            [self changeCell:cell isBold:false];
-            [cell.layer setCornerRadius:6.0f];
+            [self setIsBold:FALSE cell:cell];
             [row addObject:cell];
         }
     }
@@ -169,7 +188,7 @@
     
     swipeGestureRecognizer = [[UISwipeGestureRecognizer alloc]initWithTarget:self action:@selector(handleSwipe:)];
     swipeGestureRecognizer.direction = UISwipeGestureRecognizerDirectionUp | UISwipeGestureRecognizerDirectionDown;
-    swipeGestureRecognizer.numberOfTouchesRequired = 1; //TODO: maybe change to 2?
+    swipeGestureRecognizer.numberOfTouchesRequired = 1;
     
     [self addGestureRecognizer:tapGestureRecognizer];
     [self addGestureRecognizer:swipeGestureRecognizer];
@@ -177,6 +196,7 @@
 
 - (void)reset
 {
+    [self stopPlayback];
     for(NSMutableArray *row in cells) {
         for(int j=0; j<numBoxes.y; j++) {
             GridCell *cell = [row objectAtIndex:j];
@@ -184,6 +204,7 @@
         }
     }
     [pathView reset];
+    [self changeToNormalState];
     [self setNeedsDisplay];
 }
 
@@ -193,15 +214,15 @@
     CellPos box = [self getBoxFromCoords:pos];
     assert(box.x >= 0 && box.x < numBoxes.x);
     assert(box.y >= 0 && box.y < numBoxes.y);
-    switch([self state])
-    {
+    switch([self state]) {
         case NORMAL_STATE:
             [self setState:PIANO_STATE];
              box = [self getBoxFromCoords:pos];
             
             currentCell = box;
+            [self playCurrentCellForDuration:DEFAULT_DURATION];
             
-            [self changeCell:[self cellAtPos:currentCell] isBold:true];
+            [self setIsBold:TRUE cell:[self cellAtPos:currentCell]];
             int pianoHeight = 200; //TODO change to const
             int pianoY = [self bounds].size.height - pianoHeight;
             if((box.y+1) * [self boxHeight] > pianoY) {
@@ -209,27 +230,27 @@
             }
             
             CGRect pianoRect = CGRectMake(0, pianoY, [self bounds].size.width, pianoHeight);
-            if (piano)
-                piano = [piano initWithFrame:pianoRect delegate:self];
-            else
-                piano = [[Piano alloc] initWithFrame:pianoRect delegate:self];
+            if(!piano)
+                piano = [Piano alloc];
+            piano = [piano initWithFrame:pianoRect];
+            [piano setGrid:self];
             [self addSubview:piano];
             break;
             
         case PIANO_STATE:
-            if(!CGRectContainsPoint([piano frame], pos))
-            {
-                [self changeCell:[self cellAtPos:currentCell] isBold:false];
+            if(!CGRectContainsPoint([piano frame], pos)) {
+                [self setIsBold:FALSE cell:[self cellAtPos:currentCell]];
                 currentCell = box;
-                [self changeCell:[self cellAtPos:currentCell] isBold:true];
-                [self playNoteForDuration:DEFAULT_DURATION];
+                [self setIsBold:TRUE  cell:[self cellAtPos:currentCell]];
+                [self playCurrentCellForDuration:DEFAULT_DURATION];
                 [piano gridCellHasChanged];
             }
-            
             break;
         case PATH_EDIT_STATE:
             //CGPoint point = CGPointMake((box.x + 0.5) * [self boxWidth], (box.y + 0.5) * [self boxHeight]); //Snap to center
-            if([delegate pathEditStateIsAdding])
+            assert(pathView);
+            [viewController projectHasChanged];
+            if([viewController pathEditStateIsAdding])
                 [pathView addNoteWithPos:pos];
             else
                 [pathView removeNoteWithPos:pos];
@@ -239,61 +260,48 @@
     }
 }
 
--  (void) handleSwipe:(UIGestureRecognizer *)sender
+- (void)handleSwipe:(UIGestureRecognizer *)sender
 {
     CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
-    if([self state] == PIANO_STATE)
-    {
+    if([self state] == PIANO_STATE) {
         if(!CGRectContainsPoint([piano frame], pos))
             [self changeToNormalState];
     }
 }
 
-- (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave cellPos:(CellPos)cellPos appendNote:(bool)appendNote
+- (void)addNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave
 {
-    assert(pitch < NOTES_IN_OCTAVE);
-    assert(octave <= MAX_OCTAVE && octave >= MIN_OCTAVE);
-    assert(cellPos.x < numBoxes.x && cellPos.y < numBoxes.y);
-    GridCell *cell = [self cellAtPos:cellPos];
-    midinote note = pitch + octave * NOTES_IN_OCTAVE;
-    if(appendNote)
-        [cell addNote:note];
-    else
-        [cell setLastNote:note];
+    GridCell *cell = [self cellAtPos:currentCell];
+    midinote note = [noteTypes midinoteOfPitch:pitch octave:octave];
+    [cell addNote:note];
+    [viewController projectHasChanged];
 }
 
-- (void)changeNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave appendNote:(bool)appendNote
+- (void)removeNoteWithPitch:(unsigned int)pitch octave:(unsigned int)octave
 {
-    [self changeNoteWithPitch:pitch octave:octave cellPos:currentCell appendNote:appendNote];
-}
-
-- (void)updateDisplayAtCurrentCell
-{
-    [[self cellAtPos:currentCell] setNeedsDisplay];
-}
-
-- (void)clearNoteForCell:(CellPos)cellPos
-{
-    [[self cellAtPos:cellPos] clearNotes];
+    GridCell *cell = [self cellAtPos:currentCell];
+    midinote note = [noteTypes midinoteOfPitch:pitch octave:octave];
+    [cell removeNote:note];
+    [viewController projectHasChanged];
 }
 
 - (void)clearNote
 {
-    [self clearNoteForCell:currentCell];
+    [[self cellAtPos:currentCell] clearNotes];
+    [viewController projectHasChanged];
 }
 
-- (void)playNoteForDuration:(NSTimeInterval)duration
+- (void)playCurrentCellForDuration:(NSTimeInterval)duration
 {
-    [self playNoteForCell:currentCell duration:duration];
+    [self playCell:currentCell duration:duration];
 }
 
-- (void)playNoteForCell:(CellPos)cellPos duration:(NSTimeInterval)duration
+- (void)playCell:(CellPos)cellPos duration:(NSTimeInterval)duration
 {
     NSMutableArray *notes = [[self cellAtPos:cellPos] notes];
-    for(NSNumber *n in notes)
-    {
+    for(NSNumber *n in notes) {
         midinote note = [n unsignedIntValue];
-        [NotePlayer playNoteWithPitch: note % NOTES_IN_OCTAVE octave:note / NOTES_IN_OCTAVE duration:duration];
+        [NotePlayer playNoteWithPitch: note % NOTES_IN_OCTAVE octave:note / NOTES_IN_OCTAVE duration:duration]; // Get duration from cell at cellPos
     }
 }
 
@@ -323,7 +331,6 @@
         for(int j=0; j<numBoxes.y; j++) {
             GridCell *cell = [row objectAtIndex:j];
             [[cell layer] setBorderColor:color];
-            [cell.layer setCornerRadius:6.0f];
         }
     }
 }
@@ -337,7 +344,7 @@
 -(void) stopPlayback
 {
     [pathView stop];
-    [delegate setPlayStateToStopped];
+    [viewController setPlayStateToStopped];
     [self convertCellBorderColors:CELL_BORDER_COLOR];
 }
 
@@ -345,15 +352,14 @@
 {
     if([self state] == PATH_EDIT_STATE)
         [self changeToNormalState];
-    else
-    {
+    else {
         if([self state] == PIANO_STATE)
             [piano removeFromSuperview];
         [self setState:PATH_EDIT_STATE];
     }
 }
 
-- (CellPos) getBoxFromCoords:(CGPoint)pos 
+- (CellPos)getBoxFromCoords:(CGPoint)pos
 {
     CellPos box = [GridView cellPosMakeX:(pos.x / [self boxWidth]) y:(pos.y / [self boxHeight])];
     assert(box.x <= numBoxes.x || box.y <= numBoxes.y);
@@ -365,7 +371,6 @@
     [pathView setGrid:self];
     [self convertCellBorderColors:CELL_BORDER_COLOR_WHILE_PLAYING];
     [pathView play];
-
 }
 
 - (void)playbackHasStopped
@@ -373,18 +378,15 @@
     [self convertCellBorderColors:CELL_BORDER_COLOR];
 }
 
-- (NSMutableArray*)notesAtCell:(CellPos)cellPos
+- (NSArray*)notes
 {
-    return [[self cellAtPos:cellPos] notes];
-}
-
-- (NSMutableArray*)notes
-{
-    return [self notesAtCell:currentCell];
+    return [[self cellAtPos:currentCell] notes];
 }
 
 - (void)setSpeed:(NSTimeInterval)speed
 {
+    if(speed != [pathView speed])
+        [viewController projectHasChanged];
     [pathView setSpeed:speed];
 }
 

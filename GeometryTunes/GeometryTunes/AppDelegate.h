@@ -1,18 +1,17 @@
 #import <UIKit/UIKit.h>
-#include "crmd.h"
+#import "noteTypes.h"
 
 @class ViewController;
+@class MidiController;
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
 @property (strong, nonatomic) ViewController *viewController;
+@property (nonatomic, retain) MidiController *midi;
 
-@property CRMD_HANDLE handle;
-@property CRMD_FUNC *api;
-
-
-
+- (void)noteOn: (midinote)note;
+- (void)noteOff:(midinote)note;
 
 @end

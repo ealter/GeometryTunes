@@ -2,6 +2,17 @@
 #import "PathsView.h"
 #import "PathListController.h"
 
+@interface PathEditorController ()
+
+@property (nonatomic, retain) IBOutlet UITextField *pathNameField;
+@property (nonatomic, retain) IBOutlet UISwitch *loopingSwitch;
+
+- (IBAction)renameEvent:(id)sender;
+- (IBAction)clearEvent;
+- (IBAction)loopingChanged:(id)sender;
+
+@end
+
 @implementation PathEditorController
 
 @synthesize pathName, pathNameField;
@@ -19,20 +30,20 @@
 
 - (IBAction)renameEvent:(id)sender
 {
-    //TODO: Make sure that there is at least 1 nonspace character
     NSString *oldName = pathName;
-    [self setPathName:[sender text]];
-    if(oldName)
-    {
+    NSString *newName = [[sender text] stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+    if([newName length] == 0)
+        return;
+    [self setPathName:newName];
+    if(oldName) {
         [pathsView renamePathFrom:oldName to:pathName];
-        [[pathList pathPicker] reloadData];
+        [pathList refresh];
     }
 }
 
 - (IBAction)clearEvent
 {
-    [[[pathsView paths] objectForKey:pathName]removeAllNotes];
-    [pathsView setNeedsDisplay];
+    [pathsView removeAllNotes];
 }
 
 - (IBAction)loopingChanged:(id)sender
@@ -47,19 +58,6 @@
     [loopingSwitch setOn:[pathsView pathDoesLoop:pathName] animated:FALSE];
 }
 
-- (void)viewDidLoad
-{
-    [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-}
-
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
 	return YES;
@@ -67,7 +65,7 @@
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController
 {
-    [[pathList pathPicker] setEditing:false];
+    [pathList setIsEditingPaths:FALSE];
 }
 
 @end

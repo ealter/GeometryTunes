@@ -2,10 +2,28 @@
 #import "PathsView.h"
 #import "ViewController.h"
 #import "PathEditorController.h"
+#import "GridView.h"
+
+@interface PathListController ()
+
+@property (nonatomic, retain) IBOutlet UITableView *pathPicker;
+@property (nonatomic, retain) IBOutlet UIBarButtonItem *editPathBtn;
+@property (nonatomic, retain) IBOutlet UISegmentedControl *pathModifyType;
+
+@property (nonatomic) int selectedPath; //The row of the path being edited
+
+- (IBAction)newPath;
+- (IBAction)editPath;
+
+- (void)setPathEditState:(BOOL)isAdding;
+- (NSString *)nameForNthCell:(int)row;
+
+@end
 
 @implementation PathListController
 
 @synthesize pathView, pathPicker, editPathBtn;
+@synthesize pathModifyType;
 @synthesize mainViewController;
 @synthesize pathEditor, pathEditorPopover;
 @synthesize selectedPath;
@@ -18,14 +36,6 @@
     return self;
 }
 
-- (void)didReceiveMemoryWarning
-{
-    // Releases the view if it doesn't have a superview.
-    [super didReceiveMemoryWarning];
-    
-    // Release any cached data, images, etc that aren't in use.
-}
-
 #pragma mark - View lifecycle
 
 - (void)viewDidLoad
@@ -35,22 +45,26 @@
     [pathPicker setAllowsSelectionDuringEditing:true];
 }
 
-- (void)viewDidUnload
-{
-    [super viewDidUnload];
-    // Release any retained subviews of the main view.
-    // e.g. self.myOutlet = nil;
-}
-
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
 	return YES;
 }
 
+- (void)refresh
+{
+    [pathPicker reloadData];
+    [pathPicker selectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0] animated:NO scrollPosition:UITableViewScrollPositionNone];
+}
+
+- (void)setIsEditingPaths:(BOOL)isEditing
+{
+    [pathPicker setEditing:isEditing];
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     assert(pathView);
-    return [[pathView paths] count];
+    return [pathView numPaths];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -96,7 +110,9 @@
         [pathEditorPopover setPassthroughViews:[NSArray arrayWithObject:pathPicker]];
     }
     [pathEditorPopover presentPopoverFromRect:[pathPicker convertRect:[pathPicker rectForRowAtIndexPath:location] toView:self.view] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft | UIPopoverArrowDirectionRight animated:TRUE];
-    [pathEditor setPathName:[self nameForNthCell:selectedPath]];
+    NSString *pathname = [self nameForNthCell:selectedPath];
+    [pathEditor setPathName:pathname];
+    [pathView setCurrentPathName:pathname updateAccessTime:FALSE];
     
     CGSize popoverSize = CGSizeMake(300, 200);
     pathEditorPopover.popoverContentSize = popoverSize;
@@ -117,16 +133,22 @@
     }
 }
 
+- (void)setPathView:(PathsView *)_pathView
+{
+    pathView = _pathView;
+    [pathEditor setPathsView:pathView];
+}
+
 - (IBAction)newPath
 {
-    int pathNum = [[pathView paths] count];
+    int pathNum = [pathView numPaths];
     NSString *pathName = [[NSString alloc]initWithFormat:@"path%d", pathNum];
-    for(; [[pathView paths] objectForKey:pathName] != nil; pathNum++, pathName = [[NSString alloc]initWithFormat:@"path%d", pathNum]);
+    for(; [pathView pathExists:pathName]; pathNum++, pathName = [[NSString alloc]initWithFormat:@"path%d", pathNum]);
     [pathView addPath:pathName];
     [pathPicker reloadData];
     if(mainViewController) {
         [mainViewController pathHasBeenSelected];
-        [mainViewController setPathEditState:TRUE];
+        [self setPathEditState:TRUE];
     }
 }
 
@@ -137,16 +159,27 @@
 
 - (IBAction)editPath
 {
-    if([[pathView paths] count] == 0)
+    if([pathView numPaths] == 0)
         return;
     [pathPicker setEditing:![pathPicker isEditing]];
-    if(![pathPicker isEditing])
-    {
+    if(![pathPicker isEditing]) {
         [pathEditorPopover dismissPopoverAnimated:TRUE];
         return;
     }
     selectedPath = 0;
-    [self showPathEditor:[NSIndexPath indexPathForRow:selectedPath inSection:0]];
+    NSIndexPath *index = [NSIndexPath indexPathForRow:selectedPath inSection:0];
+    [pathPicker selectRowAtIndexPath:index animated:TRUE scrollPosition:UITableViewScrollPositionNone];
+    [self showPathEditor:index];
+}
+
+- (BOOL)pathEditStateIsAdding
+{
+    return [pathModifyType selectedSegmentIndex] == 0;
+}
+
+- (void)setPathEditState:(BOOL)isAdding
+{
+    [pathModifyType setSelectedSegmentIndex:(isAdding ? 0 : 1)];
 }
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController

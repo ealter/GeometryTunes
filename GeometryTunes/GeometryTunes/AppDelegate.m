@@ -1,9 +1,14 @@
 #import "AppDelegate.h"
-
 #import "ViewController.h"
+#import "GridView.h"
+#import "MidiController.h"
 #import <AudioToolBox/AudioServices.h>
+#include "crmd.h"
 
 @interface AppDelegate ()
+
+@property CRMD_HANDLE handle;
+@property CRMD_FUNC *api;
 
 - (void)initMidiPlayer;
 
@@ -14,7 +19,7 @@
 @synthesize window = _window;
 @synthesize viewController = _viewController;
 @synthesize api, handle;
-
+@synthesize midi;
 
 - (void)initMidiPlayer
 {
@@ -69,14 +74,35 @@
 	}
 }
 
+- (void)noteOn:(midinote)note
+{
+    if(MIDI_PIANO)
+        api->setChannelMessage (handle, 0x00, 0x90, note, 0x7F);
+    else
+        [midi noteOn:note];
+}
+
+- (void)noteOff:(midinote)note
+{
+    if(MIDI_PIANO)
+        api->setChannelMessage (handle, 0x00, 0x90, note, 0x00);
+    else
+        [midi noteOff:note];
+}
+
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {   
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
+    midi = [MidiController alloc];
     self.viewController = [[ViewController alloc] initWithNibName:@"ViewController" bundle:nil];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
-    [self initMidiPlayer];
+    
+    if(MIDI_PIANO)
+        [self initMidiPlayer];
+    else
+        midi = [[MidiController alloc] init];
     return YES;
 }
 
@@ -95,8 +121,8 @@
      Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
      If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
      */
-    //[[self viewController] saveGridToFile:@"goodGrid"]; //TODO: delete this
     [[[self viewController] grid] stopPlayback];
+    [[self viewController] changeStateToNormal:TRUE];
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application

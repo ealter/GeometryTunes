@@ -7,7 +7,7 @@
 #define SAT 1
 #define BRIGHT 2
 #define ALPHA 3
-#define BRIGHTNESS_FACTOR 0.1
+#define BRIGHTNESS_FACTOR (0.9/(MAX_OCTAVE - MIN_OCTAVE + 1))
 
 static const float HSBAPitchMap[12][4] =
 {
@@ -26,6 +26,7 @@ static const float HSBAPitchMap[12][4] =
 };
 
 + (UIColor*)colorFromNoteWithPitch:(int)pitch octave:(int)octave {
+    assert([noteTypes isValidPitch:pitch octave:octave]);
     float hue = HSBAPitchMap[pitch][HUE];
     float sat = HSBAPitchMap[pitch][SAT];
     float bright = HSBAPitchMap[pitch][BRIGHT];

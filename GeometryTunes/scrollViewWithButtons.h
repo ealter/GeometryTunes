@@ -2,6 +2,4 @@
 
 @interface scrollViewWithButtons : UIScrollView
 
-- (BOOL)touchesShouldCancelInContentView:(UIView *)view;
-
 @end

@@ -6,17 +6,20 @@
 
 @implementation GridCell
 
+@synthesize notes;
+@synthesize duration; //.25 = quarter note, .5 = half note, 1 = whole note
+
 - (void)sharedInit
 {
     notes = [[NSMutableArray alloc] init];
     [self setBackgroundColor:[UIColor clearColor]];
+    [self setDuration:1];
 }
 
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
-    if (self)
-    {
+    if (self) {
         [self sharedInit];
     }
     return self;
@@ -42,42 +45,22 @@
     [aCoder encodeObject:notes forKey:NOTES_ENCODE_KEY];
 }
 
-- (void)setNotes:(NSMutableArray *)n
-{
-    notes = n;
-    [self setNeedsDisplay];
-}
-
-- (NSMutableArray*)notes
-{
-    return notes;
-}
-
-- (void)setLastNote:(midinote)note
-{
-    int numNotes = [notes count];
-    NSNumber *n = [NSNumber numberWithUnsignedInt:note];
-    if(numNotes == 0)
-        [notes addObject:n];
-    else
-        [notes replaceObjectAtIndex:numNotes - 1 withObject:n];
-    [self setNotes:notes];
-}
-
 - (void)addNote:(midinote)note
 {
     [notes addObject:[NSNumber numberWithUnsignedInt:note]];
     [self setNeedsDisplay];
 }
 
-- (NSNumber*)getNoteAtIndex:(int)i
+- (void)removeNote:(midinote)note
 {
-    return [notes objectAtIndex:i];
+    [notes removeObject:[NSNumber numberWithUnsignedInt:note]];
+    [self setNeedsDisplay];
 }
 
 - (void)clearNotes
 {
-    [self setNotes:[[NSMutableArray alloc]init]];
+    notes = [[NSMutableArray alloc]init];
+    [self setNeedsDisplay];
 }
 
 // Creates a colored rect for each note played from cell
@@ -87,8 +70,8 @@
     
     int numNotes = [notes count];
     float rectHeight = rect.size.height / numNotes;
-    for(int i = 0, offset = 0; i < numNotes; i++, offset += rectHeight)
-    {
+    float offset = 0;
+    for(int i = 0; i < numNotes; i++, offset += rectHeight) {
         midinote note = [[notes objectAtIndex:i] unsignedIntValue];
         UIColor *color = [noteColor colorFromNoteWithPitch:note % NOTES_IN_OCTAVE octave:note / NOTES_IN_OCTAVE];
         CGContextSetFillColorWithColor(context, [color CGColor]);

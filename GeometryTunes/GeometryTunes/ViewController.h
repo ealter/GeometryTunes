@@ -1,52 +1,37 @@
 #import <UIKit/UIKit.h>
-#import "GridView.h"
-#import "PathListController.h"
-#import "ProjectList.h"
+
+@class GridView;
 
 @interface ViewController : UIViewController
 
 typedef enum STATE
 {
-    NORMAL_STATE,
-    PIANO_STATE,
-    PATH_EDIT_STATE
+    NORMAL_STATE,   /* The default state of the application. This includes playback. */
+    PIANO_STATE,    /* When the piano is visible and a cell is being edited */
+    PATH_EDIT_STATE /* When the paths are being edited (i.e. adding or removing nodes) */
 } STATE;
 
 @property STATE state;
-@property (nonatomic, copy, readonly) NSString *currentFileName;
-@property (nonatomic, retain) IBOutlet GridView *grid; 
-@property (nonatomic, retain) IBOutlet UIButton *editPathBtn;
-@property (nonatomic, retain) IBOutlet UIButton *playPauseButton;
-@property (nonatomic, retain) IBOutlet UILabel *tempoTextField;
-@property (nonatomic, retain) IBOutlet UISegmentedControl *pathModifyType;
-@property float tempo;
-//@property CGPDFDocumentRef document;
-
-@property (strong, nonatomic) PathListController *pathList;
-@property (strong, nonatomic) UIPopoverController *pathListPopover;
-@property (strong, nonatomic) ProjectList *projectList;
-@property (strong, nonatomic) UIPopoverController *projectListPopover;
+@property (nonatomic, retain) IBOutlet GridView *grid;
+@property (nonatomic) NSTimeInterval tempo; /* The amount of time in between notes */
+@property (nonatomic, readonly) BOOL hasUnsavedChanges;
 
 //Playback methods
-- (IBAction)playPauseEvent:(id)sender;
-- (IBAction)stopEvent:(id)sender;
-- (void)setPlayStateToStopped;
-- (IBAction)sliderValueChanged:(id)sender;
+- (void)setPlayStateToStopped;    /* Call this method when the playback was stopped by the program, rather than the user */
 
 //Path methods
-- (IBAction)editPathEvent:(id)sender; 
+- (void)pathHasBeenSelected; /* A callback method indicating that the PathListController has selected a path */
 - (BOOL)pathEditStateIsAdding;
-- (void)setPathEditState:(BOOL)isAdding;
-- (void)pathHasBeenSelected;
 
-- (void)changeStateToNormal:(bool)informGrid;
+- (void)changeStateToNormal:(bool)informGrid; /* Changes the STATE to NORMAL_STATE. If informGrid is true, this calls the changeStateToNormal method fot the GridView (yes, this is a hacky way of doing it). */
 
 //Save & Load methods
 - (IBAction)saveLoadEvent:(id)sender;
+- (BOOL)saveGridToFile:(NSString *)fileName; //returns true on success
 - (void)loadGridFromFile:(NSString *)fileName;
-- (void)saveGridToFile:  (NSString *)fileName;
+- (NSString*)currentFileName;
 - (void)newGrid;
-+ (NSMutableArray *)gridNameList;
-+ (NSString *)nthFileName:(NSInteger)i;
+- (void)refreshFileName;
+- (void)projectHasChanged;
 
 @end
