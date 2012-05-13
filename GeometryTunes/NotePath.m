@@ -154,8 +154,7 @@
     }
     CGPoint pos = [[notes objectAtIndex:playbackPosition] CGPointValue];
     CellPos coords = [[self grid] getBoxFromCoords:pos];
-    GridCell* cell = [[GridCell alloc]init];
-    cell = [[self grid] cellAtPos:coords];
+    GridCell *cell = [[self grid] cellAtPos:coords];
     NSTimeInterval cellDuration = [cell duration];
     [[self grid] playCell:coords duration:cellDuration*.99];
     [pathView pulseAt:pos];
@@ -220,7 +219,7 @@
     [pathView playHasStopped];
 }
 
-- (NSTimeInterval)timeUntilNextNote //Is this used???
+- (NSTimeInterval)timeUntilNextNote
 {
     assert([playbackTimer isValid]);
     return [[playbackTimer fireDate] timeIntervalSinceNow];

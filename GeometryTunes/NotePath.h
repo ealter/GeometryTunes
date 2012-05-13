@@ -1,7 +1,6 @@
 #import <Foundation/Foundation.h>
 @class GridView;
 @class PathsView;
-@class GridCell;
 
 @interface NotePath : NSObject <NSCoding>
 
