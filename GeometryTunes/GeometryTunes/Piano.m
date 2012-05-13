@@ -181,6 +181,7 @@
 - (void)noteClearEvent
 {
     [delegate clearNote];
+    [self gridCellHasChanged];
 }
 
 + (bool)isBlackNote:(int)pitch

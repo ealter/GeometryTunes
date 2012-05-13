@@ -11,18 +11,25 @@
 
 #define DEFAULT_DURATION 1
 
+@interface GridView ()
+
+- (void)sharedInit;
+- (void)initCells;
+- (void)allocateCells;
+- (void)drawGrid;
+- (void)convertCellBorderColors:(CGColorRef)color;
+
+@end
+
 @implementation GridView
 
 @synthesize numBoxes;
-
 @synthesize currentCell;
-
-@synthesize tapGestureRecognizer;
-@synthesize swipeGestureRecognizer;
-
+@synthesize tapGestureRecognizer, swipeGestureRecognizer;
 @synthesize delegate, pathView;
 
 #define CELL_BORDER_COLOR [[UIColor grayColor] CGColor]
+#define CELL_BORDER_COLOR_WHILE_PLAYING [[UIColor clearColor] CGColor]
 
 - (GridCell*)cellAtPos:(CellPos)cellPos
 {
@@ -59,7 +66,10 @@
     else
     {
         [cell.layer setBorderWidth:2];
-        [cell.layer setBorderColor:CELL_BORDER_COLOR];
+        if([pathView isPlaying])
+            [cell.layer setBorderColor:CELL_BORDER_COLOR_WHILE_PLAYING];
+        else
+            [cell.layer setBorderColor:CELL_BORDER_COLOR];
     }
 }
 
@@ -77,17 +87,71 @@
     self = [super initWithFrame:frame];
     if (self) {
         [self sharedInit];
+        [self allocateCells];
+        [self initCells];
+        pathView = [[PathsView alloc]initWithFrame:[self bounds]];
+        [self draw];
     }
     return self;
 }
+
+#define PATHVIEW_ENCODE_KEY @"pathView"
+#define CELLS_ENCODE_KEY @"cells"
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
         [self sharedInit];
+        cells = [aDecoder decodeObjectForKey:CELLS_ENCODE_KEY];
+        if(!cells)
+            [self allocateCells];
+        [self initCells];
+        pathView = [aDecoder decodeObjectForKey:PATHVIEW_ENCODE_KEY];
+        if(!pathView)
+            pathView = [[PathsView alloc]initWithFrame:[self bounds]];
+        [self draw];
     }
     return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [super encodeWithCoder:aCoder];
+    [aCoder encodeObject:pathView forKey:PATHVIEW_ENCODE_KEY];
+    [aCoder encodeObject:cells forKey:CELLS_ENCODE_KEY];
+}
+
+- (void)allocateCells
+{
+    cells = [[NSMutableArray alloc] initWithCapacity:numBoxes.y];
+    NSMutableArray *row;
+    
+    float boxWidth = [self boxWidth];
+    float boxHeight = [self boxHeight];
+    for(int i=0; i<numBoxes.x; i++)
+    {
+        row = [[NSMutableArray alloc] initWithCapacity:numBoxes.x];
+        for(int j=0; j<numBoxes.y; j++) {
+            CGRect cellBounds = CGRectMake(i * boxWidth, j * boxHeight, boxWidth, boxHeight);
+            GridCell *cell = [[GridCell alloc]initWithFrame:cellBounds];
+            [row addObject:cell];
+        }
+        [cells addObject:row];
+    }
+}
+
+- (void)initCells
+{
+    for(NSMutableArray *row in cells) {
+        for(int j=0; j<numBoxes.y; j++) {
+            GridCell *cell = [row objectAtIndex:j];
+            [[cell layer] setBorderColor:CELL_BORDER_COLOR];
+            [self changeCell:cell isBold:false];
+            [cell.layer setCornerRadius:6.0f];
+            [row addObject:cell];
+        }
+    }
 }
 
 -(void)sharedInit
@@ -99,30 +163,6 @@
     [self setState:NORMAL_STATE];
     piano = NULL;
     
-    cells = [[NSMutableArray alloc] initWithCapacity:numBoxes.y];
-    NSMutableArray *row;
-    
-    float boxWidth = [self boxWidth];
-    float boxHeight = [self boxHeight];
-    for(int i=0; i<numBoxes.x; i++)
-    {
-        row = [[NSMutableArray alloc] initWithCapacity:numBoxes.x];
-        for(int j=0; j<numBoxes.y; j++)
-        {
-            CGRect cellBounds = CGRectMake(i * boxWidth, j * boxHeight, boxWidth, boxHeight);
-
-            GridCell *cell = [[GridCell alloc]initWithFrame:cellBounds];
-            [[cell layer] setBorderColor:CELL_BORDER_COLOR];
-
-            [self changeCell:cell isBold:false];
-            [cell.layer setCornerRadius:6.0f];
-            [row addObject:cell];
-        }
-        [cells addObject:row];
-    }
-    
-    pathView = [[PathsView alloc]initWithFrame:[self bounds]];
-    
     tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
     tapGestureRecognizer.numberOfTapsRequired = 1;
     [tapGestureRecognizer setCancelsTouchesInView:false];
@@ -133,7 +173,18 @@
     
     [self addGestureRecognizer:tapGestureRecognizer];
     [self addGestureRecognizer:swipeGestureRecognizer];
-    [self draw];
+}
+
+- (void)reset
+{
+    for(NSMutableArray *row in cells) {
+        for(int j=0; j<numBoxes.y; j++) {
+            GridCell *cell = [row objectAtIndex:j];
+            [cell clearNotes];
+        }
+    }
+    [pathView reset];
+    [self setNeedsDisplay];
 }
 
 -(void) handleTap:(UITapGestureRecognizer *)sender
@@ -178,8 +229,10 @@
             break;
         case PATH_EDIT_STATE:
             //CGPoint point = CGPointMake((box.x + 0.5) * [self boxWidth], (box.y + 0.5) * [self boxHeight]); //Snap to center
-            [pathView addNoteWithPos:pos];
-            [pathView setNeedsDisplay];
+            if([delegate pathEditStateIsAdding])
+                [pathView addNoteWithPos:pos];
+            else
+                [pathView removeNoteWithPos:pos];
             break;
         default:
             assert(0); //Unknown state!
@@ -189,13 +242,11 @@
 -  (void) handleSwipe:(UIGestureRecognizer *)sender
 {
     CGPoint pos = [sender locationOfTouch:0 inView:sender.view];
-    if(!CGRectContainsPoint([piano frame], pos))
-        [self changeToNormalState];
-}
-
-- (void) resetPath 
-{
-    [pathView removeAllNotes];
+    if([self state] == PIANO_STATE)
+    {
+        if(!CGRectContainsPoint([piano frame], pos))
+            [self changeToNormalState];
+    }
 }
 
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave cellPos:(CellPos)cellPos appendNote:(bool)appendNote
@@ -266,21 +317,28 @@
     }
 }
 
--(void) playButtonEvent:(id)sender;
+-(void)convertCellBorderColors:(CGColorRef)color
 {
-    [self changeToNormalState];
-    [self playPathWithSpeedFactor:1 reversed:FALSE];
+    for(NSMutableArray *row in cells) {
+        for(int j=0; j<numBoxes.y; j++) {
+            GridCell *cell = [row objectAtIndex:j];
+            [[cell layer] setBorderColor:color];
+            [cell.layer setCornerRadius:6.0f];
+        }
+    }
 }
 
 -(void) pausePlayback
 {
     [pathView pause];
+    [self convertCellBorderColors:CELL_BORDER_COLOR];
 }
 
 -(void) stopPlayback
 {
     [pathView stop];
     [delegate setPlayStateToStopped];
+    [self convertCellBorderColors:CELL_BORDER_COLOR];
 }
 
 -(void) editButtonEvent:(id)sender;
@@ -302,13 +360,17 @@
     return box;
 }
 
-- (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse
+- (void)play
 {
     [pathView setGrid:self];
-    if(piano) //Note: This assumes that the grid is blank if the piano doesn't exist
-        [pathView playWithSpeedFactor:factor];
-    else
-        [delegate performSelector:@selector(setPlayStateToStopped) withObject:nil afterDelay:0];
+    [self convertCellBorderColors:CELL_BORDER_COLOR_WHILE_PLAYING];
+    [pathView play];
+
+}
+
+- (void)playbackHasStopped
+{
+    [self convertCellBorderColors:CELL_BORDER_COLOR];
 }
 
 - (NSMutableArray*)notesAtCell:(CellPos)cellPos
@@ -321,9 +383,9 @@
     return [self notesAtCell:currentCell];
 }
 
-- (void)setSpeedFactor:(float)factor
+- (void)setSpeed:(NSTimeInterval)speed
 {
-    [pathView setSpeedFactor:factor];
+    [pathView setSpeed:speed];
 }
 
 + (CellPos)cellPosMakeX:(unsigned int)x y:(unsigned int)y

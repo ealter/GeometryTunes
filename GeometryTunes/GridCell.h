@@ -1,13 +1,10 @@
 #import <UIKit/UIKit.h>
 #import "noteTypes.h"
-#import <CoreData/CoreData.h>
 
-@interface GridCell : UIView
+@interface GridCell : UIView <NSCoding>
 {
     NSMutableArray *notes; //An array of NSNumber*'s that each represent a midinote
 }
-
-@property (nonatomic, retain) NSFetchedResultsController *fetchedResultsContoller;
 
 - (NSMutableArray*)notes;
 - (void)setNotes:(NSMutableArray*)notes;

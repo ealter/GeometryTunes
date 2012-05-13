@@ -32,6 +32,7 @@
 {
     [super viewDidLoad];
     assert(pathPicker);
+    [pathPicker setAllowsSelectionDuringEditing:true];
 }
 
 - (void)viewDidUnload
@@ -78,9 +79,11 @@
     NSString *pathName = [pathView nthPathName:indexPath.row];
     [pathView deletePath:pathName];
     [pathPicker reloadData];
+    if([pathName isEqualToString:[pathEditor pathName]])
+        [pathEditorPopover dismissPopoverAnimated:TRUE];
 }
 
-- (void)showPathEditor
+- (void)showPathEditor:(NSIndexPath *)location
 {
     [pathPicker setEditing:true];
     if(!pathEditor)
@@ -90,9 +93,9 @@
         [pathEditor setPathsView:[[mainViewController grid] pathView]];
         pathEditorPopover = [[UIPopoverController alloc]initWithContentViewController:pathEditor];
         [pathEditorPopover setDelegate:pathEditor];
+        [pathEditorPopover setPassthroughViews:[NSArray arrayWithObject:pathPicker]];
     }
-    [pathEditor setPathName:[self nameForNthCell:selectedPath]];
-    [pathEditorPopover presentPopoverFromRect:[self.view frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
+    [pathEditorPopover presentPopoverFromRect:[pathPicker convertRect:[pathPicker rectForRowAtIndexPath:location] toView:self.view] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionLeft | UIPopoverArrowDirectionRight animated:TRUE];
     [pathEditor setPathName:[self nameForNthCell:selectedPath]];
     
     CGSize popoverSize = CGSizeMake(300, 200);
@@ -105,7 +108,7 @@
     if([tableView isEditing]) {
         [pathEditorPopover dismissPopoverAnimated:FALSE];
         [self setSelectedPath:indexPath.row];
-        [self showPathEditor];
+        [self showPathEditor:indexPath];
     }
     else {
         [pathView setCurrentPathName:[pathView nthPathName:indexPath.row]];
@@ -121,17 +124,21 @@
     for(; [[pathView paths] objectForKey:pathName] != nil; pathNum++, pathName = [[NSString alloc]initWithFormat:@"path%d", pathNum]);
     [pathView addPath:pathName];
     [pathPicker reloadData];
-    if(mainViewController)
+    if(mainViewController) {
         [mainViewController pathHasBeenSelected];
+        [mainViewController setPathEditState:TRUE];
+    }
 }
 
 - (NSString *)nameForNthCell:(int)row
 {
-    return [[[pathPicker cellForRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]] textLabel] text];
+    return [[[pathPicker cellForRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]] textLabel] text];
 }
 
 - (IBAction)editPath
 {
+    if([[pathView paths] count] == 0)
+        return;
     [pathPicker setEditing:![pathPicker isEditing]];
     if(![pathPicker isEditing])
     {
@@ -139,7 +146,7 @@
         return;
     }
     selectedPath = 0;
-    [self showPathEditor];
+    [self showPathEditor:[NSIndexPath indexPathForRow:selectedPath inSection:0]];
 }
 
 - (void)popoverControllerDidDismissPopover:(UIPopoverController *)popoverController

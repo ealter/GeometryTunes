@@ -1,6 +1,5 @@
 #import "NotePath.h"
 #import "GridView.h"
-#import "NotePlayer.h"
 #import "PathsView.h"
 #import <QuartzCore/QuartzCore.h>
 
@@ -9,11 +8,10 @@
 @synthesize notes;
 @synthesize playbackPosition, isPlaying;
 @synthesize delegateGrid, pathView;
-@synthesize speedFactor;
+@synthesize shouldChangeSpeed;
 @synthesize mostRecentAccess;
 @synthesize pathFollower;
-
-const static NSTimeInterval playbackSpeed = 1;
+@synthesize doesLoop;
 
 - (id)init 
 {
@@ -30,8 +28,28 @@ const static NSTimeInterval playbackSpeed = 1;
         isPlaying = false;
         mostRecentAccess = 0;
         pathFollower = nil;
+        doesLoop = NO;
     }
     return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [self init];
+    NSMutableArray *_notes = [aDecoder decodeObject];
+    if(_notes)
+        notes = _notes;
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:notes];
+}
+
+- (NSTimeInterval)speed
+{
+    return [pathView speed];
 }
 
 - (void)addNoteWithPos:(CGPoint)pos 
@@ -48,23 +66,27 @@ const static NSTimeInterval playbackSpeed = 1;
 {
     [notes removeAllObjects];
     [path removeAllPoints];
+    [self stop];
 }
 
 - (void)buildPath
 {
     path = [UIBezierPath bezierPath];
     int count = notes.count;
-    const float radius = 5;
+    const float defaultRadius = 5;
     for (int i = 0; i < count; i++) {
         CGPoint point = [[notes objectAtIndex:i] CGPointValue];
         if (i == 0)
             [path moveToPoint:point];
         else
             [path addLineToPoint:point];
+        float radius = i==0 ? defaultRadius * 2 : defaultRadius;
         UIBezierPath *circlePath = [UIBezierPath bezierPathWithOvalInRect:CGRectMake(point.x - radius, point.y - radius, radius*2, radius*2)];
         [path appendPath:circlePath];
         [path moveToPoint:point];
     }
+    if(doesLoop && count > 1)
+        [path addLineToPoint:[[notes objectAtIndex:0] CGPointValue]];
 }
 
 - (void)updateAndDisplayPath:(CGContextRef)context
@@ -81,20 +103,30 @@ const static NSTimeInterval playbackSpeed = 1;
 
 - (void)playNote:(NSTimer*)t
 {
+    assert(notes);
+    if(playbackPosition >= [notes count])
+    {
+        if(doesLoop) {
+            playbackPosition %= [notes count];
+        }
+        else {
+            [self stop];
+            return;
+        }
+    }
     CGPoint pos = [[notes objectAtIndex:playbackPosition] CGPointValue];
     CellPos coords = [delegateGrid getBoxFromCoords:pos];
-    [delegateGrid playNoteForCell:coords duration:[t timeInterval]];
+    [delegateGrid playNoteForCell:coords duration:[t timeInterval]*.99];
     [pathView pulseAt:pos];
     if(playbackPosition < [notes count])
     {
         CGPoint pos = [[notes objectAtIndex:playbackPosition] CGPointValue];
         [[pathFollower layer] setPosition:pos];
-        if(playbackPosition + 1 < [notes count])
-            [pathView movePathFollower:pathFollower pos:[[notes objectAtIndex:playbackPosition + 1] CGPointValue] delegate:self];
+        if(playbackPosition + 1 < [notes count] || doesLoop)
+            [pathView movePathFollower:pathFollower pos:[[notes objectAtIndex:(playbackPosition + 1) % [notes count]] CGPointValue] delegate:self];
     }
     playbackPosition++;
-    if(playbackPosition >= [notes count])
-    {
+    if(playbackPosition >= [notes count] && !doesLoop) {
         [self performSelector:@selector(stop) withObject:nil afterDelay:[t timeInterval]];
         [t invalidate];
     }
@@ -102,11 +134,11 @@ const static NSTimeInterval playbackSpeed = 1;
     {
         shouldChangeSpeed = false;
         [t invalidate];
-        playbackTimer = [NSTimer scheduledTimerWithTimeInterval:speedFactor * playbackSpeed target:self selector:@selector(playNote:) userInfo:nil repeats:YES];
+        playbackTimer = [NSTimer scheduledTimerWithTimeInterval:[self speed] target:self selector:@selector(playNote:) userInfo:nil repeats:YES];
     }
 }
 
-- (void)playWithSpeedFactor:(float)factor
+- (void)play
 {
     isPlaying = true;
     if([notes count] < 1)
@@ -121,12 +153,9 @@ const static NSTimeInterval playbackSpeed = 1;
     
     shouldChangeSpeed = false;
     
-    //NSTimeInterval speed = playbackSpeed * factor;
-    speedFactor = factor;
-    
     if(playbackTimer)
         [playbackTimer invalidate];
-    playbackTimer = [NSTimer scheduledTimerWithTimeInterval:speedFactor * playbackSpeed target:self selector:@selector(playNote:) userInfo:nil repeats:YES];
+    playbackTimer = [NSTimer scheduledTimerWithTimeInterval:[self speed] target:self selector:@selector(playNote:) userInfo:nil repeats:YES];
     [playbackTimer fire];
 }
 
@@ -141,20 +170,14 @@ const static NSTimeInterval playbackSpeed = 1;
 - (void)stop
 {
     [self pause];
-    playbackPosition = 0;
     shouldChangeSpeed = false;
     if(pathFollower)
     {
+        [pathFollower stopAnimating];
         [pathFollower removeFromSuperview];
         pathFollower = nil;
     }
-    [pathView playHasStopped:self];
-}
-
-- (void)setSpeedFactor:(float)_speedFactor
-{
-    speedFactor = _speedFactor;
-    shouldChangeSpeed = true;
+    [pathView playHasStopped];
 }
 
 - (float)distanceFrom:(CGPoint)pos noteIndex:(int)i
@@ -180,16 +203,6 @@ const static NSTimeInterval playbackSpeed = 1;
         }
     }
     return minIndex;
-}
-
-- (void)setPlaybackPosition:(int)_playbackPosition
-{
-    playbackPosition = _playbackPosition;
-}
-
-- (void)animationDidStop:(CAAnimation *)anim finished:(BOOL)flag
-{
-    
 }
 
 @end

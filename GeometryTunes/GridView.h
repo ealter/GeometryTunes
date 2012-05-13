@@ -5,7 +5,7 @@
 @class ViewController;
 @class GridCell;
 
-@interface GridView : UIView
+@interface GridView : UIView <NSCoding>
 {
     Piano *piano;
     NSMutableArray *cells; //2D array: 1st index is row
@@ -22,17 +22,13 @@ typedef struct CellPos {
 
 @property (nonatomic) CellPos numBoxes;
 
-@property (retain) ViewController *delegate;
+@property (nonatomic, retain) ViewController *delegate;
 @property (nonatomic, retain) PathsView *pathView;
 
-@property (nonatomic) CellPos currentCell; //Used when editing a square
+@property (nonatomic, readonly) CellPos currentCell; //Used when editing a square
 
 @property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic, retain) UISwipeGestureRecognizer *swipeGestureRecognizer;
-
-- (void)sharedInit;
-
-- (void) resetPath; 
 
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave appendNote:(bool)appendNote; //Uses the currentCell
 - (void)changeNoteWithPitch:(unsigned)pitch octave:(unsigned)octave cellPos:(CellPos)cellPos appendNote:(bool)appendNote;
@@ -52,18 +48,19 @@ typedef struct CellPos {
 - (float)boxWidth;
 - (float)boxHeight;
 
-- (void)drawGrid;
-
 - (CellPos)getBoxFromCoords:(CGPoint)pos;
 
-- (void)playPathWithSpeedFactor:(float)factor reversed:(bool)reverse;
-- (void)setSpeedFactor:(float)factor;
+- (void)play;
+- (void)setSpeed:(NSTimeInterval)speed;
 - (void)pausePlayback;
 - (void)stopPlayback;
+- (void)playbackHasStopped;
 
 - (void)changeToNormalState;
 
 - (void)changeCell:(GridCell *)cell isBold:(bool)isBold;
 - (GridCell*)cellAtPos:(CellPos)cellPos;
+
+- (void)reset;
 
 @end

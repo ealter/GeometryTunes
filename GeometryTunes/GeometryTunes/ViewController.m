@@ -2,35 +2,134 @@
 #import "PathsView.h"
 #import "PathListController.h"
 
+@interface ViewController ()
+
+@property (nonatomic, copy) NSString *playImageFile;
+@property (nonatomic, copy) NSString *pauseImageFile;
++ (NSString *)getSavedGridsDirectory;
++ (NSString *)getFilePath:(NSString *)filename;
+
+@end
+
 @implementation ViewController
 
 @synthesize state;
-@synthesize grid;
-@synthesize editPathBtn;
-@synthesize playPauseButton;
-@synthesize tempoTextField;
-@synthesize tempo;
+@synthesize grid, currentFileName;
+@synthesize editPathBtn, playPauseButton, pathModifyType;
+@synthesize tempoTextField, tempo;
 @synthesize pathList, pathListPopover;
-@synthesize helpMenu;
-//@synthesize document;
+@synthesize projectList, projectListPopover;
+@synthesize playImageFile, pauseImageFile;
 
-static NSString *playBtnText = @"Play";
-static NSString *pauseBtnText = @"Pause";
+//static NSString *playBtnText = @"Play";
+//static NSString *pauseBtnText = @"Pause";
+static NSString *normalPathBtnText;
+static NSString *pathEditBtnText = @"               Done"; //TODO: OMG THIS IS HACKY CODE
+
++ (NSString *)getSavedGridsDirectory {
+    
+    NSArray *paths = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *documentsDirectory = [paths objectAtIndex:0];
+    documentsDirectory = [documentsDirectory stringByAppendingPathComponent:@"Grids"];
+    
+    NSError *error;
+    [[NSFileManager defaultManager] createDirectoryAtPath:documentsDirectory withIntermediateDirectories:YES attributes:nil error:&error];   
+    
+    return documentsDirectory;
+}
+
+#define FILE_EXTENSION @"geotunes"
+#define GRID_NAME_KEY  @"filename"
+#define GRID_KEY       @"grid"
+
++ (NSString *)getFilePath:(NSString *)filename
+{
+    return [[[ViewController getSavedGridsDirectory] stringByAppendingPathComponent:filename] stringByAppendingPathExtension:FILE_EXTENSION];
+}
+
+- (void)loadGridFromFile:(NSString *)fileName
+{
+    NSString *dataPath = [ViewController getFilePath:fileName];
+    NSData *codedData = [[NSData alloc] initWithContentsOfFile:dataPath];
+    if (codedData == nil) return;
+    
+    NSKeyedUnarchiver *unarchiver = [[NSKeyedUnarchiver alloc] initForReadingWithData:codedData];
+    NSString *gridName = [unarchiver decodeObjectForKey:GRID_NAME_KEY];
+    if(gridName == nil) return;
+    GridView *_grid = [unarchiver decodeObjectForKey:GRID_KEY];
+    if(_grid) {
+        [grid removeFromSuperview];
+        [self.view addSubview:_grid];
+        grid = _grid;
+    }
+    [unarchiver finishDecoding];
+    [grid setDelegate:self];
+    currentFileName = fileName;
+}
+
+- (void)saveGridToFile:(NSString *)fileName
+{
+    NSString *dataPath = [ViewController getFilePath:fileName];
+    NSMutableData *data = [[NSMutableData alloc] init];
+    NSKeyedArchiver *archiver = [[NSKeyedArchiver alloc] initForWritingWithMutableData:data];          
+    [archiver encodeObject:fileName forKey:GRID_NAME_KEY];
+    [grid changeToNormalState];
+    [grid stopPlayback];
+    [archiver encodeObject:grid forKey:GRID_KEY];
+    [archiver finishEncoding];
+    [data writeToFile:dataPath atomically:YES];
+    currentFileName = fileName;
+}
+
++ (NSMutableArray *)gridNameList
+{
+    NSString *documentsDirectory = [self getSavedGridsDirectory];
+    
+    NSError *error;
+    NSArray *files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:documentsDirectory error:&error];
+    if (files == nil) {
+        NSLog(@"Error reading contents of documents directory: %@", [error localizedDescription]);
+        return nil;
+    }
+    
+    NSMutableArray *gridNames = [NSMutableArray arrayWithCapacity:files.count];
+    for (NSString *file in files) {
+        if ([file.pathExtension compare:FILE_EXTENSION options:NSCaseInsensitiveSearch] == NSOrderedSame) {
+            [gridNames addObject:[file stringByDeletingPathExtension]];
+        }
+    }
+    
+    return gridNames;
+}
+
++ (NSString *)nthFileName:(NSInteger)i
+{
+    return [[self gridNameList] objectAtIndex:i]; //TODO: sort alphabetically
+}
 
 - (IBAction)playPauseEvent:(id)sender
 {
-    if([playPauseButton.currentTitle compare:playBtnText]){
+    if([grid.pathView isPlaying]){ //]compare:playBtnText]){
         if(state == NORMAL_STATE)
             [grid pausePlayback];
         else
             [self changeStateToNormal:true];
         [self setPlayStateToStopped];
+        
+        UIImage *playImage = [[UIImage alloc]initWithContentsOfFile:playImageFile];
+        [playPauseButton setBackgroundImage:playImage forState:UIControlStateNormal];
     }
     else{
         if(state != NORMAL_STATE)
             [self changeStateToNormal:true];
+<<<<<<< HEAD
         [grid playPathWithSpeedFactor:tempo reversed:false];
         [playPauseButton setTitle:pauseBtnText forState:UIControlStateNormal];
+=======
+        [grid play];
+        UIImage *pauseImage = [[UIImage alloc]initWithContentsOfFile:pauseImageFile];
+        [playPauseButton setBackgroundImage:pauseImage forState:UIControlStateNormal];
+>>>>>>> c2e0e8bbfb9bb3662b4ef5ef3eca46993572964a
     }
 }
 
@@ -44,22 +143,6 @@ static NSString *pauseBtnText = @"Pause";
         [self changeStateToNormal:true];
 }
 
-- (IBAction)rewindEvent:(id)sender
-{
-    if(state != NORMAL_STATE)
-        [self changeStateToNormal:true];
-    [grid pausePlayback];
-    [grid playPathWithSpeedFactor:0.5 reversed:true];
-}
-
-- (IBAction)fastForwardEvent:(id)sender
-{
-    if(state != NORMAL_STATE)
-        [self changeStateToNormal:true];
-    [grid pausePlayback];
-    [grid playPathWithSpeedFactor:0.5 reversed:false];
-}
-
 - (IBAction)editPathEvent:(id)sender
 {
     if(state == PATH_EDIT_STATE)
@@ -67,7 +150,7 @@ static NSString *pauseBtnText = @"Pause";
     else
     {
         [self changeStateToNormal:true];
-        [editPathBtn setTitle:@"Stop Path" forState:UIControlStateNormal];
+        [editPathBtn setTitle:pathEditBtnText forState:UIControlStateNormal];
         state = PATH_EDIT_STATE;
         if(!pathList)
         {
@@ -77,14 +160,10 @@ static NSString *pauseBtnText = @"Pause";
             pathListPopover = [[UIPopoverController alloc]initWithContentViewController:pathList];
             [pathListPopover setDelegate:pathList];
         }
-        if(![[[pathList pathView] paths] count]) {
-            [pathList newPath];
-            return;
-        }
-        [pathListPopover presentPopoverFromRect:[sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
-        
         CGSize popoverSize = CGSizeMake(200, 300);
+        [pathList.pathPicker reloadData];
         pathListPopover.popoverContentSize = popoverSize;
+        [pathListPopover presentPopoverFromRect:[sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
     }
 }
 
@@ -94,39 +173,58 @@ static NSString *pauseBtnText = @"Pause";
         [pathListPopover dismissPopoverAnimated:true];
 }
 
-- (IBAction)clearPathEvent:(id)sender
-{
-    [grid resetPath];
-}
-
 - (void)changeStateToNormal:(bool)informGrid
 {
     if(state == PATH_EDIT_STATE)
-        [editPathBtn setTitle:@"Edit Path" forState:UIControlStateNormal];
+        [editPathBtn setTitle:normalPathBtnText forState:UIControlStateNormal];
     if(informGrid)
         [grid changeToNormalState];
     state = NORMAL_STATE;
 }
 
+- (IBAction)saveLoadEvent:(id)sender
+{
+    if(!projectList)
+    {
+        projectList = [[ProjectList alloc]initWithNibName:@"ProjectList" bundle:nil];
+        [projectList setViewController:self];
+        projectListPopover = [[UIPopoverController alloc]initWithContentViewController:projectList];
+        [projectList setPopover:projectListPopover];
+        //[projectListPopover setDelegate:projectList];
+    }
+    CGSize popoverSize = CGSizeMake(200, 300);
+    projectListPopover.popoverContentSize = popoverSize;
+    [projectListPopover presentPopoverFromRect:[sender frame] inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:TRUE];
+}
+
+- (void)newGrid
+{
+    currentFileName = nil;
+    [grid reset];
+}
+
 - (void)setPlayStateToStopped
 {
-    [playPauseButton setTitle:playBtnText forState:UIControlStateNormal];
+    UIImage *playImage = [[UIImage alloc]initWithContentsOfFile:playImageFile];
+    [playPauseButton setBackgroundImage:playImage forState:UIControlStateNormal];
+    [grid playbackHasStopped];
 }
 
 - (IBAction) sliderValueChanged:(UISlider *)sender {
-    //NSLog(@"%.1f BPM", ([sender value])*60);
-    tempoTextField.text = [NSString stringWithFormat:@"%.1f BPM", ([sender value])*60]; 
-    tempo = 1 / [sender value];
+    tempoTextField.text = [NSString stringWithFormat:@"%d BPM", (int)[sender value]]; 
+    tempo = 60/[sender value];
     
-    if([playPauseButton.currentTitle compare:playBtnText]){ //If playing
-        [grid setSpeedFactor:tempo];
-    }
+    [grid setSpeed:tempo];
 }
 
-- (void)addWoodBackground
+- (BOOL)pathEditStateIsAdding
 {
-    UIColor *background = [[UIColor alloc] initWithPatternImage:[UIImage imageNamed:@"woodBackgroundRoyaltyFree.jpg"]];
-    self.view.backgroundColor = background;
+    return [pathModifyType selectedSegmentIndex] == 0;
+}
+
+- (void)setPathEditState:(BOOL)isAdding
+{
+    [pathModifyType setSelectedSegmentIndex:(isAdding ? 0 : 1)];
 }
 
 - (void)didReceiveMemoryWarning
@@ -143,8 +241,11 @@ static NSString *pauseBtnText = @"Pause";
     tempo = 1;
     state = NORMAL_STATE;
     [grid setDelegate:self];
-    [self addWoodBackground];
-    [editPathBtn setHidden:true];
+    normalPathBtnText = [[editPathBtn titleLabel] text];
+    pauseImageFile = [[NSBundle mainBundle]pathForResource:@"pauseButton" ofType:@"png"];
+    playImageFile = [[NSBundle mainBundle]pathForResource:@"playButton" ofType:@"png"];
+    currentFileName = nil;
+    //[self loadGridFromFile:@"goodGrid"]; //TODO: delete this
 }
 
 - (void)viewDidUnload
@@ -178,7 +279,7 @@ static NSString *pauseBtnText = @"Pause";
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     // Return YES for supported orientations
-    if(interfaceOrientation == UIInterfaceOrientationPortrait) return YES;
+    if(interfaceOrientation == UIInterfaceOrientationPortrait || interfaceOrientation == UIInterfaceOrientationPortraitUpsideDown) return YES;
     return NO;
 }
 

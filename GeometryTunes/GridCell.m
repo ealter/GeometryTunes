@@ -3,11 +3,8 @@
 #import "Piano.h"
 #import <QuartzCore/QuartzCore.h>
 #import "AppDelegate.h"
-#import "CoreDataAccess.h"
 
 @implementation GridCell
-
-@synthesize fetchedResultsContoller;
 
 - (void)sharedInit
 {
@@ -21,20 +18,28 @@
     if (self)
     {
         [self sharedInit];
-        //save cell
-        CoreDataAccess *data = [[CoreDataAccess alloc]init];
-        [data saveContext];
     }
     return self;
 }
+
+#define NOTES_ENCODE_KEY @"notes"
 
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
         [self sharedInit];
+        NSMutableArray *_notes = [aDecoder decodeObjectForKey:NOTES_ENCODE_KEY];
+        if(_notes)
+            notes = _notes;
     }
     return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [super encodeWithCoder:aCoder];
+    [aCoder encodeObject:notes forKey:NOTES_ENCODE_KEY];
 }
 
 - (void)setNotes:(NSMutableArray *)n
@@ -62,8 +67,7 @@
 - (void)addNote:(midinote)note
 {
     [notes addObject:[NSNumber numberWithUnsignedInt:note]];
-    [self setNotes:notes];
-    //Add midinote (unsigned int) to cell as color
+    [self setNeedsDisplay];
 }
 
 - (NSNumber*)getNoteAtIndex:(int)i
