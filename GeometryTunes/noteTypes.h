@@ -7,7 +7,7 @@
 #define NOTES_IN_OCTAVE 12
 
 /* True means to use the proprietary midi library that expires at the end of May */
-#define MIDI_PIANO false
+#define MIDI_PIANO true
 
 typedef UInt32 midinote;
 
