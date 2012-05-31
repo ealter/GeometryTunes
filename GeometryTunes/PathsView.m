@@ -9,7 +9,7 @@
 @interface PathsView ()
 
 @property (retain) NSMutableDictionary *paths;
-@property (retain) UIImage *pulseCircle;
+@property (nonatomic, retain) UIImage *pulseCircle;
 @property (nonatomic, retain) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic) float tapDistanceTolerance; //Units are pixels^2. This is the maximum distance a touch can be from a node for it to register that the touch was meant for that node
 @property (nonatomic) float removeDistanceTolerance;
@@ -25,7 +25,7 @@
 @implementation PathsView
 
 @synthesize grid = _grid;
-@synthesize pulseCircle;
+@synthesize pulseCircle = _pulseCircle;
 @synthesize paths, currentPathName;
 @synthesize tapGestureRecognizer;
 @synthesize tapDistanceTolerance, removeDistanceTolerance;
@@ -52,9 +52,7 @@
 - (void)sharedInit
 {
     paths = [[NSMutableDictionary alloc]init];
-    [self setBackgroundColor:[UIColor clearColor]];
-    
-    [self initPulseCircle];
+    self.backgroundColor = [UIColor clearColor];
     
     tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
     [tapGestureRecognizer setEnabled:FALSE];
@@ -62,6 +60,12 @@
     removeDistanceTolerance = 30 * 30;
     self.speed = 1;
     _isPlaying = FALSE;
+}
+
+- (UIImage *)pulseCircle
+{
+    if(!_pulseCircle) [self initPulseCircle];
+    return _pulseCircle;
 }
 
 - (void)initPulseCircle
@@ -76,7 +80,7 @@
     [[UIColor whiteColor] set];
     [solidPath fill];
     
-    pulseCircle = UIGraphicsGetImageFromCurrentImageContext();
+    self.pulseCircle = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 }
 
@@ -250,8 +254,7 @@
 {
     _isPlaying = FALSE;
     [tapGestureRecognizer setEnabled:FALSE];
-    for (NSString *pathName in paths)
-    {
+    for (NSString *pathName in paths) {
         [[self path:pathName] pause];
     }
     [NotePlayer stopAllNotes];
@@ -306,7 +309,6 @@
 
 - (void)pulseAt:(CGPoint)pos
 {
-    assert(pulseCircle);
     //Pulse the grid cell
     GridCell *cell = [self.grid cellAtPos:[self.grid getBoxFromCoords:pos]];
     [self.grid setIsBold:TRUE cell:cell];
@@ -315,7 +317,7 @@
     const float width = 40;
     const float height = width;
     
-    UIImageView *pulse = [[UIImageView alloc]initWithImage:pulseCircle];
+    UIImageView *pulse = [[UIImageView alloc]initWithImage:self.pulseCircle];
     [pulse setBackgroundColor:[UIColor clearColor]];
     [pulse setFrame:CGRectMake(pos.x - width/2, pos.y - height/2, width, height)];
     [self addSubview:pulse];
@@ -410,7 +412,7 @@ static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
     const float width = 20;
     const float height = width;
     
-    UIImageView *pulse = [[UIImageView alloc]initWithImage:pulseCircle];
+    UIImageView *pulse = [[UIImageView alloc]initWithImage:self.pulseCircle];
     [pulse setBackgroundColor:[UIColor clearColor]];
     [pulse setFrame:CGRectMake(pos.x - width/2, pos.y - height/2, width, height)];
     [self addSubview:pulse];
