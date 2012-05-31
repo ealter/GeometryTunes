@@ -24,11 +24,13 @@
 
 @implementation PathsView
 
-@synthesize grid, pulseCircle;
+@synthesize grid = _grid;
+@synthesize pulseCircle;
 @synthesize paths, currentPathName;
 @synthesize tapGestureRecognizer;
 @synthesize tapDistanceTolerance, removeDistanceTolerance;
-@synthesize speed, isPlaying;
+@synthesize speed = _speed;
+@synthesize isPlaying = _isPlaying;
 
 - (NotePath *)currentPath
 {
@@ -44,13 +46,12 @@
 
 - (void)projectHasChanged
 {
-    [grid.viewController projectHasChanged];
+    [self.grid.viewController projectHasChanged];
 }
 
 - (void)sharedInit
 {
     paths = [[NSMutableDictionary alloc]init];
-    currentPathName = nil;
     [self setBackgroundColor:[UIColor clearColor]];
     
     [self initPulseCircle];
@@ -58,10 +59,9 @@
     tapGestureRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(handleTap:)];
     [tapGestureRecognizer setEnabled:FALSE];
     [self addGestureRecognizer:tapGestureRecognizer];
-    tapDistanceTolerance = 0; /* Gets set in setGrid */
     removeDistanceTolerance = 30 * 30;
-    speed = 1;
-    isPlaying = FALSE;
+    self.speed = 1;
+    _isPlaying = FALSE;
 }
 
 - (void)initPulseCircle
@@ -192,7 +192,7 @@
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
     for (NSString *pathName in paths) {
-        BOOL isCurrentPath = ([grid state] == PATH_EDIT_STATE) && ([pathName compare:currentPathName] == NSOrderedSame);
+        BOOL isCurrentPath = (self.grid.state == PATH_EDIT_STATE) && ([pathName compare:currentPathName] == NSOrderedSame);
         [[self path:pathName] updateAndDisplayPath:context dashed:isCurrentPath];
     }
 }
@@ -233,7 +233,7 @@
 
 - (void)play
 {
-    isPlaying = TRUE;
+    _isPlaying = TRUE;
     if([paths count] == 0) {
         [self performSelector:@selector(playHasStopped) withObject:nil afterDelay:0];
         UIAlertView *alert = [[UIAlertView alloc]initWithTitle:@"There are no paths to play!" message:@"To make a path, click the \"Paths\" button at the top right of the screen." delegate:nil cancelButtonTitle:@"Okay" otherButtonTitles:nil];
@@ -248,7 +248,7 @@
 
 - (void)pause
 {
-    isPlaying = FALSE;
+    _isPlaying = FALSE;
     [tapGestureRecognizer setEnabled:FALSE];
     for (NSString *pathName in paths)
     {
@@ -259,10 +259,9 @@
 
 - (void)stop
 {
-    isPlaying = FALSE;
+    _isPlaying = FALSE;
     [tapGestureRecognizer setEnabled:FALSE];
-    for (NSString *pathName in paths)
-    {
+    for (NSString *pathName in paths) {
         [[self path:pathName] stop];
     }
     [NotePlayer stopAllNotes];
@@ -272,47 +271,46 @@
 {
     //Check if the play has stopped for all paths
     bool stillPlaying = false;
-    for (NSString *pathName in paths)
-    {
+    for (NSString *pathName in paths) {
         stillPlaying = stillPlaying || [[self path:pathName] isPlaying];
     }
     if(!stillPlaying) {
-        isPlaying = FALSE;
+        _isPlaying = FALSE;
         [NotePlayer stopAllNotes];
         for(NSString *pathName in paths) {
             [[self path:pathName] setPlaybackPosition:0];
         }
         [tapGestureRecognizer setEnabled:FALSE];
-        [[grid viewController] setPlayStateToStopped];
+        [self.grid.viewController setPlayStateToStopped];
     }
 }
 
-- (void)setSpeed:(NSTimeInterval)_speed
+- (void)setSpeed:(NSTimeInterval)speed
 {
-    speed = _speed;
+    _speed = speed;
     for (NSString *pathName in paths) {
-        [[self path:pathName] setShouldChangeSpeed:TRUE];
+        [self path:pathName].shouldChangeSpeed = TRUE;
     }
 }
 
-- (void)setGrid:(GridView *)_grid
+- (void)setGrid:(GridView *)grid
 {
-    grid = _grid;
-    tapDistanceTolerance = [grid boxWidth] * [grid boxHeight];
+    _grid = grid;
+    tapDistanceTolerance = [self.grid boxWidth] * [self.grid boxHeight];
 }
 
 - (void)deemphasizeCell:(GridCell *)cell
 {
-    [grid setIsBold:FALSE cell:cell];
+    [self.grid setIsBold:FALSE cell:cell];
 }
 
 - (void)pulseAt:(CGPoint)pos
 {
     assert(pulseCircle);
     //Pulse the grid cell
-    GridCell *cell = [grid cellAtPos:[grid getBoxFromCoords:pos]];
-    [grid setIsBold:TRUE cell:cell];
-    [self performSelector:@selector(deemphasizeCell:) withObject:cell afterDelay:speed * .99];
+    GridCell *cell = [self.grid cellAtPos:[self.grid getBoxFromCoords:pos]];
+    [self.grid setIsBold:TRUE cell:cell];
+    [self performSelector:@selector(deemphasizeCell:) withObject:cell afterDelay:self.speed * .99];
     
     const float width = 40;
     const float height = width;
@@ -393,7 +391,7 @@ static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
     NotePath *path = [self path:currentPathName];
     if(path && updateAccessTime)
         [path setMostRecentAccess:mach_absolute_time()];
-    if([grid state] == PATH_EDIT_STATE)
+    if(self.grid.state == PATH_EDIT_STATE)
         [self setNeedsDisplay];
 }
 
@@ -424,7 +422,7 @@ static NSInteger comparePaths(NSString *path1, NSString *path2, void *context)
     CABasicAnimation *theAnimation;
     
     theAnimation=[CABasicAnimation animationWithKeyPath:@"position"];
-    theAnimation.duration=speed;
+    theAnimation.duration=self.speed;
     theAnimation.fromValue=[NSValue valueWithCGPoint:follower.center];
     theAnimation.toValue=[NSValue valueWithCGPoint:pos];
     [theAnimation setDelegate:delegate];

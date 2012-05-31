@@ -6,7 +6,7 @@
 
 @interface PathsView : UIView <NSCoding>
 
-@property (nonatomic, retain) GridView *grid; /* The class that makes the PathsView should initialize this */
+@property (nonatomic, weak) GridView *grid; /* The class that makes the PathsView should initialize this */
 @property (nonatomic, copy) NSString *currentPathName;
 @property (nonatomic) NSTimeInterval speed;
 @property (nonatomic, readonly) BOOL isPlaying;
