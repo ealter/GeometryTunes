@@ -18,8 +18,7 @@ typedef struct CellPos {
 @property (nonatomic, retain) ViewController *viewController;
 @property (nonatomic, retain, readonly) PathsView *pathView;
 @property (nonatomic, readonly) CellPos currentCell; //Used when editing a square
-
-- (STATE)state;
+@property (nonatomic, readonly) STATE state;
 
 //The following methods use the currentCell
 - (void)addNoteWithPitch:   (unsigned)pitch octave:(unsigned)octave;
